@@ -1,0 +1,329 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Examen 10</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap"><style>
+:root{
+  --bg:#f6f7fb; --surface:#ffffff; --fg:#1d2233; --muted:#5b6379; --line:#dde1ec;
+  --oxi:#1f5fbf; --oxi-bg:#e4edfb;
+  --hid:#17805a; --hid-bg:#dff3ea;
+  --hox:#c0284f; --hox-bg:#fbe3ea;
+  --aci:#c2570c; --aci-bg:#fdebd9;
+  --sal:#8a3fb0; --sal-bg:#f1e5f8;
+  --guide:#3a4160; --guide-bg:#e8eaf3;
+  --bad:#b3261e; --bad-bg:#fbe4e2; --good:#17805a; --good-bg:#dff3ea;
+
+  --display:"Bricolage Grotesque","Trebuchet MS",sans-serif;
+  --body:"Source Sans 3","Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  --fam:var(--guide); --fam-bg:var(--guide-bg);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12151f; --surface:#1b2030; --fg:#e9ecf6; --muted:#a2a9bf; --line:#2f3650;
+  --oxi:#7fb0ff; --oxi-bg:#1b2b4a;
+  --hid:#5fd0a2; --hid-bg:#173a2e;
+  --hox:#ff8fa8; --hox-bg:#4a1f2d;
+  --aci:#ffa45c; --aci-bg:#4a2b12;
+  --sal:#d29bf0; --sal-bg:#3a2248;
+  --guide:#b9c0e0; --guide-bg:#262c45;
+  --bad:#ff8d85; --bad-bg:#4a1f1c; --good:#5fd0a2; --good-bg:#173a2e;
+ color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12151f; --surface:#1b2030; --fg:#e9ecf6; --muted:#a2a9bf; --line:#2f3650;
+  --oxi:#7fb0ff; --oxi-bg:#1b2b4a;
+  --hid:#5fd0a2; --hid-bg:#173a2e;
+  --hox:#ff8fa8; --hox-bg:#4a1f2d;
+  --aci:#ffa45c; --aci-bg:#4a2b12;
+  --sal:#d29bf0; --sal-bg:#3a2248;
+  --guide:#b9c0e0; --guide-bg:#262c45;
+  --bad:#ff8d85; --bad-bg:#4a1f1c; --good:#5fd0a2; --good-bg:#173a2e;
+ color-scheme:dark}
+body.fam-oxi{--fam:var(--oxi);--fam-bg:var(--oxi-bg)}
+body.fam-hid{--fam:var(--hid);--fam-bg:var(--hid-bg)}
+body.fam-hox{--fam:var(--hox);--fam-bg:var(--hox-bg)}
+body.fam-aci{--fam:var(--aci);--fam-bg:var(--aci-bg)}
+body.fam-sal{--fam:var(--sal);--fam-bg:var(--sal-bg)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.55}
+.wrap{max-width:62rem;margin-inline:auto;padding-inline:16px;padding-block:20px 56px;display:flex;flex-direction:column;gap:40px}
+h1,h2,h3,h4{font-family:var(--display);line-height:1.12;text-wrap:balance;margin:0}
+h1{font-size:clamp(2rem,6vw,3.1rem);font-weight:800}
+h2{font-size:1.55rem;font-weight:800}
+h3{font-size:1.2rem;font-weight:600}
+h4{font-size:1.02rem;font-weight:600}
+p{margin:0}
+a{color:var(--fg);font-weight:700}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--fg);outline-offset:2px}
+.lead{color:var(--muted);max-width:44rem}
+sub{font-size:.75em}
+.f{font-family:var(--mono);font-weight:700}
+.k{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.top{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;justify-content:space-between;font-size:.95rem}
+.top .r{display:flex;gap:8px 18px;flex-wrap:wrap}
+.hero{display:flex;gap:20px;align-items:center;background:var(--fam-bg);color:var(--fam);border-radius:14px;padding:22px}
+.hero svg{flex:none;width:76px;height:76px}
+.hero > div{min-width:0;display:flex;flex-direction:column;gap:8px}
+.hero h1{color:var(--fam)}
+.hero p{color:var(--fg);max-width:42rem}
+.sec{display:flex;flex-direction:column;gap:16px}
+.sh{display:flex;align-items:center;gap:12px}
+.sh::before{content:"";width:12px;height:30px;border-radius:3px;background:var(--fam);flex:none}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));gap:16px}
+.three{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));gap:16px}
+.tag{display:inline-block;padding:2px 10px;border-radius:6px;font-weight:700;font-size:.88rem;background:var(--fam-bg);color:var(--fam)}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:99px;font-weight:700;font-size:.9rem;background:var(--fam-bg);color:var(--fam)}
+.oxi{background:var(--oxi-bg);color:var(--oxi)}.hid{background:var(--hid-bg);color:var(--hid)}
+.hox{background:var(--hox-bg);color:var(--hox)}.aci{background:var(--aci-bg);color:var(--aci)}
+.sal{background:var(--sal-bg);color:var(--sal)}
+.nom{display:inline-block;padding:3px 10px;border:1.5px solid var(--fg);border-radius:6px;font-weight:700;font-size:.9rem;background:var(--surface);color:var(--fg)}
+.pend{border-style:dashed;border-color:var(--muted);color:var(--muted);font-weight:600}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:36rem}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+tr:last-child td{border-bottom:0}
+.cell{white-space:nowrap}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+.q b.t{font-family:var(--display);font-size:1.1rem}
+.q.warn{border-color:var(--aci)}
+.q.pending{border-style:dashed;border-color:var(--muted)}
+.steps{display:flex;flex-direction:column;gap:10px;counter-reset:s;padding:0;margin:0;list-style:none}
+.steps li{counter-increment:s;padding:2px 0 2px 42px;position:relative}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:28px;height:28px;border-radius:50%;background:var(--fam);color:var(--bg);font-family:var(--display);font-weight:800;display:grid;place-items:center;font-size:.95rem}
+.ex{background:var(--fam-bg);border-left:5px solid var(--fam);border-radius:8px;padding:12px 14px;color:var(--fg)}
+.ex .f{color:var(--fam)}
+.nomblock{background:var(--surface);border:1px solid var(--line);border-top:6px solid var(--fam);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.nomblock > header{display:flex;flex-direction:column;gap:6px}
+.dir{display:flex;flex-direction:column;gap:12px;min-width:0}
+.dir h4{color:var(--fam)}
+.struct{font-family:var(--mono);font-weight:700;background:var(--bg);border-radius:8px;padding:10px 14px;overflow-wrap:anywhere}
+.trap{display:grid;grid-template-columns:auto 1fr;gap:10px 14px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:0}
+.trap dt{font-family:var(--mono);font-weight:700;color:var(--fam)}
+.trap dd{margin:0}
+button{font:inherit;font-weight:700;border:2px solid transparent;border-radius:8px;padding:10px 14px;cursor:pointer}
+button.rv{background:var(--fg);color:var(--bg)}
+.ans{font-weight:600}
+.pager{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,16rem),1fr));gap:12px}
+.pager a{display:flex;flex-direction:column;gap:2px;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--surface);text-decoration:none}
+.pager a span.k{font-size:.72rem}
+.pager a:hover{border-color:var(--fam)}
+
+th{text-transform:none;letter-spacing:.02em;font-size:.84rem}
+.sv{width:100%;height:auto;display:block}
+.sv text{fill:var(--fg);font-family:var(--body);font-size:12px}
+.sv text.m{fill:var(--muted)}
+.sv text.b{font-weight:700}
+.sv text.mo{font-family:var(--mono);font-weight:700}
+.sv .ax{stroke:var(--muted);stroke-width:1.3;fill:none}
+.sv .gd{stroke:var(--line);stroke-width:1;fill:none}
+.fig{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.fig .cap{color:var(--muted);font-size:.92rem}
+.tl{display:flex;gap:12px;overflow-x:auto;padding:6px 2px 16px;scroll-snap-type:x proximity}
+.tlc{flex:0 0 17rem;scroll-snap-align:start;background:var(--surface);border:1px solid var(--line);border-top:6px solid var(--fam);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.tlc.out{border-left-style:dashed;border-right-style:dashed;border-bottom-style:dashed}
+.tlc .yr{font-family:var(--display);font-weight:800;font-size:1.5rem;color:var(--fam);line-height:1}
+.tlc .who{font-weight:700}
+.tlc svg{width:100%;height:auto;background:var(--fam-bg);border-radius:8px;color:var(--fam)}
+.tlc svg text{fill:var(--fam);font-family:var(--body);font-size:10px;font-weight:700}
+.tlc .mini{font-size:.93rem;color:var(--fg)}
+.tlc ul{margin:0;padding-left:1.1rem;font-size:.93rem}
+.gap{flex:0 0 3.2rem;display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:700;font-size:.85rem;writing-mode:vertical-rl;text-orientation:mixed;border-inline:2px dotted var(--line)}
+.noex{display:inline-block;font-size:.78rem;font-weight:700;padding:2px 8px;border-radius:6px;background:var(--bg);border:1px dashed var(--muted);color:var(--muted);width:fit-content}
+.pt{display:grid;grid-template-columns:1.5rem repeat(18,minmax(2.7rem,1fr));gap:3px;min-width:56rem}
+.pt .gh,.pt .ph0{font-size:.72rem;font-weight:700;color:var(--muted);text-align:center;align-self:center}
+.pt .e{aspect-ratio:1/1.08;border-radius:5px;padding:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.55rem;line-height:1.05;background:color-mix(in srgb,var(--c,var(--muted)) 24%,var(--surface));border:1px solid color-mix(in srgb,var(--c,var(--muted)) 55%,var(--surface));min-width:0;overflow:hidden}
+.pt .e b{font-family:var(--mono);font-size:.98rem;line-height:1.1}
+.pt .e i{font-style:normal;color:var(--muted);font-size:.58rem}
+.pt .e small{font-size:.5rem;color:var(--muted);max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pt .e.ph{background:transparent;border-style:dashed;color:var(--muted);font-size:.6rem;text-align:center}
+.pt[data-v=bloque] .e.s{--c:var(--oxi)}.pt[data-v=bloque] .e.p{--c:var(--hid)}.pt[data-v=bloque] .e.d{--c:var(--hox)}.pt[data-v=bloque] .e.f{--c:var(--aci)}
+.pt[data-v=tipo] .e.t-alc{--c:#e0524a}.pt[data-v=tipo] .e.t-ake{--c:#e58a2b}.pt[data-v=tipo] .e.t-tr{--c:#d8b020}.pt[data-v=tipo] .e.t-pt{--c:#6aa84f}.pt[data-v=tipo] .e.t-la{--c:#c0599a}.pt[data-v=tipo] .e.t-ac{--c:#9a5fc0}
+.pt[data-v=tipo] .e.t-mo{--c:#2aa198}.pt[data-v=tipo] .e.t-nm{--c:#3b82d6}.pt[data-v=tipo] .e.t-ha{--c:#6c63d9}.pt[data-v=tipo] .e.t-ng{--c:#8a8fa8}
+.pt[data-v=metal] .e.m1{--c:#d8a020}.pt[data-v=metal] .e.m2{--c:#2aa198}.pt[data-v=metal] .e.m3{--c:#3b82d6}
+.pt[data-v=grupo] .e.g1{--c:#e0524a}.pt[data-v=grupo] .e.g2{--c:#e58a2b}.pt[data-v=grupo] .e.g13{--c:#d8b020}.pt[data-v=grupo] .e.g14{--c:#6aa84f}.pt[data-v=grupo] .e.g15{--c:#2aa198}.pt[data-v=grupo] .e.g16{--c:#3b82d6}.pt[data-v=grupo] .e.g17{--c:#6c63d9}.pt[data-v=grupo] .e.g18{--c:#c0599a}.pt[data-v=grupo] .e.gd{--c:var(--muted)}
+.lg{display:flex;flex-wrap:wrap;gap:6px}
+.lg[hidden]{display:none}
+.lg span{display:inline-flex;gap:6px;align-items:center;padding:3px 10px;border-radius:99px;border:1px solid var(--line);background:var(--surface);font-size:.85rem;font-weight:600}
+.lg span::before{content:"";width:12px;height:12px;border-radius:3px;background:var(--c)}
+.ptw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:10px}
+.vb{display:flex;flex-wrap:wrap;gap:8px}
+button.vbtn{background:var(--surface);color:var(--fg);border:1.5px solid var(--line);padding:6px 14px}
+button.vbtn[aria-pressed=true]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+table.heat{min-width:0;width:auto}
+table.heat th,table.heat td{text-align:center;padding:6px 10px}
+table.heat td.hv{font-family:var(--mono);font-weight:700;background:color-mix(in srgb,var(--fam) calc(var(--p,0) * 1%),var(--surface));min-width:4.4rem}
+table.heat td.hv span{display:block;font-family:var(--body);font-size:.78rem;font-weight:600;color:var(--muted)}
+table.heat td.na{color:var(--muted);font-weight:600}
+.bx{display:inline-block;min-width:2.5rem;height:1.7rem;line-height:1.55rem;text-align:center;border:1.6px solid var(--fam);border-radius:4px;font-family:var(--mono);font-weight:700;margin-right:3px;background:var(--surface)}
+.arrowtbl td{vertical-align:middle}
+.up{color:var(--good)}.dn{color:var(--bad)}
+.tr3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr));gap:12px}
+.tr3 .card b{font-family:var(--display)}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opts label{display:flex;gap:10px;align-items:flex-start;padding:8px 12px;border:1.5px solid var(--line);border-radius:8px;background:var(--bg);cursor:pointer}
+.opts input{margin-top:.35rem}
+.opts label.sel{border-color:var(--fg)}
+.opts label.right{border-color:var(--good);background:var(--good-bg)}
+.opts label.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.expl{color:var(--fg);font-size:.97rem}
+.tp{font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.qcard{display:grid;grid-template-columns:auto 1fr;gap:0 14px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;list-style:none;border-left:6px solid var(--line)}
+.qcard.ok{border-left-color:var(--good)}.qcard.no{border-left-color:var(--bad)}
+#qs{display:flex;flex-direction:column;gap:12px;padding:0;margin:0}
+.qn{font-family:var(--display);font-weight:800;font-size:1.3rem;color:var(--muted);min-width:1.8rem}
+.qb{display:flex;flex-direction:column;gap:10px;min-width:0}
+.qp{font-size:1.08rem;overflow-wrap:anywhere}
+.qp .f{font-size:1.2rem}
+input.ans-in{font-family:var(--mono);font-weight:700;font-size:1.05rem;width:100%;padding:10px 12px;border:2px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg)}
+input.ans-in:read-only{opacity:.9}
+.fbok{background:var(--good-bg);color:var(--good);padding:10px 12px;border-radius:8px}
+.fbno{background:var(--bad-bg);color:var(--bad);padding:10px 12px;border-radius:8px;overflow-wrap:anywhere}
+.fbno .f.good,.f.good{color:var(--good)}
+.fbno .alt{font-size:.92rem;opacity:.9}
+.fbok .chip,.fbno .chip{margin-top:6px}
+.toolbar{display:flex;flex-wrap:wrap;gap:6px;position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:8px}
+button.sym{background:var(--surface);color:var(--fg);border:1.5px solid var(--line);font-family:var(--mono);padding:6px 12px;font-size:1.05rem}
+button.main{background:var(--fg);color:var(--bg)}
+button.ghost{background:transparent;color:var(--fg);border-color:var(--fg)}
+button:disabled{opacity:.5;cursor:default}
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+#result{background:var(--surface);border:2px solid var(--fg);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:14px}
+#result .big{font-size:1.6rem}
+.info{color:var(--muted)}</style></head><body class=""><a href="../../index.html" style="display:block;padding:8px 16px;background:#1b2033;color:#fff;font:600 15px/1.3 system-ui,'Segoe UI',sans-serif;text-decoration:none;position:relative;z-index:60">← Índice principal</a><div class="wrap"><nav class="top"><a href="index.html">← Índice</a><div class="r"><a href="examen-09.html">← Examen 09</a></div></nav><header><span class="k">Examen de naturaleza de la materia</span><h1>Examen 10</h1><p class="lead">20 preguntas: 16 de teoría (la mayoría, de detalle: fórmulas, ejemplos y matices de tus apuntes que suelen escaparse) y 4 prácticas (2 configuraciones electrónicas y 2 comparaciones de PI, AE o EN). Las de teoría se responden <b>con tus propias palabras</b>: al corregir ves la respuesta modelo y una lista de ideas clave marcadas automáticamente, que puedes ajustar tú. Los exponentes se pueden escribir con los botones (1s², 3d⁵, Cl⁻) o con números (1s2, 3d5, Cl-). Las configuraciones se admiten completas o abreviadas con gas noble. Pulsa <b>Corregir examen</b> al final.</p></header><div class="toolbar" role="group" aria-label="Símbolos"><button class="sym" type="button" data-c="⁰">⁰</button><button class="sym" type="button" data-c="¹">¹</button><button class="sym" type="button" data-c="²">²</button><button class="sym" type="button" data-c="³">³</button><button class="sym" type="button" data-c="⁴">⁴</button><button class="sym" type="button" data-c="⁵">⁵</button><button class="sym" type="button" data-c="⁶">⁶</button><button class="sym" type="button" data-c="⁷">⁷</button><button class="sym" type="button" data-c="⁸">⁸</button><button class="sym" type="button" data-c="⁹">⁹</button><button class="sym" type="button" data-c="⁺">⁺</button><button class="sym" type="button" data-c="⁻">⁻</button><button class="sym" type="button" data-c="[">[</button><button class="sym" type="button" data-c="]">]</button><button class="sym" type="button" data-c="(">(</button><button class="sym" type="button" data-c=")">)</button></div><ol id="qs"></ol><div class="actions"><button class="main" id="check" type="button">Corregir examen</button><button class="ghost" id="reset" type="button">Borrar y empezar de nuevo</button></div><section id="result" hidden></section><nav class="top"><a href="index.html">← Índice</a><div class="r"><a href="examen-09.html">← Examen 09</a></div></nav></div><script>const QS=[{"t": "txt", "tp": "Configuración electrónica", "p": "Escribe la configuración electrónica del átomo de <b>V<\/b> (vanadio), Z = 23.", "a": ["1s2 2s2 2p6 3s2 3p6 4s2 3d3", "1s2 2s2 2p6 3s2 3p6 3d3 4s2", "[Ar] 4s2 3d3", "[Ar] 3d3 4s2"], "e": "Con 23 electrones, en el orden de llenado: <span class=\"f\">1s<sup>2<\/sup> 2s<sup>2<\/sup> 2p<sup>6<\/sup> 3s<sup>2<\/sup> 3p<sup>6<\/sup> 4s<sup>2<\/sup> 3d<sup>3<\/sup><\/span>. En abreviado: <span class=\"f\">[Ar] 4s<sup>2<\/sup> 3d<sup>3<\/sup><\/span>.", "show": "1s2 2s2 2p6 3s2 3p6 4s2 3d3"}, {"t": "txt", "tp": "Configuración electrónica", "p": "Escribe la configuración electrónica del átomo de <b>Pd<\/b> (paladio), Z = 46. Puedes usar el gas noble entre corchetes.", "a": ["1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d8", "1s2 2s2 2p6 3s2 3p6 3d10 4s2 4p6 4d8 5s2", "[Kr] 5s2 4d8", "[Kr] 4d8 5s2"], "e": "Sigue el orden de llenado 4s 3d 4p 5s 4d 5p: <span class=\"f\">1s<sup>2<\/sup> 2s<sup>2<\/sup> 2p<sup>6<\/sup> 3s<sup>2<\/sup> 3p<sup>6<\/sup> 4s<sup>2<\/sup> 3d<sup>10<\/sup> 4p<sup>6<\/sup> 5s<sup>2<\/sup> 4d<sup>8<\/sup><\/span>. En abreviado: <span class=\"f\">[Kr] 5s<sup>2<\/sup> 4d<sup>8<\/sup><\/span>.", "show": "1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d8"}, {"t": "mc", "tp": "Comparar PI, AE y EN", "p": "¿Cuál de estos átomos tiene <b>menor<\/b> potencial de ionización: Ca, As, N?", "o": ["N", "As", "Ca"], "a": 2, "e": "El potencial de ionización aumenta hacia arriba y hacia la derecha (igual que el potencial de ionización). Posiciones: N (grupo 15, periodo 2); As (grupo 15, periodo 4); Ca (grupo 2, periodo 4). Orden de mayor a menor: <b>N > As > Ca<\/b>."}, {"t": "mc", "tp": "Comparar PI, AE y EN", "p": "¿Cuál de estos átomos tiene <b>mayor<\/b> afinidad electrónica: Se, In, Sb, F?", "o": ["Sb", "F", "In", "Se"], "a": 1, "e": "La afinidad electrónica aumenta hacia arriba y hacia la derecha (igual que el potencial de ionización). Posiciones: F (grupo 17, periodo 2); Se (grupo 16, periodo 4); Sb (grupo 15, periodo 5); In (grupo 13, periodo 5). Orden de mayor a menor: <b>F > Se > Sb > In<\/b>."}, {"t": "free", "tp": "Teoría (con tus palabras)", "p": "Explica la teoría de los cuantos de <b>Planck<\/b> y qué es la constante <b>h<\/b> (de <b>«integral energía»<\/b>, como dice tu profesora).", "m": "Según Planck la energía no es continua sino «<b>integral<\/b>»: viene en cuantos. La <b>constante de Planck (h)<\/b> es el <b>mínimo de energía posible<\/b>. Es la base del modelo <b>cuantizado<\/b> de Bohr.", "ideas": [{"d": "Constante de Planck h", "k": [["planck"], ["constante"]]}, {"d": "Es el mínimo de energía posible", "k": [["minimo"]]}, {"d": "Energía en cuantos / integral / cuantizada", "k": [["cuant"], ["integral"]]}]}, {"t": "free", "tp": "Teoría (con tus palabras)", "p": "Enuncia el <b>principio de incertidumbre de Heisenberg<\/b>.", "m": "El principio de incertidumbre de <b>Heisenberg<\/b> dice que <b>no puedes saber a la vez la velocidad y la posición de un electrón<\/b>.", "ideas": [{"d": "Heisenberg: incertidumbre", "k": [["heisenberg"], ["incertidumbre"]]}, {"d": "No se conocen a la vez velocidad y posición", "k": [["velocidad", "posicion"]]}]}, {"t": "free", "tp": "Teoría (con tus palabras)", "p": "Para los orbitales <b>1s, 2s y 2p<\/b>, indica cuántos orbitales hay, cuántos electrones caben y qué valores de m tienen.", "m": "El <b>1s<\/b> tiene l = 0 y m = 0: <b>1 orbital, 2 electrones<\/b>. El <b>2s<\/b> igual: m = 0, 1 orbital, 2 electrones. El <b>2p<\/b> tiene l = 1 y <b>m = −1, 0, 1<\/b>: <b>3 orbitales y 6 electrones<\/b>.", "ideas": [{"d": "1s: m = 0, 1 orbital, 2 electrones", "k": [["1s"]]}, {"d": "2s: m = 0, 1 orbital, 2 electrones", "k": [["2s"]]}, {"d": "2p: m = −1, 0, 1", "k": [["-1"]]}, {"d": "2p: 3 orbitales y 6 electrones", "k": [["3 orbitales"], ["6 electrones"], ["tres orbitales"]]}]}, {"t": "free", "tp": "Teoría (con tus palabras)", "p": "Un átomo neutro tiene Z = 17 y A = 37. Indica sus protones, electrones y neutrones y explica el cálculo.", "m": "Protones = Z = <b>17<\/b>. Al ser neutro, electrones = protones = <b>17<\/b>. Como A = Z + N, los neutrones son N = A − Z = 37 − 17 = <b>20<\/b>.", "ideas": [{"d": "17 protones (Z)", "k": [["17", "proton"]]}, {"d": "17 electrones (neutro)", "k": [["17", "electron"]]}, {"d": "20 neutrones = A − Z", "k": [["20"]]}]}, {"t": "free", "tp": "Teoría (con tus palabras)", "p": "Explica el <b>principio de exclusión de Pauli<\/b> aplicado a la configuración electrónica.", "m": "En un átomo es <b>imposible encontrar dos electrones con los cuatro números cuánticos iguales<\/b>. Por eso en cada orbital caben como máximo dos electrones, con espín distinto.", "ideas": [{"d": "Imposible dos electrones con los 4 nº cuánticos iguales", "k": [["cuatro"], ["iguales"]]}, {"d": "Dos electrones por orbital con espín distinto", "k": [["espin"], ["dos electrones"], ["2 electrones"]]}]}, {"t": "free", "tp": "Teoría (con tus palabras)", "p": "Compara el <b>Li<\/b> y el <b>F<\/b>: ¿a cuál le cuesta más perder un electrón y por qué (octeto s²p⁶)?", "m": "Al <b>Li<\/b> le da igual perder 1 electrón, es el electrón <b>más fácil de quitar<\/b>. El <b>F<\/b> se sujeta fuerte al electrón porque <b>todos intentan completar el octeto s²p⁶<\/b>: es el electrón <b>más difícil de quitar<\/b>. Por eso el F tiene mayor potencial de ionización.", "ideas": [{"d": "Al Li es más fácil quitarle el electrón", "k": [["li", "facil"], ["li", "igual"], ["li", "menos"]]}, {"d": "El F se sujeta fuerte / es más difícil", "k": [["f", "dificil"], ["f", "fuerte"], ["f", "mas"]]}, {"d": "Todos intentan completar el octeto s²p⁶", "k": [["octeto"], ["s2p6"], ["s2 p6"]]}]}, {"t": "free", "tp": "Teoría (con tus palabras)", "p": "En tus apuntes aparece la columna <b>H, Li, Na, K…<\/b> con la ley de Coulomb. ¿Qué explica sobre el potencial de ionización al bajar en un grupo?", "m": "Al bajar en un grupo (H, Li, Na, K…) el electrón más externo está <b>más lejos del núcleo<\/b> (d mayor). Según <b>F = K·Q·q/d²<\/b> la fuerza disminuye, y con el <b>apantallamiento<\/b> del resto de los electrones es <b>más fácil quitarlo<\/b>: el potencial de ionización <b>disminuye<\/b>.", "ideas": [{"d": "Al bajar el electrón está más lejos (mayor d)", "k": [["lejos"], ["distancia"]]}, {"d": "Coulomb: la fuerza disminuye", "k": [["coulomb"], ["fuerza"]]}, {"d": "Apantallamiento", "k": [["apantall"]]}, {"d": "El PI disminuye al bajar (más fácil quitarlo)", "k": [["disminuye"], ["facil"], ["baja"]]}]}, {"t": "free", "tp": "Teoría (con tus palabras)", "p": "¿Por qué los compuestos iónicos se disuelven en <b>agua<\/b>? Relaciónalo con las cargas del agua.", "m": "Se disuelven en <b>líquidos polares<\/b> como el agua. La molécula de agua tiene cargas parciales <b>δ⁺<\/b> (en los H, hidrógeno) y <b>δ⁻<\/b> (en el O, oxígeno).", "ideas": [{"d": "Se disuelven en líquidos polares", "k": [["polar"]]}, {"d": "Agua con cargas δ⁺ y δ⁻", "k": [["δ"], ["parcial"], ["carga"]]}, {"d": "H = δ⁺ y O = δ⁻", "k": [["hidrogeno", "oxigeno"]]}]}, {"t": "free", "tp": "Teoría (con tus palabras)", "p": "Explica cómo se forma el enlace del <b>HCl<\/b> con las configuraciones de valencia y su estructura de Lewis.", "m": "El Cl (s²p⁵) pasa a <b>s² pₓ² p<sub>y<\/sub>² p<sub>z<\/sub>¹<\/b> y el H tiene un electrón de valencia (s¹). Los dos <b>comparten electrones<\/b>: se unen el s¹ del H y el p<sub>z<\/sub>¹ del Cl. En Lewis: <b>H–Cl<\/b> con un par enlazante y tres pares no enlazantes en el Cl.", "ideas": [{"d": "Cl: s²p⁵ → s²pₓ²p<sub>y<\/sub>²p<sub>z<\/sub>¹", "k": [["pz"], ["s2p5"]]}, {"d": "H: electrón de valencia s¹", "k": [["s1"]]}, {"d": "Comparten electrones", "k": [["comparten"]]}, {"d": "Lewis: H–Cl con 3 pares no enlazantes", "k": [["lewis"], ["no enlazante"], ["3 pares"]]}]}, {"t": "free", "tp": "Teoría (con tus palabras)", "p": "Explica cómo se describe la <b>geometría de una molécula<\/b> con la tabla de tus apuntes: qué datos se miran y qué geometría resulta con 2, 3 y 4 átomos unidos y sin pares libres.", "m": "Se mira el número de <b>átomos unidos<\/b>, el de <b>pares enlazantes<\/b> y el de <b>pares no enlazantes<\/b> (libres). Sin pares libres: con 2 átomos, <b>lineal<\/b> (180°); con 3, <b>trigonal plana<\/b> (120°); con 4, <b>tetraédrica<\/b> (109,5°).", "ideas": [{"d": "Se miran átomos unidos, pares enlazantes y no enlazantes", "k": [["enlazante"], ["libre"]]}, {"d": "2 átomos → lineal, 180°", "k": [["lineal"]]}, {"d": "3 átomos → trigonal plana, 120°", "k": [["trigonal plana"], ["120"]]}, {"d": "4 átomos → tetraédrica, 109,5°", "k": [["tetraedric"], ["109"]]}]}, {"t": "free", "tp": "Teoría (con tus palabras)", "p": "Explica las <b>uniones entre moléculas<\/b> que aparecen en tus apuntes.", "m": "Hay dos: los <b>puentes de hidrógeno<\/b> y las uniones de <b>Van der Waals<\/b>. En los puentes de hidrógeno un <b>H<\/b> unido a <b>F, O o N<\/b> (δ⁺) se une al F, O o N (δ⁻) de otra molécula. En Van der Waals hay <b>dipolos instantáneos<\/b> y son <b>muy débiles<\/b>.", "ideas": [{"d": "Puentes de hidrógeno", "k": [["puente"]]}, {"d": "Van der Waals", "k": [["waals"]]}, {"d": "H con F, O o N", "k": [["f, o"], ["f o n"], ["f, o y n"], ["oxigeno", "nitrogeno"]]}, {"d": "Dipolos instantáneos, muy débiles", "k": [["instantaneo"], ["debil"]]}]}, {"t": "free", "tp": "Teoría (con tus palabras)", "p": "Explica qué es la <b>valencia covalente<\/b> y por qué el F tiene valencia 1 mientras que otros elementos pueden tener 1, 3, 5 y 7.", "m": "Es el <b>número de electrones desapareados<\/b> (dispuestos a compartir). Con la configuración <b>s² pₓ² p<sub>y<\/sub>² p<sub>z<\/sub>¹<\/b> hay 1 electrón desapareado: <b>valencia 1<\/b>. Al desaparear electrones hacia orbitales vacíos aparecen las valencias <b>3, 5 y 7<\/b>; el F, justo, no puede.", "ideas": [{"d": "Nº de electrones desapareados", "k": [["desapareado"]]}, {"d": "s²pₓ²p<sub>y<\/sub>²p<sub>z<\/sub>¹ → valencia 1", "k": [["pz"], ["un electron"]]}, {"d": "Aparecen 3, 5 y 7 al desaparear", "k": [["3, 5"], ["3,5"], ["3 5 7"], ["1, 3"]]}, {"d": "El F no puede", "k": [["f no"], ["fluor no"], ["no puede"], ["excepto"]]}]}, {"t": "free", "tp": "Teoría (con tus palabras)", "p": "Bohr parte de dos ideas. Explica <b>qué son los espectros<\/b> y <b>qué dice la teoría de los cuantos de Planck<\/b>.", "m": "Los <b>espectros<\/b> son lo que <b>emiten o absorben<\/b> los diferentes átomos, y cada uno tiene un <b>patrón distinto<\/b>. En la teoría de los <b>cuantos<\/b>, <b>Planck<\/b> introduce la constante <b>h<\/b>, que es el <b>mínimo de energía posible<\/b>.", "ideas": [{"d": "Espectro: lo que emite o absorbe un átomo", "k": [["emit"], ["absorb"]]}, {"d": "Cada átomo tiene un patrón distinto", "k": [["patron"], ["distint"]]}, {"d": "Planck: constante h", "k": [["planck"], ["constante"]]}, {"d": "h es el mínimo de energía posible", "k": [["minimo"]]}]}, {"t": "free", "tp": "Teoría (con tus palabras)", "p": "Explica la diferencia entre un enlace <b>σ<\/b> y un enlace <b>π<\/b> y cuántos de cada tipo tienen el Cl₂, el O₂ y el N₂.", "m": "El enlace <b>σ<\/b> (sigma) es un solape frontal de orbitales; el <b>π<\/b> (pi) es un solape lateral. <b>Cl₂<\/b>: 1 σ. <b>O₂<\/b> (doble): 1 σ + 1 π. <b>N₂<\/b> (triple): 1 σ + 2 π.", "ideas": [{"d": "σ: solape frontal", "k": [["frontal"]]}, {"d": "π: solape lateral", "k": [["lateral"]]}, {"d": "Cl₂: 1 σ", "k": [["cl2", "1"], ["1 sigma"], ["1 σ"]]}, {"d": "O₂: 1 σ + 1 π; N₂: 1 σ + 2 π", "k": [["n2"], ["2 π"], ["2 pi"]]}]}, {"t": "free", "tp": "Teoría (con tus palabras)", "p": "Describe el <b>enlace metálico<\/b>: entre qué átomos se da, según su electronegatividad, y cómo es su estructura.", "m": "Se da entre <b>metales<\/b> (normalmente iguales) con electronegatividades <b>bajas o medias y parecidas<\/b>. Forma una <b>red de iones positivos con un mar de electrones<\/b>.", "ideas": [{"d": "Entre metales (normalmente iguales)", "k": [["metal"]]}, {"d": "Electronegatividades bajas o medias y parecidas", "k": [["baj"], ["medi"], ["parecid"]]}, {"d": "Red de iones con mar de electrones", "k": [["mar"], ["red"]]}]}, {"t": "free", "tp": "Teoría (con tus palabras)", "p": "Compara las propiedades de los compuestos <b>iónicos<\/b> y los <b>metálicos<\/b> en cuanto a conductividad y solubilidad.", "m": "Los <b>iónicos<\/b> no son conductores salvo que estén disueltos y se disuelven en líquidos polares (agua). Los <b>metales<\/b> son conductores y son poco solubles. Ambos tienen puntos de fusión y ebullición altos.", "ideas": [{"d": "Iónicos: no conducen salvo disueltos", "k": [["ionico", "disuelto"], ["disuelto"]]}, {"d": "Iónicos: solubles en líquidos polares", "k": [["polar"], ["agua"]]}, {"d": "Metales: conductores", "k": [["metal", "conductor"], ["conductor"]]}, {"d": "Metales: poco solubles", "k": [["poco soluble"]]}]}];
+const SUP={'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁺':'+','⁻':'-'};
+function nz(s){
+  s=String(s).normalize('NFC').toLowerCase();
+  s=s.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻]/g,function(c){return SUP[c]});
+  s=s.replace(/[−–—‐]/g,'-').replace(/\^/g,'').replace(/[\[\]\(\)\{\}]/g,'').replace(/\s+/g,'').replace(/,/g,'.');
+  return s;
+}
+function nf(s){
+  s=String(s).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+  s=s.replace(/[−–—]/g,'-');
+  s=s.replace(/[₀-₉]/g,function(c){return String(c.charCodeAt(0)-8320)});
+  s=s.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻]/g,function(c){return SUP[c]});
+  return s.replace(/<[^>]+>/g,'');
+}
+function detect(text,ideas){
+  const t=nf(text), ts=t.replace(/\s+/g,'');
+  return ideas.map(function(id){
+    return id.k.some(function(alt){return alt.every(function(kw){const k=nf(kw);return t.indexOf(k)>=0||ts.indexOf(k.replace(/\s+/g,''))>=0})});
+  });
+}
+function esc(t){return String(t).replace(/&/g,'&amp;').replace(new RegExp(String.fromCharCode(60),'g'),'&lt;')}
+function fx(x){return (Math.round(x*10)/10).toString().replace('.',',')}
+let lastInput=null, corrected=false;
+const FREE={};
+const list=document.getElementById('qs');
+QS.forEach(function(q,i){
+  const n=i+1, li=document.createElement('li'); li.className='qcard'; li.id='q'+n;
+  let ans='';
+  if(q.t==='mc'){
+    ans='<div class="opts" role="radiogroup" aria-label="Opciones de la pregunta '+n+'">'+q.o.map(function(o,k){
+      return '<label><input type="radio" name="q'+n+'" value="'+k+'"><span><b>'+'ABCD'[k]+'.</b> '+o+'</span></label>';}).join('')+'</div>';
+  } else if(q.t==='free'){
+    ans='<textarea id="r'+n+'" class="ans-in" rows="5" style="width:100%;font:inherit;padding:10px;border-radius:8px;border:1.5px solid var(--line,#999);background:var(--surface,#fff);color:inherit" autocomplete="off" spellcheck="true" aria-label="Respuesta '+n+'" placeholder="Explícalo con tus propias palabras"></textarea>';
+  } else {
+    ans='<input type="text" id="r'+n+'" class="ans-in" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Respuesta '+n+'" placeholder="Escribe tu respuesta">';
+  }
+  li.innerHTML='<div class="qn">'+n+'</div><div class="qb"><span class="tp">'+q.tp+'</span><div class="qp">'+q.p+'</div>'+ans+'<div class="qf" id="f'+n+'"></div></div>';
+  list.appendChild(li);
+  const inp=li.querySelector('input[type=text]'); if(inp) inp.addEventListener('focus',function(e){lastInput=e.target});
+});
+document.querySelectorAll('button.sym').forEach(function(b){
+  b.addEventListener('mousedown',function(e){e.preventDefault()});
+  b.addEventListener('click',function(){
+    const inp=lastInput||document.querySelector('input.ans-in'); if(!inp||inp.readOnly) return;
+    const s=inp.selectionStart==null?inp.value.length:inp.selectionStart, e2=inp.selectionEnd==null?s:inp.selectionEnd;
+    inp.value=inp.value.slice(0,s)+b.dataset.c+inp.value.slice(e2); inp.focus(); const p=s+b.dataset.c.length; inp.setSelectionRange(p,p);
+  });
+});
+function given(i){
+  const q=QS[i];
+  if(q.t==='mc'){const r=document.querySelector('input[name=q'+(i+1)+']:checked'); return r?+r.value:-1;}
+  return document.getElementById('r'+(i+1)).value;
+}
+function isRight(i){
+  const q=QS[i], g=given(i);
+  if(q.t==='mc') return g===q.a;
+  if(!String(g).trim()) return false;
+  const x=nz(g); return q.a.some(function(a){return nz(a)===x});
+}
+function correct(i){const q=QS[i]; return q.t==='mc'?q.o[q.a]:q.show;}
+function score(i){
+  const q=QS[i];
+  if(q.t==='free'){const f=FREE[i]; return f.filter(Boolean).length/f.length;}
+  return isRight(i)?1:0;
+}
+function renderResult(){
+  const by={}, goods=[], fails=[]; let tot=0;
+  QS.forEach(function(q,i){
+    const s=score(i); tot+=s;
+    by[q.tp]=by[q.tp]||[0,0]; by[q.tp][0]+=s; by[q.tp][1]++;
+    if(s>=0.999) goods.push(i+1); else fails.push(i);
+  });
+  const N=QS.length, pct=Math.round(100*tot/N), res=document.getElementById('result');
+  let h='<h2>Resultado</h2><p class="big"><b>'+fx(tot)+'</b> de '+N+' ('+pct+' %)</p>';
+  h+='<div class="two"><div class="card"><span class="k">Completas ('+goods.length+')</span><p>'+(goods.length?goods.join(', '):'Ninguna')+'</p></div>';
+  h+='<div class="card"><span class="k">Por repasar ('+fails.length+')</span><p>'+(fails.length?fails.map(function(f){return f+1}).join(', '):'Ninguna: examen perfecto.')+'</p></div></div>';
+  h+='<h3>Por temas</h3><div class="tw"><table style="min-width:0"><tr><th>Tema</th><th>Puntos</th></tr>';
+  Object.keys(by).forEach(function(t){h+='<tr><td>'+t+'</td><td><b>'+fx(by[t][0])+'</b> de '+by[t][1]+'</td></tr>'});
+  h+='</table></div>';
+  const nonfree=fails.filter(function(i){return QS[i].t!=='free'});
+  if(nonfree.length){
+    h+='<h3>Repasa estos casos</h3><div class="tw"><table><tr><th>Nº</th><th>Enunciado</th><th>Tu respuesta</th><th>Respuesta correcta</th></tr>';
+    nonfree.forEach(function(i){
+      const q=QS[i], g=given(i); let mine=q.t==='mc'?(g<0?'(sin responder)':esc(q.o[g])):(String(g).trim()?esc(g):'(vacía)');
+      h+='<tr><td>'+(i+1)+'</td><td>'+q.p+'</td><td class="f">'+mine+'</td><td class="f good">'+esc(correct(i))+'</td></tr>';
+    });
+    h+='</table></div>';
+  }
+  res.innerHTML=h; res.hidden=false;
+}
+document.getElementById('check').addEventListener('click',function(){
+  if(corrected) return; corrected=true;
+  QS.forEach(function(q,i){
+    const n=i+1, card=document.getElementById('q'+n), fb=document.getElementById('f'+n), g=given(i);
+    const tag='<span class="nom">'+q.tp+'</span>';
+    if(q.t==='free'){
+      document.getElementById('r'+n).readOnly=true;
+      FREE[i]=detect(g,q.ideas);
+      let h='<div class="fbok" style="border-color:var(--line,#999)"><b>Respuesta modelo.</b> '+tag+'<div class="expl">'+q.m+'</div>';
+      h+='<p style="margin:10px 0 4px"><b>Ideas clave.</b> Se han marcado las que se detectan en tu texto. Si has dicho una con otras palabras, márcala tú; si no la decías, desmárcala:</p>';
+      h+=q.ideas.map(function(id,k){return '<label style="display:block;margin:4px 0"><input type="checkbox" data-q="'+i+'" data-k="'+k+'"'+(FREE[i][k]?' checked':'')+'> '+id.d+'</label>';}).join('');
+      h+='<p class="sc" id="sc'+i+'" style="margin-top:8px"></p></div>';
+      fb.innerHTML=h;
+      const upd=function(){const f=FREE[i]; document.getElementById('sc'+i).innerHTML='Puntuación: <b>'+f.filter(Boolean).length+'</b> de '+f.length+' ideas.'; card.classList.remove('ok','no'); card.classList.add(f.every(Boolean)?'ok':'no');};
+      upd();
+      fb.querySelectorAll('input[type=checkbox]').forEach(function(c){c.addEventListener('change',function(){FREE[i][+c.dataset.k]=c.checked; upd(); renderResult();});});
+      return;
+    }
+    const good=isRight(i);
+    card.classList.add(good?'ok':'no');
+    if(q.t==='mc'){
+      card.querySelectorAll('.opts label').forEach(function(l,k){
+        const inp=l.querySelector('input'); inp.disabled=true;
+        if(k===q.a) l.classList.add('right'); else if(k===g) l.classList.add('wrong');
+      });
+    } else document.getElementById('r'+n).readOnly=true;
+    if(good) fb.innerHTML='<div class="fbok"><b>Correcto.</b> '+tag+'<div class="expl">'+q.e+'</div></div>';
+    else{
+      let mine;
+      if(q.t==='mc') mine=(g<0)?'(sin responder)':esc(q.o[g]); else mine=String(g).trim()?esc(g):'(vacía)';
+      fb.innerHTML='<div class="fbno"><b>Fallo.</b> Tu respuesta: <span class="f">'+mine+'</span><br>Respuesta correcta: <span class="f good">'+esc(correct(i))+'</span><div class="expl" style="margin-top:6px">'+q.e+'</div>'+tag+'</div>';
+    }
+  });
+  renderResult();
+  document.getElementById('check').disabled=true;
+  document.getElementById('result').scrollIntoView({behavior:'smooth',block:'start'});
+});
+document.getElementById('reset').addEventListener('click',function(){
+  corrected=false;
+  QS.forEach(function(q,i){
+    const n=i+1, card=document.getElementById('q'+n);
+    if(q.t==='mc'){card.querySelectorAll('.opts label').forEach(function(l){l.classList.remove('right','wrong'); const inp=l.querySelector('input'); inp.disabled=false; inp.checked=false;});}
+    else{const inp=document.getElementById('r'+n); inp.readOnly=false; inp.value='';}
+    document.getElementById('f'+n).innerHTML=''; card.classList.remove('ok','no');
+  });
+  document.getElementById('result').hidden=true; document.getElementById('check').disabled=false;
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+</script></body></html>

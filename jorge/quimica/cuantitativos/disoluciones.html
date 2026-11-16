@@ -1,0 +1,232 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Disoluciones</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap"><style>
+:root{
+  --bg:#f6f7fb; --surface:#ffffff; --fg:#1d2233; --muted:#5b6379; --line:#dde1ec;
+  --oxi:#1f5fbf; --oxi-bg:#e4edfb;
+  --hid:#17805a; --hid-bg:#dff3ea;
+  --hox:#c0284f; --hox-bg:#fbe3ea;
+  --aci:#c2570c; --aci-bg:#fdebd9;
+  --sal:#8a3fb0; --sal-bg:#f1e5f8;
+  --guide:#3a4160; --guide-bg:#e8eaf3;
+  --bad:#b3261e; --bad-bg:#fbe4e2; --good:#17805a; --good-bg:#dff3ea;
+
+  --display:"Bricolage Grotesque","Trebuchet MS",sans-serif;
+  --body:"Source Sans 3","Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  --fam:var(--guide); --fam-bg:var(--guide-bg);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12151f; --surface:#1b2030; --fg:#e9ecf6; --muted:#a2a9bf; --line:#2f3650;
+  --oxi:#7fb0ff; --oxi-bg:#1b2b4a;
+  --hid:#5fd0a2; --hid-bg:#173a2e;
+  --hox:#ff8fa8; --hox-bg:#4a1f2d;
+  --aci:#ffa45c; --aci-bg:#4a2b12;
+  --sal:#d29bf0; --sal-bg:#3a2248;
+  --guide:#b9c0e0; --guide-bg:#262c45;
+  --bad:#ff8d85; --bad-bg:#4a1f1c; --good:#5fd0a2; --good-bg:#173a2e;
+ color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12151f; --surface:#1b2030; --fg:#e9ecf6; --muted:#a2a9bf; --line:#2f3650;
+  --oxi:#7fb0ff; --oxi-bg:#1b2b4a;
+  --hid:#5fd0a2; --hid-bg:#173a2e;
+  --hox:#ff8fa8; --hox-bg:#4a1f2d;
+  --aci:#ffa45c; --aci-bg:#4a2b12;
+  --sal:#d29bf0; --sal-bg:#3a2248;
+  --guide:#b9c0e0; --guide-bg:#262c45;
+  --bad:#ff8d85; --bad-bg:#4a1f1c; --good:#5fd0a2; --good-bg:#173a2e;
+ color-scheme:dark}
+body.fam-oxi{--fam:var(--oxi);--fam-bg:var(--oxi-bg)}
+body.fam-hid{--fam:var(--hid);--fam-bg:var(--hid-bg)}
+body.fam-hox{--fam:var(--hox);--fam-bg:var(--hox-bg)}
+body.fam-aci{--fam:var(--aci);--fam-bg:var(--aci-bg)}
+body.fam-sal{--fam:var(--sal);--fam-bg:var(--sal-bg)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.55}
+.wrap{max-width:62rem;margin-inline:auto;padding-inline:16px;padding-block:20px 56px;display:flex;flex-direction:column;gap:40px}
+h1,h2,h3,h4{font-family:var(--display);line-height:1.12;text-wrap:balance;margin:0}
+h1{font-size:clamp(2rem,6vw,3.1rem);font-weight:800}
+h2{font-size:1.55rem;font-weight:800}
+h3{font-size:1.2rem;font-weight:600}
+h4{font-size:1.02rem;font-weight:600}
+p{margin:0}
+a{color:var(--fg);font-weight:700}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--fg);outline-offset:2px}
+.lead{color:var(--muted);max-width:44rem}
+sub{font-size:.75em}
+.f{font-family:var(--mono);font-weight:700}
+.k{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.top{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;justify-content:space-between;font-size:.95rem}
+.top .r{display:flex;gap:8px 18px;flex-wrap:wrap}
+.hero{display:flex;gap:20px;align-items:center;background:var(--fam-bg);color:var(--fam);border-radius:14px;padding:22px}
+.hero svg{flex:none;width:76px;height:76px}
+.hero > div{min-width:0;display:flex;flex-direction:column;gap:8px}
+.hero h1{color:var(--fam)}
+.hero p{color:var(--fg);max-width:42rem}
+.sec{display:flex;flex-direction:column;gap:16px}
+.sh{display:flex;align-items:center;gap:12px}
+.sh::before{content:"";width:12px;height:30px;border-radius:3px;background:var(--fam);flex:none}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));gap:16px}
+.three{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));gap:16px}
+.tag{display:inline-block;padding:2px 10px;border-radius:6px;font-weight:700;font-size:.88rem;background:var(--fam-bg);color:var(--fam)}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:99px;font-weight:700;font-size:.9rem;background:var(--fam-bg);color:var(--fam)}
+.oxi{background:var(--oxi-bg);color:var(--oxi)}.hid{background:var(--hid-bg);color:var(--hid)}
+.hox{background:var(--hox-bg);color:var(--hox)}.aci{background:var(--aci-bg);color:var(--aci)}
+.sal{background:var(--sal-bg);color:var(--sal)}
+.nom{display:inline-block;padding:3px 10px;border:1.5px solid var(--fg);border-radius:6px;font-weight:700;font-size:.9rem;background:var(--surface);color:var(--fg)}
+.pend{border-style:dashed;border-color:var(--muted);color:var(--muted);font-weight:600}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:36rem}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+tr:last-child td{border-bottom:0}
+.cell{white-space:nowrap}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+.q b.t{font-family:var(--display);font-size:1.1rem}
+.q.warn{border-color:var(--aci)}
+.q.pending{border-style:dashed;border-color:var(--muted)}
+.steps{display:flex;flex-direction:column;gap:10px;counter-reset:s;padding:0;margin:0;list-style:none}
+.steps li{counter-increment:s;padding:2px 0 2px 42px;position:relative}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:28px;height:28px;border-radius:50%;background:var(--fam);color:var(--bg);font-family:var(--display);font-weight:800;display:grid;place-items:center;font-size:.95rem}
+.ex{background:var(--fam-bg);border-left:5px solid var(--fam);border-radius:8px;padding:12px 14px;color:var(--fg)}
+.ex .f{color:var(--fam)}
+.nomblock{background:var(--surface);border:1px solid var(--line);border-top:6px solid var(--fam);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.nomblock > header{display:flex;flex-direction:column;gap:6px}
+.dir{display:flex;flex-direction:column;gap:12px;min-width:0}
+.dir h4{color:var(--fam)}
+.struct{font-family:var(--mono);font-weight:700;background:var(--bg);border-radius:8px;padding:10px 14px;overflow-wrap:anywhere}
+.trap{display:grid;grid-template-columns:auto 1fr;gap:10px 14px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:0}
+.trap dt{font-family:var(--mono);font-weight:700;color:var(--fam)}
+.trap dd{margin:0}
+button{font:inherit;font-weight:700;border:2px solid transparent;border-radius:8px;padding:10px 14px;cursor:pointer}
+button.rv{background:var(--fg);color:var(--bg)}
+.ans{font-weight:600}
+.pager{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,16rem),1fr));gap:12px}
+.pager a{display:flex;flex-direction:column;gap:2px;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--surface);text-decoration:none}
+.pager a span.k{font-size:.72rem}
+.pager a:hover{border-color:var(--fam)}
+
+th{text-transform:none;letter-spacing:.02em;font-size:.84rem}
+.sv{width:100%;height:auto;display:block}
+.sv text{fill:var(--fg);font-family:var(--body);font-size:12px}
+.sv text.m{fill:var(--muted)}
+.sv text.b{font-weight:700}
+.sv text.mo{font-family:var(--mono);font-weight:700}
+.sv .ax{stroke:var(--muted);stroke-width:1.3;fill:none}
+.sv .gd{stroke:var(--line);stroke-width:1;fill:none}
+.fig{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.fig .cap{color:var(--muted);font-size:.92rem}
+.tl{display:flex;gap:12px;overflow-x:auto;padding:6px 2px 16px;scroll-snap-type:x proximity}
+.tlc{flex:0 0 17rem;scroll-snap-align:start;background:var(--surface);border:1px solid var(--line);border-top:6px solid var(--fam);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.tlc.out{border-left-style:dashed;border-right-style:dashed;border-bottom-style:dashed}
+.tlc .yr{font-family:var(--display);font-weight:800;font-size:1.5rem;color:var(--fam);line-height:1}
+.tlc .who{font-weight:700}
+.tlc svg{width:100%;height:auto;background:var(--fam-bg);border-radius:8px;color:var(--fam)}
+.tlc svg text{fill:var(--fam);font-family:var(--body);font-size:10px;font-weight:700}
+.tlc .mini{font-size:.93rem;color:var(--fg)}
+.tlc ul{margin:0;padding-left:1.1rem;font-size:.93rem}
+.gap{flex:0 0 3.2rem;display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:700;font-size:.85rem;writing-mode:vertical-rl;text-orientation:mixed;border-inline:2px dotted var(--line)}
+.noex{display:inline-block;font-size:.78rem;font-weight:700;padding:2px 8px;border-radius:6px;background:var(--bg);border:1px dashed var(--muted);color:var(--muted);width:fit-content}
+.pt{display:grid;grid-template-columns:1.5rem repeat(18,minmax(2.7rem,1fr));gap:3px;min-width:56rem}
+.pt .gh,.pt .ph0{font-size:.72rem;font-weight:700;color:var(--muted);text-align:center;align-self:center}
+.pt .e{aspect-ratio:1/1.08;border-radius:5px;padding:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.55rem;line-height:1.05;background:color-mix(in srgb,var(--c,var(--muted)) 24%,var(--surface));border:1px solid color-mix(in srgb,var(--c,var(--muted)) 55%,var(--surface));min-width:0;overflow:hidden}
+.pt .e b{font-family:var(--mono);font-size:.98rem;line-height:1.1}
+.pt .e i{font-style:normal;color:var(--muted);font-size:.58rem}
+.pt .e small{font-size:.5rem;color:var(--muted);max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pt .e.ph{background:transparent;border-style:dashed;color:var(--muted);font-size:.6rem;text-align:center}
+.pt[data-v=bloque] .e.s{--c:var(--oxi)}.pt[data-v=bloque] .e.p{--c:var(--hid)}.pt[data-v=bloque] .e.d{--c:var(--hox)}.pt[data-v=bloque] .e.f{--c:var(--aci)}
+.pt[data-v=tipo] .e.t-alc{--c:#e0524a}.pt[data-v=tipo] .e.t-ake{--c:#e58a2b}.pt[data-v=tipo] .e.t-tr{--c:#d8b020}.pt[data-v=tipo] .e.t-pt{--c:#6aa84f}.pt[data-v=tipo] .e.t-la{--c:#c0599a}.pt[data-v=tipo] .e.t-ac{--c:#9a5fc0}
+.pt[data-v=tipo] .e.t-mo{--c:#2aa198}.pt[data-v=tipo] .e.t-nm{--c:#3b82d6}.pt[data-v=tipo] .e.t-ha{--c:#6c63d9}.pt[data-v=tipo] .e.t-ng{--c:#8a8fa8}
+.pt[data-v=metal] .e.m1{--c:#d8a020}.pt[data-v=metal] .e.m2{--c:#2aa198}.pt[data-v=metal] .e.m3{--c:#3b82d6}
+.pt[data-v=grupo] .e.g1{--c:#e0524a}.pt[data-v=grupo] .e.g2{--c:#e58a2b}.pt[data-v=grupo] .e.g13{--c:#d8b020}.pt[data-v=grupo] .e.g14{--c:#6aa84f}.pt[data-v=grupo] .e.g15{--c:#2aa198}.pt[data-v=grupo] .e.g16{--c:#3b82d6}.pt[data-v=grupo] .e.g17{--c:#6c63d9}.pt[data-v=grupo] .e.g18{--c:#c0599a}.pt[data-v=grupo] .e.gd{--c:var(--muted)}
+.lg{display:flex;flex-wrap:wrap;gap:6px}
+.lg[hidden]{display:none}
+.lg span{display:inline-flex;gap:6px;align-items:center;padding:3px 10px;border-radius:99px;border:1px solid var(--line);background:var(--surface);font-size:.85rem;font-weight:600}
+.lg span::before{content:"";width:12px;height:12px;border-radius:3px;background:var(--c)}
+.ptw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:10px}
+.vb{display:flex;flex-wrap:wrap;gap:8px}
+button.vbtn{background:var(--surface);color:var(--fg);border:1.5px solid var(--line);padding:6px 14px}
+button.vbtn[aria-pressed=true]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+table.heat{min-width:0;width:auto}
+table.heat th,table.heat td{text-align:center;padding:6px 10px}
+table.heat td.hv{font-family:var(--mono);font-weight:700;background:color-mix(in srgb,var(--fam) calc(var(--p,0) * 1%),var(--surface));min-width:4.4rem}
+table.heat td.hv span{display:block;font-family:var(--body);font-size:.78rem;font-weight:600;color:var(--muted)}
+table.heat td.na{color:var(--muted);font-weight:600}
+.bx{display:inline-block;min-width:2.5rem;height:1.7rem;line-height:1.55rem;text-align:center;border:1.6px solid var(--fam);border-radius:4px;font-family:var(--mono);font-weight:700;margin-right:3px;background:var(--surface)}
+.arrowtbl td{vertical-align:middle}
+.up{color:var(--good)}.dn{color:var(--bad)}
+.tr3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr));gap:12px}
+.tr3 .card b{font-family:var(--display)}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opts label{display:flex;gap:10px;align-items:flex-start;padding:8px 12px;border:1.5px solid var(--line);border-radius:8px;background:var(--bg);cursor:pointer}
+.opts input{margin-top:.35rem}
+.opts label.sel{border-color:var(--fg)}
+.opts label.right{border-color:var(--good);background:var(--good-bg)}
+.opts label.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.expl{color:var(--fg);font-size:.97rem}
+.tp{font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+.box{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--line);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+.box.warn{border-left-color:var(--aci)}.box.ok{border-left-color:var(--good)}.box.bad{border-left-color:var(--bad)}
+.box h3{font-size:1.15rem}
+.box .src{font-size:.9rem;color:var(--muted)}
+.box .ask{background:var(--aci-bg);border-radius:8px;padding:8px 12px}
+.box .cp{align-self:flex-start;background:transparent;color:var(--fg);border-color:var(--fg);padding:6px 12px;font-size:.9rem}
+.prob{background:var(--surface);border:1px solid var(--line);border-top:6px solid var(--fam);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.prob .en{font-size:1.05rem}
+.prob .sol{display:flex;flex-direction:column;gap:6px;border-top:1px dashed var(--line);padding-top:10px}
+.prob .sol p{padding-left:12px;border-left:3px solid var(--fam-bg)}
+.prob .res{font-family:var(--mono);font-weight:700;color:var(--fam);font-size:1.08rem}
+.law{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;align-items:baseline;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 18px}
+.law .f{font-size:1.15rem;color:var(--fam)}
+.law span.k{align-self:center}
+.formula{font-family:var(--mono);font-weight:700;font-size:1.25rem;color:var(--fam);text-align:center;padding:14px;background:var(--fam-bg);border-radius:10px}
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 3px;line-height:1.15}
+.frac>span:first-child{border-bottom:2px solid currentColor;padding:0 4px}
+.frac>span:last-child{padding:0 4px}
+.ok-t{color:var(--good)}.bad-t{color:var(--bad)}
+.note{background:var(--guide-bg);border-radius:8px;padding:10px 14px;color:var(--fg);font-size:.95rem}
+.note b{color:var(--guide)}
+.extra{border:1.5px dashed var(--muted);border-radius:10px;padding:14px 18px;display:flex;flex-direction:column;gap:8px}
+.extra .k{color:var(--muted)}
+.pdfs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr));gap:14px}
+.pdfs a{display:flex;flex-direction:column;gap:4px;padding:16px;border:1px solid var(--line);border-radius:10px;background:var(--surface);text-decoration:none}
+.pdfs a.pend{border-style:dashed;color:var(--muted)}
+.viewer{width:100%;height:80vh;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.tabs{display:flex;flex-wrap:wrap;gap:8px}
+.tabs button{background:var(--surface);color:var(--fg);border:1.5px solid var(--line)}
+.tabs button[aria-pressed=true]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.badge{display:inline-block;font-size:.78rem;font-weight:700;padding:2px 8px;border-radius:6px;background:var(--guide-bg);color:var(--guide);margin-left:6px;vertical-align:middle}
+.badge.j{background:var(--oxi-bg);color:var(--oxi)}.badge.f{background:var(--sal-bg);color:var(--sal)}.badge.g{background:var(--hid-bg);color:var(--hid)}.badge.x{background:var(--aci-bg);color:var(--aci)}
+.cmp{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr));gap:12px}
+.cmp .card{border-top:5px solid var(--fam)}
+.cmp .card.j{border-top-color:var(--oxi)}.cmp .card.g{border-top-color:var(--hid)}
+table.cmpt td:first-child{font-weight:700;white-space:nowrap}
+</style></head><body class="fam-hox"><a href="../../index.html" style="display:block;padding:8px 16px;background:#1b2033;color:#fff;font:600 15px/1.3 system-ui,'Segoe UI',sans-serif;text-decoration:none;position:relative;z-index:60">← Índice principal</a><div class="wrap"><nav class="top"><a href="index.html">← Índice</a><div class="r"><a href="leyes-ponderales.html">Ponderales</a><a href="leyes-gases.html">Gases</a><a href="concentracion.html">Disoluciones</a><a href="formula-empirica.html">Fórmulas</a><a href="ejercicios.html">Ejercicios</a><a href="resumen.html">Resumen</a><a href="index.html#examenes">Exámenes</a></div></nav><header class="hero"><svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6h24v28a6 6 0 0 1-6 6H18a6 6 0 0 1-6-6z"/><path d="M12 22h24"/><circle cx="20" cy="30" r="2" fill="currentColor"/><circle cx="28" cy="32" r="2" fill="currentColor"/></svg><div><span class="k">Aspectos cuantitativos de la materia · 4.1</span><h1>Disoluciones: definición y clasificación</h1><p>Qué es una disolución, sus componentes, de qué depende su estado y cómo se clasifican por la cantidad de soluto.</p></div></header><section class="sec"><div class="sh"><h2>Definición</h2></div><div class="ex"><b>Disolución:</b> mezcla <b>homogénea</b>, <b>uniforme</b> y <b>estable</b>. <span class="badge j">Jorge</span><span class="badge g">Gonzalo</span><span class="badge f">Fran</span></div><div class="three"><div class="card"><h3>Homogénea</h3><p>Es igual por todas partes, en todos lados (Jorge). Las proporciones <b>no son constantes</b>: no es un compuesto (Gonzalo: «las proporciones no son constantes de los elementos; en una composición es constante»).</p></div><div class="card"><h3>Uniforme</h3><p>No se distinguen sus partes a simple vista.</p></div><div class="card"><h3>Estable</h3><p>«Que no se mueva o se desdisuelva con el tiempo» (Jorge); «que se quede igual con el tiempo» (Gonzalo).</p></div></div><div class="two"><div class="card"><h3>Ejemplos de tus apuntes</h3><p><b>H₂O</b>: proporción constante → es un compuesto, no una disolución. <b>Colacao, leche con cacao</b>: proporción no constante → disolución.</p></div><div class="card"><h3>Componentes</h3><p><b>Soluto</b> y <b>disolvente</b>. El <b>disolvente</b> es el que está en <b>mayor cantidad</b> en la mezcla; el soluto, el que se disuelve.</p></div></div></section><section class="sec"><div class="sh"><h2>El estado de la disolución</h2></div><div class="ex">El estado de la disolución <b>depende del estado del disolvente</b>. <span class="badge j">Jorge</span><span class="badge g">Gonzalo</span><span class="badge f">Fran</span></div><div class="tw"><table><tr><th>Disolvente</th><th>Disolución</th><th>Ejemplo</th></tr><tr><td>sólido</td><td>sólida</td><td>aleaciones (bronce: Cu con Sn)</td></tr><tr><td>líquido</td><td>líquida</td><td>agua con sal</td></tr><tr><td>gaseoso</td><td>gaseosa</td><td>el aire</td></tr></table></div></section><section class="sec"><div class="sh"><h2>Clasificación por la cantidad de soluto</h2></div><div class="tw"><table><tr><th>Tipo</th><th>Qué significa</th></tr><tr><td><b>Diluida</b></td><td>Poco soluto respecto a lo que admite el disolvente.</td></tr><tr><td><b>Concentrada</b></td><td>Mucho soluto, pero aún sin llegar al máximo.</td></tr><tr><td><b>Saturada</b></td><td>El disolvente tiene el <b>máximo de soluto</b> que admite (Gonzalo: «el disolvente ha alcanzado el tope de soluto»).</td></tr><tr><td><b>Sobresaturada</b></td><td>Disolvente al máximo <b>con soluto sin disolver</b> (Jorge); «+ soluto sin disolver» (Gonzalo).</td></tr></table></div><p><span class="badge j">Jorge</span><span class="badge g">Gonzalo</span><span class="badge f">Fran</span> Las dos listas coinciden.</p><p class="note"><b>Extra:</b> la cantidad máxima que se puede disolver es la <b>solubilidad</b> (g de soluto por 100 g de disolvente, a una temperatura dada). Por eso una sobresaturada se consigue calentando, disolviendo más y enfriando despacio.</p></section><section class="sec"><div class="sh"><h2>Errores típicos</h2></div><dl class="trap"><dt>1</dt><dd>El agua pura <b>no</b> es una disolución: es un compuesto (proporción fija).</dd><dt>2</dt><dd>El disolvente es el de <b>mayor cantidad</b>, no «el líquido»: en una aleación el disolvente es un metal sólido.</dd><dt>3</dt><dd>Saturada ≠ concentrada: una disolución de una sal poco soluble puede estar saturada y ser muy diluida.</dd></dl></section><section class="sec"><div class="sh"><h2>Práctica: tapa y comprueba</h2></div><div class="tw"><table id="pr"><tr><th>Enunciado</th><th>Respuesta</th></tr><tr><td>Define disolución.</td><td class="ans" hidden>Mezcla homogénea, uniforme y estable.</td></tr><tr><td>¿Cuáles son los componentes de una disolución y cuál es cuál?</td><td class="ans" hidden>Soluto y disolvente; el disolvente es el que está en mayor cantidad.</td></tr><tr><td>¿De qué depende el estado de una disolución?</td><td class="ans" hidden>Del estado del disolvente.</td></tr><tr><td>¿Por qué el agua no es una disolución y el colacao sí?</td><td class="ans" hidden>El agua tiene proporción constante (compuesto); el colacao admite cualquier proporción (mezcla).</td></tr><tr><td>Diferencia entre saturada y sobresaturada.</td><td class="ans" hidden>Saturada: el disolvente tiene el máximo de soluto. Sobresaturada: además hay soluto sin disolver.</td></tr><tr><td>Clasifica según la cantidad de soluto (cuatro tipos).</td><td class="ans" hidden>Diluida, concentrada, saturada y sobresaturada.</td></tr></table></div><div><button class="rv" data-t="pr" type="button">Mostrar respuestas</button></div></section><nav class="pager"><a href="leyes-gases.html"><span class="k">Anterior</span><b>Leyes de los gases</b></a><a href="concentracion.html"><span class="k">Siguiente</span><b>Concentración</b></a><a href="index.html"><span class="k">Volver</span><b>Índice</b></a></nav></div><script>
+(function(){
+  document.querySelectorAll('button.rv').forEach(function(b){
+    b.addEventListener('click',function(){
+      var t=document.getElementById(b.dataset.t);
+      var open=t.classList.toggle('shown');
+      t.querySelectorAll('.ans').forEach(function(c){c.hidden=!open});
+      b.textContent=open?'Ocultar respuestas':'Mostrar respuestas';
+    });
+  });
+  document.querySelectorAll('button.cp').forEach(function(b){
+    b.addEventListener('click',function(){
+      var t=b.dataset.txt||'';
+      if(navigator.clipboard){navigator.clipboard.writeText(t).then(function(){b.textContent='Copiado';setTimeout(function(){b.textContent=b.dataset.l||'Copiar'},1500)})}
+      else{var ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand('copy')}catch(e){}ta.remove();b.textContent='Copiado';setTimeout(function(){b.textContent=b.dataset.l||'Copiar'},1500)}
+    });
+  });
+  document.querySelectorAll('.tabs').forEach(function(g){
+    g.querySelectorAll('button').forEach(function(b){
+      b.addEventListener('click',function(){
+        g.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});
+        var tgt=document.getElementById(g.dataset.t); if(tgt&&b.dataset.src){tgt.src=b.dataset.src}
+        document.querySelectorAll('[data-pane]').forEach(function(p){p.hidden=p.dataset.pane!==b.dataset.v});
+      });
+    });
+  });
+})();
+</script></body></html>

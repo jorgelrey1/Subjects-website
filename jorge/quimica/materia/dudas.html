@@ -1,0 +1,168 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Dudas</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap"><style>
+:root{
+  --bg:#f6f7fb; --surface:#ffffff; --fg:#1d2233; --muted:#5b6379; --line:#dde1ec;
+  --oxi:#1f5fbf; --oxi-bg:#e4edfb;
+  --hid:#17805a; --hid-bg:#dff3ea;
+  --hox:#c0284f; --hox-bg:#fbe3ea;
+  --aci:#c2570c; --aci-bg:#fdebd9;
+  --sal:#8a3fb0; --sal-bg:#f1e5f8;
+  --guide:#3a4160; --guide-bg:#e8eaf3;
+  --bad:#b3261e; --bad-bg:#fbe4e2; --good:#17805a; --good-bg:#dff3ea;
+
+  --display:"Bricolage Grotesque","Trebuchet MS",sans-serif;
+  --body:"Source Sans 3","Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  --fam:var(--guide); --fam-bg:var(--guide-bg);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12151f; --surface:#1b2030; --fg:#e9ecf6; --muted:#a2a9bf; --line:#2f3650;
+  --oxi:#7fb0ff; --oxi-bg:#1b2b4a;
+  --hid:#5fd0a2; --hid-bg:#173a2e;
+  --hox:#ff8fa8; --hox-bg:#4a1f2d;
+  --aci:#ffa45c; --aci-bg:#4a2b12;
+  --sal:#d29bf0; --sal-bg:#3a2248;
+  --guide:#b9c0e0; --guide-bg:#262c45;
+  --bad:#ff8d85; --bad-bg:#4a1f1c; --good:#5fd0a2; --good-bg:#173a2e;
+ color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12151f; --surface:#1b2030; --fg:#e9ecf6; --muted:#a2a9bf; --line:#2f3650;
+  --oxi:#7fb0ff; --oxi-bg:#1b2b4a;
+  --hid:#5fd0a2; --hid-bg:#173a2e;
+  --hox:#ff8fa8; --hox-bg:#4a1f2d;
+  --aci:#ffa45c; --aci-bg:#4a2b12;
+  --sal:#d29bf0; --sal-bg:#3a2248;
+  --guide:#b9c0e0; --guide-bg:#262c45;
+  --bad:#ff8d85; --bad-bg:#4a1f1c; --good:#5fd0a2; --good-bg:#173a2e;
+ color-scheme:dark}
+body.fam-oxi{--fam:var(--oxi);--fam-bg:var(--oxi-bg)}
+body.fam-hid{--fam:var(--hid);--fam-bg:var(--hid-bg)}
+body.fam-hox{--fam:var(--hox);--fam-bg:var(--hox-bg)}
+body.fam-aci{--fam:var(--aci);--fam-bg:var(--aci-bg)}
+body.fam-sal{--fam:var(--sal);--fam-bg:var(--sal-bg)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.55}
+.wrap{max-width:62rem;margin-inline:auto;padding-inline:16px;padding-block:20px 56px;display:flex;flex-direction:column;gap:40px}
+h1,h2,h3,h4{font-family:var(--display);line-height:1.12;text-wrap:balance;margin:0}
+h1{font-size:clamp(2rem,6vw,3.1rem);font-weight:800}
+h2{font-size:1.55rem;font-weight:800}
+h3{font-size:1.2rem;font-weight:600}
+h4{font-size:1.02rem;font-weight:600}
+p{margin:0}
+a{color:var(--fg);font-weight:700}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--fg);outline-offset:2px}
+.lead{color:var(--muted);max-width:44rem}
+sub{font-size:.75em}
+.f{font-family:var(--mono);font-weight:700}
+.k{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.top{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;justify-content:space-between;font-size:.95rem}
+.top .r{display:flex;gap:8px 18px;flex-wrap:wrap}
+.hero{display:flex;gap:20px;align-items:center;background:var(--fam-bg);color:var(--fam);border-radius:14px;padding:22px}
+.hero svg{flex:none;width:76px;height:76px}
+.hero > div{min-width:0;display:flex;flex-direction:column;gap:8px}
+.hero h1{color:var(--fam)}
+.hero p{color:var(--fg);max-width:42rem}
+.sec{display:flex;flex-direction:column;gap:16px}
+.sh{display:flex;align-items:center;gap:12px}
+.sh::before{content:"";width:12px;height:30px;border-radius:3px;background:var(--fam);flex:none}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));gap:16px}
+.three{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));gap:16px}
+.tag{display:inline-block;padding:2px 10px;border-radius:6px;font-weight:700;font-size:.88rem;background:var(--fam-bg);color:var(--fam)}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:99px;font-weight:700;font-size:.9rem;background:var(--fam-bg);color:var(--fam)}
+.oxi{background:var(--oxi-bg);color:var(--oxi)}.hid{background:var(--hid-bg);color:var(--hid)}
+.hox{background:var(--hox-bg);color:var(--hox)}.aci{background:var(--aci-bg);color:var(--aci)}
+.sal{background:var(--sal-bg);color:var(--sal)}
+.nom{display:inline-block;padding:3px 10px;border:1.5px solid var(--fg);border-radius:6px;font-weight:700;font-size:.9rem;background:var(--surface);color:var(--fg)}
+.pend{border-style:dashed;border-color:var(--muted);color:var(--muted);font-weight:600}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:36rem}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+tr:last-child td{border-bottom:0}
+.cell{white-space:nowrap}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+.q b.t{font-family:var(--display);font-size:1.1rem}
+.q.warn{border-color:var(--aci)}
+.q.pending{border-style:dashed;border-color:var(--muted)}
+.steps{display:flex;flex-direction:column;gap:10px;counter-reset:s;padding:0;margin:0;list-style:none}
+.steps li{counter-increment:s;padding:2px 0 2px 42px;position:relative}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:28px;height:28px;border-radius:50%;background:var(--fam);color:var(--bg);font-family:var(--display);font-weight:800;display:grid;place-items:center;font-size:.95rem}
+.ex{background:var(--fam-bg);border-left:5px solid var(--fam);border-radius:8px;padding:12px 14px;color:var(--fg)}
+.ex .f{color:var(--fam)}
+.nomblock{background:var(--surface);border:1px solid var(--line);border-top:6px solid var(--fam);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.nomblock > header{display:flex;flex-direction:column;gap:6px}
+.dir{display:flex;flex-direction:column;gap:12px;min-width:0}
+.dir h4{color:var(--fam)}
+.struct{font-family:var(--mono);font-weight:700;background:var(--bg);border-radius:8px;padding:10px 14px;overflow-wrap:anywhere}
+.trap{display:grid;grid-template-columns:auto 1fr;gap:10px 14px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:0}
+.trap dt{font-family:var(--mono);font-weight:700;color:var(--fam)}
+.trap dd{margin:0}
+button{font:inherit;font-weight:700;border:2px solid transparent;border-radius:8px;padding:10px 14px;cursor:pointer}
+button.rv{background:var(--fg);color:var(--bg)}
+.ans{font-weight:600}
+.pager{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,16rem),1fr));gap:12px}
+.pager a{display:flex;flex-direction:column;gap:2px;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--surface);text-decoration:none}
+.pager a span.k{font-size:.72rem}
+.pager a:hover{border-color:var(--fam)}
+
+th{text-transform:none;letter-spacing:.02em;font-size:.84rem}
+.sv{width:100%;height:auto;display:block}
+.sv text{fill:var(--fg);font-family:var(--body);font-size:12px}
+.sv text.m{fill:var(--muted)}
+.sv text.b{font-weight:700}
+.sv text.mo{font-family:var(--mono);font-weight:700}
+.sv .ax{stroke:var(--muted);stroke-width:1.3;fill:none}
+.sv .gd{stroke:var(--line);stroke-width:1;fill:none}
+.fig{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.fig .cap{color:var(--muted);font-size:.92rem}
+.tl{display:flex;gap:12px;overflow-x:auto;padding:6px 2px 16px;scroll-snap-type:x proximity}
+.tlc{flex:0 0 17rem;scroll-snap-align:start;background:var(--surface);border:1px solid var(--line);border-top:6px solid var(--fam);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.tlc.out{border-left-style:dashed;border-right-style:dashed;border-bottom-style:dashed}
+.tlc .yr{font-family:var(--display);font-weight:800;font-size:1.5rem;color:var(--fam);line-height:1}
+.tlc .who{font-weight:700}
+.tlc svg{width:100%;height:auto;background:var(--fam-bg);border-radius:8px;color:var(--fam)}
+.tlc svg text{fill:var(--fam);font-family:var(--body);font-size:10px;font-weight:700}
+.tlc .mini{font-size:.93rem;color:var(--fg)}
+.tlc ul{margin:0;padding-left:1.1rem;font-size:.93rem}
+.gap{flex:0 0 3.2rem;display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:700;font-size:.85rem;writing-mode:vertical-rl;text-orientation:mixed;border-inline:2px dotted var(--line)}
+.noex{display:inline-block;font-size:.78rem;font-weight:700;padding:2px 8px;border-radius:6px;background:var(--bg);border:1px dashed var(--muted);color:var(--muted);width:fit-content}
+.pt{display:grid;grid-template-columns:1.5rem repeat(18,minmax(2.7rem,1fr));gap:3px;min-width:56rem}
+.pt .gh,.pt .ph0{font-size:.72rem;font-weight:700;color:var(--muted);text-align:center;align-self:center}
+.pt .e{aspect-ratio:1/1.08;border-radius:5px;padding:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.55rem;line-height:1.05;background:color-mix(in srgb,var(--c,var(--muted)) 24%,var(--surface));border:1px solid color-mix(in srgb,var(--c,var(--muted)) 55%,var(--surface));min-width:0;overflow:hidden}
+.pt .e b{font-family:var(--mono);font-size:.98rem;line-height:1.1}
+.pt .e i{font-style:normal;color:var(--muted);font-size:.58rem}
+.pt .e small{font-size:.5rem;color:var(--muted);max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pt .e.ph{background:transparent;border-style:dashed;color:var(--muted);font-size:.6rem;text-align:center}
+.pt[data-v=bloque] .e.s{--c:var(--oxi)}.pt[data-v=bloque] .e.p{--c:var(--hid)}.pt[data-v=bloque] .e.d{--c:var(--hox)}.pt[data-v=bloque] .e.f{--c:var(--aci)}
+.pt[data-v=tipo] .e.t-alc{--c:#e0524a}.pt[data-v=tipo] .e.t-ake{--c:#e58a2b}.pt[data-v=tipo] .e.t-tr{--c:#d8b020}.pt[data-v=tipo] .e.t-pt{--c:#6aa84f}.pt[data-v=tipo] .e.t-la{--c:#c0599a}.pt[data-v=tipo] .e.t-ac{--c:#9a5fc0}
+.pt[data-v=tipo] .e.t-mo{--c:#2aa198}.pt[data-v=tipo] .e.t-nm{--c:#3b82d6}.pt[data-v=tipo] .e.t-ha{--c:#6c63d9}.pt[data-v=tipo] .e.t-ng{--c:#8a8fa8}
+.pt[data-v=metal] .e.m1{--c:#d8a020}.pt[data-v=metal] .e.m2{--c:#2aa198}.pt[data-v=metal] .e.m3{--c:#3b82d6}
+.pt[data-v=grupo] .e.g1{--c:#e0524a}.pt[data-v=grupo] .e.g2{--c:#e58a2b}.pt[data-v=grupo] .e.g13{--c:#d8b020}.pt[data-v=grupo] .e.g14{--c:#6aa84f}.pt[data-v=grupo] .e.g15{--c:#2aa198}.pt[data-v=grupo] .e.g16{--c:#3b82d6}.pt[data-v=grupo] .e.g17{--c:#6c63d9}.pt[data-v=grupo] .e.g18{--c:#c0599a}.pt[data-v=grupo] .e.gd{--c:var(--muted)}
+.lg{display:flex;flex-wrap:wrap;gap:6px}
+.lg[hidden]{display:none}
+.lg span{display:inline-flex;gap:6px;align-items:center;padding:3px 10px;border-radius:99px;border:1px solid var(--line);background:var(--surface);font-size:.85rem;font-weight:600}
+.lg span::before{content:"";width:12px;height:12px;border-radius:3px;background:var(--c)}
+.ptw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:10px}
+.vb{display:flex;flex-wrap:wrap;gap:8px}
+button.vbtn{background:var(--surface);color:var(--fg);border:1.5px solid var(--line);padding:6px 14px}
+button.vbtn[aria-pressed=true]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+table.heat{min-width:0;width:auto}
+table.heat th,table.heat td{text-align:center;padding:6px 10px}
+table.heat td.hv{font-family:var(--mono);font-weight:700;background:color-mix(in srgb,var(--fam) calc(var(--p,0) * 1%),var(--surface));min-width:4.4rem}
+table.heat td.hv span{display:block;font-family:var(--body);font-size:.78rem;font-weight:600;color:var(--muted)}
+table.heat td.na{color:var(--muted);font-weight:600}
+.bx{display:inline-block;min-width:2.5rem;height:1.7rem;line-height:1.55rem;text-align:center;border:1.6px solid var(--fam);border-radius:4px;font-family:var(--mono);font-weight:700;margin-right:3px;background:var(--surface)}
+.arrowtbl td{vertical-align:middle}
+.up{color:var(--good)}.dn{color:var(--bad)}
+.tr3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr));gap:12px}
+.tr3 .card b{font-family:var(--display)}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opts label{display:flex;gap:10px;align-items:flex-start;padding:8px 12px;border:1.5px solid var(--line);border-radius:8px;background:var(--bg);cursor:pointer}
+.opts input{margin-top:.35rem}
+.opts label.sel{border-color:var(--fg)}
+.opts label.right{border-color:var(--good);background:var(--good-bg)}
+.opts label.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.expl{color:var(--fg);font-size:.97rem}
+.tp{font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+</style></head><body class=""><a href="../../index.html" style="display:block;padding:8px 16px;background:#1b2033;color:#fff;font:600 15px/1.3 system-ui,'Segoe UI',sans-serif;text-decoration:none;position:relative;z-index:60">← Índice principal</a><div class="wrap"><nav class="top"><a href="index.html">← Índice</a></nav><header><span class="k">Pendiente</span><h1>Dudas por confirmar con la profesora</h1></header><p class="lead">Con los apuntes completos, algunas dudas se han resuelto y han aparecido otras. Si alguna de las abiertas es distinta, dímelo y se corrige en las páginas y los exámenes afectados.</p><h2>Dudas abiertas (0)</h2><h2>Dudas resueltas con tus apuntes (15)</h2><div class="q ok"><b class="t">Fechas de los modelos atómicos</b><p><b>Antes.</b> Antes dudábamos entre varias fechas.</p><p><b>Qué dicen los apuntes.</b> Tus apuntes lo aclaran: Demócrito 450 a. C., Dalton 1803, Thomson 1904, Rutherford 1911, Bohr 1913 y Schrödinger 1926.</p><p class="k">Aparece en: <span style="text-transform:none;letter-spacing:0"><a href="modelos-atomicos.html">Modelos atómicos</a></span></p></div><div class="q ok"><b class="t">Cómo escribir la configuración electrónica</b><p><b>Antes.</b> Antes dudábamos si se escribe por orden de energía o por niveles.</p><p><b>Qué dicen los apuntes.</b> En el ejemplo del Br tu profesora la escribe en <b>orden de llenado</b> (1s² 2s² 2p⁶ 3s² 3p⁶ 4s² 3d¹⁰ 4p⁵). Los exámenes aceptan también la otra ordenación.</p><p class="k">Aparece en: <span style="text-transform:none;letter-spacing:0"><a href="configuracion-electronica.html">Configuración electrónica</a></span></p></div><div class="q ok"><b class="t">Definición de afinidad electrónica</b><p><b>Antes.</b> Antes dudábamos si era energía desprendida o absorbida.</p><p><b>Qué dicen los apuntes.</b> Tus apuntes dicen que es la energía que el elemento <b>normalmente desprende</b> al captar un electrón.</p><p class="k">Aparece en: <span style="text-transform:none;letter-spacing:0"><a href="afinidad-electronica.html">Afinidad electrónica</a></span></p></div><div class="q ok"><b class="t">Definición de valencia</b><p><b>Antes.</b> Antes dudábamos entre «capacidad de combinación» y «electrones de valencia».</p><p><b>Qué dicen los apuntes.</b> Tu profesora distingue <b>valencia iónica</b> (electrones que gana o cede para llegar a s²p⁶, p. ej. Mg²⁺ y F⁻) y <b>valencia covalente</b> (electrones desapareados que puede compartir, p. ej. F = 1).</p><p class="k">Aparece en: <span style="text-transform:none;letter-spacing:0"><a href="valencia.html">Valencia</a></span></p></div><div class="q ok"><b class="t">«Tipos de enlaces moleculares»</b><p><b>Antes.</b> No sabíamos qué incluía.</p><p><b>Qué dicen los apuntes.</b> Según los apuntes: Lewis (pares enlazantes y no enlazantes), enlaces σ y π, hibridación sp³, covalente dativo, geometría molecular y uniones entre moléculas (puentes de hidrógeno y Van der Waals).</p><p class="k">Aparece en: <span style="text-transform:none;letter-spacing:0"><a href="enlace-moleculares.html">Enlaces moleculares</a></span></p></div><div class="q ok"><b class="t">Criterio para decidir el tipo de enlace</b><p><b>Antes.</b> Antes usábamos límites de ΔEN.</p><p><b>Qué dicen los apuntes.</b> Tu profesora lo hace por electronegatividad: <b>muy distintas</b> → iónico; <b>bajas o medias y parecidas</b> → metálico; <b>altas y parecidas</b> → covalente.</p><p class="k">Aparece en: <span style="text-transform:none;letter-spacing:0"><a href="enlace-atomos.html">Enlace entre átomos</a></span></p></div><div class="q ok"><b class="t">Qué entra en el examen</b><p><b>Antes.</b> No estaba claro.</p><p><b>Qué dicen los apuntes.</b> Práctica: configuraciones electrónicas y comparar potencial de ionización, afinidad electrónica y electronegatividad. Teoría: todos los modelos atómicos y básicamente todo lo demás, <b>explicado con tus propias palabras</b>.</p><p class="k">Aparece en: <span style="text-transform:none;letter-spacing:0"><a href="index.html#examenes">Exámenes</a></span></p></div><div class="q ok"><b class="t">Nº cuántico secundario (l)</b><p><b>Antes.</b> En una hoja se lee «1 = s, 2 = p, 3 = d, 4 = f».</p><p><b>Qué dicen los apuntes.</b> Se recoge que tu profesora numera los tipos de orbital como 1 = s, 2 = p, 3 = d, 4 = f. En sus tablas de n = 1, 2 y 3, l toma los valores 0, 1, 2…, y así se escribe en las páginas.</p><p class="k">Aparece en: <span style="text-transform:none;letter-spacing:0"><a href="modelos-atomicos.html">Modelos atómicos</a></span></p></div><div class="q ok"><b class="t">Electronegatividad del H</b><p><b>Antes.</b> Había una anotación difícil de leer.</p><p><b>Qué dicen los apuntes.</b> Dice que la electronegatividad del H es similar a la del N. Se recoge así en la página de electronegatividad.</p><p class="k">Aparece en: <span style="text-transform:none;letter-spacing:0"><a href="electronegatividad.html">Electronegatividad</a></span></p></div><div class="q ok"><b class="t">Afinidad electrónica del F y del Cl</b><p><b>Antes.</b> La regla daba F &gt; Cl y algunas tablas de datos dan Cl &gt; F.</p><p><b>Qué dicen los apuntes.</b> Se sigue lo que dice tu profesora: la AE varía igual que el PI, así que el F tiene más que el Cl.</p><p class="k">Aparece en: <span style="text-transform:none;letter-spacing:0"><a href="afinidad-electronica.html">Afinidad electrónica</a></span></p></div><div class="q ok"><b class="t">Excepciones de la configuración electrónica</b><p><b>Antes.</b> Los apuntes solo dicen «configuraciones anómalas».</p><p><b>Qué dicen los apuntes.</b> Se hace como si no hubiese excepciones: siempre el orden de llenado (Cr: 4s² 3d⁴; Cu: 4s² 3d⁹).</p><p class="k">Aparece en: <span style="text-transform:none;letter-spacing:0"><a href="configuracion-electronica.html">Configuración electrónica</a></span></p></div><div class="q ok"><b class="t">Metaloides</b><p><b>Antes.</b> No sabíamos si se daban.</p><p><b>Qué dicen los apuntes.</b> No se han dado: se han quitado y todos los elementos son metales o no metales.</p><p class="k">Aparece en: <span style="text-transform:none;letter-spacing:0"><a href="caracter-metalico.html">Carácter metálico</a></span></p></div><div class="q ok"><b class="t">Valencias covalentes «1, 3, 5, 7»</b><p><b>Antes.</b> Parecían tachadas.</p><p><b>Qué dicen los apuntes.</b> No lo están: es la explicación de que con s² px² py² pz¹ salen esas valencias (aunque con el F no). Se explica en la página de valencia.</p><p class="k">Aparece en: <span style="text-transform:none;letter-spacing:0"><a href="valencia.html">Valencia</a></span></p></div><div class="q ok"><b class="t">Fila del SO₂ en la tabla de geometría</b><p><b>Antes.</b> No estaba claro cuántos pares y átomos tenía.</p><p><b>Qué dicen los apuntes.</b> Con la imagen del libro: 2 átomos unidos, 3 pares totales y 1 par libre, geometría angular (ejemplos: SnF₂, SO₂).</p><p class="k">Aparece en: <span style="text-transform:none;letter-spacing:0"><a href="enlace-moleculares.html">Enlaces moleculares</a></span></p></div><div class="q ok"><b class="t">Otras dudas</b><p><b>Antes.</b> Unidades de energía (julios), nombres «planetario» (Bohr) y «nuclear» (Rutherford), lámina del experimento, hasta dónde llega la teoría, el H₂SO₄ con 4 covalentes y 2 dativos y el significado de «CSP».</p><p><b>Qué dicen los apuntes.</b> Todo correcto tal como está: se mantiene lo que dice tu profesora.</p><p class="k">Aparece en: <span style="text-transform:none;letter-spacing:0"><a href="modelos-atomicos.html">Modelos atómicos</a> · <a href="enlace-moleculares.html">Enlaces moleculares</a></span></p></div></div></body></html>

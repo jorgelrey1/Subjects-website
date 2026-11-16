@@ -1,0 +1,188 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Potencial de ionización</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap"><style>
+:root{
+  --bg:#f6f7fb; --surface:#ffffff; --fg:#1d2233; --muted:#5b6379; --line:#dde1ec;
+  --oxi:#1f5fbf; --oxi-bg:#e4edfb;
+  --hid:#17805a; --hid-bg:#dff3ea;
+  --hox:#c0284f; --hox-bg:#fbe3ea;
+  --aci:#c2570c; --aci-bg:#fdebd9;
+  --sal:#8a3fb0; --sal-bg:#f1e5f8;
+  --guide:#3a4160; --guide-bg:#e8eaf3;
+  --bad:#b3261e; --bad-bg:#fbe4e2; --good:#17805a; --good-bg:#dff3ea;
+
+  --display:"Bricolage Grotesque","Trebuchet MS",sans-serif;
+  --body:"Source Sans 3","Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  --fam:var(--guide); --fam-bg:var(--guide-bg);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12151f; --surface:#1b2030; --fg:#e9ecf6; --muted:#a2a9bf; --line:#2f3650;
+  --oxi:#7fb0ff; --oxi-bg:#1b2b4a;
+  --hid:#5fd0a2; --hid-bg:#173a2e;
+  --hox:#ff8fa8; --hox-bg:#4a1f2d;
+  --aci:#ffa45c; --aci-bg:#4a2b12;
+  --sal:#d29bf0; --sal-bg:#3a2248;
+  --guide:#b9c0e0; --guide-bg:#262c45;
+  --bad:#ff8d85; --bad-bg:#4a1f1c; --good:#5fd0a2; --good-bg:#173a2e;
+ color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12151f; --surface:#1b2030; --fg:#e9ecf6; --muted:#a2a9bf; --line:#2f3650;
+  --oxi:#7fb0ff; --oxi-bg:#1b2b4a;
+  --hid:#5fd0a2; --hid-bg:#173a2e;
+  --hox:#ff8fa8; --hox-bg:#4a1f2d;
+  --aci:#ffa45c; --aci-bg:#4a2b12;
+  --sal:#d29bf0; --sal-bg:#3a2248;
+  --guide:#b9c0e0; --guide-bg:#262c45;
+  --bad:#ff8d85; --bad-bg:#4a1f1c; --good:#5fd0a2; --good-bg:#173a2e;
+ color-scheme:dark}
+body.fam-oxi{--fam:var(--oxi);--fam-bg:var(--oxi-bg)}
+body.fam-hid{--fam:var(--hid);--fam-bg:var(--hid-bg)}
+body.fam-hox{--fam:var(--hox);--fam-bg:var(--hox-bg)}
+body.fam-aci{--fam:var(--aci);--fam-bg:var(--aci-bg)}
+body.fam-sal{--fam:var(--sal);--fam-bg:var(--sal-bg)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.55}
+.wrap{max-width:62rem;margin-inline:auto;padding-inline:16px;padding-block:20px 56px;display:flex;flex-direction:column;gap:40px}
+h1,h2,h3,h4{font-family:var(--display);line-height:1.12;text-wrap:balance;margin:0}
+h1{font-size:clamp(2rem,6vw,3.1rem);font-weight:800}
+h2{font-size:1.55rem;font-weight:800}
+h3{font-size:1.2rem;font-weight:600}
+h4{font-size:1.02rem;font-weight:600}
+p{margin:0}
+a{color:var(--fg);font-weight:700}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--fg);outline-offset:2px}
+.lead{color:var(--muted);max-width:44rem}
+sub{font-size:.75em}
+.f{font-family:var(--mono);font-weight:700}
+.k{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.top{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;justify-content:space-between;font-size:.95rem}
+.top .r{display:flex;gap:8px 18px;flex-wrap:wrap}
+.hero{display:flex;gap:20px;align-items:center;background:var(--fam-bg);color:var(--fam);border-radius:14px;padding:22px}
+.hero svg{flex:none;width:76px;height:76px}
+.hero > div{min-width:0;display:flex;flex-direction:column;gap:8px}
+.hero h1{color:var(--fam)}
+.hero p{color:var(--fg);max-width:42rem}
+.sec{display:flex;flex-direction:column;gap:16px}
+.sh{display:flex;align-items:center;gap:12px}
+.sh::before{content:"";width:12px;height:30px;border-radius:3px;background:var(--fam);flex:none}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));gap:16px}
+.three{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));gap:16px}
+.tag{display:inline-block;padding:2px 10px;border-radius:6px;font-weight:700;font-size:.88rem;background:var(--fam-bg);color:var(--fam)}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:99px;font-weight:700;font-size:.9rem;background:var(--fam-bg);color:var(--fam)}
+.oxi{background:var(--oxi-bg);color:var(--oxi)}.hid{background:var(--hid-bg);color:var(--hid)}
+.hox{background:var(--hox-bg);color:var(--hox)}.aci{background:var(--aci-bg);color:var(--aci)}
+.sal{background:var(--sal-bg);color:var(--sal)}
+.nom{display:inline-block;padding:3px 10px;border:1.5px solid var(--fg);border-radius:6px;font-weight:700;font-size:.9rem;background:var(--surface);color:var(--fg)}
+.pend{border-style:dashed;border-color:var(--muted);color:var(--muted);font-weight:600}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:36rem}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+tr:last-child td{border-bottom:0}
+.cell{white-space:nowrap}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+.q b.t{font-family:var(--display);font-size:1.1rem}
+.q.warn{border-color:var(--aci)}
+.q.pending{border-style:dashed;border-color:var(--muted)}
+.steps{display:flex;flex-direction:column;gap:10px;counter-reset:s;padding:0;margin:0;list-style:none}
+.steps li{counter-increment:s;padding:2px 0 2px 42px;position:relative}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:28px;height:28px;border-radius:50%;background:var(--fam);color:var(--bg);font-family:var(--display);font-weight:800;display:grid;place-items:center;font-size:.95rem}
+.ex{background:var(--fam-bg);border-left:5px solid var(--fam);border-radius:8px;padding:12px 14px;color:var(--fg)}
+.ex .f{color:var(--fam)}
+.nomblock{background:var(--surface);border:1px solid var(--line);border-top:6px solid var(--fam);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.nomblock > header{display:flex;flex-direction:column;gap:6px}
+.dir{display:flex;flex-direction:column;gap:12px;min-width:0}
+.dir h4{color:var(--fam)}
+.struct{font-family:var(--mono);font-weight:700;background:var(--bg);border-radius:8px;padding:10px 14px;overflow-wrap:anywhere}
+.trap{display:grid;grid-template-columns:auto 1fr;gap:10px 14px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:0}
+.trap dt{font-family:var(--mono);font-weight:700;color:var(--fam)}
+.trap dd{margin:0}
+button{font:inherit;font-weight:700;border:2px solid transparent;border-radius:8px;padding:10px 14px;cursor:pointer}
+button.rv{background:var(--fg);color:var(--bg)}
+.ans{font-weight:600}
+.pager{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,16rem),1fr));gap:12px}
+.pager a{display:flex;flex-direction:column;gap:2px;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--surface);text-decoration:none}
+.pager a span.k{font-size:.72rem}
+.pager a:hover{border-color:var(--fam)}
+
+th{text-transform:none;letter-spacing:.02em;font-size:.84rem}
+.sv{width:100%;height:auto;display:block}
+.sv text{fill:var(--fg);font-family:var(--body);font-size:12px}
+.sv text.m{fill:var(--muted)}
+.sv text.b{font-weight:700}
+.sv text.mo{font-family:var(--mono);font-weight:700}
+.sv .ax{stroke:var(--muted);stroke-width:1.3;fill:none}
+.sv .gd{stroke:var(--line);stroke-width:1;fill:none}
+.fig{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.fig .cap{color:var(--muted);font-size:.92rem}
+.tl{display:flex;gap:12px;overflow-x:auto;padding:6px 2px 16px;scroll-snap-type:x proximity}
+.tlc{flex:0 0 17rem;scroll-snap-align:start;background:var(--surface);border:1px solid var(--line);border-top:6px solid var(--fam);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.tlc.out{border-left-style:dashed;border-right-style:dashed;border-bottom-style:dashed}
+.tlc .yr{font-family:var(--display);font-weight:800;font-size:1.5rem;color:var(--fam);line-height:1}
+.tlc .who{font-weight:700}
+.tlc svg{width:100%;height:auto;background:var(--fam-bg);border-radius:8px;color:var(--fam)}
+.tlc svg text{fill:var(--fam);font-family:var(--body);font-size:10px;font-weight:700}
+.tlc .mini{font-size:.93rem;color:var(--fg)}
+.tlc ul{margin:0;padding-left:1.1rem;font-size:.93rem}
+.gap{flex:0 0 3.2rem;display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:700;font-size:.85rem;writing-mode:vertical-rl;text-orientation:mixed;border-inline:2px dotted var(--line)}
+.noex{display:inline-block;font-size:.78rem;font-weight:700;padding:2px 8px;border-radius:6px;background:var(--bg);border:1px dashed var(--muted);color:var(--muted);width:fit-content}
+.pt{display:grid;grid-template-columns:1.5rem repeat(18,minmax(2.7rem,1fr));gap:3px;min-width:56rem}
+.pt .gh,.pt .ph0{font-size:.72rem;font-weight:700;color:var(--muted);text-align:center;align-self:center}
+.pt .e{aspect-ratio:1/1.08;border-radius:5px;padding:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.55rem;line-height:1.05;background:color-mix(in srgb,var(--c,var(--muted)) 24%,var(--surface));border:1px solid color-mix(in srgb,var(--c,var(--muted)) 55%,var(--surface));min-width:0;overflow:hidden}
+.pt .e b{font-family:var(--mono);font-size:.98rem;line-height:1.1}
+.pt .e i{font-style:normal;color:var(--muted);font-size:.58rem}
+.pt .e small{font-size:.5rem;color:var(--muted);max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pt .e.ph{background:transparent;border-style:dashed;color:var(--muted);font-size:.6rem;text-align:center}
+.pt[data-v=bloque] .e.s{--c:var(--oxi)}.pt[data-v=bloque] .e.p{--c:var(--hid)}.pt[data-v=bloque] .e.d{--c:var(--hox)}.pt[data-v=bloque] .e.f{--c:var(--aci)}
+.pt[data-v=tipo] .e.t-alc{--c:#e0524a}.pt[data-v=tipo] .e.t-ake{--c:#e58a2b}.pt[data-v=tipo] .e.t-tr{--c:#d8b020}.pt[data-v=tipo] .e.t-pt{--c:#6aa84f}.pt[data-v=tipo] .e.t-la{--c:#c0599a}.pt[data-v=tipo] .e.t-ac{--c:#9a5fc0}
+.pt[data-v=tipo] .e.t-mo{--c:#2aa198}.pt[data-v=tipo] .e.t-nm{--c:#3b82d6}.pt[data-v=tipo] .e.t-ha{--c:#6c63d9}.pt[data-v=tipo] .e.t-ng{--c:#8a8fa8}
+.pt[data-v=metal] .e.m1{--c:#d8a020}.pt[data-v=metal] .e.m2{--c:#2aa198}.pt[data-v=metal] .e.m3{--c:#3b82d6}
+.pt[data-v=grupo] .e.g1{--c:#e0524a}.pt[data-v=grupo] .e.g2{--c:#e58a2b}.pt[data-v=grupo] .e.g13{--c:#d8b020}.pt[data-v=grupo] .e.g14{--c:#6aa84f}.pt[data-v=grupo] .e.g15{--c:#2aa198}.pt[data-v=grupo] .e.g16{--c:#3b82d6}.pt[data-v=grupo] .e.g17{--c:#6c63d9}.pt[data-v=grupo] .e.g18{--c:#c0599a}.pt[data-v=grupo] .e.gd{--c:var(--muted)}
+.lg{display:flex;flex-wrap:wrap;gap:6px}
+.lg[hidden]{display:none}
+.lg span{display:inline-flex;gap:6px;align-items:center;padding:3px 10px;border-radius:99px;border:1px solid var(--line);background:var(--surface);font-size:.85rem;font-weight:600}
+.lg span::before{content:"";width:12px;height:12px;border-radius:3px;background:var(--c)}
+.ptw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:10px}
+.vb{display:flex;flex-wrap:wrap;gap:8px}
+button.vbtn{background:var(--surface);color:var(--fg);border:1.5px solid var(--line);padding:6px 14px}
+button.vbtn[aria-pressed=true]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+table.heat{min-width:0;width:auto}
+table.heat th,table.heat td{text-align:center;padding:6px 10px}
+table.heat td.hv{font-family:var(--mono);font-weight:700;background:color-mix(in srgb,var(--fam) calc(var(--p,0) * 1%),var(--surface));min-width:4.4rem}
+table.heat td.hv span{display:block;font-family:var(--body);font-size:.78rem;font-weight:600;color:var(--muted)}
+table.heat td.na{color:var(--muted);font-weight:600}
+.bx{display:inline-block;min-width:2.5rem;height:1.7rem;line-height:1.55rem;text-align:center;border:1.6px solid var(--fam);border-radius:4px;font-family:var(--mono);font-weight:700;margin-right:3px;background:var(--surface)}
+.arrowtbl td{vertical-align:middle}
+.up{color:var(--good)}.dn{color:var(--bad)}
+.tr3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr));gap:12px}
+.tr3 .card b{font-family:var(--display)}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opts label{display:flex;gap:10px;align-items:flex-start;padding:8px 12px;border:1.5px solid var(--line);border-radius:8px;background:var(--bg);cursor:pointer}
+.opts input{margin-top:.35rem}
+.opts label.sel{border-color:var(--fg)}
+.opts label.right{border-color:var(--good);background:var(--good-bg)}
+.opts label.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.expl{color:var(--fg);font-size:.97rem}
+.tp{font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+</style></head><body class="fam-aci"><a href="../../index.html" style="display:block;padding:8px 16px;background:#1b2033;color:#fff;font:600 15px/1.3 system-ui,'Segoe UI',sans-serif;text-decoration:none;position:relative;z-index:60">← Índice principal</a><div class="wrap"><nav class="top"><a href="index.html">← Índice</a><div class="r"><a href="modelos-atomicos.html">Modelos atómicos</a><a href="tabla-periodica.html">Tabla periódica</a><a href="propiedades-periodicas.html">Propiedades</a><a href="enlace-conceptos.html">Enlaces</a><a href="resumen.html">Resumen</a></div></nav><header class="hero"><svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="26" r="9"/><circle cx="38" cy="14" r="3" fill="currentColor"/><path d="M26 22l8-6"/><path d="M6 8h10"/></svg><div><span class="k">Naturaleza de la materia</span><h1>Potencial de ionización</h1><p>Definición, variación en la tabla y la explicación con la ley de Coulomb y el apantallamiento.</p></div></header><section class="sec"><div class="sh"><h2>Definición</h2></div><div class="ex"><b>Potencial de ionización:</b> energía necesaria para arrancar el electrón más externo a un átomo en estado <b>neutro</b>, <b>fundamental</b> y <b>gaseoso</b>.</div><p>La energía se mide en <b>julios</b>.</p></section><section class="sec"><div class="sh"><h2>Variación</h2></div><div class="fig"><svg class="sv" viewBox="0 0 320 250" role="img" aria-label="Variación en la tabla periódica"><defs><marker id="a1" viewBox="0 0 10 10" refX="7" refY="5" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" orient="auto"><path d="M0 0L10 5L0 10z" style="fill:var(--aci)"/></marker></defs><rect x="20" y="20" width="280" height="190" rx="8" style="fill:var(--surface);stroke:var(--line);stroke-width:2"/><path d="M200 190L270 42" style="stroke:var(--aci);stroke-width:5;fill:none" marker-end="url(#a1)"/><path d="M60 190L60 50" style="stroke:var(--aci);stroke-width:3;fill:none" marker-end="url(#a1)"/><text class="b" x="160" y="236" text-anchor="middle" style="fill:var(--aci)">hacia arriba y a la derecha</text><text class="b" x="80" y="70" style="fill:var(--aci)">aumenta</text><text x="80" y="94">potencial de ionización</text><text x="80" y="114">afinidad electrónica</text><text x="80" y="134">electronegatividad</text></svg><p class="cap">Aumenta hacia arriba y hacia la derecha.</p></div><h3>La explicación de tus apuntes</h3><div class="two"><div class="card"><h3>Ley de Coulomb</h3><div class="ex"><span class="f">F = K · Q · q / d<sup>2</sup></span></div><p><b>F</b> es la fuerza, <b>K</b> la constante, <b>Q</b> y <b>q</b> las cargas y <b>d</b> la distancia. En la columna H, Li, Na, K… los electrones están cada vez más lejos del núcleo.</p></div><div class="card"><h3>Apantallamiento</h3><p>Los electrones del resto de las capas (<b>apantallamiento del resto de e⁻</b>) tapan la carga del núcleo.</p></div></div><div class="two"><div class="card"><h3>Todos intentan completar el octeto</h3><p>Todos los átomos intentan completar el octeto <span class="f">s<sup>2</sup> p<sup>6</sup></span> (grupo 18).</p></div><div class="card"><h3>Li y F</h3><p><b>Li</b>: le da igual perder 1 electrón (es el electrón <b>más fácil</b> de quitar). <b>F</b>: se sujeta fuerte para completar s<sup>2</sup> p<sup>6</sup> (electrón <b>más difícil</b> de quitar).</p></div></div></section><section class="sec"><div class="sh"><h2>Errores típicos</h2></div><dl class="trap"><dt>1</dt><dd>El PI es energía que hay que <b>aportar</b> para arrancar el electrón.</dd><dt>2</dt><dd>Hacia abajo en un grupo (H, Li, Na, K…) el PI <b>baja</b>; hacia la derecha del periodo <b>sube</b>.</dd><dt>3</dt><dd>El átomo debe estar en estado <b>neutro, fundamental y gaseoso</b>.</dd></dl></section><section class="sec"><div class="sh"><h2>Práctica: tapa y comprueba</h2></div><div class="tw"><table id="pr"><tr><th>Enunciado</th><th>Respuesta</th></tr><tr><td>Define el potencial de ionización.</td><td class="ans" hidden>Energía necesaria para arrancar el electrón más externo a un átomo en estado neutro, fundamental y gaseoso</td></tr><tr><td>¿En qué unidades se mide la energía?</td><td class="ans" hidden>En julios</td></tr><tr><td>¿Cómo varía el PI en la tabla?</td><td class="ans" hidden>Aumenta hacia arriba y hacia la derecha</td></tr><tr><td>¿Qué ley explica la atracción núcleo-electrón?</td><td class="ans" hidden>La ley de Coulomb: F = K·Q·q/d²</td></tr><tr><td>¿Qué es el apantallamiento?</td><td class="ans" hidden>Los electrones del resto de las capas tapan la carga del núcleo</td></tr><tr><td>Compara Li y F: ¿cuál cede un electrón con más facilidad y por qué?</td><td class="ans" hidden>El Li. El F se sujeta fuerte el electrón porque quiere completar s² p⁶ (octeto)</td></tr></table></div><div><button class="rv" data-t="pr" type="button">Mostrar respuestas</button></div></section><section class="sec"><div class="sh"><h2>Compara átomos: ¿cuál tiene mayor potencial de ionización?</h2></div><p>Elige el átomo según su posición en la tabla: <b>arriba y a la derecha</b> aumentan el potencial de ionización, la afinidad electrónica y la electronegatividad.</p><div class="tw"><table id="pr2"><tr><th>Enunciado</th><th>Respuesta</th></tr><tr><td>¿Cuál de estos átomos tiene <b>mayor</b> potencial de ionización: P, Ga, O, Si?</td><td class="ans" hidden><b>O</b>.<br><span style="font-size:.93rem">El potencial de ionización aumenta hacia arriba y hacia la derecha (igual que el potencial de ionización). Posiciones: O (grupo 16, periodo 2); P (grupo 15, periodo 3); Si (grupo 14, periodo 3); Ga (grupo 13, periodo 4). Orden de mayor a menor: <b>O > P > Si > Ga</b>.</span></td></tr><tr><td>¿Cuál de estos átomos tiene <b>menor</b> potencial de ionización: F, P, N?</td><td class="ans" hidden><b>P</b>.<br><span style="font-size:.93rem">El potencial de ionización aumenta hacia arriba y hacia la derecha (igual que el potencial de ionización). Posiciones: F (grupo 17, periodo 2); N (grupo 15, periodo 2); P (grupo 15, periodo 3). Orden de mayor a menor: <b>F > N > P</b>.</span></td></tr><tr><td>¿Cuál de estos átomos tiene <b>mayor</b> potencial de ionización: Li, C, Rb?</td><td class="ans" hidden><b>C</b>.<br><span style="font-size:.93rem">El potencial de ionización aumenta hacia arriba y hacia la derecha (igual que el potencial de ionización). Posiciones: C (grupo 14, periodo 2); Li (grupo 1, periodo 2); Rb (grupo 1, periodo 5). Orden de mayor a menor: <b>C > Li > Rb</b>.</span></td></tr><tr><td>Ordena de <b>menor a mayor</b> potencial de ionización: Sr, Cl, Te, S.</td><td class="ans" hidden><b>Sr < Te < S < Cl</b>.<br><span style="font-size:.93rem">El potencial de ionización aumenta hacia arriba y hacia la derecha (igual que el potencial de ionización). Posiciones: Cl (grupo 17, periodo 3); S (grupo 16, periodo 3); Te (grupo 16, periodo 5); Sr (grupo 2, periodo 5). Orden de mayor a menor: <b>Cl > S > Te > Sr</b>.</span></td></tr><tr><td>¿Cuál de estos átomos tiene <b>mayor</b> potencial de ionización: Rb, In, Sb, As?</td><td class="ans" hidden><b>As</b>.<br><span style="font-size:.93rem">El potencial de ionización aumenta hacia arriba y hacia la derecha (igual que el potencial de ionización). Posiciones: As (grupo 15, periodo 4); Sb (grupo 15, periodo 5); In (grupo 13, periodo 5); Rb (grupo 1, periodo 5). Orden de mayor a menor: <b>As > Sb > In > Rb</b>.</span></td></tr><tr><td>¿Cuál de estos átomos tiene <b>menor</b> potencial de ionización: O, Ca, Ge, C?</td><td class="ans" hidden><b>Ca</b>.<br><span style="font-size:.93rem">El potencial de ionización aumenta hacia arriba y hacia la derecha (igual que el potencial de ionización). Posiciones: O (grupo 16, periodo 2); C (grupo 14, periodo 2); Ge (grupo 14, periodo 4); Ca (grupo 2, periodo 4). Orden de mayor a menor: <b>O > C > Ge > Ca</b>.</span></td></tr><tr><td>Ordena de <b>menor a mayor</b> potencial de ionización: O, Be, Li, C.</td><td class="ans" hidden><b>Li < Be < C < O</b>.<br><span style="font-size:.93rem">El potencial de ionización aumenta hacia arriba y hacia la derecha (igual que el potencial de ionización). Posiciones: O (grupo 16, periodo 2); C (grupo 14, periodo 2); Be (grupo 2, periodo 2); Li (grupo 1, periodo 2). Orden de mayor a menor: <b>O > C > Be > Li</b>.</span></td></tr><tr><td>¿Cuál de estos átomos tiene <b>mayor</b> potencial de ionización: Ge, In, O?</td><td class="ans" hidden><b>O</b>.<br><span style="font-size:.93rem">El potencial de ionización aumenta hacia arriba y hacia la derecha (igual que el potencial de ionización). Posiciones: O (grupo 16, periodo 2); Ge (grupo 14, periodo 4); In (grupo 13, periodo 5). Orden de mayor a menor: <b>O > Ge > In</b>.</span></td></tr></table></div><div><button class="rv" data-t="pr2" type="button">Mostrar respuestas</button></div></section><section class="sec"><div class="sh"><h2>Teoría: explícalo con tus propias palabras</h2></div><div class="tw"><table id="pr3"><tr><th>Enunciado</th><th>Respuesta</th></tr><tr><td>Define el <b>potencial de ionización</b> con exactitud: condiciones del átomo y unidades.</td><td class="ans" hidden><p><b>Energía necesaria para arrancar el electrón más externo</b> a un átomo en estado <b>neutro</b> y <b>fundamental</b> y <b>gaseoso</b>. La energía se mide en <b>julios</b>.</p><p><b>Ideas clave que debería tener tu respuesta:</b></p><ul><li>Energía necesaria para arrancar el electrón más externo</li><li>Átomo neutro</li><li>Estado fundamental y gaseoso</li><li>Se mide en julios</li></ul></td></tr><tr><td>Escribe la <b>ley de Coulomb</b> y úsala, junto con el apantallamiento, para explicar la variación del potencial de ionización.</td><td class="ans" hidden><p><b>F = K · Q · q / d²</b>, con F la <b>fuerza</b>, K la <b>constante</b>, Q y q las <b>cargas</b> y d la <b>distancia</b>. Los electrones del resto de las capas hacen de <b>apantallamiento</b>. Al bajar en una columna (H, Li, Na, K…) el electrón está más lejos y la fuerza es menor, así que cuesta menos quitarlo.</p><p><b>Ideas clave que debería tener tu respuesta:</b></p><ul><li>F = K·Q·q/d²</li><li>F fuerza, K constante, Q y q cargas, d distancia</li><li>Apantallamiento del resto de electrones</li><li>Más distancia → menos fuerza → más fácil quitarlo</li></ul></td></tr></table></div><div><button class="rv" data-t="pr3" type="button">Mostrar respuestas</button></div></section><nav class="pager"><a href="propiedades-periodicas.html"><span class="k">Anterior</span><b>Propiedades periódicas</b></a><a href="afinidad-electronica.html"><span class="k">Siguiente</span><b>Afinidad electrónica</b></a><a href="index.html"><span class="k">Volver</span><b>Índice</b></a></nav></div><script>
+(function(){
+  document.querySelectorAll('button.rv').forEach(function(b){
+    b.addEventListener('click',function(){
+      var t=document.getElementById(b.dataset.t);
+      var open=t.classList.toggle('shown');
+      t.querySelectorAll('.ans').forEach(function(c){c.hidden=!open});
+      b.textContent=open?'Ocultar respuestas':'Mostrar respuestas';
+    });
+  });
+  document.querySelectorAll('.vb').forEach(function(g){
+    g.querySelectorAll('button.vbtn').forEach(function(b){
+      b.addEventListener('click',function(){
+        var t=document.getElementById(g.dataset.t); t.dataset.v=b.dataset.v;
+        g.querySelectorAll('button.vbtn').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});
+        var l=document.getElementById(g.dataset.t+'-lg'); if(l){l.querySelectorAll('[data-for]').forEach(function(x){x.hidden=x.dataset.for!==b.dataset.v})}
+      });
+    });
+  });
+})();
+</script></body></html>

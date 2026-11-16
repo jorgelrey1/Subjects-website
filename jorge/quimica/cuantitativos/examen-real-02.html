@@ -1,0 +1,331 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Examen real 02</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap"><style>
+:root{
+  --bg:#f6f7fb; --surface:#ffffff; --fg:#1d2233; --muted:#5b6379; --line:#dde1ec;
+  --oxi:#1f5fbf; --oxi-bg:#e4edfb;
+  --hid:#17805a; --hid-bg:#dff3ea;
+  --hox:#c0284f; --hox-bg:#fbe3ea;
+  --aci:#c2570c; --aci-bg:#fdebd9;
+  --sal:#8a3fb0; --sal-bg:#f1e5f8;
+  --guide:#3a4160; --guide-bg:#e8eaf3;
+  --bad:#b3261e; --bad-bg:#fbe4e2; --good:#17805a; --good-bg:#dff3ea;
+
+  --display:"Bricolage Grotesque","Trebuchet MS",sans-serif;
+  --body:"Source Sans 3","Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  --fam:var(--guide); --fam-bg:var(--guide-bg);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12151f; --surface:#1b2030; --fg:#e9ecf6; --muted:#a2a9bf; --line:#2f3650;
+  --oxi:#7fb0ff; --oxi-bg:#1b2b4a;
+  --hid:#5fd0a2; --hid-bg:#173a2e;
+  --hox:#ff8fa8; --hox-bg:#4a1f2d;
+  --aci:#ffa45c; --aci-bg:#4a2b12;
+  --sal:#d29bf0; --sal-bg:#3a2248;
+  --guide:#b9c0e0; --guide-bg:#262c45;
+  --bad:#ff8d85; --bad-bg:#4a1f1c; --good:#5fd0a2; --good-bg:#173a2e;
+ color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12151f; --surface:#1b2030; --fg:#e9ecf6; --muted:#a2a9bf; --line:#2f3650;
+  --oxi:#7fb0ff; --oxi-bg:#1b2b4a;
+  --hid:#5fd0a2; --hid-bg:#173a2e;
+  --hox:#ff8fa8; --hox-bg:#4a1f2d;
+  --aci:#ffa45c; --aci-bg:#4a2b12;
+  --sal:#d29bf0; --sal-bg:#3a2248;
+  --guide:#b9c0e0; --guide-bg:#262c45;
+  --bad:#ff8d85; --bad-bg:#4a1f1c; --good:#5fd0a2; --good-bg:#173a2e;
+ color-scheme:dark}
+body.fam-oxi{--fam:var(--oxi);--fam-bg:var(--oxi-bg)}
+body.fam-hid{--fam:var(--hid);--fam-bg:var(--hid-bg)}
+body.fam-hox{--fam:var(--hox);--fam-bg:var(--hox-bg)}
+body.fam-aci{--fam:var(--aci);--fam-bg:var(--aci-bg)}
+body.fam-sal{--fam:var(--sal);--fam-bg:var(--sal-bg)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.55}
+.wrap{max-width:62rem;margin-inline:auto;padding-inline:16px;padding-block:20px 56px;display:flex;flex-direction:column;gap:40px}
+h1,h2,h3,h4{font-family:var(--display);line-height:1.12;text-wrap:balance;margin:0}
+h1{font-size:clamp(2rem,6vw,3.1rem);font-weight:800}
+h2{font-size:1.55rem;font-weight:800}
+h3{font-size:1.2rem;font-weight:600}
+h4{font-size:1.02rem;font-weight:600}
+p{margin:0}
+a{color:var(--fg);font-weight:700}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--fg);outline-offset:2px}
+.lead{color:var(--muted);max-width:44rem}
+sub{font-size:.75em}
+.f{font-family:var(--mono);font-weight:700}
+.k{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.top{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;justify-content:space-between;font-size:.95rem}
+.top .r{display:flex;gap:8px 18px;flex-wrap:wrap}
+.hero{display:flex;gap:20px;align-items:center;background:var(--fam-bg);color:var(--fam);border-radius:14px;padding:22px}
+.hero svg{flex:none;width:76px;height:76px}
+.hero > div{min-width:0;display:flex;flex-direction:column;gap:8px}
+.hero h1{color:var(--fam)}
+.hero p{color:var(--fg);max-width:42rem}
+.sec{display:flex;flex-direction:column;gap:16px}
+.sh{display:flex;align-items:center;gap:12px}
+.sh::before{content:"";width:12px;height:30px;border-radius:3px;background:var(--fam);flex:none}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));gap:16px}
+.three{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));gap:16px}
+.tag{display:inline-block;padding:2px 10px;border-radius:6px;font-weight:700;font-size:.88rem;background:var(--fam-bg);color:var(--fam)}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:99px;font-weight:700;font-size:.9rem;background:var(--fam-bg);color:var(--fam)}
+.oxi{background:var(--oxi-bg);color:var(--oxi)}.hid{background:var(--hid-bg);color:var(--hid)}
+.hox{background:var(--hox-bg);color:var(--hox)}.aci{background:var(--aci-bg);color:var(--aci)}
+.sal{background:var(--sal-bg);color:var(--sal)}
+.nom{display:inline-block;padding:3px 10px;border:1.5px solid var(--fg);border-radius:6px;font-weight:700;font-size:.9rem;background:var(--surface);color:var(--fg)}
+.pend{border-style:dashed;border-color:var(--muted);color:var(--muted);font-weight:600}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:36rem}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+tr:last-child td{border-bottom:0}
+.cell{white-space:nowrap}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+.q b.t{font-family:var(--display);font-size:1.1rem}
+.q.warn{border-color:var(--aci)}
+.q.pending{border-style:dashed;border-color:var(--muted)}
+.steps{display:flex;flex-direction:column;gap:10px;counter-reset:s;padding:0;margin:0;list-style:none}
+.steps li{counter-increment:s;padding:2px 0 2px 42px;position:relative}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:28px;height:28px;border-radius:50%;background:var(--fam);color:var(--bg);font-family:var(--display);font-weight:800;display:grid;place-items:center;font-size:.95rem}
+.ex{background:var(--fam-bg);border-left:5px solid var(--fam);border-radius:8px;padding:12px 14px;color:var(--fg)}
+.ex .f{color:var(--fam)}
+.nomblock{background:var(--surface);border:1px solid var(--line);border-top:6px solid var(--fam);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.nomblock > header{display:flex;flex-direction:column;gap:6px}
+.dir{display:flex;flex-direction:column;gap:12px;min-width:0}
+.dir h4{color:var(--fam)}
+.struct{font-family:var(--mono);font-weight:700;background:var(--bg);border-radius:8px;padding:10px 14px;overflow-wrap:anywhere}
+.trap{display:grid;grid-template-columns:auto 1fr;gap:10px 14px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:0}
+.trap dt{font-family:var(--mono);font-weight:700;color:var(--fam)}
+.trap dd{margin:0}
+button{font:inherit;font-weight:700;border:2px solid transparent;border-radius:8px;padding:10px 14px;cursor:pointer}
+button.rv{background:var(--fg);color:var(--bg)}
+.ans{font-weight:600}
+.pager{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,16rem),1fr));gap:12px}
+.pager a{display:flex;flex-direction:column;gap:2px;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--surface);text-decoration:none}
+.pager a span.k{font-size:.72rem}
+.pager a:hover{border-color:var(--fam)}
+
+th{text-transform:none;letter-spacing:.02em;font-size:.84rem}
+.sv{width:100%;height:auto;display:block}
+.sv text{fill:var(--fg);font-family:var(--body);font-size:12px}
+.sv text.m{fill:var(--muted)}
+.sv text.b{font-weight:700}
+.sv text.mo{font-family:var(--mono);font-weight:700}
+.sv .ax{stroke:var(--muted);stroke-width:1.3;fill:none}
+.sv .gd{stroke:var(--line);stroke-width:1;fill:none}
+.fig{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.fig .cap{color:var(--muted);font-size:.92rem}
+.tl{display:flex;gap:12px;overflow-x:auto;padding:6px 2px 16px;scroll-snap-type:x proximity}
+.tlc{flex:0 0 17rem;scroll-snap-align:start;background:var(--surface);border:1px solid var(--line);border-top:6px solid var(--fam);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.tlc.out{border-left-style:dashed;border-right-style:dashed;border-bottom-style:dashed}
+.tlc .yr{font-family:var(--display);font-weight:800;font-size:1.5rem;color:var(--fam);line-height:1}
+.tlc .who{font-weight:700}
+.tlc svg{width:100%;height:auto;background:var(--fam-bg);border-radius:8px;color:var(--fam)}
+.tlc svg text{fill:var(--fam);font-family:var(--body);font-size:10px;font-weight:700}
+.tlc .mini{font-size:.93rem;color:var(--fg)}
+.tlc ul{margin:0;padding-left:1.1rem;font-size:.93rem}
+.gap{flex:0 0 3.2rem;display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:700;font-size:.85rem;writing-mode:vertical-rl;text-orientation:mixed;border-inline:2px dotted var(--line)}
+.noex{display:inline-block;font-size:.78rem;font-weight:700;padding:2px 8px;border-radius:6px;background:var(--bg);border:1px dashed var(--muted);color:var(--muted);width:fit-content}
+.pt{display:grid;grid-template-columns:1.5rem repeat(18,minmax(2.7rem,1fr));gap:3px;min-width:56rem}
+.pt .gh,.pt .ph0{font-size:.72rem;font-weight:700;color:var(--muted);text-align:center;align-self:center}
+.pt .e{aspect-ratio:1/1.08;border-radius:5px;padding:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.55rem;line-height:1.05;background:color-mix(in srgb,var(--c,var(--muted)) 24%,var(--surface));border:1px solid color-mix(in srgb,var(--c,var(--muted)) 55%,var(--surface));min-width:0;overflow:hidden}
+.pt .e b{font-family:var(--mono);font-size:.98rem;line-height:1.1}
+.pt .e i{font-style:normal;color:var(--muted);font-size:.58rem}
+.pt .e small{font-size:.5rem;color:var(--muted);max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pt .e.ph{background:transparent;border-style:dashed;color:var(--muted);font-size:.6rem;text-align:center}
+.pt[data-v=bloque] .e.s{--c:var(--oxi)}.pt[data-v=bloque] .e.p{--c:var(--hid)}.pt[data-v=bloque] .e.d{--c:var(--hox)}.pt[data-v=bloque] .e.f{--c:var(--aci)}
+.pt[data-v=tipo] .e.t-alc{--c:#e0524a}.pt[data-v=tipo] .e.t-ake{--c:#e58a2b}.pt[data-v=tipo] .e.t-tr{--c:#d8b020}.pt[data-v=tipo] .e.t-pt{--c:#6aa84f}.pt[data-v=tipo] .e.t-la{--c:#c0599a}.pt[data-v=tipo] .e.t-ac{--c:#9a5fc0}
+.pt[data-v=tipo] .e.t-mo{--c:#2aa198}.pt[data-v=tipo] .e.t-nm{--c:#3b82d6}.pt[data-v=tipo] .e.t-ha{--c:#6c63d9}.pt[data-v=tipo] .e.t-ng{--c:#8a8fa8}
+.pt[data-v=metal] .e.m1{--c:#d8a020}.pt[data-v=metal] .e.m2{--c:#2aa198}.pt[data-v=metal] .e.m3{--c:#3b82d6}
+.pt[data-v=grupo] .e.g1{--c:#e0524a}.pt[data-v=grupo] .e.g2{--c:#e58a2b}.pt[data-v=grupo] .e.g13{--c:#d8b020}.pt[data-v=grupo] .e.g14{--c:#6aa84f}.pt[data-v=grupo] .e.g15{--c:#2aa198}.pt[data-v=grupo] .e.g16{--c:#3b82d6}.pt[data-v=grupo] .e.g17{--c:#6c63d9}.pt[data-v=grupo] .e.g18{--c:#c0599a}.pt[data-v=grupo] .e.gd{--c:var(--muted)}
+.lg{display:flex;flex-wrap:wrap;gap:6px}
+.lg[hidden]{display:none}
+.lg span{display:inline-flex;gap:6px;align-items:center;padding:3px 10px;border-radius:99px;border:1px solid var(--line);background:var(--surface);font-size:.85rem;font-weight:600}
+.lg span::before{content:"";width:12px;height:12px;border-radius:3px;background:var(--c)}
+.ptw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:10px}
+.vb{display:flex;flex-wrap:wrap;gap:8px}
+button.vbtn{background:var(--surface);color:var(--fg);border:1.5px solid var(--line);padding:6px 14px}
+button.vbtn[aria-pressed=true]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+table.heat{min-width:0;width:auto}
+table.heat th,table.heat td{text-align:center;padding:6px 10px}
+table.heat td.hv{font-family:var(--mono);font-weight:700;background:color-mix(in srgb,var(--fam) calc(var(--p,0) * 1%),var(--surface));min-width:4.4rem}
+table.heat td.hv span{display:block;font-family:var(--body);font-size:.78rem;font-weight:600;color:var(--muted)}
+table.heat td.na{color:var(--muted);font-weight:600}
+.bx{display:inline-block;min-width:2.5rem;height:1.7rem;line-height:1.55rem;text-align:center;border:1.6px solid var(--fam);border-radius:4px;font-family:var(--mono);font-weight:700;margin-right:3px;background:var(--surface)}
+.arrowtbl td{vertical-align:middle}
+.up{color:var(--good)}.dn{color:var(--bad)}
+.tr3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr));gap:12px}
+.tr3 .card b{font-family:var(--display)}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opts label{display:flex;gap:10px;align-items:flex-start;padding:8px 12px;border:1.5px solid var(--line);border-radius:8px;background:var(--bg);cursor:pointer}
+.opts input{margin-top:.35rem}
+.opts label.sel{border-color:var(--fg)}
+.opts label.right{border-color:var(--good);background:var(--good-bg)}
+.opts label.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.expl{color:var(--fg);font-size:.97rem}
+.tp{font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.qcard{display:grid;grid-template-columns:auto 1fr;gap:0 14px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;list-style:none;border-left:6px solid var(--line)}
+.qcard.ok{border-left-color:var(--good)}.qcard.no{border-left-color:var(--bad)}
+#qs{display:flex;flex-direction:column;gap:12px;padding:0;margin:0}
+.qn{font-family:var(--display);font-weight:800;font-size:1.3rem;color:var(--muted);min-width:1.8rem}
+.qb{display:flex;flex-direction:column;gap:10px;min-width:0}
+.qp{font-size:1.08rem;overflow-wrap:anywhere}
+.qp .f{font-size:1.2rem}
+input.ans-in{font-family:var(--mono);font-weight:700;font-size:1.05rem;width:100%;padding:10px 12px;border:2px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg)}
+input.ans-in:read-only{opacity:.9}
+.fbok{background:var(--good-bg);color:var(--good);padding:10px 12px;border-radius:8px}
+.fbno{background:var(--bad-bg);color:var(--bad);padding:10px 12px;border-radius:8px;overflow-wrap:anywhere}
+.fbno .f.good,.f.good{color:var(--good)}
+.fbno .alt{font-size:.92rem;opacity:.9}
+.fbok .chip,.fbno .chip{margin-top:6px}
+.toolbar{display:flex;flex-wrap:wrap;gap:6px;position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:8px}
+button.sym{background:var(--surface);color:var(--fg);border:1.5px solid var(--line);font-family:var(--mono);padding:6px 12px;font-size:1.05rem}
+button.main{background:var(--fg);color:var(--bg)}
+button.ghost{background:transparent;color:var(--fg);border-color:var(--fg)}
+button:disabled{opacity:.5;cursor:default}
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+#result{background:var(--surface);border:2px solid var(--fg);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:14px}
+#result .big{font-size:1.6rem}
+.info{color:var(--muted)}
+.box{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--line);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+.box.warn{border-left-color:var(--aci)}.box.ok{border-left-color:var(--good)}.box.bad{border-left-color:var(--bad)}
+.box h3{font-size:1.15rem}
+.box .src{font-size:.9rem;color:var(--muted)}
+.box .ask{background:var(--aci-bg);border-radius:8px;padding:8px 12px}
+.box .cp{align-self:flex-start;background:transparent;color:var(--fg);border-color:var(--fg);padding:6px 12px;font-size:.9rem}
+.prob{background:var(--surface);border:1px solid var(--line);border-top:6px solid var(--fam);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.prob .en{font-size:1.05rem}
+.prob .sol{display:flex;flex-direction:column;gap:6px;border-top:1px dashed var(--line);padding-top:10px}
+.prob .sol p{padding-left:12px;border-left:3px solid var(--fam-bg)}
+.prob .res{font-family:var(--mono);font-weight:700;color:var(--fam);font-size:1.08rem}
+.law{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;align-items:baseline;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 18px}
+.law .f{font-size:1.15rem;color:var(--fam)}
+.law span.k{align-self:center}
+.formula{font-family:var(--mono);font-weight:700;font-size:1.25rem;color:var(--fam);text-align:center;padding:14px;background:var(--fam-bg);border-radius:10px}
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 3px;line-height:1.15}
+.frac>span:first-child{border-bottom:2px solid currentColor;padding:0 4px}
+.frac>span:last-child{padding:0 4px}
+.ok-t{color:var(--good)}.bad-t{color:var(--bad)}
+.note{background:var(--guide-bg);border-radius:8px;padding:10px 14px;color:var(--fg);font-size:.95rem}
+.note b{color:var(--guide)}
+.extra{border:1.5px dashed var(--muted);border-radius:10px;padding:14px 18px;display:flex;flex-direction:column;gap:8px}
+.extra .k{color:var(--muted)}
+.pdfs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr));gap:14px}
+.pdfs a{display:flex;flex-direction:column;gap:4px;padding:16px;border:1px solid var(--line);border-radius:10px;background:var(--surface);text-decoration:none}
+.pdfs a.pend{border-style:dashed;color:var(--muted)}
+.viewer{width:100%;height:80vh;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.tabs{display:flex;flex-wrap:wrap;gap:8px}
+.tabs button{background:var(--surface);color:var(--fg);border:1.5px solid var(--line)}
+.tabs button[aria-pressed=true]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.badge{display:inline-block;font-size:.78rem;font-weight:700;padding:2px 8px;border-radius:6px;background:var(--guide-bg);color:var(--guide);margin-left:6px;vertical-align:middle}
+.badge.j{background:var(--oxi-bg);color:var(--oxi)}.badge.f{background:var(--sal-bg);color:var(--sal)}.badge.g{background:var(--hid-bg);color:var(--hid)}.badge.x{background:var(--aci-bg);color:var(--aci)}
+.cmp{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr));gap:12px}
+.cmp .card{border-top:5px solid var(--fam)}
+.cmp .card.j{border-top-color:var(--oxi)}.cmp .card.g{border-top-color:var(--hid)}
+table.cmpt td:first-child{font-weight:700;white-space:nowrap}
+</style></head><body class=""><a href="../../index.html" style="display:block;padding:8px 16px;background:#1b2033;color:#fff;font:600 15px/1.3 system-ui,'Segoe UI',sans-serif;text-decoration:none;position:relative;z-index:60">← Índice principal</a><div class="wrap"><nav class="top"><a href="index.html#reales">← Índice</a><div class="r"><a href="examen-real-03.html">Examen real 03 →</a></div></nav><header><span class="k">Examen real · aspectos cuantitativos de la materia</span><h1>Examen real 02</h1><p class="lead">Cinco ejercicios de <b>2 puntos</b>, del nivel de un examen de verdad: mezclan varias leyes y hay que pensar qué usar; no se dice qué apartado es. Escribe cada resultado <b>con su unidad</b> (3 cifras significativas) y, debajo, el <b>desarrollo completo</b>: nombre y enunciado de cada ley usada, unidades, pasos y comprobación. Al corregir: 1 punto por resultados (sin unidad o con unidad mal, solo el 40 %), 1 punto por el desarrollo (ideas clave). Datos que debes saber: R = 0,082 atm·L/(K·mol); 1 atm = 760 mmHg = 10⁵ Pa; N<sub>A</sub> = 6,023 · 10²³; 0 °C = 273 K; condiciones estándar 10⁵ Pa y 273,15 K.</p></header><div class="toolbar" role="group" aria-label="Símbolos"><button class="sym" type="button" data-c="₂">₂</button><button class="sym" type="button" data-c="₃">₃</button><button class="sym" type="button" data-c="₄">₄</button><button class="sym" type="button" data-c="₅">₅</button><button class="sym" type="button" data-c="₆">₆</button><button class="sym" type="button" data-c="²">²</button><button class="sym" type="button" data-c="³">³</button><button class="sym" type="button" data-c="⁺">⁺</button><button class="sym" type="button" data-c="⁻">⁻</button><button class="sym" type="button" data-c="·">·</button><button class="sym" type="button" data-c="e">e (·10^)</button></div><ol id="qs"></ol><div class="actions"><button class="main" id="check" type="button">Corregir examen</button><button class="ghost" id="reset" type="button">Borrar y empezar de nuevo</button></div><section id="result" hidden></section><nav class="top"><a href="index.html#reales">← Índice</a><div class="r"><a href="examen-real-03.html">Examen real 03 →</a></div></nav></div><script>
+(function(){
+  document.querySelectorAll('button.rv').forEach(function(b){
+    b.addEventListener('click',function(){
+      var t=document.getElementById(b.dataset.t);
+      var open=t.classList.toggle('shown');
+      t.querySelectorAll('.ans').forEach(function(c){c.hidden=!open});
+      b.textContent=open?'Ocultar respuestas':'Mostrar respuestas';
+    });
+  });
+  document.querySelectorAll('button.cp').forEach(function(b){
+    b.addEventListener('click',function(){
+      var t=b.dataset.txt||'';
+      if(navigator.clipboard){navigator.clipboard.writeText(t).then(function(){b.textContent='Copiado';setTimeout(function(){b.textContent=b.dataset.l||'Copiar'},1500)})}
+      else{var ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand('copy')}catch(e){}ta.remove();b.textContent='Copiado';setTimeout(function(){b.textContent=b.dataset.l||'Copiar'},1500)}
+    });
+  });
+  document.querySelectorAll('.tabs').forEach(function(g){
+    g.querySelectorAll('button').forEach(function(b){
+      b.addEventListener('click',function(){
+        g.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});
+        var tgt=document.getElementById(g.dataset.t); if(tgt&&b.dataset.src){tgt.src=b.dataset.src}
+        document.querySelectorAll('[data-pane]').forEach(function(p){p.hidden=p.dataset.pane!==b.dataset.v});
+      });
+    });
+  });
+})();
+const QS=[{"t": "real", "tp": "Ejercicio", "p": "El nitrógeno forma con el oxígeno un óxido A que contiene un 36,86 % de nitrógeno, y otro óxido B en el que 7,00 g de nitrógeno se combinan con 16,0 g de oxígeno. Calcula la masa de oxígeno que se combina con 1,00 g de nitrógeno en cada óxido, comprueba qué ley cumplen esos dos valores y, sabiendo que la masa molar de A es 76 g/mol, determina su fórmula molecular (masas atómicas: N = 14, O = 16).", "res": [{"k": "num", "l": "g de O por g de N en A", "v": 1.71, "u": ["g", "gramo", "gramos"], "tol": 0.03}, {"k": "num", "l": "g de O por g de N en B", "v": 2.29, "u": ["g", "gramo", "gramos"], "tol": 0.03}, {"k": "txt", "l": "Fórmula molecular de A (sin subíndices)", "a": ["N2O3"]}], "ideas": [{"d": "En A: 63,14 g de O por 36,86 g de N → 1,71 g de O por g de N; en B: 16,0/7,00 = 2,29", "k": [["1,71"], ["1.71"], ["2,29"], ["2.29"]]}, {"d": "Ley de Dalton de las proporciones múltiples enunciada (masa fija de un elemento, relación de enteros sencillos)", "k": [["dalton"], ["multiples"], ["fija"]]}, {"d": "Cociente 2,29/1,71 = 1,33 = 4/3 → relación 4 : 3, enteros sencillos: se cumple", "k": [["4/3"], ["4:3"], ["4 : 3"], ["1,33"], ["1.33"]]}, {"d": "Fórmula empírica de A: N 36,86/14 = 2,63; O 63,14/16 = 3,95 → 1 : 1,5 → N₂O₃", "k": [["n2o3"], ["n₂o₃"], ["1,5"], ["1.5"]]}, {"d": "Masa de la empírica 76 = masa molar → p = 1, la molecular coincide", "k": [["76"], ["p = 1"], ["p=1"], ["coincide"]]}, {"d": "Unidades y cifras; cita también Proust para la composición fija de cada óxido", "k": [["proust"], ["unidad"]]}], "sol": "<p>A: por cada 36,86 g de N hay 63,14 g de O → 63,14/36,86 = <b>1,71 g de O por g de N</b>. B: 16,0/7,00 = <b>2,29 g</b>.</p><p><b>Dalton</b>: 2,29/1,71 = 1,33 = 4/3 → relación 4 : 3 de números enteros sencillos. Se cumple.</p><p>Empírica de A: N 2,63, O 3,95 → ÷2,63 → 1 : 1,5 → ×2 → N₂O₃ (M = 76). Como coincide con la masa molar, <b>N₂O₃</b> es también la fórmula molecular.</p>"}, {"t": "real", "tp": "Ejercicio", "p": "Un recipiente rígido de 5,00 L contiene 4,00 g de helio y 8,00 g de oxígeno a 27 °C. Se abre una válvula y se deja escapar gas, sin cambiar la temperatura, hasta que la presión interior es de 1,00 atm. Calcula la presión inicial, los moles de gas que quedan y la presión parcial final del oxígeno (masas atómicas: He = 4, O = 16).", "res": [{"k": "num", "l": "Presión inicial", "v": 6.15, "u": ["atm", "atmosfera", "atmosferas"], "tol": 0.03}, {"k": "num", "l": "Moles finales", "v": 0.203, "u": ["mol", "moles"], "tol": 0.03}, {"k": "num", "l": "Presión parcial final del O₂", "v": 0.2, "u": ["atm", "atmosfera", "atmosferas"], "tol": 0.03}], "ideas": [{"d": "Moles iniciales: He 4,00/4 = 1,00 mol; O₂ 8,00/32 = 0,250 mol; total 1,25 mol", "k": [["1,25"], ["1.25"], ["0,25"], ["0.25"]]}, {"d": "Ecuación de estado con T = 300 K: P = nRT/V", "k": [["nrt"], ["300"]]}, {"d": "Ley de Dalton de las presiones parciales enunciada: P = ΣP<sub>i</sub>; cada gas ocupa todo el volumen", "k": [["dalton"], ["parcial"], ["suma"]]}, {"d": "Al escapar gas la mezcla mantiene su composición: fracción molar del O₂ = 0,250/1,25 = 0,200", "k": [["fraccion molar"], ["0,2"], ["0.2"], ["composicion"]]}, {"d": "Moles finales con PV = nRT a 1,00 atm: 0,203 mol", "k": [["0,203"], ["0.203"]]}, {"d": "P(O₂) = X · P<sub>total</sub> = 0,200 atm; unidades", "k": [["x·p"], ["x p"], ["0,200 atm"], ["0,2 atm"], ["unidad"]]}], "sol": "<p>n = 1,00 + 0,250 = 1,25 mol → P = nRT/V = 1,25 · 0,082 · 300/5,00 = <b>6,15 atm</b>.</p><p>Al final: n = PV/RT = 1,00 · 5,00/(0,082 · 300) = <b>0,203 mol</b>. La mezcla que escapa tiene la misma composición que la que queda, así que X(O₂) sigue siendo 0,250/1,25 = 0,200 → <b>Dalton</b>: P(O₂) = 0,200 · 1,00 = <b>0,200 atm</b>.</p>"}, {"t": "real", "tp": "Ejercicio", "p": "Se mezclan 100 mL de ácido clorhídrico 2,00 M con 150 mL de ácido clorhídrico 0,500 M y se añade agua hasta un volumen total de 500 mL. Calcula la concentración molar final y la masa de HCl disuelta. ¿Qué volumen de un ácido clorhídrico comercial del 37,0 % en masa y densidad 1,19 g/mL contiene esa misma masa de HCl? (masas atómicas: H = 1, Cl = 35,5).", "res": [{"k": "num", "l": "Molaridad final", "v": 0.55, "u": ["mol/l", "m", "molar", "mol·l-1", "mol/litro"], "tol": 0.03}, {"k": "num", "l": "Masa de HCl", "v": 10.0, "u": ["g", "gramo", "gramos"], "tol": 0.03}, {"k": "num", "l": "Volumen de ácido comercial", "v": 22.8, "u": ["ml", "mililitro", "mililitros", "cm3", "cm³"], "tol": 0.03}], "ideas": [{"d": "Moles de cada disolución: n = M · V → 0,200 + 0,075 = 0,275 mol", "k": [["0,275"], ["0.275"], ["0,2"], ["0.2"]]}, {"d": "Los moles de soluto se conservan al mezclar y diluir; M = n/V con V = 0,500 L", "k": [["conserva"], ["0,5"], ["0.5"], ["suma"]]}, {"d": "Masa = n · M(HCl) = 0,275 · 36,5", "k": [["36,5"], ["36.5"], ["masa molar"]]}, {"d": "Definición de % en masa: 10,0 g de HCl son el 37,0 % de la disolución comercial → 27,1 g de disolución", "k": [["27,1"], ["27.1"], ["37"]]}, {"d": "Densidad: V = m/d = 27,1/1,19", "k": [["densidad"], ["m/d"], ["1,19"], ["1.19"]]}, {"d": "Resultados con unidades (mol/L, g, mL) y 3 cifras", "k": [["unidad"], ["ml"]]}], "sol": "<p>n = 0,100 · 2,00 + 0,150 · 0,500 = 0,275 mol. <b>M = 0,275/0,500 = 0,550 mol/L</b>. m = 0,275 · 36,5 = <b>10,0 g</b>.</p><p>Comercial: m<sub>disolución</sub> = 10,0/0,370 = 27,1 g → V = 27,1/1,19 = <b>22,8 mL</b>.</p>"}, {"t": "real", "tp": "Ejercicio", "p": "Medidos en las mismas condiciones de presión y temperatura, 2,00 L de un gas desconocido X pesan 4,00 g y 2,00 L de oxígeno pesan 2,00 g. Determina la masa molar de X. Se sabe además que X es un óxido de azufre con un 50,0 % de azufre: escribe su fórmula molecular y calcula cuántas moléculas hay en los 2,00 L si están a 0 °C y 1 atm (masas atómicas: S = 32, O = 16).", "res": [{"k": "num", "l": "Masa molar de X", "v": 64.0, "u": ["g/mol", "gmol-1", "g·mol-1", "g/mol"], "tol": 0.03}, {"k": "txt", "l": "Fórmula molecular (sin subíndices)", "a": ["SO2"]}, {"k": "num", "l": "Número de moléculas", "v": 5.38e+22, "u": ["moleculas", "molec", "molécula", "moleculas de glucosa", "moleculas de so2"], "tol": 0.03}], "ideas": [{"d": "Hipótesis de Avogadro enunciada: volúmenes iguales a igual P y T tienen el mismo número de moléculas (mismos moles)", "k": [["avogadro"], ["mismo numero"], ["mismas moleculas"], ["mismos moles"]]}, {"d": "Mismos moles → las masas son proporcionales a las masas molares: M(X) = 32 · 4,00/2,00", "k": [["proporcional"], ["32"]]}, {"d": "Fórmula empírica: S 50/32 = 1,56; O 50/16 = 3,13 → SO₂ (M = 64, coincide: es la molecular)", "k": [["so2"], ["so₂"], ["1,56"], ["1.56"]]}, {"d": "Moles en 2,00 L a 0 °C y 1 atm con PV = nRT (o 22,4 L/mol): 0,0893 mol", "k": [["22,4"], ["22.4"], ["0,089"], ["0.089"], ["nrt"]]}, {"d": "Moléculas = n · N<sub>A</sub>", "k": [["avogadro"], ["6,02"], ["6.02"]]}, {"d": "Unidades (g/mol) y notación científica", "k": [["g/mol"], ["10^22"], ["10²²"], ["e22"]]}], "sol": "<p><b>Avogadro</b>: a igual P, T y V hay los mismos moles, así que las masas están en la relación de las masas molares: M(X) = 32 · 4,00/2,00 = <b>64,0 g/mol</b>.</p><p>Empírica: S 1,56, O 3,13 → 1 : 2 → SO₂, M = 64 → molecular <b>SO₂</b>.</p><p>n = PV/RT = 1 · 2,00/(0,082 · 273) = 0,0893 mol → N = 0,0893 · 6,023 · 10²³ = <b>5,38 · 10²² moléculas</b>.</p>"}, {"t": "real", "tp": "Ejercicio", "p": "Una disolución preparada con 2,00 g de una proteína en 100 mL de agua presenta una presión osmótica de 15,2 mmHg a 25 °C. Calcula la masa molar de la proteína y el número de moléculas de proteína que hay en la disolución.", "res": [{"k": "num", "l": "Masa molar", "v": 24400.0, "u": ["g/mol", "gmol-1", "g·mol-1", "g/mol"], "tol": 0.03}, {"k": "num", "l": "Número de moléculas", "v": 4.93e+19, "u": ["moleculas", "molec", "molécula", "moleculas de glucosa", "moleculas de proteina"], "tol": 0.03}], "ideas": [{"d": "Presión osmótica definida (presión que impide el paso del disolvente por la membrana semipermeable) y fórmula πV = nRT", "k": [["osmotica"], ["membrana"], ["nrt"], ["π"]]}, {"d": "Pasar 15,2 mmHg a atm (0,0200 atm) y T a 298 K", "k": [["0,02"], ["0.02"], ["760"], ["298"]]}, {"d": "n = πV/RT = 0,0200 · 0,100/(0,082 · 298) = 8,19 · 10⁻⁵ mol", "k": [["8,19"], ["8.19"], ["10^-5"], ["10⁻⁵"], ["e-5"]]}, {"d": "Masa molar = 2,00 g / n", "k": [["masa molar"], ["m/n"], ["2/"]]}, {"d": "Moléculas = n · N<sub>A</sub>", "k": [["avogadro"], ["6,02"], ["6.02"]]}, {"d": "Unidades (g/mol) y notación científica", "k": [["g/mol"], ["10^"], ["e19"], ["10¹⁹"]]}], "sol": "<p>π = 15,2/760 = 0,0200 atm; T = 298 K. πV = nRT → n = 0,0200 · 0,100/(0,082 · 298) = 8,19 · 10⁻⁵ mol.</p><p><b>M = 2,00/8,19·10⁻⁵ = 2,44 · 10⁴ g/mol</b>. Moléculas = 8,19·10⁻⁵ · 6,023·10²³ = <b>4,93 · 10¹⁹</b>.</p>"}];
+const SUP={'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁺':'+','⁻':'-'};
+function nf(s){s=String(s).normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[−–—]/g,'-');s=s.replace(/[₀-₉]/g,function(c){return String(c.charCodeAt(0)-8320)});return s.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻]/g,function(c){return SUP[c]}).replace(/<[^>]+>/g,'')}
+function nz(s){return nf(s).replace(/\s+/g,'').replace(/[\[\]\(\)\{\}]/g,'').replace(/\^/g,'').replace(/,/g,'.')}
+function parseRes(s){
+  s=String(s).trim().replace(/[−–—]/g,'-').replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻]/g,function(c){return SUP[c]});
+  const m=s.match(/^([-+]?\d+(?:[.,]\d+)?(?:\s*(?:[·x*×]\s*10\s*\^?\s*|e)\s*[-+]?\d+)?)\s*(.*)$/i);
+  if(!m) return null;
+  let numtxt=m[1].replace(/\s+/g,'').replace(/[·x*×]10\^?/i,'e').replace(',', '.'); const v=parseFloat(numtxt);
+  if(isNaN(v)) return null;
+  let u=nf(m[2]).replace(/\s+/g,'').replace(/^de/,'').replace(/\.$/,'');
+  return {v:v,u:u};
+}
+function unitOk(u,list){const L=list.map(function(x){return nf(x).replace(/\s+/g,'')}); if(L.indexOf(u)>=0) return true; if(u===''&&L.indexOf('')>=0) return true; return false;}
+function detect(text,ideas){const t=nf(text), ts=t.replace(/\s+/g,'');return ideas.map(function(id){return id.k.some(function(alt){return alt.every(function(kw){const k=nf(kw);return t.indexOf(k)>=0||ts.indexOf(k.replace(/\s+/g,''))>=0})})});}
+function esc(t){return String(t).replace(/&/g,'&amp;').replace(new RegExp(String.fromCharCode(60),'g'),'&lt;')}
+function f2(x){return (Math.round(x*100)/100).toString().replace('.',',')}
+const ST={}; let corrected=false;
+const list=document.getElementById('qs');
+QS.forEach(function(q,i){
+  const n=i+1, li=document.createElement('li'); li.className='qcard'; li.id='q'+n;
+  let h='<div class="qn">'+n+'</div><div class="qb"><span class="tp">Ejercicio '+n+' · 2 puntos</span><div class="qp">'+q.p+'</div>';
+  q.res.forEach(function(r,k){
+    h+='<label class="k" for="r'+n+'_'+k+'" style="text-transform:none;letter-spacing:0;font-size:.95rem;margin-top:6px">'+r.l+(r.k==='num'?' (escribe el número con su unidad)':'')+':</label>';
+    h+='<input type="text" id="r'+n+'_'+k+'" class="ans-in" style="max-width:22rem" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="'+(r.k==='num'?'p. ej. 3,45 g':'p. ej. C2H6')+'">';
+  });
+  h+='<label class="k" for="x'+n+'" style="text-transform:none;letter-spacing:0;font-size:.95rem;margin-top:8px">Desarrollo: leyes que usas (nombre y enunciado), unidades, pasos y comprobación (1 punto):</label><textarea id="x'+n+'" class="ans-x" rows="7" style="width:100%;font:inherit;padding:10px;border-radius:8px;border:1.5px solid var(--line,#999);background:var(--surface,#fff);color:inherit" spellcheck="true"></textarea>';
+  h+='<div class="qf" id="f'+n+'"></div></div>';
+  li.innerHTML=h; list.appendChild(li);
+});
+function scoreEx(i){
+  const q=QS[i], s=ST[i]; if(!s) return 0;
+  let r=0; const share=1/q.res.length;
+  s.res.forEach(function(x){ if(x.val&&x.unit) r+=share; else if(x.val) r+=0.4*share; });
+  const ideasFrac=s.ideas.length?s.ideas.filter(Boolean).length/s.ideas.length:0;
+  return r+ideasFrac;
+}
+function total(){let t=0; QS.forEach(function(q,i){t+=scoreEx(i)}); return t;}
+function nota(){return total();}
+function renderResult(){
+  const res=document.getElementById('result'); const t=total(), nt=nota();
+  let h='<h2>Resultado</h2><p class="big"><b>'+f2(nt)+'</b> de 10</p>';
+  h+='<div class="tw"><table style="min-width:0"><tr><th>Ejercicio</th><th>Resultados</th><th>Desarrollo</th><th>Puntos</th></tr>';
+  QS.forEach(function(q,i){const s=ST[i]; if(!s) return; const rr=s.res.map(function(x){return x.val?(x.unit?'✓':'✓ sin unidad'):'✗'}).join(' · '); h+='<tr><td>'+(i+1)+'</td><td>'+rr+'</td><td>'+s.ideas.filter(Boolean).length+' de '+s.ideas.length+' ideas</td><td><b>'+f2(scoreEx(i))+'</b>'+'</td></tr>'});
+  h+='</table></div><p>Criterio: en cada ejercicio, 1 punto por los resultados (un resultado correcto <b>sin unidad o con unidad equivocada</b> solo vale el 40 %) y 1 punto por el desarrollo (ideas clave).</p>';
+  res.innerHTML=h; res.hidden=false;
+}
+document.getElementById('check').addEventListener('click',function(){
+  if(corrected) return; corrected=true;
+  QS.forEach(function(q,i){
+    const n=i+1, card=document.getElementById('q'+n), fb=document.getElementById('f'+n);
+    const st={res:[],ideas:[]};
+    let h='';
+    q.res.forEach(function(r,k){
+      const inp=document.getElementById('r'+n+'_'+k); inp.readOnly=true; const g=inp.value.trim(); let val=false, unit=false, correct='';
+      if(r.k==='num'){const p=parseRes(g); if(p){const tol=Math.max(Math.abs(r.v)*(r.tol||0.03),1e-9); val=Math.abs(p.v-r.v)<=tol; unit=val&&unitOk(p.u,r.u);} correct=String(r.v).replace('.',',')+(r.u[0]?' '+r.u[0]:'');}
+      else{val=r.a.some(function(a){return nz(a)===nz(g)}); unit=val; correct=r.a[0];}
+      st.res.push({val:val,unit:unit});
+      h+='<p><b>'+r.l+':</b> tu respuesta <span class="f">'+(g?esc(g):'(vacía)')+'</span> → '+(val?(unit?'<span class="good">correcto</span>':'<span style="color:var(--bad)">número correcto pero la unidad falta o está mal (40 %)</span>'):'<span style="color:var(--bad)">incorrecto</span>')+'. Correcto: <span class="f good">'+esc(correct)+'</span></p>';
+    });
+    const xa=document.getElementById('x'+n); xa.readOnly=true; st.ideas=detect(xa.value,q.ideas); ST[i]=st;
+    h+='<div class="expl"><b>Resolución.</b>'+q.sol+'</div>';
+    h+='<p style="margin:10px 0 4px"><b>Ideas que debe tener el desarrollo</b> (marcadas las detectadas; ajústalas con honestidad):</p>';
+    h+=q.ideas.map(function(id,k){return '<label style="display:block;margin:4px 0"><input type="checkbox" data-k="'+k+'"'+(st.ideas[k]?' checked':'')+'> '+id.d+'</label>'}).join('');
+    h+='<p class="sc" id="sc'+i+'"></p>';
+    fb.innerHTML='<div class="fbok" style="border-color:var(--line,#999)">'+h+'</div>';
+    const upd=function(){document.getElementById('sc'+i).innerHTML='Puntos del ejercicio: <b>'+f2(scoreEx(i))+'</b> de 2.'; card.classList.remove('ok','no'); card.classList.add(scoreEx(i)>=1.99?'ok':'no'); renderResult();};
+    fb.querySelectorAll('input[data-k]').forEach(function(c){c.addEventListener('change',function(){st.ideas[+c.dataset.k]=c.checked; upd();})});
+    upd();
+  });
+  renderResult(); document.getElementById('check').disabled=true; document.getElementById('result').scrollIntoView({behavior:'smooth',block:'start'});
+});
+document.getElementById('reset').addEventListener('click',function(){
+  corrected=false;
+  QS.forEach(function(q,i){const n=i+1; q.res.forEach(function(r,k){const inp=document.getElementById('r'+n+'_'+k); inp.readOnly=false; inp.value='';}); const xa=document.getElementById('x'+n); xa.readOnly=false; xa.value=''; document.getElementById('f'+n).innerHTML=''; document.getElementById('q'+n).classList.remove('ok','no');});
+  document.getElementById('result').hidden=true; document.getElementById('check').disabled=false; window.scrollTo({top:0,behavior:'smooth'});
+});
+</script></body></html>

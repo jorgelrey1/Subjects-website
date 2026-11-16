@@ -1,0 +1,188 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Clasificación del sistema periódico</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap"><style>
+:root{
+  --bg:#f6f7fb; --surface:#ffffff; --fg:#1d2233; --muted:#5b6379; --line:#dde1ec;
+  --oxi:#1f5fbf; --oxi-bg:#e4edfb;
+  --hid:#17805a; --hid-bg:#dff3ea;
+  --hox:#c0284f; --hox-bg:#fbe3ea;
+  --aci:#c2570c; --aci-bg:#fdebd9;
+  --sal:#8a3fb0; --sal-bg:#f1e5f8;
+  --guide:#3a4160; --guide-bg:#e8eaf3;
+  --bad:#b3261e; --bad-bg:#fbe4e2; --good:#17805a; --good-bg:#dff3ea;
+
+  --display:"Bricolage Grotesque","Trebuchet MS",sans-serif;
+  --body:"Source Sans 3","Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  --fam:var(--guide); --fam-bg:var(--guide-bg);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12151f; --surface:#1b2030; --fg:#e9ecf6; --muted:#a2a9bf; --line:#2f3650;
+  --oxi:#7fb0ff; --oxi-bg:#1b2b4a;
+  --hid:#5fd0a2; --hid-bg:#173a2e;
+  --hox:#ff8fa8; --hox-bg:#4a1f2d;
+  --aci:#ffa45c; --aci-bg:#4a2b12;
+  --sal:#d29bf0; --sal-bg:#3a2248;
+  --guide:#b9c0e0; --guide-bg:#262c45;
+  --bad:#ff8d85; --bad-bg:#4a1f1c; --good:#5fd0a2; --good-bg:#173a2e;
+ color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12151f; --surface:#1b2030; --fg:#e9ecf6; --muted:#a2a9bf; --line:#2f3650;
+  --oxi:#7fb0ff; --oxi-bg:#1b2b4a;
+  --hid:#5fd0a2; --hid-bg:#173a2e;
+  --hox:#ff8fa8; --hox-bg:#4a1f2d;
+  --aci:#ffa45c; --aci-bg:#4a2b12;
+  --sal:#d29bf0; --sal-bg:#3a2248;
+  --guide:#b9c0e0; --guide-bg:#262c45;
+  --bad:#ff8d85; --bad-bg:#4a1f1c; --good:#5fd0a2; --good-bg:#173a2e;
+ color-scheme:dark}
+body.fam-oxi{--fam:var(--oxi);--fam-bg:var(--oxi-bg)}
+body.fam-hid{--fam:var(--hid);--fam-bg:var(--hid-bg)}
+body.fam-hox{--fam:var(--hox);--fam-bg:var(--hox-bg)}
+body.fam-aci{--fam:var(--aci);--fam-bg:var(--aci-bg)}
+body.fam-sal{--fam:var(--sal);--fam-bg:var(--sal-bg)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.55}
+.wrap{max-width:62rem;margin-inline:auto;padding-inline:16px;padding-block:20px 56px;display:flex;flex-direction:column;gap:40px}
+h1,h2,h3,h4{font-family:var(--display);line-height:1.12;text-wrap:balance;margin:0}
+h1{font-size:clamp(2rem,6vw,3.1rem);font-weight:800}
+h2{font-size:1.55rem;font-weight:800}
+h3{font-size:1.2rem;font-weight:600}
+h4{font-size:1.02rem;font-weight:600}
+p{margin:0}
+a{color:var(--fg);font-weight:700}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--fg);outline-offset:2px}
+.lead{color:var(--muted);max-width:44rem}
+sub{font-size:.75em}
+.f{font-family:var(--mono);font-weight:700}
+.k{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.top{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;justify-content:space-between;font-size:.95rem}
+.top .r{display:flex;gap:8px 18px;flex-wrap:wrap}
+.hero{display:flex;gap:20px;align-items:center;background:var(--fam-bg);color:var(--fam);border-radius:14px;padding:22px}
+.hero svg{flex:none;width:76px;height:76px}
+.hero > div{min-width:0;display:flex;flex-direction:column;gap:8px}
+.hero h1{color:var(--fam)}
+.hero p{color:var(--fg);max-width:42rem}
+.sec{display:flex;flex-direction:column;gap:16px}
+.sh{display:flex;align-items:center;gap:12px}
+.sh::before{content:"";width:12px;height:30px;border-radius:3px;background:var(--fam);flex:none}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));gap:16px}
+.three{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));gap:16px}
+.tag{display:inline-block;padding:2px 10px;border-radius:6px;font-weight:700;font-size:.88rem;background:var(--fam-bg);color:var(--fam)}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:99px;font-weight:700;font-size:.9rem;background:var(--fam-bg);color:var(--fam)}
+.oxi{background:var(--oxi-bg);color:var(--oxi)}.hid{background:var(--hid-bg);color:var(--hid)}
+.hox{background:var(--hox-bg);color:var(--hox)}.aci{background:var(--aci-bg);color:var(--aci)}
+.sal{background:var(--sal-bg);color:var(--sal)}
+.nom{display:inline-block;padding:3px 10px;border:1.5px solid var(--fg);border-radius:6px;font-weight:700;font-size:.9rem;background:var(--surface);color:var(--fg)}
+.pend{border-style:dashed;border-color:var(--muted);color:var(--muted);font-weight:600}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:36rem}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+tr:last-child td{border-bottom:0}
+.cell{white-space:nowrap}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+.q b.t{font-family:var(--display);font-size:1.1rem}
+.q.warn{border-color:var(--aci)}
+.q.pending{border-style:dashed;border-color:var(--muted)}
+.steps{display:flex;flex-direction:column;gap:10px;counter-reset:s;padding:0;margin:0;list-style:none}
+.steps li{counter-increment:s;padding:2px 0 2px 42px;position:relative}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:28px;height:28px;border-radius:50%;background:var(--fam);color:var(--bg);font-family:var(--display);font-weight:800;display:grid;place-items:center;font-size:.95rem}
+.ex{background:var(--fam-bg);border-left:5px solid var(--fam);border-radius:8px;padding:12px 14px;color:var(--fg)}
+.ex .f{color:var(--fam)}
+.nomblock{background:var(--surface);border:1px solid var(--line);border-top:6px solid var(--fam);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.nomblock > header{display:flex;flex-direction:column;gap:6px}
+.dir{display:flex;flex-direction:column;gap:12px;min-width:0}
+.dir h4{color:var(--fam)}
+.struct{font-family:var(--mono);font-weight:700;background:var(--bg);border-radius:8px;padding:10px 14px;overflow-wrap:anywhere}
+.trap{display:grid;grid-template-columns:auto 1fr;gap:10px 14px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:0}
+.trap dt{font-family:var(--mono);font-weight:700;color:var(--fam)}
+.trap dd{margin:0}
+button{font:inherit;font-weight:700;border:2px solid transparent;border-radius:8px;padding:10px 14px;cursor:pointer}
+button.rv{background:var(--fg);color:var(--bg)}
+.ans{font-weight:600}
+.pager{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,16rem),1fr));gap:12px}
+.pager a{display:flex;flex-direction:column;gap:2px;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--surface);text-decoration:none}
+.pager a span.k{font-size:.72rem}
+.pager a:hover{border-color:var(--fam)}
+
+th{text-transform:none;letter-spacing:.02em;font-size:.84rem}
+.sv{width:100%;height:auto;display:block}
+.sv text{fill:var(--fg);font-family:var(--body);font-size:12px}
+.sv text.m{fill:var(--muted)}
+.sv text.b{font-weight:700}
+.sv text.mo{font-family:var(--mono);font-weight:700}
+.sv .ax{stroke:var(--muted);stroke-width:1.3;fill:none}
+.sv .gd{stroke:var(--line);stroke-width:1;fill:none}
+.fig{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.fig .cap{color:var(--muted);font-size:.92rem}
+.tl{display:flex;gap:12px;overflow-x:auto;padding:6px 2px 16px;scroll-snap-type:x proximity}
+.tlc{flex:0 0 17rem;scroll-snap-align:start;background:var(--surface);border:1px solid var(--line);border-top:6px solid var(--fam);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.tlc.out{border-left-style:dashed;border-right-style:dashed;border-bottom-style:dashed}
+.tlc .yr{font-family:var(--display);font-weight:800;font-size:1.5rem;color:var(--fam);line-height:1}
+.tlc .who{font-weight:700}
+.tlc svg{width:100%;height:auto;background:var(--fam-bg);border-radius:8px;color:var(--fam)}
+.tlc svg text{fill:var(--fam);font-family:var(--body);font-size:10px;font-weight:700}
+.tlc .mini{font-size:.93rem;color:var(--fg)}
+.tlc ul{margin:0;padding-left:1.1rem;font-size:.93rem}
+.gap{flex:0 0 3.2rem;display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:700;font-size:.85rem;writing-mode:vertical-rl;text-orientation:mixed;border-inline:2px dotted var(--line)}
+.noex{display:inline-block;font-size:.78rem;font-weight:700;padding:2px 8px;border-radius:6px;background:var(--bg);border:1px dashed var(--muted);color:var(--muted);width:fit-content}
+.pt{display:grid;grid-template-columns:1.5rem repeat(18,minmax(2.7rem,1fr));gap:3px;min-width:56rem}
+.pt .gh,.pt .ph0{font-size:.72rem;font-weight:700;color:var(--muted);text-align:center;align-self:center}
+.pt .e{aspect-ratio:1/1.08;border-radius:5px;padding:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.55rem;line-height:1.05;background:color-mix(in srgb,var(--c,var(--muted)) 24%,var(--surface));border:1px solid color-mix(in srgb,var(--c,var(--muted)) 55%,var(--surface));min-width:0;overflow:hidden}
+.pt .e b{font-family:var(--mono);font-size:.98rem;line-height:1.1}
+.pt .e i{font-style:normal;color:var(--muted);font-size:.58rem}
+.pt .e small{font-size:.5rem;color:var(--muted);max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pt .e.ph{background:transparent;border-style:dashed;color:var(--muted);font-size:.6rem;text-align:center}
+.pt[data-v=bloque] .e.s{--c:var(--oxi)}.pt[data-v=bloque] .e.p{--c:var(--hid)}.pt[data-v=bloque] .e.d{--c:var(--hox)}.pt[data-v=bloque] .e.f{--c:var(--aci)}
+.pt[data-v=tipo] .e.t-alc{--c:#e0524a}.pt[data-v=tipo] .e.t-ake{--c:#e58a2b}.pt[data-v=tipo] .e.t-tr{--c:#d8b020}.pt[data-v=tipo] .e.t-pt{--c:#6aa84f}.pt[data-v=tipo] .e.t-la{--c:#c0599a}.pt[data-v=tipo] .e.t-ac{--c:#9a5fc0}
+.pt[data-v=tipo] .e.t-mo{--c:#2aa198}.pt[data-v=tipo] .e.t-nm{--c:#3b82d6}.pt[data-v=tipo] .e.t-ha{--c:#6c63d9}.pt[data-v=tipo] .e.t-ng{--c:#8a8fa8}
+.pt[data-v=metal] .e.m1{--c:#d8a020}.pt[data-v=metal] .e.m2{--c:#2aa198}.pt[data-v=metal] .e.m3{--c:#3b82d6}
+.pt[data-v=grupo] .e.g1{--c:#e0524a}.pt[data-v=grupo] .e.g2{--c:#e58a2b}.pt[data-v=grupo] .e.g13{--c:#d8b020}.pt[data-v=grupo] .e.g14{--c:#6aa84f}.pt[data-v=grupo] .e.g15{--c:#2aa198}.pt[data-v=grupo] .e.g16{--c:#3b82d6}.pt[data-v=grupo] .e.g17{--c:#6c63d9}.pt[data-v=grupo] .e.g18{--c:#c0599a}.pt[data-v=grupo] .e.gd{--c:var(--muted)}
+.lg{display:flex;flex-wrap:wrap;gap:6px}
+.lg[hidden]{display:none}
+.lg span{display:inline-flex;gap:6px;align-items:center;padding:3px 10px;border-radius:99px;border:1px solid var(--line);background:var(--surface);font-size:.85rem;font-weight:600}
+.lg span::before{content:"";width:12px;height:12px;border-radius:3px;background:var(--c)}
+.ptw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:10px}
+.vb{display:flex;flex-wrap:wrap;gap:8px}
+button.vbtn{background:var(--surface);color:var(--fg);border:1.5px solid var(--line);padding:6px 14px}
+button.vbtn[aria-pressed=true]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+table.heat{min-width:0;width:auto}
+table.heat th,table.heat td{text-align:center;padding:6px 10px}
+table.heat td.hv{font-family:var(--mono);font-weight:700;background:color-mix(in srgb,var(--fam) calc(var(--p,0) * 1%),var(--surface));min-width:4.4rem}
+table.heat td.hv span{display:block;font-family:var(--body);font-size:.78rem;font-weight:600;color:var(--muted)}
+table.heat td.na{color:var(--muted);font-weight:600}
+.bx{display:inline-block;min-width:2.5rem;height:1.7rem;line-height:1.55rem;text-align:center;border:1.6px solid var(--fam);border-radius:4px;font-family:var(--mono);font-weight:700;margin-right:3px;background:var(--surface)}
+.arrowtbl td{vertical-align:middle}
+.up{color:var(--good)}.dn{color:var(--bad)}
+.tr3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr));gap:12px}
+.tr3 .card b{font-family:var(--display)}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opts label{display:flex;gap:10px;align-items:flex-start;padding:8px 12px;border:1.5px solid var(--line);border-radius:8px;background:var(--bg);cursor:pointer}
+.opts input{margin-top:.35rem}
+.opts label.sel{border-color:var(--fg)}
+.opts label.right{border-color:var(--good);background:var(--good-bg)}
+.opts label.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.expl{color:var(--fg);font-size:.97rem}
+.tp{font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+</style></head><body class="fam-hid"><a href="../../index.html" style="display:block;padding:8px 16px;background:#1b2033;color:#fff;font:600 15px/1.3 system-ui,'Segoe UI',sans-serif;text-decoration:none;position:relative;z-index:60">← Índice principal</a><div class="wrap"><nav class="top"><a href="index.html">← Índice</a><div class="r"><a href="modelos-atomicos.html">Modelos atómicos</a><a href="tabla-periodica.html">Tabla periódica</a><a href="propiedades-periodicas.html">Propiedades</a><a href="enlace-conceptos.html">Enlaces</a><a href="resumen.html">Resumen</a></div></nav><header class="hero"><svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="9" width="38" height="30" rx="3"/><path d="M5 19h38M5 29h38M17 9v30M30 9v30"/></svg><div><span class="k">Naturaleza de la materia</span><h1>Moseley y la clasificación del sistema periódico</h1><p>Moseley, periodos y grupos, elementos representativos y los inconvenientes de la tabla, como en tus apuntes.</p></div></header><section class="sec"><div class="sh"><h2>Sistema periódico: Moseley</h2></div><div class="three"><div class="card"><span class="k">Moseley</span><p>Ordena los elementos en <b>orden creciente de Z</b> (número atómico).</p></div><div class="card"><span class="k">7 periodos</span><p>Las <b>filas</b>.</p></div><div class="card"><span class="k">18 grupos</span><p>Las <b>columnas</b> (familias).</p></div></div><p>Cambia la vista si quieres; pasa el cursor sobre un elemento para ver su nombre y su Z.</p><div id="pt-lg"><div class="lg" data-for="bloque"><span style="--c:var(--oxi)">Bloque s</span><span style="--c:var(--hid)">Bloque p</span><span style="--c:var(--hox)">Bloque d</span><span style="--c:var(--aci)">Bloque f</span></div><div class="lg" data-for="grupo" hidden><span style="--c:#e0524a">Alcalinos (1)</span><span style="--c:#e58a2b">Alcalinotérreos (2)</span><span style="--c:#d8b020">Térreos (13)</span><span style="--c:#6aa84f">Carbonoideos (14)</span><span style="--c:#2aa198">Nitrogenoideos (15)</span><span style="--c:#3b82d6">Anfígenos (16)</span><span style="--c:#6c63d9">Halógenos (17)</span><span style="--c:#c0599a">Gases nobles (18)</span><span style="--c:var(--muted)">Transición y f</span></div><div class="lg" data-for="tipo" hidden><span style="--c:#e0524a">Alcalinos</span><span style="--c:#e58a2b">Alcalinotérreos</span><span style="--c:#d8b020">Metales de transición</span><span style="--c:#6aa84f">Otros metales</span><span style="--c:#3b82d6">No metales</span><span style="--c:#6c63d9">Halógenos</span><span style="--c:#8a8fa8">Gases nobles</span><span style="--c:#c0599a">Lantánidos</span><span style="--c:#9a5fc0">Actínidos</span></div><div class="lg" data-for="metal" hidden><span style="--c:#d8a020">Metales</span><span style="--c:#3b82d6">No metales</span></div></div><div class="ptw"><div class="pt" id="pt" data-v="bloque"><div class="ph0"></div><div class="gh">1</div><div class="gh">2</div><div class="gh">3</div><div class="gh">4</div><div class="gh">5</div><div class="gh">6</div><div class="gh">7</div><div class="gh">8</div><div class="gh">9</div><div class="gh">10</div><div class="gh">11</div><div class="gh">12</div><div class="gh">13</div><div class="gh">14</div><div class="gh">15</div><div class="gh">16</div><div class="gh">17</div><div class="gh">18</div><div class="ph0">1</div><div class="e s t-nm m3 g1" title="Hidrógeno (Z = 1)"><i>1</i><b>H</b><small>Hidrógeno</small></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div class="e s t-ng m3 g18" title="Helio (Z = 2)"><i>2</i><b>He</b><small>Helio</small></div><div class="ph0">2</div><div class="e s t-alc m1 g1" title="Litio (Z = 3)"><i>3</i><b>Li</b><small>Litio</small></div><div class="e s t-ake m1 g2" title="Berilio (Z = 4)"><i>4</i><b>Be</b><small>Berilio</small></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div class="e p t-nm m3 g13" title="Boro (Z = 5)"><i>5</i><b>B</b><small>Boro</small></div><div class="e p t-nm m3 g14" title="Carbono (Z = 6)"><i>6</i><b>C</b><small>Carbono</small></div><div class="e p t-nm m3 g15" title="Nitrógeno (Z = 7)"><i>7</i><b>N</b><small>Nitrógeno</small></div><div class="e p t-nm m3 g16" title="Oxígeno (Z = 8)"><i>8</i><b>O</b><small>Oxígeno</small></div><div class="e p t-ha m3 g17" title="Flúor (Z = 9)"><i>9</i><b>F</b><small>Flúor</small></div><div class="e p t-ng m3 g18" title="Neón (Z = 10)"><i>10</i><b>Ne</b><small>Neón</small></div><div class="ph0">3</div><div class="e s t-alc m1 g1" title="Sodio (Z = 11)"><i>11</i><b>Na</b><small>Sodio</small></div><div class="e s t-ake m1 g2" title="Magnesio (Z = 12)"><i>12</i><b>Mg</b><small>Magnesio</small></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div class="e p t-pt m1 g13" title="Aluminio (Z = 13)"><i>13</i><b>Al</b><small>Aluminio</small></div><div class="e p t-nm m3 g14" title="Silicio (Z = 14)"><i>14</i><b>Si</b><small>Silicio</small></div><div class="e p t-nm m3 g15" title="Fósforo (Z = 15)"><i>15</i><b>P</b><small>Fósforo</small></div><div class="e p t-nm m3 g16" title="Azufre (Z = 16)"><i>16</i><b>S</b><small>Azufre</small></div><div class="e p t-ha m3 g17" title="Cloro (Z = 17)"><i>17</i><b>Cl</b><small>Cloro</small></div><div class="e p t-ng m3 g18" title="Argón (Z = 18)"><i>18</i><b>Ar</b><small>Argón</small></div><div class="ph0">4</div><div class="e s t-alc m1 g1" title="Potasio (Z = 19)"><i>19</i><b>K</b><small>Potasio</small></div><div class="e s t-ake m1 g2" title="Calcio (Z = 20)"><i>20</i><b>Ca</b><small>Calcio</small></div><div class="e d t-tr m1 gd" title="Escandio (Z = 21)"><i>21</i><b>Sc</b><small>Escandio</small></div><div class="e d t-tr m1 gd" title="Titanio (Z = 22)"><i>22</i><b>Ti</b><small>Titanio</small></div><div class="e d t-tr m1 gd" title="Vanadio (Z = 23)"><i>23</i><b>V</b><small>Vanadio</small></div><div class="e d t-tr m1 gd" title="Cromo (Z = 24)"><i>24</i><b>Cr</b><small>Cromo</small></div><div class="e d t-tr m1 gd" title="Manganeso (Z = 25)"><i>25</i><b>Mn</b><small>Manganeso</small></div><div class="e d t-tr m1 gd" title="Hierro (Z = 26)"><i>26</i><b>Fe</b><small>Hierro</small></div><div class="e d t-tr m1 gd" title="Cobalto (Z = 27)"><i>27</i><b>Co</b><small>Cobalto</small></div><div class="e d t-tr m1 gd" title="Níquel (Z = 28)"><i>28</i><b>Ni</b><small>Níquel</small></div><div class="e d t-tr m1 gd" title="Cobre (Z = 29)"><i>29</i><b>Cu</b><small>Cobre</small></div><div class="e d t-tr m1 gd" title="Cinc (Z = 30)"><i>30</i><b>Zn</b><small>Cinc</small></div><div class="e p t-pt m1 g13" title="Galio (Z = 31)"><i>31</i><b>Ga</b><small>Galio</small></div><div class="e p t-pt m1 g14" title="Germanio (Z = 32)"><i>32</i><b>Ge</b><small>Germanio</small></div><div class="e p t-nm m3 g15" title="Arsénico (Z = 33)"><i>33</i><b>As</b><small>Arsénico</small></div><div class="e p t-nm m3 g16" title="Selenio (Z = 34)"><i>34</i><b>Se</b><small>Selenio</small></div><div class="e p t-ha m3 g17" title="Bromo (Z = 35)"><i>35</i><b>Br</b><small>Bromo</small></div><div class="e p t-ng m3 g18" title="Criptón (Z = 36)"><i>36</i><b>Kr</b><small>Criptón</small></div><div class="ph0">5</div><div class="e s t-alc m1 g1" title="Rubidio (Z = 37)"><i>37</i><b>Rb</b><small>Rubidio</small></div><div class="e s t-ake m1 g2" title="Estroncio (Z = 38)"><i>38</i><b>Sr</b><small>Estroncio</small></div><div class="e d t-tr m1 gd" title="Itrio (Z = 39)"><i>39</i><b>Y</b><small>Itrio</small></div><div class="e d t-tr m1 gd" title="Circonio (Z = 40)"><i>40</i><b>Zr</b><small>Circonio</small></div><div class="e d t-tr m1 gd" title="Niobio (Z = 41)"><i>41</i><b>Nb</b><small>Niobio</small></div><div class="e d t-tr m1 gd" title="Molibdeno (Z = 42)"><i>42</i><b>Mo</b><small>Molibdeno</small></div><div class="e d t-tr m1 gd" title="Tecnecio (Z = 43)"><i>43</i><b>Tc</b><small>Tecnecio</small></div><div class="e d t-tr m1 gd" title="Rutenio (Z = 44)"><i>44</i><b>Ru</b><small>Rutenio</small></div><div class="e d t-tr m1 gd" title="Rodio (Z = 45)"><i>45</i><b>Rh</b><small>Rodio</small></div><div class="e d t-tr m1 gd" title="Paladio (Z = 46)"><i>46</i><b>Pd</b><small>Paladio</small></div><div class="e d t-tr m1 gd" title="Plata (Z = 47)"><i>47</i><b>Ag</b><small>Plata</small></div><div class="e d t-tr m1 gd" title="Cadmio (Z = 48)"><i>48</i><b>Cd</b><small>Cadmio</small></div><div class="e p t-pt m1 g13" title="Indio (Z = 49)"><i>49</i><b>In</b><small>Indio</small></div><div class="e p t-pt m1 g14" title="Estaño (Z = 50)"><i>50</i><b>Sn</b><small>Estaño</small></div><div class="e p t-pt m1 g15" title="Antimonio (Z = 51)"><i>51</i><b>Sb</b><small>Antimonio</small></div><div class="e p t-nm m3 g16" title="Telurio (Z = 52)"><i>52</i><b>Te</b><small>Telurio</small></div><div class="e p t-ha m3 g17" title="Yodo (Z = 53)"><i>53</i><b>I</b><small>Yodo</small></div><div class="e p t-ng m3 g18" title="Xenón (Z = 54)"><i>54</i><b>Xe</b><small>Xenón</small></div><div class="ph0">6</div><div class="e s t-alc m1 g1" title="Cesio (Z = 55)"><i>55</i><b>Cs</b><small>Cesio</small></div><div class="e s t-ake m1 g2" title="Bario (Z = 56)"><i>56</i><b>Ba</b><small>Bario</small></div><div class="e ph">57–71</div><div class="e d t-tr m1 gd" title="Hafnio (Z = 72)"><i>72</i><b>Hf</b><small>Hafnio</small></div><div class="e d t-tr m1 gd" title="Tántalo (Z = 73)"><i>73</i><b>Ta</b><small>Tántalo</small></div><div class="e d t-tr m1 gd" title="Wolframio (Z = 74)"><i>74</i><b>W</b><small>Wolframio</small></div><div class="e d t-tr m1 gd" title="Renio (Z = 75)"><i>75</i><b>Re</b><small>Renio</small></div><div class="e d t-tr m1 gd" title="Osmio (Z = 76)"><i>76</i><b>Os</b><small>Osmio</small></div><div class="e d t-tr m1 gd" title="Iridio (Z = 77)"><i>77</i><b>Ir</b><small>Iridio</small></div><div class="e d t-tr m1 gd" title="Platino (Z = 78)"><i>78</i><b>Pt</b><small>Platino</small></div><div class="e d t-tr m1 gd" title="Oro (Z = 79)"><i>79</i><b>Au</b><small>Oro</small></div><div class="e d t-tr m1 gd" title="Mercurio (Z = 80)"><i>80</i><b>Hg</b><small>Mercurio</small></div><div class="e p t-pt m1 g13" title="Talio (Z = 81)"><i>81</i><b>Tl</b><small>Talio</small></div><div class="e p t-pt m1 g14" title="Plomo (Z = 82)"><i>82</i><b>Pb</b><small>Plomo</small></div><div class="e p t-pt m1 g15" title="Bismuto (Z = 83)"><i>83</i><b>Bi</b><small>Bismuto</small></div><div class="e p t-pt m1 g16" title="Polonio (Z = 84)"><i>84</i><b>Po</b><small>Polonio</small></div><div class="e p t-ha m3 g17" title="Astato (Z = 85)"><i>85</i><b>At</b><small>Astato</small></div><div class="e p t-ng m3 g18" title="Radón (Z = 86)"><i>86</i><b>Rn</b><small>Radón</small></div><div class="ph0">7</div><div class="e s t-alc m1 g1" title="Francio (Z = 87)"><i>87</i><b>Fr</b><small>Francio</small></div><div class="e s t-ake m1 g2" title="Radio (Z = 88)"><i>88</i><b>Ra</b><small>Radio</small></div><div class="e ph">89–103</div><div class="e d t-tr m1 gd" title="Rutherfordio (Z = 104)"><i>104</i><b>Rf</b><small>Rutherfordio</small></div><div class="e d t-tr m1 gd" title="Dubnio (Z = 105)"><i>105</i><b>Db</b><small>Dubnio</small></div><div class="e d t-tr m1 gd" title="Seaborgio (Z = 106)"><i>106</i><b>Sg</b><small>Seaborgio</small></div><div class="e d t-tr m1 gd" title="Bohrio (Z = 107)"><i>107</i><b>Bh</b><small>Bohrio</small></div><div class="e d t-tr m1 gd" title="Hasio (Z = 108)"><i>108</i><b>Hs</b><small>Hasio</small></div><div class="e d t-tr m1 gd" title="Meitnerio (Z = 109)"><i>109</i><b>Mt</b><small>Meitnerio</small></div><div class="e d t-tr m1 gd" title="Darmstatio (Z = 110)"><i>110</i><b>Ds</b><small>Darmstatio</small></div><div class="e d t-tr m1 gd" title="Roentgenio (Z = 111)"><i>111</i><b>Rg</b><small>Roentgenio</small></div><div class="e d t-tr m1 gd" title="Copernicio (Z = 112)"><i>112</i><b>Cn</b><small>Copernicio</small></div><div class="e p t-pt m1 g13" title="Nihonio (Z = 113)"><i>113</i><b>Nh</b><small>Nihonio</small></div><div class="e p t-pt m1 g14" title="Flerovio (Z = 114)"><i>114</i><b>Fl</b><small>Flerovio</small></div><div class="e p t-pt m1 g15" title="Moscovio (Z = 115)"><i>115</i><b>Mc</b><small>Moscovio</small></div><div class="e p t-pt m1 g16" title="Livermorio (Z = 116)"><i>116</i><b>Lv</b><small>Livermorio</small></div><div class="e p t-ha m3 g17" title="Teneso (Z = 117)"><i>117</i><b>Ts</b><small>Teneso</small></div><div class="e p t-ng m3 g18" title="Oganesón (Z = 118)"><i>118</i><b>Og</b><small>Oganesón</small></div><div style="grid-column:1/-1;height:6px"></div><div class="ph0">6</div><div></div><div></div><div class="e f t-la m1 gd" title="Lantano (Z = 57)"><i>57</i><b>La</b><small>Lantano</small></div><div class="e f t-la m1 gd" title="Cerio (Z = 58)"><i>58</i><b>Ce</b><small>Cerio</small></div><div class="e f t-la m1 gd" title="Praseodimio (Z = 59)"><i>59</i><b>Pr</b><small>Praseodimio</small></div><div class="e f t-la m1 gd" title="Neodimio (Z = 60)"><i>60</i><b>Nd</b><small>Neodimio</small></div><div class="e f t-la m1 gd" title="Prometio (Z = 61)"><i>61</i><b>Pm</b><small>Prometio</small></div><div class="e f t-la m1 gd" title="Samario (Z = 62)"><i>62</i><b>Sm</b><small>Samario</small></div><div class="e f t-la m1 gd" title="Europio (Z = 63)"><i>63</i><b>Eu</b><small>Europio</small></div><div class="e f t-la m1 gd" title="Gadolinio (Z = 64)"><i>64</i><b>Gd</b><small>Gadolinio</small></div><div class="e f t-la m1 gd" title="Terbio (Z = 65)"><i>65</i><b>Tb</b><small>Terbio</small></div><div class="e f t-la m1 gd" title="Disprosio (Z = 66)"><i>66</i><b>Dy</b><small>Disprosio</small></div><div class="e f t-la m1 gd" title="Holmio (Z = 67)"><i>67</i><b>Ho</b><small>Holmio</small></div><div class="e f t-la m1 gd" title="Erbio (Z = 68)"><i>68</i><b>Er</b><small>Erbio</small></div><div class="e f t-la m1 gd" title="Tulio (Z = 69)"><i>69</i><b>Tm</b><small>Tulio</small></div><div class="e f t-la m1 gd" title="Iterbio (Z = 70)"><i>70</i><b>Yb</b><small>Iterbio</small></div><div class="e f t-la m1 gd" title="Lutecio (Z = 71)"><i>71</i><b>Lu</b><small>Lutecio</small></div><div></div><div class="ph0">7</div><div></div><div></div><div class="e f t-ac m1 gd" title="Actinio (Z = 89)"><i>89</i><b>Ac</b><small>Actinio</small></div><div class="e f t-ac m1 gd" title="Torio (Z = 90)"><i>90</i><b>Th</b><small>Torio</small></div><div class="e f t-ac m1 gd" title="Protactinio (Z = 91)"><i>91</i><b>Pa</b><small>Protactinio</small></div><div class="e f t-ac m1 gd" title="Uranio (Z = 92)"><i>92</i><b>U</b><small>Uranio</small></div><div class="e f t-ac m1 gd" title="Neptunio (Z = 93)"><i>93</i><b>Np</b><small>Neptunio</small></div><div class="e f t-ac m1 gd" title="Plutonio (Z = 94)"><i>94</i><b>Pu</b><small>Plutonio</small></div><div class="e f t-ac m1 gd" title="Americio (Z = 95)"><i>95</i><b>Am</b><small>Americio</small></div><div class="e f t-ac m1 gd" title="Curio (Z = 96)"><i>96</i><b>Cm</b><small>Curio</small></div><div class="e f t-ac m1 gd" title="Berkelio (Z = 97)"><i>97</i><b>Bk</b><small>Berkelio</small></div><div class="e f t-ac m1 gd" title="Californio (Z = 98)"><i>98</i><b>Cf</b><small>Californio</small></div><div class="e f t-ac m1 gd" title="Einstenio (Z = 99)"><i>99</i><b>Es</b><small>Einstenio</small></div><div class="e f t-ac m1 gd" title="Fermio (Z = 100)"><i>100</i><b>Fm</b><small>Fermio</small></div><div class="e f t-ac m1 gd" title="Mendelevio (Z = 101)"><i>101</i><b>Md</b><small>Mendelevio</small></div><div class="e f t-ac m1 gd" title="Nobelio (Z = 102)"><i>102</i><b>No</b><small>Nobelio</small></div><div class="e f t-ac m1 gd" title="Lawrencio (Z = 103)"><i>103</i><b>Lr</b><small>Lawrencio</small></div><div></div></div></div><div class="card"><h3>Elementos representativos</h3><p>Los grupos <b>1, 2 y 13 a 18</b>. Tienen <b>estructuras electrónicas semejantes</b> y, por eso, <b>propiedades químicas similares</b>.</p></div></section><section class="sec"><div class="sh"><h2>Cómo se lee: periodo y grupo</h2></div><p>Como en tus apuntes: el <b>grupo</b> sale del <b>electrón diferenciador</b> y el <b>periodo</b> es el valor de <b>n</b>.</p><div class="ex"><b>Br (Z = 35):</b> <span class="f">1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup> 3s<sup>2</sup> 3p<sup>6</sup> 4s<sup>2</sup> 3d<sup>10</sup> 4p<sup>5</sup></span><br>Electrón diferenciador: <b>4p<sup>5</sup></b>. <b>Grupo</b>: el que indica el electrón diferenciador (4p<sup>5</sup>: grupo 17). <b>Periodo</b> = n = <b>4</b>.</div><p class="lead">Para esto hace falta saber la <a href="configuracion-electronica.html">configuración electrónica</a>. Y para memorizar los elementos: <a href="aprender-tabla.html">aprenderse la tabla periódica</a>.</p></section><section class="sec"><div class="sh"><h2>Metales y no metales</h2></div><p>Un átomo es <b>metal</b> cuando <b>suele ceder electrones</b> y <b>no metal</b> cuando <b>suele captar electrones</b>.</p></section><section class="sec"><div class="sh"><h2>Inconvenientes de la tabla actual</h2></div><div class="tw"><table><tr><th>Inconveniente</th><th>En qué consiste</th></tr><tr><td><b>Anexo</b></td><td>Elementos de transición interna (tierras raras): <b>lantánidos y actínidos</b>.</td></tr><tr><td><b>Hidrógeno</b></td><td>Su posición en la tabla.</td></tr><tr><td><b>Configuraciones electrónicas anómalas</b></td><td>Algunos elementos no siguen el orden esperado.</td></tr><tr><td><b>Orden creciente de masa (A)</b></td><td>No siempre se da.</td></tr></table></div></section><section class="sec"><div class="sh"><h2>Errores típicos</h2></div><dl class="trap"><dt>1</dt><dd>Periodo = fila (n del último nivel). Grupo = columna.</dd><dt>2</dt><dd>Moseley ordena por <b>número atómico Z</b>, no por masa.</dd><dt>3</dt><dd>Representativos: grupos <b>1, 2 y 13–18</b>.</dd><dt>4</dt><dd>Metal: suele ceder e<sup>−</sup>. No metal: suele captar e<sup>−</sup>.</dd></dl></section><section class="sec"><div class="sh"><h2>Práctica: tapa y comprueba</h2></div><div class="tw"><table id="pr"><tr><th>Enunciado</th><th>Respuesta</th></tr><tr><td>¿Qué propiedad usó Moseley para ordenar los elementos?</td><td class="ans" hidden>El número atómico (Z), en orden creciente</td></tr><tr><td>¿Cuántos periodos y cuántos grupos tiene la tabla?</td><td class="ans" hidden>7 periodos y 18 grupos</td></tr><tr><td>¿Qué grupos son los elementos representativos?</td><td class="ans" hidden>1, 2 y 13 a 18</td></tr><tr><td>¿Por qué los representativos tienen propiedades químicas parecidas?</td><td class="ans" hidden>Porque tienen estructuras electrónicas semejantes</td></tr><tr><td>Br (Z = 35): ¿cuál es su electrón diferenciador, su periodo y su grupo?</td><td class="ans" hidden>4p⁵; periodo 4 (n = 4); grupo 17</td></tr><tr><td>¿Cuándo se considera que un átomo es metal y cuándo no metal?</td><td class="ans" hidden>Metal: suele ceder electrones; no metal: suele captar electrones</td></tr><tr><td>Cuatro inconvenientes de la tabla actual.</td><td class="ans" hidden>El anexo (lantánidos y actínidos), el hidrógeno, las configuraciones anómalas y que el orden creciente de masa (A) no siempre se da</td></tr></table></div><div><button class="rv" data-t="pr" type="button">Mostrar respuestas</button></div></section><section class="sec"><div class="sh"><h2>Teoría: explícalo con tus propias palabras</h2></div><div class="tw"><table id="pr2"><tr><th>Enunciado</th><th>Respuesta</th></tr><tr><td>Explica cómo ordenó <b>Moseley</b> los elementos y cuántos periodos y grupos tiene la tabla.</td><td class="ans" hidden><p><b>Moseley</b> los ordenó en <b>orden creciente de Z</b> (número atómico). La tabla tiene <b>7 periodos</b> (filas) y <b>18 grupos</b> (columnas).</p><p><b>Ideas clave que debería tener tu respuesta:</b></p><ul><li>Moseley: orden creciente de Z</li><li>7 periodos</li><li>18 grupos</li></ul></td></tr><tr><td>¿Qué elementos se llaman <b>representativos</b> y por qué se parecen?</td><td class="ans" hidden><p>Son los de los <b>grupos 1, 2 y 13 a 18</b>. Tienen <b>estructuras electrónicas semejantes</b> y, por eso, <b>propiedades químicas similares</b>.</p><p><b>Ideas clave que debería tener tu respuesta:</b></p><ul><li>Grupos 1, 2 y 13 a 18</li><li>Estructuras electrónicas semejantes</li><li>Propiedades químicas similares</li></ul></td></tr><tr><td>Enumera los <b>cuatro inconvenientes</b> de la tabla periódica actual.</td><td class="ans" hidden><p>1) El <b>anexo</b> (elementos de transición interna: lantánidos y actínidos, «tierras raras»). 2) La posición del <b>hidrógeno</b>. 3) Las <b>configuraciones electrónicas anómalas</b>. 4) El <b>orden creciente de masa (A)</b> no siempre se da.</p><p><b>Ideas clave que debería tener tu respuesta:</b></p><ul><li>El anexo: lantánidos y actínidos</li><li>La posición del hidrógeno</li><li>Configuraciones electrónicas anómalas</li><li>El orden de masa A no siempre se da</li></ul></td></tr></table></div><div><button class="rv" data-t="pr2" type="button">Mostrar respuestas</button></div></section><nav class="pager"><a href="modelos-atomicos.html"><span class="k">Anterior</span><b>Modelos atómicos</b></a><a href="configuracion-electronica.html"><span class="k">Siguiente</span><b>Configuración electrónica</b></a><a href="index.html"><span class="k">Volver</span><b>Índice</b></a></nav></div><script>
+(function(){
+  document.querySelectorAll('button.rv').forEach(function(b){
+    b.addEventListener('click',function(){
+      var t=document.getElementById(b.dataset.t);
+      var open=t.classList.toggle('shown');
+      t.querySelectorAll('.ans').forEach(function(c){c.hidden=!open});
+      b.textContent=open?'Ocultar respuestas':'Mostrar respuestas';
+    });
+  });
+  document.querySelectorAll('.vb').forEach(function(g){
+    g.querySelectorAll('button.vbtn').forEach(function(b){
+      b.addEventListener('click',function(){
+        var t=document.getElementById(g.dataset.t); t.dataset.v=b.dataset.v;
+        g.querySelectorAll('button.vbtn').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});
+        var l=document.getElementById(g.dataset.t+'-lg'); if(l){l.querySelectorAll('[data-for]').forEach(function(x){x.hidden=x.dataset.for!==b.dataset.v})}
+      });
+    });
+  });
+})();
+</script></body></html>

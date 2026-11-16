@@ -1,0 +1,329 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Examen 02</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap"><style>
+:root{
+  --bg:#f6f7fb; --surface:#ffffff; --fg:#1d2233; --muted:#5b6379; --line:#dde1ec;
+  --oxi:#1f5fbf; --oxi-bg:#e4edfb;
+  --hid:#17805a; --hid-bg:#dff3ea;
+  --hox:#c0284f; --hox-bg:#fbe3ea;
+  --aci:#c2570c; --aci-bg:#fdebd9;
+  --sal:#8a3fb0; --sal-bg:#f1e5f8;
+  --guide:#3a4160; --guide-bg:#e8eaf3;
+  --bad:#b3261e; --bad-bg:#fbe4e2; --good:#17805a; --good-bg:#dff3ea;
+
+  --display:"Bricolage Grotesque","Trebuchet MS",sans-serif;
+  --body:"Source Sans 3","Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  --fam:var(--guide); --fam-bg:var(--guide-bg);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12151f; --surface:#1b2030; --fg:#e9ecf6; --muted:#a2a9bf; --line:#2f3650;
+  --oxi:#7fb0ff; --oxi-bg:#1b2b4a;
+  --hid:#5fd0a2; --hid-bg:#173a2e;
+  --hox:#ff8fa8; --hox-bg:#4a1f2d;
+  --aci:#ffa45c; --aci-bg:#4a2b12;
+  --sal:#d29bf0; --sal-bg:#3a2248;
+  --guide:#b9c0e0; --guide-bg:#262c45;
+  --bad:#ff8d85; --bad-bg:#4a1f1c; --good:#5fd0a2; --good-bg:#173a2e;
+ color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12151f; --surface:#1b2030; --fg:#e9ecf6; --muted:#a2a9bf; --line:#2f3650;
+  --oxi:#7fb0ff; --oxi-bg:#1b2b4a;
+  --hid:#5fd0a2; --hid-bg:#173a2e;
+  --hox:#ff8fa8; --hox-bg:#4a1f2d;
+  --aci:#ffa45c; --aci-bg:#4a2b12;
+  --sal:#d29bf0; --sal-bg:#3a2248;
+  --guide:#b9c0e0; --guide-bg:#262c45;
+  --bad:#ff8d85; --bad-bg:#4a1f1c; --good:#5fd0a2; --good-bg:#173a2e;
+ color-scheme:dark}
+body.fam-oxi{--fam:var(--oxi);--fam-bg:var(--oxi-bg)}
+body.fam-hid{--fam:var(--hid);--fam-bg:var(--hid-bg)}
+body.fam-hox{--fam:var(--hox);--fam-bg:var(--hox-bg)}
+body.fam-aci{--fam:var(--aci);--fam-bg:var(--aci-bg)}
+body.fam-sal{--fam:var(--sal);--fam-bg:var(--sal-bg)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.55}
+.wrap{max-width:62rem;margin-inline:auto;padding-inline:16px;padding-block:20px 56px;display:flex;flex-direction:column;gap:40px}
+h1,h2,h3,h4{font-family:var(--display);line-height:1.12;text-wrap:balance;margin:0}
+h1{font-size:clamp(2rem,6vw,3.1rem);font-weight:800}
+h2{font-size:1.55rem;font-weight:800}
+h3{font-size:1.2rem;font-weight:600}
+h4{font-size:1.02rem;font-weight:600}
+p{margin:0}
+a{color:var(--fg);font-weight:700}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--fg);outline-offset:2px}
+.lead{color:var(--muted);max-width:44rem}
+sub{font-size:.75em}
+.f{font-family:var(--mono);font-weight:700}
+.k{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.top{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;justify-content:space-between;font-size:.95rem}
+.top .r{display:flex;gap:8px 18px;flex-wrap:wrap}
+.hero{display:flex;gap:20px;align-items:center;background:var(--fam-bg);color:var(--fam);border-radius:14px;padding:22px}
+.hero svg{flex:none;width:76px;height:76px}
+.hero > div{min-width:0;display:flex;flex-direction:column;gap:8px}
+.hero h1{color:var(--fam)}
+.hero p{color:var(--fg);max-width:42rem}
+.sec{display:flex;flex-direction:column;gap:16px}
+.sh{display:flex;align-items:center;gap:12px}
+.sh::before{content:"";width:12px;height:30px;border-radius:3px;background:var(--fam);flex:none}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));gap:16px}
+.three{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));gap:16px}
+.tag{display:inline-block;padding:2px 10px;border-radius:6px;font-weight:700;font-size:.88rem;background:var(--fam-bg);color:var(--fam)}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:99px;font-weight:700;font-size:.9rem;background:var(--fam-bg);color:var(--fam)}
+.oxi{background:var(--oxi-bg);color:var(--oxi)}.hid{background:var(--hid-bg);color:var(--hid)}
+.hox{background:var(--hox-bg);color:var(--hox)}.aci{background:var(--aci-bg);color:var(--aci)}
+.sal{background:var(--sal-bg);color:var(--sal)}
+.nom{display:inline-block;padding:3px 10px;border:1.5px solid var(--fg);border-radius:6px;font-weight:700;font-size:.9rem;background:var(--surface);color:var(--fg)}
+.pend{border-style:dashed;border-color:var(--muted);color:var(--muted);font-weight:600}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:36rem}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+tr:last-child td{border-bottom:0}
+.cell{white-space:nowrap}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+.q b.t{font-family:var(--display);font-size:1.1rem}
+.q.warn{border-color:var(--aci)}
+.q.pending{border-style:dashed;border-color:var(--muted)}
+.steps{display:flex;flex-direction:column;gap:10px;counter-reset:s;padding:0;margin:0;list-style:none}
+.steps li{counter-increment:s;padding:2px 0 2px 42px;position:relative}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:28px;height:28px;border-radius:50%;background:var(--fam);color:var(--bg);font-family:var(--display);font-weight:800;display:grid;place-items:center;font-size:.95rem}
+.ex{background:var(--fam-bg);border-left:5px solid var(--fam);border-radius:8px;padding:12px 14px;color:var(--fg)}
+.ex .f{color:var(--fam)}
+.nomblock{background:var(--surface);border:1px solid var(--line);border-top:6px solid var(--fam);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.nomblock > header{display:flex;flex-direction:column;gap:6px}
+.dir{display:flex;flex-direction:column;gap:12px;min-width:0}
+.dir h4{color:var(--fam)}
+.struct{font-family:var(--mono);font-weight:700;background:var(--bg);border-radius:8px;padding:10px 14px;overflow-wrap:anywhere}
+.trap{display:grid;grid-template-columns:auto 1fr;gap:10px 14px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:0}
+.trap dt{font-family:var(--mono);font-weight:700;color:var(--fam)}
+.trap dd{margin:0}
+button{font:inherit;font-weight:700;border:2px solid transparent;border-radius:8px;padding:10px 14px;cursor:pointer}
+button.rv{background:var(--fg);color:var(--bg)}
+.ans{font-weight:600}
+.pager{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,16rem),1fr));gap:12px}
+.pager a{display:flex;flex-direction:column;gap:2px;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--surface);text-decoration:none}
+.pager a span.k{font-size:.72rem}
+.pager a:hover{border-color:var(--fam)}
+
+th{text-transform:none;letter-spacing:.02em;font-size:.84rem}
+.sv{width:100%;height:auto;display:block}
+.sv text{fill:var(--fg);font-family:var(--body);font-size:12px}
+.sv text.m{fill:var(--muted)}
+.sv text.b{font-weight:700}
+.sv text.mo{font-family:var(--mono);font-weight:700}
+.sv .ax{stroke:var(--muted);stroke-width:1.3;fill:none}
+.sv .gd{stroke:var(--line);stroke-width:1;fill:none}
+.fig{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.fig .cap{color:var(--muted);font-size:.92rem}
+.tl{display:flex;gap:12px;overflow-x:auto;padding:6px 2px 16px;scroll-snap-type:x proximity}
+.tlc{flex:0 0 17rem;scroll-snap-align:start;background:var(--surface);border:1px solid var(--line);border-top:6px solid var(--fam);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.tlc.out{border-left-style:dashed;border-right-style:dashed;border-bottom-style:dashed}
+.tlc .yr{font-family:var(--display);font-weight:800;font-size:1.5rem;color:var(--fam);line-height:1}
+.tlc .who{font-weight:700}
+.tlc svg{width:100%;height:auto;background:var(--fam-bg);border-radius:8px;color:var(--fam)}
+.tlc svg text{fill:var(--fam);font-family:var(--body);font-size:10px;font-weight:700}
+.tlc .mini{font-size:.93rem;color:var(--fg)}
+.tlc ul{margin:0;padding-left:1.1rem;font-size:.93rem}
+.gap{flex:0 0 3.2rem;display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:700;font-size:.85rem;writing-mode:vertical-rl;text-orientation:mixed;border-inline:2px dotted var(--line)}
+.noex{display:inline-block;font-size:.78rem;font-weight:700;padding:2px 8px;border-radius:6px;background:var(--bg);border:1px dashed var(--muted);color:var(--muted);width:fit-content}
+.pt{display:grid;grid-template-columns:1.5rem repeat(18,minmax(2.7rem,1fr));gap:3px;min-width:56rem}
+.pt .gh,.pt .ph0{font-size:.72rem;font-weight:700;color:var(--muted);text-align:center;align-self:center}
+.pt .e{aspect-ratio:1/1.08;border-radius:5px;padding:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.55rem;line-height:1.05;background:color-mix(in srgb,var(--c,var(--muted)) 24%,var(--surface));border:1px solid color-mix(in srgb,var(--c,var(--muted)) 55%,var(--surface));min-width:0;overflow:hidden}
+.pt .e b{font-family:var(--mono);font-size:.98rem;line-height:1.1}
+.pt .e i{font-style:normal;color:var(--muted);font-size:.58rem}
+.pt .e small{font-size:.5rem;color:var(--muted);max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pt .e.ph{background:transparent;border-style:dashed;color:var(--muted);font-size:.6rem;text-align:center}
+.pt[data-v=bloque] .e.s{--c:var(--oxi)}.pt[data-v=bloque] .e.p{--c:var(--hid)}.pt[data-v=bloque] .e.d{--c:var(--hox)}.pt[data-v=bloque] .e.f{--c:var(--aci)}
+.pt[data-v=tipo] .e.t-alc{--c:#e0524a}.pt[data-v=tipo] .e.t-ake{--c:#e58a2b}.pt[data-v=tipo] .e.t-tr{--c:#d8b020}.pt[data-v=tipo] .e.t-pt{--c:#6aa84f}.pt[data-v=tipo] .e.t-la{--c:#c0599a}.pt[data-v=tipo] .e.t-ac{--c:#9a5fc0}
+.pt[data-v=tipo] .e.t-mo{--c:#2aa198}.pt[data-v=tipo] .e.t-nm{--c:#3b82d6}.pt[data-v=tipo] .e.t-ha{--c:#6c63d9}.pt[data-v=tipo] .e.t-ng{--c:#8a8fa8}
+.pt[data-v=metal] .e.m1{--c:#d8a020}.pt[data-v=metal] .e.m2{--c:#2aa198}.pt[data-v=metal] .e.m3{--c:#3b82d6}
+.pt[data-v=grupo] .e.g1{--c:#e0524a}.pt[data-v=grupo] .e.g2{--c:#e58a2b}.pt[data-v=grupo] .e.g13{--c:#d8b020}.pt[data-v=grupo] .e.g14{--c:#6aa84f}.pt[data-v=grupo] .e.g15{--c:#2aa198}.pt[data-v=grupo] .e.g16{--c:#3b82d6}.pt[data-v=grupo] .e.g17{--c:#6c63d9}.pt[data-v=grupo] .e.g18{--c:#c0599a}.pt[data-v=grupo] .e.gd{--c:var(--muted)}
+.lg{display:flex;flex-wrap:wrap;gap:6px}
+.lg[hidden]{display:none}
+.lg span{display:inline-flex;gap:6px;align-items:center;padding:3px 10px;border-radius:99px;border:1px solid var(--line);background:var(--surface);font-size:.85rem;font-weight:600}
+.lg span::before{content:"";width:12px;height:12px;border-radius:3px;background:var(--c)}
+.ptw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:10px}
+.vb{display:flex;flex-wrap:wrap;gap:8px}
+button.vbtn{background:var(--surface);color:var(--fg);border:1.5px solid var(--line);padding:6px 14px}
+button.vbtn[aria-pressed=true]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+table.heat{min-width:0;width:auto}
+table.heat th,table.heat td{text-align:center;padding:6px 10px}
+table.heat td.hv{font-family:var(--mono);font-weight:700;background:color-mix(in srgb,var(--fam) calc(var(--p,0) * 1%),var(--surface));min-width:4.4rem}
+table.heat td.hv span{display:block;font-family:var(--body);font-size:.78rem;font-weight:600;color:var(--muted)}
+table.heat td.na{color:var(--muted);font-weight:600}
+.bx{display:inline-block;min-width:2.5rem;height:1.7rem;line-height:1.55rem;text-align:center;border:1.6px solid var(--fam);border-radius:4px;font-family:var(--mono);font-weight:700;margin-right:3px;background:var(--surface)}
+.arrowtbl td{vertical-align:middle}
+.up{color:var(--good)}.dn{color:var(--bad)}
+.tr3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr));gap:12px}
+.tr3 .card b{font-family:var(--display)}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opts label{display:flex;gap:10px;align-items:flex-start;padding:8px 12px;border:1.5px solid var(--line);border-radius:8px;background:var(--bg);cursor:pointer}
+.opts input{margin-top:.35rem}
+.opts label.sel{border-color:var(--fg)}
+.opts label.right{border-color:var(--good);background:var(--good-bg)}
+.opts label.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.expl{color:var(--fg);font-size:.97rem}
+.tp{font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.qcard{display:grid;grid-template-columns:auto 1fr;gap:0 14px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;list-style:none;border-left:6px solid var(--line)}
+.qcard.ok{border-left-color:var(--good)}.qcard.no{border-left-color:var(--bad)}
+#qs{display:flex;flex-direction:column;gap:12px;padding:0;margin:0}
+.qn{font-family:var(--display);font-weight:800;font-size:1.3rem;color:var(--muted);min-width:1.8rem}
+.qb{display:flex;flex-direction:column;gap:10px;min-width:0}
+.qp{font-size:1.08rem;overflow-wrap:anywhere}
+.qp .f{font-size:1.2rem}
+input.ans-in{font-family:var(--mono);font-weight:700;font-size:1.05rem;width:100%;padding:10px 12px;border:2px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg)}
+input.ans-in:read-only{opacity:.9}
+.fbok{background:var(--good-bg);color:var(--good);padding:10px 12px;border-radius:8px}
+.fbno{background:var(--bad-bg);color:var(--bad);padding:10px 12px;border-radius:8px;overflow-wrap:anywhere}
+.fbno .f.good,.f.good{color:var(--good)}
+.fbno .alt{font-size:.92rem;opacity:.9}
+.fbok .chip,.fbno .chip{margin-top:6px}
+.toolbar{display:flex;flex-wrap:wrap;gap:6px;position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:8px}
+button.sym{background:var(--surface);color:var(--fg);border:1.5px solid var(--line);font-family:var(--mono);padding:6px 12px;font-size:1.05rem}
+button.main{background:var(--fg);color:var(--bg)}
+button.ghost{background:transparent;color:var(--fg);border-color:var(--fg)}
+button:disabled{opacity:.5;cursor:default}
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+#result{background:var(--surface);border:2px solid var(--fg);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:14px}
+#result .big{font-size:1.6rem}
+.info{color:var(--muted)}</style></head><body class=""><a href="../../index.html" style="display:block;padding:8px 16px;background:#1b2033;color:#fff;font:600 15px/1.3 system-ui,'Segoe UI',sans-serif;text-decoration:none;position:relative;z-index:60">← Índice principal</a><div class="wrap"><nav class="top"><a href="index.html">← Índice</a><div class="r"><a href="examen-01.html">← Examen 01</a><a href="examen-03.html">Examen 03 →</a></div></nav><header><span class="k">Examen de naturaleza de la materia</span><h1>Examen 02</h1><p class="lead">20 preguntas: 16 de teoría (la mayoría, de detalle: fórmulas, ejemplos y matices de tus apuntes que suelen escaparse) y 4 prácticas (2 configuraciones electrónicas y 2 comparaciones de PI, AE o EN). Las de teoría se responden <b>con tus propias palabras</b>: al corregir ves la respuesta modelo y una lista de ideas clave marcadas automáticamente, que puedes ajustar tú. Los exponentes se pueden escribir con los botones (1s², 3d⁵, Cl⁻) o con números (1s2, 3d5, Cl-). Las configuraciones se admiten completas o abreviadas con gas noble. Pulsa <b>Corregir examen</b> al final.</p></header><div class="toolbar" role="group" aria-label="Símbolos"><button class="sym" type="button" data-c="⁰">⁰</button><button class="sym" type="button" data-c="¹">¹</button><button class="sym" type="button" data-c="²">²</button><button class="sym" type="button" data-c="³">³</button><button class="sym" type="button" data-c="⁴">⁴</button><button class="sym" type="button" data-c="⁵">⁵</button><button class="sym" type="button" data-c="⁶">⁶</button><button class="sym" type="button" data-c="⁷">⁷</button><button class="sym" type="button" data-c="⁸">⁸</button><button class="sym" type="button" data-c="⁹">⁹</button><button class="sym" type="button" data-c="⁺">⁺</button><button class="sym" type="button" data-c="⁻">⁻</button><button class="sym" type="button" data-c="[">[</button><button class="sym" type="button" data-c="]">]</button><button class="sym" type="button" data-c="(">(</button><button class="sym" type="button" data-c=")">)</button></div><ol id="qs"></ol><div class="actions"><button class="main" id="check" type="button">Corregir examen</button><button class="ghost" id="reset" type="button">Borrar y empezar de nuevo</button></div><section id="result" hidden></section><nav class="top"><a href="index.html">← Índice</a><div class="r"><a href="examen-01.html">← Examen 01</a><a href="examen-03.html">Examen 03 →</a></div></nav></div><script>const QS=[{"t": "txt", "tp": "Configuración electrónica", "p": "Escribe la configuración electrónica del átomo de <b>Ca<\/b> (calcio), Z = 20.", "a": ["1s2 2s2 2p6 3s2 3p6 4s2", "[Ar] 4s2"], "e": "Con 20 electrones, en el orden de llenado: <span class=\"f\">1s<sup>2<\/sup> 2s<sup>2<\/sup> 2p<sup>6<\/sup> 3s<sup>2<\/sup> 3p<sup>6<\/sup> 4s<sup>2<\/sup><\/span>. En abreviado: <span class=\"f\">[Ar] 4s<sup>2<\/sup><\/span>.", "show": "1s2 2s2 2p6 3s2 3p6 4s2"}, {"t": "txt", "tp": "Configuración electrónica", "p": "Escribe la configuración electrónica del átomo de <b>Zr<\/b> (circonio), Z = 40. Puedes usar el gas noble entre corchetes.", "a": ["1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d2", "1s2 2s2 2p6 3s2 3p6 3d10 4s2 4p6 4d2 5s2", "[Kr] 5s2 4d2", "[Kr] 4d2 5s2"], "e": "Sigue el orden de llenado 4s 3d 4p 5s 4d 5p: <span class=\"f\">1s<sup>2<\/sup> 2s<sup>2<\/sup> 2p<sup>6<\/sup> 3s<sup>2<\/sup> 3p<sup>6<\/sup> 4s<sup>2<\/sup> 3d<sup>10<\/sup> 4p<sup>6<\/sup> 5s<sup>2<\/sup> 4d<sup>2<\/sup><\/span>. En abreviado: <span class=\"f\">[Kr] 5s<sup>2<\/sup> 4d<sup>2<\/sup><\/span>.", "show": "1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d2"}, {"t": "mc", "tp": "Comparar PI, AE y EN", "p": "¿Cuál de estos átomos tiene <b>menor<\/b> electronegatividad: Ca, As, O?", "o": ["As", "O", "Ca"], "a": 2, "e": "La electronegatividad aumenta hacia arriba y hacia la derecha (igual que el potencial de ionización). Posiciones: O (grupo 16, periodo 2); As (grupo 15, periodo 4); Ca (grupo 2, periodo 4). Orden de mayor a menor: <b>O > As > Ca<\/b>."}, {"t": "mc", "tp": "Comparar PI, AE y EN", "p": "¿Cuál de estos átomos tiene <b>menor<\/b> potencial de ionización: O, B, Li, K?", "o": ["K", "Li", "B", "O"], "a": 0, "e": "El potencial de ionización aumenta hacia arriba y hacia la derecha (igual que el potencial de ionización). Posiciones: O (grupo 16, periodo 2); B (grupo 13, periodo 2); Li (grupo 1, periodo 2); K (grupo 1, periodo 4). Orden de mayor a menor: <b>O > B > Li > K<\/b>."}, {"t": "free", "tp": "Teoría (con tus palabras)", "p": "En los tubos de descarga de gases de Thomson aparecen los rayos <b>catódicos<\/b> y los <b>anódicos<\/b>. Explica qué son y qué partícula se descubre con cada uno.", "m": "Los <b>rayos catódicos<\/b> están formados por <b>electrones<\/b> y los <b>rayos anódicos<\/b> por <b>protones<\/b>. Gracias a ellos Thomson dedujo que la materia tiene naturaleza eléctrica.", "ideas": [{"d": "Catódicos = electrones", "k": [["catodic", "electron"]]}, {"d": "Anódicos = protones", "k": [["anodic", "proton"]]}, {"d": "Conclusión: naturaleza eléctrica de la materia", "k": [["electric"]]}]}, {"t": "free", "tp": "Teoría (con tus palabras)", "p": "Explica qué significa que un electrón <b>cambie de órbita<\/b> según Bohr, con la fórmula <b>ΔE = h·ν<\/b> y el significado de cada letra.", "m": "Cuando un electrón cambia de órbita es porque <b>gana o pierde energía<\/b>. Esa energía es <b>ΔE = h·ν<\/b>: <b>ΔE<\/b> es la diferencia de energía entre las capas de electrones, <b>h<\/b> la constante de Planck y <b>ν<\/b> la frecuencia, que es <b>1/T<\/b>.", "ideas": [{"d": "Cambia de órbita porque gana o pierde energía", "k": [["gana"], ["pierde"]]}, {"d": "ΔE = h·ν", "k": [["h·ν"], ["h*v"], ["hν"], ["hv"]]}, {"d": "ΔE = diferencia de energía entre capas", "k": [["diferencia"]]}, {"d": "ν = frecuencia = 1/T", "k": [["frecuencia"], ["1/t"]]}]}, {"t": "free", "tp": "Teoría (con tus palabras)", "p": "Explica con tus palabras el <b>modelo de Schrödinger<\/b>: por qué es un modelo de probabilidad y qué es un orbital.", "m": "Es un <b>modelo de probabilidades<\/b>: calcula la <b>probabilidad de que un electrón se encuentre en un punto<\/b>. Un <b>orbital<\/b> (s, p, d, f) es la <b>región del espacio<\/b> donde la probabilidad de encontrar al electrón es del <b>99,9 %<\/b>.", "ideas": [{"d": "Modelo de probabilidad", "k": [["probabilidad"]]}, {"d": "Probabilidad de que el electrón esté en un punto", "k": [["punto"], ["probabilidad"]]}, {"d": "Orbital = región del espacio", "k": [["region"], ["zona"]]}, {"d": "99,9 %", "k": [["99,9"], ["99.9"]]}]}, {"t": "free", "tp": "Teoría (con tus palabras)", "p": "Compara el modelo de <b>Rutherford<\/b> y el de <b>Bohr<\/b>: dónde están los electrones y en qué se basa cada uno.", "m": "En <b>Rutherford<\/b> (nuclear) los electrones giran en <b>órbitas circulares<\/b> alrededor del núcleo con protones; se basa en la <b>radiactividad<\/b>. En <b>Bohr<\/b> (planetario) los electrones están en <b>órbitas estacionarias<\/b> con energía cuantizada; se basa en los <b>espectros<\/b> y los <b>cuantos<\/b> de Planck.", "ideas": [{"d": "Rutherford: órbitas circulares y núcleo con protones", "k": [["circular"], ["nucleo"]]}, {"d": "Rutherford: radiactividad", "k": [["radiactiv"]]}, {"d": "Bohr: órbitas estacionarias cuantizadas", "k": [["estacionari"], ["cuantiz"]]}, {"d": "Bohr: espectros y cuantos", "k": [["espectro"], ["cuanto"], ["planck"]]}]}, {"t": "free", "tp": "Teoría (con tus palabras)", "p": "Explica cómo ordenó <b>Moseley<\/b> los elementos y cuántos periodos y grupos tiene la tabla.", "m": "<b>Moseley<\/b> los ordenó en <b>orden creciente de Z<\/b> (número atómico). La tabla tiene <b>7 periodos<\/b> (filas) y <b>18 grupos<\/b> (columnas).", "ideas": [{"d": "Moseley: orden creciente de Z", "k": [["creciente"], ["numero atomico"]]}, {"d": "7 periodos", "k": [["7"]]}, {"d": "18 grupos", "k": [["18"]]}]}, {"t": "free", "tp": "Teoría (con tus palabras)", "p": "Explica el principio de <b>máxima multiplicidad<\/b> con un ejemplo de 2p.", "m": "Los electrones ocupan el <b>mayor número posible de orbitales<\/b> de la misma energía antes de aparearse. Por ejemplo, en 2p³ hay un electrón en cada uno de los tres orbitales p.", "ideas": [{"d": "Ocupan el mayor número de orbitales posible", "k": [["orbitales"], ["distintos"]]}, {"d": "Ejemplo: p³ un electrón en cada orbital", "k": [["p3"], ["2p"], ["tres orbitales"], ["uno en cada"]]}]}, {"t": "free", "tp": "Teoría (con tus palabras)", "p": "Define la <b>afinidad electrónica<\/b> (electroafinidad) y explica cómo varía en la tabla.", "m": "Mide la <b>energía que un elemento va normalmente a desprender cuando capta un electrón<\/b> (átomo neutro, fundamental y gaseoso). La variación es <b>igual a la del potencial de ionización<\/b>: aumenta hacia arriba y hacia la derecha.", "ideas": [{"d": "Energía que normalmente desprende al captar un electrón", "k": [["capta"], ["captar"]]}, {"d": "Neutro, fundamental y gaseoso", "k": [["neutro"]]}, {"d": "Varía igual que el potencial de ionización", "k": [["igual"]]}, {"d": "Aumenta hacia arriba y a la derecha", "k": [["arriba", "derecha"]]}]}, {"t": "free", "tp": "Teoría (con tus palabras)", "p": "Escribe las configuraciones del <b>Mg<\/b> y del <b>F<\/b> y explica cómo se obtiene la valencia iónica de cada uno.", "m": "Mg (Z = 12): <b>1s² 2s² 2p⁶ 3s²<\/b>; cede 2 electrones y queda <b>1s² 2s² 2p⁶<\/b> (Mg²⁺): valencia 2+. F: <b>1s² 2s² 2p⁵<\/b>; capta 1 electrón y llega a 2p⁶ (F⁻): valencia 1−. Ambos llegan a <b>s²p⁶<\/b>.", "ideas": [{"d": "Mg: 1s² 2s² 2p⁶ 3s²", "k": [["3s2"]]}, {"d": "Mg cede 2 e⁻ → Mg²⁺", "k": [["cede"], ["pierde"]]}, {"d": "F: 1s² 2s² 2p⁵ capta 1 e⁻ → F⁻", "k": [["2p5"]]}, {"d": "Llegan a s²p⁶", "k": [["s2p6"], ["s2 p6"], ["2p6"]]}]}, {"t": "free", "tp": "Teoría (con tus palabras)", "p": "Describe el <b>enlace metálico<\/b>: entre qué átomos se da, según su electronegatividad, y cómo es su estructura.", "m": "Se da entre <b>metales<\/b> (normalmente iguales) con electronegatividades <b>bajas o medias y parecidas<\/b>. Forma una <b>red de iones positivos con un mar de electrones<\/b>.", "ideas": [{"d": "Entre metales (normalmente iguales)", "k": [["metal"]]}, {"d": "Electronegatividades bajas o medias y parecidas", "k": [["baj"], ["medi"], ["parecid"]]}, {"d": "Red de iones con mar de electrones", "k": [["mar"], ["red"]]}]}, {"t": "free", "tp": "Teoría (con tus palabras)", "p": "Explica la diferencia entre un enlace <b>σ<\/b> y un enlace <b>π<\/b> y cuántos de cada tipo tienen el Cl₂, el O₂ y el N₂.", "m": "El enlace <b>σ<\/b> (sigma) es un solape frontal de orbitales; el <b>π<\/b> (pi) es un solape lateral. <b>Cl₂<\/b>: 1 σ. <b>O₂<\/b> (doble): 1 σ + 1 π. <b>N₂<\/b> (triple): 1 σ + 2 π.", "ideas": [{"d": "σ: solape frontal", "k": [["frontal"]]}, {"d": "π: solape lateral", "k": [["lateral"]]}, {"d": "Cl₂: 1 σ", "k": [["cl2", "1"], ["1 sigma"], ["1 σ"]]}, {"d": "O₂: 1 σ + 1 π; N₂: 1 σ + 2 π", "k": [["n2"], ["2 π"], ["2 pi"]]}]}, {"t": "free", "tp": "Teoría (con tus palabras)", "p": "Describe la geometría de la molécula <b>BH₃<\/b>: átomos unidos, pares libres, geometría y ángulo.", "m": "En el <b>BH₃<\/b> hay <b>3 átomos unidos<\/b>, 3 pares enlazantes y <b>0 pares libres<\/b>. La geometría molecular y la electrónica son <b>trigonal plana<\/b> y el ángulo es de <b>120°<\/b>.", "ideas": [{"d": "3 átomos unidos, 3 pares enlazantes", "k": [["3 atomos"], ["3 pares"], ["tres atomos"], ["tres pares"]]}, {"d": "0 pares libres", "k": [["0 pares"], ["sin pares"], ["ningun"], ["cero"], ["0 libres"], ["no tiene pares"], ["no hay pares"]]}, {"d": "Trigonal plana", "k": [["trigonal plana"], ["plana"]]}, {"d": "Ángulo 120°", "k": [["120"]]}]}, {"t": "free", "tp": "Teoría (con tus palabras)", "p": "Explica las uniones de <b>Van der Waals<\/b>: su origen y su intensidad.", "m": "Las uniones de <b>Van der Waals<\/b> se producen por <b>dipolos instantáneos<\/b> y son <b>muy débiles<\/b>.", "ideas": [{"d": "Dipolos instantáneos", "k": [["instantaneo"]]}, {"d": "Muy débiles", "k": [["debil"]]}]}, {"t": "free", "tp": "Teoría (con tus palabras)", "p": "Describe la geometría del <b>CH₄<\/b>: átomos unidos, pares libres, geometría y ángulo.", "m": "En el <b>CH₄<\/b> hay <b>4 átomos unidos<\/b>, 4 pares enlazantes y 0 pares libres. La geometría molecular y la electrónica son <b>tetraédricas<\/b> y el ángulo es de <b>109,5°<\/b>.", "ideas": [{"d": "4 átomos unidos y 4 pares enlazantes", "k": [["4 atomos"], ["4 pares"], ["cuatro atomos"], ["cuatro pares"]]}, {"d": "0 pares libres", "k": [["0 pares"], ["sin pares"], ["ningun"], ["cero"], ["0 libres"], ["no tiene pares"], ["no hay pares"]]}, {"d": "Tetraédrica", "k": [["tetraedric"]]}, {"d": "Ángulo 109,5°", "k": [["109"]]}]}, {"t": "free", "tp": "Teoría (con tus palabras)", "p": "¿Qué son las <b>moléculas diatómicas<\/b>? Cita cuáles son.", "m": "Son moléculas que <b>siempre<\/b> tienen la forma <b>X₂<\/b>: los <b>halógenos<\/b>, el <b>O₂<\/b>, el <b>N₂<\/b> y el <b>H₂<\/b>.", "ideas": [{"d": "Siempre tienen la forma X₂", "k": [["x2"], ["dos atomos"], ["siempre"]]}, {"d": "Halógenos", "k": [["halogeno"]]}, {"d": "O₂, N₂ y H₂", "k": [["o2", "n2", "h2"]]}]}, {"t": "free", "tp": "Teoría (con tus palabras)", "p": "¿Qué <b>redes covalentes<\/b> conoces? Cita los elementos y sus formas.", "m": "Las redes covalentes las forman el <b>C<\/b> (<b>grafito<\/b> y <b>diamante<\/b>) y el <b>Si<\/b> (<b>cuarzo<\/b>).", "ideas": [{"d": "C: grafito y diamante", "k": [["grafito", "diamante"]]}, {"d": "Si: cuarzo", "k": [["cuarzo"]]}]}, {"t": "free", "tp": "Teoría (con tus palabras)", "p": "Enuncia el <b>principio de incertidumbre de Heisenberg<\/b>.", "m": "El principio de incertidumbre de <b>Heisenberg<\/b> dice que <b>no puedes saber a la vez la velocidad y la posición de un electrón<\/b>.", "ideas": [{"d": "Heisenberg: incertidumbre", "k": [["heisenberg"], ["incertidumbre"]]}, {"d": "No se conocen a la vez velocidad y posición", "k": [["velocidad", "posicion"]]}]}];
+const SUP={'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁺':'+','⁻':'-'};
+function nz(s){
+  s=String(s).normalize('NFC').toLowerCase();
+  s=s.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻]/g,function(c){return SUP[c]});
+  s=s.replace(/[−–—‐]/g,'-').replace(/\^/g,'').replace(/[\[\]\(\)\{\}]/g,'').replace(/\s+/g,'').replace(/,/g,'.');
+  return s;
+}
+function nf(s){
+  s=String(s).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+  s=s.replace(/[−–—]/g,'-');
+  s=s.replace(/[₀-₉]/g,function(c){return String(c.charCodeAt(0)-8320)});
+  s=s.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻]/g,function(c){return SUP[c]});
+  return s.replace(/<[^>]+>/g,'');
+}
+function detect(text,ideas){
+  const t=nf(text), ts=t.replace(/\s+/g,'');
+  return ideas.map(function(id){
+    return id.k.some(function(alt){return alt.every(function(kw){const k=nf(kw);return t.indexOf(k)>=0||ts.indexOf(k.replace(/\s+/g,''))>=0})});
+  });
+}
+function esc(t){return String(t).replace(/&/g,'&amp;').replace(new RegExp(String.fromCharCode(60),'g'),'&lt;')}
+function fx(x){return (Math.round(x*10)/10).toString().replace('.',',')}
+let lastInput=null, corrected=false;
+const FREE={};
+const list=document.getElementById('qs');
+QS.forEach(function(q,i){
+  const n=i+1, li=document.createElement('li'); li.className='qcard'; li.id='q'+n;
+  let ans='';
+  if(q.t==='mc'){
+    ans='<div class="opts" role="radiogroup" aria-label="Opciones de la pregunta '+n+'">'+q.o.map(function(o,k){
+      return '<label><input type="radio" name="q'+n+'" value="'+k+'"><span><b>'+'ABCD'[k]+'.</b> '+o+'</span></label>';}).join('')+'</div>';
+  } else if(q.t==='free'){
+    ans='<textarea id="r'+n+'" class="ans-in" rows="5" style="width:100%;font:inherit;padding:10px;border-radius:8px;border:1.5px solid var(--line,#999);background:var(--surface,#fff);color:inherit" autocomplete="off" spellcheck="true" aria-label="Respuesta '+n+'" placeholder="Explícalo con tus propias palabras"></textarea>';
+  } else {
+    ans='<input type="text" id="r'+n+'" class="ans-in" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Respuesta '+n+'" placeholder="Escribe tu respuesta">';
+  }
+  li.innerHTML='<div class="qn">'+n+'</div><div class="qb"><span class="tp">'+q.tp+'</span><div class="qp">'+q.p+'</div>'+ans+'<div class="qf" id="f'+n+'"></div></div>';
+  list.appendChild(li);
+  const inp=li.querySelector('input[type=text]'); if(inp) inp.addEventListener('focus',function(e){lastInput=e.target});
+});
+document.querySelectorAll('button.sym').forEach(function(b){
+  b.addEventListener('mousedown',function(e){e.preventDefault()});
+  b.addEventListener('click',function(){
+    const inp=lastInput||document.querySelector('input.ans-in'); if(!inp||inp.readOnly) return;
+    const s=inp.selectionStart==null?inp.value.length:inp.selectionStart, e2=inp.selectionEnd==null?s:inp.selectionEnd;
+    inp.value=inp.value.slice(0,s)+b.dataset.c+inp.value.slice(e2); inp.focus(); const p=s+b.dataset.c.length; inp.setSelectionRange(p,p);
+  });
+});
+function given(i){
+  const q=QS[i];
+  if(q.t==='mc'){const r=document.querySelector('input[name=q'+(i+1)+']:checked'); return r?+r.value:-1;}
+  return document.getElementById('r'+(i+1)).value;
+}
+function isRight(i){
+  const q=QS[i], g=given(i);
+  if(q.t==='mc') return g===q.a;
+  if(!String(g).trim()) return false;
+  const x=nz(g); return q.a.some(function(a){return nz(a)===x});
+}
+function correct(i){const q=QS[i]; return q.t==='mc'?q.o[q.a]:q.show;}
+function score(i){
+  const q=QS[i];
+  if(q.t==='free'){const f=FREE[i]; return f.filter(Boolean).length/f.length;}
+  return isRight(i)?1:0;
+}
+function renderResult(){
+  const by={}, goods=[], fails=[]; let tot=0;
+  QS.forEach(function(q,i){
+    const s=score(i); tot+=s;
+    by[q.tp]=by[q.tp]||[0,0]; by[q.tp][0]+=s; by[q.tp][1]++;
+    if(s>=0.999) goods.push(i+1); else fails.push(i);
+  });
+  const N=QS.length, pct=Math.round(100*tot/N), res=document.getElementById('result');
+  let h='<h2>Resultado</h2><p class="big"><b>'+fx(tot)+'</b> de '+N+' ('+pct+' %)</p>';
+  h+='<div class="two"><div class="card"><span class="k">Completas ('+goods.length+')</span><p>'+(goods.length?goods.join(', '):'Ninguna')+'</p></div>';
+  h+='<div class="card"><span class="k">Por repasar ('+fails.length+')</span><p>'+(fails.length?fails.map(function(f){return f+1}).join(', '):'Ninguna: examen perfecto.')+'</p></div></div>';
+  h+='<h3>Por temas</h3><div class="tw"><table style="min-width:0"><tr><th>Tema</th><th>Puntos</th></tr>';
+  Object.keys(by).forEach(function(t){h+='<tr><td>'+t+'</td><td><b>'+fx(by[t][0])+'</b> de '+by[t][1]+'</td></tr>'});
+  h+='</table></div>';
+  const nonfree=fails.filter(function(i){return QS[i].t!=='free'});
+  if(nonfree.length){
+    h+='<h3>Repasa estos casos</h3><div class="tw"><table><tr><th>Nº</th><th>Enunciado</th><th>Tu respuesta</th><th>Respuesta correcta</th></tr>';
+    nonfree.forEach(function(i){
+      const q=QS[i], g=given(i); let mine=q.t==='mc'?(g<0?'(sin responder)':esc(q.o[g])):(String(g).trim()?esc(g):'(vacía)');
+      h+='<tr><td>'+(i+1)+'</td><td>'+q.p+'</td><td class="f">'+mine+'</td><td class="f good">'+esc(correct(i))+'</td></tr>';
+    });
+    h+='</table></div>';
+  }
+  res.innerHTML=h; res.hidden=false;
+}
+document.getElementById('check').addEventListener('click',function(){
+  if(corrected) return; corrected=true;
+  QS.forEach(function(q,i){
+    const n=i+1, card=document.getElementById('q'+n), fb=document.getElementById('f'+n), g=given(i);
+    const tag='<span class="nom">'+q.tp+'</span>';
+    if(q.t==='free'){
+      document.getElementById('r'+n).readOnly=true;
+      FREE[i]=detect(g,q.ideas);
+      let h='<div class="fbok" style="border-color:var(--line,#999)"><b>Respuesta modelo.</b> '+tag+'<div class="expl">'+q.m+'</div>';
+      h+='<p style="margin:10px 0 4px"><b>Ideas clave.</b> Se han marcado las que se detectan en tu texto. Si has dicho una con otras palabras, márcala tú; si no la decías, desmárcala:</p>';
+      h+=q.ideas.map(function(id,k){return '<label style="display:block;margin:4px 0"><input type="checkbox" data-q="'+i+'" data-k="'+k+'"'+(FREE[i][k]?' checked':'')+'> '+id.d+'</label>';}).join('');
+      h+='<p class="sc" id="sc'+i+'" style="margin-top:8px"></p></div>';
+      fb.innerHTML=h;
+      const upd=function(){const f=FREE[i]; document.getElementById('sc'+i).innerHTML='Puntuación: <b>'+f.filter(Boolean).length+'</b> de '+f.length+' ideas.'; card.classList.remove('ok','no'); card.classList.add(f.every(Boolean)?'ok':'no');};
+      upd();
+      fb.querySelectorAll('input[type=checkbox]').forEach(function(c){c.addEventListener('change',function(){FREE[i][+c.dataset.k]=c.checked; upd(); renderResult();});});
+      return;
+    }
+    const good=isRight(i);
+    card.classList.add(good?'ok':'no');
+    if(q.t==='mc'){
+      card.querySelectorAll('.opts label').forEach(function(l,k){
+        const inp=l.querySelector('input'); inp.disabled=true;
+        if(k===q.a) l.classList.add('right'); else if(k===g) l.classList.add('wrong');
+      });
+    } else document.getElementById('r'+n).readOnly=true;
+    if(good) fb.innerHTML='<div class="fbok"><b>Correcto.</b> '+tag+'<div class="expl">'+q.e+'</div></div>';
+    else{
+      let mine;
+      if(q.t==='mc') mine=(g<0)?'(sin responder)':esc(q.o[g]); else mine=String(g).trim()?esc(g):'(vacía)';
+      fb.innerHTML='<div class="fbno"><b>Fallo.</b> Tu respuesta: <span class="f">'+mine+'</span><br>Respuesta correcta: <span class="f good">'+esc(correct(i))+'</span><div class="expl" style="margin-top:6px">'+q.e+'</div>'+tag+'</div>';
+    }
+  });
+  renderResult();
+  document.getElementById('check').disabled=true;
+  document.getElementById('result').scrollIntoView({behavior:'smooth',block:'start'});
+});
+document.getElementById('reset').addEventListener('click',function(){
+  corrected=false;
+  QS.forEach(function(q,i){
+    const n=i+1, card=document.getElementById('q'+n);
+    if(q.t==='mc'){card.querySelectorAll('.opts label').forEach(function(l){l.classList.remove('right','wrong'); const inp=l.querySelector('input'); inp.disabled=false; inp.checked=false;});}
+    else{const inp=document.getElementById('r'+n); inp.readOnly=false; inp.value='';}
+    document.getElementById('f'+n).innerHTML=''; card.classList.remove('ok','no');
+  });
+  document.getElementById('result').hidden=true; document.getElementById('check').disabled=false;
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+</script></body></html>

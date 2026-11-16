@@ -1,0 +1,422 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Examen 01</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap"><style>
+:root{
+  --bg:#f6f7fb; --surface:#ffffff; --fg:#1d2233; --muted:#5b6379; --line:#dde1ec;
+  --oxi:#1f5fbf; --oxi-bg:#e4edfb;
+  --hid:#17805a; --hid-bg:#dff3ea;
+  --hox:#c0284f; --hox-bg:#fbe3ea;
+  --aci:#c2570c; --aci-bg:#fdebd9;
+  --sal:#8a3fb0; --sal-bg:#f1e5f8;
+  --guide:#3a4160; --guide-bg:#e8eaf3;
+  --bad:#b3261e; --bad-bg:#fbe4e2; --good:#17805a; --good-bg:#dff3ea;
+
+  --display:"Bricolage Grotesque","Trebuchet MS",sans-serif;
+  --body:"Source Sans 3","Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  --fam:var(--guide); --fam-bg:var(--guide-bg);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12151f; --surface:#1b2030; --fg:#e9ecf6; --muted:#a2a9bf; --line:#2f3650;
+  --oxi:#7fb0ff; --oxi-bg:#1b2b4a;
+  --hid:#5fd0a2; --hid-bg:#173a2e;
+  --hox:#ff8fa8; --hox-bg:#4a1f2d;
+  --aci:#ffa45c; --aci-bg:#4a2b12;
+  --sal:#d29bf0; --sal-bg:#3a2248;
+  --guide:#b9c0e0; --guide-bg:#262c45;
+  --bad:#ff8d85; --bad-bg:#4a1f1c; --good:#5fd0a2; --good-bg:#173a2e;
+ color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12151f; --surface:#1b2030; --fg:#e9ecf6; --muted:#a2a9bf; --line:#2f3650;
+  --oxi:#7fb0ff; --oxi-bg:#1b2b4a;
+  --hid:#5fd0a2; --hid-bg:#173a2e;
+  --hox:#ff8fa8; --hox-bg:#4a1f2d;
+  --aci:#ffa45c; --aci-bg:#4a2b12;
+  --sal:#d29bf0; --sal-bg:#3a2248;
+  --guide:#b9c0e0; --guide-bg:#262c45;
+  --bad:#ff8d85; --bad-bg:#4a1f1c; --good:#5fd0a2; --good-bg:#173a2e;
+ color-scheme:dark}
+body.fam-oxi{--fam:var(--oxi);--fam-bg:var(--oxi-bg)}
+body.fam-hid{--fam:var(--hid);--fam-bg:var(--hid-bg)}
+body.fam-hox{--fam:var(--hox);--fam-bg:var(--hox-bg)}
+body.fam-aci{--fam:var(--aci);--fam-bg:var(--aci-bg)}
+body.fam-sal{--fam:var(--sal);--fam-bg:var(--sal-bg)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.55}
+.wrap{max-width:62rem;margin-inline:auto;padding-inline:16px;padding-block:20px 56px;display:flex;flex-direction:column;gap:40px}
+h1,h2,h3,h4{font-family:var(--display);line-height:1.12;text-wrap:balance;margin:0}
+h1{font-size:clamp(2rem,6vw,3.1rem);font-weight:800}
+h2{font-size:1.55rem;font-weight:800}
+h3{font-size:1.2rem;font-weight:600}
+h4{font-size:1.02rem;font-weight:600}
+p{margin:0}
+a{color:var(--fg);font-weight:700}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--fg);outline-offset:2px}
+.lead{color:var(--muted);max-width:44rem}
+sub{font-size:.75em}
+.f{font-family:var(--mono);font-weight:700}
+.k{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.top{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;justify-content:space-between;font-size:.95rem}
+.top .r{display:flex;gap:8px 18px;flex-wrap:wrap}
+.hero{display:flex;gap:20px;align-items:center;background:var(--fam-bg);color:var(--fam);border-radius:14px;padding:22px}
+.hero svg{flex:none;width:76px;height:76px}
+.hero > div{min-width:0;display:flex;flex-direction:column;gap:8px}
+.hero h1{color:var(--fam)}
+.hero p{color:var(--fg);max-width:42rem}
+.sec{display:flex;flex-direction:column;gap:16px}
+.sh{display:flex;align-items:center;gap:12px}
+.sh::before{content:"";width:12px;height:30px;border-radius:3px;background:var(--fam);flex:none}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));gap:16px}
+.three{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));gap:16px}
+.tag{display:inline-block;padding:2px 10px;border-radius:6px;font-weight:700;font-size:.88rem;background:var(--fam-bg);color:var(--fam)}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:99px;font-weight:700;font-size:.9rem;background:var(--fam-bg);color:var(--fam)}
+.oxi{background:var(--oxi-bg);color:var(--oxi)}.hid{background:var(--hid-bg);color:var(--hid)}
+.hox{background:var(--hox-bg);color:var(--hox)}.aci{background:var(--aci-bg);color:var(--aci)}
+.sal{background:var(--sal-bg);color:var(--sal)}
+.nom{display:inline-block;padding:3px 10px;border:1.5px solid var(--fg);border-radius:6px;font-weight:700;font-size:.9rem;background:var(--surface);color:var(--fg)}
+.pend{border-style:dashed;border-color:var(--muted);color:var(--muted);font-weight:600}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:36rem}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+tr:last-child td{border-bottom:0}
+.cell{white-space:nowrap}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+.q b.t{font-family:var(--display);font-size:1.1rem}
+.q.warn{border-color:var(--aci)}
+.q.pending{border-style:dashed;border-color:var(--muted)}
+.steps{display:flex;flex-direction:column;gap:10px;counter-reset:s;padding:0;margin:0;list-style:none}
+.steps li{counter-increment:s;padding:2px 0 2px 42px;position:relative}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:28px;height:28px;border-radius:50%;background:var(--fam);color:var(--bg);font-family:var(--display);font-weight:800;display:grid;place-items:center;font-size:.95rem}
+.ex{background:var(--fam-bg);border-left:5px solid var(--fam);border-radius:8px;padding:12px 14px;color:var(--fg)}
+.ex .f{color:var(--fam)}
+.nomblock{background:var(--surface);border:1px solid var(--line);border-top:6px solid var(--fam);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.nomblock > header{display:flex;flex-direction:column;gap:6px}
+.dir{display:flex;flex-direction:column;gap:12px;min-width:0}
+.dir h4{color:var(--fam)}
+.struct{font-family:var(--mono);font-weight:700;background:var(--bg);border-radius:8px;padding:10px 14px;overflow-wrap:anywhere}
+.trap{display:grid;grid-template-columns:auto 1fr;gap:10px 14px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:0}
+.trap dt{font-family:var(--mono);font-weight:700;color:var(--fam)}
+.trap dd{margin:0}
+button{font:inherit;font-weight:700;border:2px solid transparent;border-radius:8px;padding:10px 14px;cursor:pointer}
+button.rv{background:var(--fg);color:var(--bg)}
+.ans{font-weight:600}
+.pager{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,16rem),1fr));gap:12px}
+.pager a{display:flex;flex-direction:column;gap:2px;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--surface);text-decoration:none}
+.pager a span.k{font-size:.72rem}
+.pager a:hover{border-color:var(--fam)}
+
+th{text-transform:none;letter-spacing:.02em;font-size:.84rem}
+.sv{width:100%;height:auto;display:block}
+.sv text{fill:var(--fg);font-family:var(--body);font-size:12px}
+.sv text.m{fill:var(--muted)}
+.sv text.b{font-weight:700}
+.sv text.mo{font-family:var(--mono);font-weight:700}
+.sv .ax{stroke:var(--muted);stroke-width:1.3;fill:none}
+.sv .gd{stroke:var(--line);stroke-width:1;fill:none}
+.fig{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.fig .cap{color:var(--muted);font-size:.92rem}
+.tl{display:flex;gap:12px;overflow-x:auto;padding:6px 2px 16px;scroll-snap-type:x proximity}
+.tlc{flex:0 0 17rem;scroll-snap-align:start;background:var(--surface);border:1px solid var(--line);border-top:6px solid var(--fam);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.tlc.out{border-left-style:dashed;border-right-style:dashed;border-bottom-style:dashed}
+.tlc .yr{font-family:var(--display);font-weight:800;font-size:1.5rem;color:var(--fam);line-height:1}
+.tlc .who{font-weight:700}
+.tlc svg{width:100%;height:auto;background:var(--fam-bg);border-radius:8px;color:var(--fam)}
+.tlc svg text{fill:var(--fam);font-family:var(--body);font-size:10px;font-weight:700}
+.tlc .mini{font-size:.93rem;color:var(--fg)}
+.tlc ul{margin:0;padding-left:1.1rem;font-size:.93rem}
+.gap{flex:0 0 3.2rem;display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:700;font-size:.85rem;writing-mode:vertical-rl;text-orientation:mixed;border-inline:2px dotted var(--line)}
+.noex{display:inline-block;font-size:.78rem;font-weight:700;padding:2px 8px;border-radius:6px;background:var(--bg);border:1px dashed var(--muted);color:var(--muted);width:fit-content}
+.pt{display:grid;grid-template-columns:1.5rem repeat(18,minmax(2.7rem,1fr));gap:3px;min-width:56rem}
+.pt .gh,.pt .ph0{font-size:.72rem;font-weight:700;color:var(--muted);text-align:center;align-self:center}
+.pt .e{aspect-ratio:1/1.08;border-radius:5px;padding:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.55rem;line-height:1.05;background:color-mix(in srgb,var(--c,var(--muted)) 24%,var(--surface));border:1px solid color-mix(in srgb,var(--c,var(--muted)) 55%,var(--surface));min-width:0;overflow:hidden}
+.pt .e b{font-family:var(--mono);font-size:.98rem;line-height:1.1}
+.pt .e i{font-style:normal;color:var(--muted);font-size:.58rem}
+.pt .e small{font-size:.5rem;color:var(--muted);max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pt .e.ph{background:transparent;border-style:dashed;color:var(--muted);font-size:.6rem;text-align:center}
+.pt[data-v=bloque] .e.s{--c:var(--oxi)}.pt[data-v=bloque] .e.p{--c:var(--hid)}.pt[data-v=bloque] .e.d{--c:var(--hox)}.pt[data-v=bloque] .e.f{--c:var(--aci)}
+.pt[data-v=tipo] .e.t-alc{--c:#e0524a}.pt[data-v=tipo] .e.t-ake{--c:#e58a2b}.pt[data-v=tipo] .e.t-tr{--c:#d8b020}.pt[data-v=tipo] .e.t-pt{--c:#6aa84f}.pt[data-v=tipo] .e.t-la{--c:#c0599a}.pt[data-v=tipo] .e.t-ac{--c:#9a5fc0}
+.pt[data-v=tipo] .e.t-mo{--c:#2aa198}.pt[data-v=tipo] .e.t-nm{--c:#3b82d6}.pt[data-v=tipo] .e.t-ha{--c:#6c63d9}.pt[data-v=tipo] .e.t-ng{--c:#8a8fa8}
+.pt[data-v=metal] .e.m1{--c:#d8a020}.pt[data-v=metal] .e.m2{--c:#2aa198}.pt[data-v=metal] .e.m3{--c:#3b82d6}
+.pt[data-v=grupo] .e.g1{--c:#e0524a}.pt[data-v=grupo] .e.g2{--c:#e58a2b}.pt[data-v=grupo] .e.g13{--c:#d8b020}.pt[data-v=grupo] .e.g14{--c:#6aa84f}.pt[data-v=grupo] .e.g15{--c:#2aa198}.pt[data-v=grupo] .e.g16{--c:#3b82d6}.pt[data-v=grupo] .e.g17{--c:#6c63d9}.pt[data-v=grupo] .e.g18{--c:#c0599a}.pt[data-v=grupo] .e.gd{--c:var(--muted)}
+.lg{display:flex;flex-wrap:wrap;gap:6px}
+.lg[hidden]{display:none}
+.lg span{display:inline-flex;gap:6px;align-items:center;padding:3px 10px;border-radius:99px;border:1px solid var(--line);background:var(--surface);font-size:.85rem;font-weight:600}
+.lg span::before{content:"";width:12px;height:12px;border-radius:3px;background:var(--c)}
+.ptw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:10px}
+.vb{display:flex;flex-wrap:wrap;gap:8px}
+button.vbtn{background:var(--surface);color:var(--fg);border:1.5px solid var(--line);padding:6px 14px}
+button.vbtn[aria-pressed=true]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+table.heat{min-width:0;width:auto}
+table.heat th,table.heat td{text-align:center;padding:6px 10px}
+table.heat td.hv{font-family:var(--mono);font-weight:700;background:color-mix(in srgb,var(--fam) calc(var(--p,0) * 1%),var(--surface));min-width:4.4rem}
+table.heat td.hv span{display:block;font-family:var(--body);font-size:.78rem;font-weight:600;color:var(--muted)}
+table.heat td.na{color:var(--muted);font-weight:600}
+.bx{display:inline-block;min-width:2.5rem;height:1.7rem;line-height:1.55rem;text-align:center;border:1.6px solid var(--fam);border-radius:4px;font-family:var(--mono);font-weight:700;margin-right:3px;background:var(--surface)}
+.arrowtbl td{vertical-align:middle}
+.up{color:var(--good)}.dn{color:var(--bad)}
+.tr3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr));gap:12px}
+.tr3 .card b{font-family:var(--display)}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opts label{display:flex;gap:10px;align-items:flex-start;padding:8px 12px;border:1.5px solid var(--line);border-radius:8px;background:var(--bg);cursor:pointer}
+.opts input{margin-top:.35rem}
+.opts label.sel{border-color:var(--fg)}
+.opts label.right{border-color:var(--good);background:var(--good-bg)}
+.opts label.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.expl{color:var(--fg);font-size:.97rem}
+.tp{font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.qcard{display:grid;grid-template-columns:auto 1fr;gap:0 14px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;list-style:none;border-left:6px solid var(--line)}
+.qcard.ok{border-left-color:var(--good)}.qcard.no{border-left-color:var(--bad)}
+#qs{display:flex;flex-direction:column;gap:12px;padding:0;margin:0}
+.qn{font-family:var(--display);font-weight:800;font-size:1.3rem;color:var(--muted);min-width:1.8rem}
+.qb{display:flex;flex-direction:column;gap:10px;min-width:0}
+.qp{font-size:1.08rem;overflow-wrap:anywhere}
+.qp .f{font-size:1.2rem}
+input.ans-in{font-family:var(--mono);font-weight:700;font-size:1.05rem;width:100%;padding:10px 12px;border:2px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg)}
+input.ans-in:read-only{opacity:.9}
+.fbok{background:var(--good-bg);color:var(--good);padding:10px 12px;border-radius:8px}
+.fbno{background:var(--bad-bg);color:var(--bad);padding:10px 12px;border-radius:8px;overflow-wrap:anywhere}
+.fbno .f.good,.f.good{color:var(--good)}
+.fbno .alt{font-size:.92rem;opacity:.9}
+.fbok .chip,.fbno .chip{margin-top:6px}
+.toolbar{display:flex;flex-wrap:wrap;gap:6px;position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:8px}
+button.sym{background:var(--surface);color:var(--fg);border:1.5px solid var(--line);font-family:var(--mono);padding:6px 12px;font-size:1.05rem}
+button.main{background:var(--fg);color:var(--bg)}
+button.ghost{background:transparent;color:var(--fg);border-color:var(--fg)}
+button:disabled{opacity:.5;cursor:default}
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+#result{background:var(--surface);border:2px solid var(--fg);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:14px}
+#result .big{font-size:1.6rem}
+.info{color:var(--muted)}
+.box{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--line);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+.box.warn{border-left-color:var(--aci)}.box.ok{border-left-color:var(--good)}.box.bad{border-left-color:var(--bad)}
+.box h3{font-size:1.15rem}
+.box .src{font-size:.9rem;color:var(--muted)}
+.box .ask{background:var(--aci-bg);border-radius:8px;padding:8px 12px}
+.box .cp{align-self:flex-start;background:transparent;color:var(--fg);border-color:var(--fg);padding:6px 12px;font-size:.9rem}
+.prob{background:var(--surface);border:1px solid var(--line);border-top:6px solid var(--fam);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.prob .en{font-size:1.05rem}
+.prob .sol{display:flex;flex-direction:column;gap:6px;border-top:1px dashed var(--line);padding-top:10px}
+.prob .sol p{padding-left:12px;border-left:3px solid var(--fam-bg)}
+.prob .res{font-family:var(--mono);font-weight:700;color:var(--fam);font-size:1.08rem}
+.law{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;align-items:baseline;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 18px}
+.law .f{font-size:1.15rem;color:var(--fam)}
+.law span.k{align-self:center}
+.formula{font-family:var(--mono);font-weight:700;font-size:1.25rem;color:var(--fam);text-align:center;padding:14px;background:var(--fam-bg);border-radius:10px}
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 3px;line-height:1.15}
+.frac>span:first-child{border-bottom:2px solid currentColor;padding:0 4px}
+.frac>span:last-child{padding:0 4px}
+.ok-t{color:var(--good)}.bad-t{color:var(--bad)}
+.note{background:var(--guide-bg);border-radius:8px;padding:10px 14px;color:var(--fg);font-size:.95rem}
+.note b{color:var(--guide)}
+.extra{border:1.5px dashed var(--muted);border-radius:10px;padding:14px 18px;display:flex;flex-direction:column;gap:8px}
+.extra .k{color:var(--muted)}
+.pdfs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr));gap:14px}
+.pdfs a{display:flex;flex-direction:column;gap:4px;padding:16px;border:1px solid var(--line);border-radius:10px;background:var(--surface);text-decoration:none}
+.pdfs a.pend{border-style:dashed;color:var(--muted)}
+.viewer{width:100%;height:80vh;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.tabs{display:flex;flex-wrap:wrap;gap:8px}
+.tabs button{background:var(--surface);color:var(--fg);border:1.5px solid var(--line)}
+.tabs button[aria-pressed=true]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.badge{display:inline-block;font-size:.78rem;font-weight:700;padding:2px 8px;border-radius:6px;background:var(--guide-bg);color:var(--guide);margin-left:6px;vertical-align:middle}
+.badge.j{background:var(--oxi-bg);color:var(--oxi)}.badge.f{background:var(--sal-bg);color:var(--sal)}.badge.g{background:var(--hid-bg);color:var(--hid)}.badge.x{background:var(--aci-bg);color:var(--aci)}
+.cmp{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr));gap:12px}
+.cmp .card{border-top:5px solid var(--fam)}
+.cmp .card.j{border-top-color:var(--oxi)}.cmp .card.g{border-top-color:var(--hid)}
+table.cmpt td:first-child{font-weight:700;white-space:nowrap}
+</style></head><body class=""><a href="../../index.html" style="display:block;padding:8px 16px;background:#1b2033;color:#fff;font:600 15px/1.3 system-ui,'Segoe UI',sans-serif;text-decoration:none;position:relative;z-index:60">← Índice principal</a><div class="wrap"><nav class="top"><a href="index.html#examenes">← Índice</a><div class="r"><a href="examen-02.html">Examen 02 →</a></div></nav><header><span class="k">Examen de aspectos cuantitativos de la materia</span><h1>Examen 01</h1><p class="lead">20 preguntas: <b>10 de teoría</b> (enunciar leyes, definir y explicar <b>con tus propias palabras</b>; al corregir ves la respuesta modelo y las ideas clave detectadas, que puedes ajustar) y <b>10 problemas</b> (gases, leyes ponderales, concentraciones, coligativas y fórmulas). Cada problema tiene <b>dos partes</b>, como pide la profesora: el <b>resultado</b> (solo el número; coma o punto, da igual; 3 % de margen) y <b>enunciar la ley que usas y explicar el proceso</b> con tus palabras, que se corrige por ideas clave (medio punto cada parte). Datos: R = 0,082 atm·L/(K·mol); 1 atm = 760 mmHg; N<sub>A</sub> = 6,023 · 10²³; K<sub>e</sub>(agua) = 0,52 y K<sub>c</sub>(agua) = 1,86 °C·kg/mol. Las masas atómicas que hagan falta van en el enunciado. Pulsa <b>Corregir examen</b> al final.</p></header><div class="toolbar" role="group" aria-label="Símbolos"><button class="sym" type="button" data-c="₂">₂</button><button class="sym" type="button" data-c="₃">₃</button><button class="sym" type="button" data-c="₄">₄</button><button class="sym" type="button" data-c="₅">₅</button><button class="sym" type="button" data-c="₆">₆</button><button class="sym" type="button" data-c="²">²</button><button class="sym" type="button" data-c="³">³</button><button class="sym" type="button" data-c="⁺">⁺</button><button class="sym" type="button" data-c="⁻">⁻</button><button class="sym" type="button" data-c="·">·</button><button class="sym" type="button" data-c="e">e (·10^)</button></div><ol id="qs"></ol><div class="actions"><button class="main" id="check" type="button">Corregir examen</button><button class="ghost" id="reset" type="button">Borrar y empezar de nuevo</button></div><section id="result" hidden></section><nav class="top"><a href="index.html#examenes">← Índice</a><div class="r"><a href="examen-02.html">Examen 02 →</a></div></nav></div><script>
+(function(){
+  document.querySelectorAll('button.rv').forEach(function(b){
+    b.addEventListener('click',function(){
+      var t=document.getElementById(b.dataset.t);
+      var open=t.classList.toggle('shown');
+      t.querySelectorAll('.ans').forEach(function(c){c.hidden=!open});
+      b.textContent=open?'Ocultar respuestas':'Mostrar respuestas';
+    });
+  });
+  document.querySelectorAll('button.cp').forEach(function(b){
+    b.addEventListener('click',function(){
+      var t=b.dataset.txt||'';
+      if(navigator.clipboard){navigator.clipboard.writeText(t).then(function(){b.textContent='Copiado';setTimeout(function(){b.textContent=b.dataset.l||'Copiar'},1500)})}
+      else{var ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand('copy')}catch(e){}ta.remove();b.textContent='Copiado';setTimeout(function(){b.textContent=b.dataset.l||'Copiar'},1500)}
+    });
+  });
+  document.querySelectorAll('.tabs').forEach(function(g){
+    g.querySelectorAll('button').forEach(function(b){
+      b.addEventListener('click',function(){
+        g.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});
+        var tgt=document.getElementById(g.dataset.t); if(tgt&&b.dataset.src){tgt.src=b.dataset.src}
+        document.querySelectorAll('[data-pane]').forEach(function(p){p.hidden=p.dataset.pane!==b.dataset.v});
+      });
+    });
+  });
+})();
+const QS=[{"t": "free", "tp": "Teoría · 3.3 · Leyes de los gases", "p": "Dos recipientes con gases distintos se conectan por una llave. Explica cómo se calcula la presión final de la mezcla.", "m": "Cada gas se expande a <b>todo el volumen</b> (suma de los dos). Se calculan los <b>moles</b> de cada gas con PV = nRT en su recipiente inicial; la presión final es la de los <b>moles totales</b> en el volumen total a la misma T, o bien la <b>suma de las presiones parciales</b> de cada gas en el volumen total (<b>Dalton</b>).", "ideas": [{"d": "Volumen total = suma", "k": [["suma"], ["total"]]}, {"d": "Moles de cada gas con PV = nRT", "k": [["nrt"], ["moles"]]}, {"d": "Dalton: suma de presiones parciales", "k": [["dalton"], ["parcial"]]}, {"d": "Misma temperatura", "k": [["temperatura"], ["t constante"]]}]}, {"t": "num", "tp": "Unidades", "p": "Pasa <b>127 °C</b> a kelvin.", "v": 400, "u": "K", "tol": 0.002, "e": "K = °C + 273 = 127 + 273 = <b>400 K</b>.", "show": "400 K", "ideas": [{"d": "Escribe la equivalencia usada (K = °C + 273; 1 atm = 760 mmHg; 1 L = 1000 mL)", "k": [["273"], ["760"], ["1000"]]}]}, {"t": "free", "tp": "Teoría · 4 · Disoluciones", "p": "Clasifica las disoluciones según la <b>cantidad de soluto</b> y explica qué diferencia a una <b>saturada</b> de una <b>sobresaturada</b>.", "m": "<b>Diluidas</b>, <b>concentradas</b>, <b>saturadas</b> (el disolvente tiene el máximo de soluto que admite) y <b>sobresaturadas</b> (disolvente al máximo y además soluto sin disolver).", "ideas": [{"d": "Diluida y concentrada", "k": [["diluida", "concentrada"]]}, {"d": "Saturada: máximo de soluto", "k": [["saturada"], ["maximo"], ["tope"]]}, {"d": "Sobresaturada: soluto sin disolver", "k": [["sin disolver"], ["sobresaturada"]]}]}, {"t": "num", "tp": "Leyes de los gases", "p": "Un gas ocupa <b>10 L</b> a <b>2 atm</b>. Si la temperatura no cambia, ¿qué volumen (en L) ocupará a <b>0,5 atm</b>?", "v": 40.0, "u": "L", "tol": 0.03, "e": "T constante → <b>Boyle-Mariotte</b> (isotérmico): P₁V₁ = P₂V₂ → V₂ = P₁V₁/P₂ = 2 · 10 / 0,5 = <b>40 L</b>.", "show": "40 L", "ideas": [{"d": "Nombra la ley: Boyle-Mariotte", "k": [["boyle"], ["mariotte"]]}, {"d": "Enunciado: a temperatura constante, P y V son inversamente proporcionales", "k": [["inversa"]]}, {"d": "Proceso isotérmico / T constante", "k": [["isoterm"], ["temperatura constante"], ["t constante"], ["t cte"]]}, {"d": "Aplica P₁V₁ = P₂V₂ y despeja", "k": [["p1v1"], ["p1·v1"], ["p1 v1"], ["despej"], ["p·v"]]}]}, {"t": "free", "tp": "Teoría · 1 · La materia", "p": "Define <b>materia</b> y explica la diferencia entre un sistema <b>abierto</b>, <b>cerrado</b> y <b>aislado</b>.", "m": "<b>Materia</b> es todo lo que tiene <b>masa</b> y ocupa un <b>volumen</b>. Un sistema <b>abierto</b> intercambia <b>materia y energía</b> con el entorno; uno <b>cerrado</b> solo <b>energía</b>; uno <b>aislado</b> no intercambia nada.", "ideas": [{"d": "Materia: tiene masa y ocupa volumen", "k": [["masa", "volumen"]]}, {"d": "Abierto: materia y energía", "k": [["abierto"]]}, {"d": "Cerrado: solo energía", "k": [["cerrado", "energia"]]}, {"d": "Aislado: nada", "k": [["aislado"]]}]}, {"t": "num", "tp": "Ecuación de estado", "p": "¿Qué <b>masa (g)</b> de He (M = 4 g/mol) hay en <b>20 L</b> a <b>3 atm</b> y <b>20 °C</b>?", "v": 9.9892, "u": "g", "tol": 0.03, "e": "n = PV/(RT) = 3 · 20 / (0,082 · 293) = 2,4973 mol; m = n · M = 2,4973 · 4 = <b>9,99 g</b>.", "show": "9,99 g", "ideas": [{"d": "Nombra la ecuación de estado de los gases ideales, PV = nRT", "k": [["ecuacion de estado"], ["gases ideales"], ["nrt"]]}, {"d": "Unidades: P en atm, V en L, T en kelvin, R = 0,082", "k": [["atm"], ["kelvin"], ["0,082"], ["0.082"], ["273"]]}, {"d": "Si hay masa, pasa a moles con n = m/M", "k": [["m/m"], ["masa molar"], ["moles"], ["n ="]]}, {"d": "Despeja la incógnita y sustituye", "k": [["despej"], ["sustitu"]]}]}, {"t": "free", "tp": "Teoría · 3.3 · Leyes de los gases", "p": "Explica cómo se obtiene la <b>masa molar de un gas</b> a partir de su densidad, presión y temperatura.", "m": "En PV = nRT se sustituye n = m/M: PV = (m/M)RT. Como la densidad es d = m/V, queda <b>M = dRT/P</b>. Con d en g/L, P en atm, T en K y R = 0,082 se obtiene M en g/mol.", "ideas": [{"d": "PV = nRT con n = m/M", "k": [["m/m"], ["nrt"]]}, {"d": "d = m/V", "k": [["m/v"], ["densidad"]]}, {"d": "M = dRT/P", "k": [["drt"], ["d·r·t"], ["m ="]]}, {"d": "Unidades (g/L, atm, K → g/mol)", "k": [["g/mol"], ["unidad"], ["g/l"]]}]}, {"t": "num", "tp": "Presiones parciales", "p": "En un recipiente de <b>5 L</b> a <b>77 °C</b> hay <b>0,2 mol de Cl₂</b> y <b>0,2 mol de NH₃</b>. ¿Presión parcial del Cl₂ (atm)?", "v": 1.148, "u": "atm", "tol": 0.03, "e": "La presión parcial es la que tendría el Cl₂ solo en todo el volumen: P = nRT/V = 0,2 · 0,082 · 350 / 5 = <b>1,148 atm</b>. (El otro gas no influye en su parcial.)", "show": "1,148 atm", "ideas": [{"d": "Nombra la ley de Dalton de las presiones parciales", "k": [["dalton"], ["parcial"]]}, {"d": "Enunciado: la presión de la mezcla es la suma de las presiones parciales", "k": [["suma"]]}, {"d": "Cada gas ocupa todo el volumen y cumple PV = nRT por su cuenta", "k": [["todo el volumen"], ["nrt"], ["cada gas"]]}, {"d": "T en kelvin", "k": [["kelvin"], ["273"]]}]}, {"t": "free", "tp": "Teoría · 4.2 · Concentración", "p": "¿Qué le ocurre a la molaridad al <b>diluir</b> una disolución con agua? ¿Qué se conserva y cómo se calcula la nueva concentración?", "m": "Al añadir agua los <b>moles de soluto no cambian</b> y el volumen aumenta, así que la molaridad <b>disminuye</b>. Se calcula con n = M₁·V₁ = M₂·V₂ → M₂ = M₁V₁/V₂.", "ideas": [{"d": "Los moles de soluto se conservan", "k": [["moles"], ["conserva"], ["no cambia"]]}, {"d": "El volumen aumenta y la molaridad baja", "k": [["disminu"], ["baja"], ["menor"]]}, {"d": "M₁V₁ = M₂V₂", "k": [["m1v1"], ["m1·v1"], ["m1 v1"], ["m2 ="]]}]}, {"t": "num", "tp": "Leyes ponderales", "p": "En el sulfuro de hierro(II) (FeS) la proporción de masas Fe : S es <b>7 : 4</b>. ¿Cuántos g de <b>S</b> se combinan con <b>21 g de Fe</b>?", "v": 12, "u": "g", "tol": 0.03, "e": "<b>Proust</b>: proporción fija. 21 g de Fe · (4 g S / 7 g Fe) = <b>12 g de S</b>.", "show": "12 g", "ideas": [{"d": "Nombra la ley de las proporciones definidas (Proust)", "k": [["proust"], ["definidas"]]}, {"d": "Enunciado: los elementos de un compuesto se combinan siempre en la misma proporción de masas", "k": [["proporcion"], ["relacion"]]}, {"d": "Plantea la proporción y calcula la masa que falta", "k": [["regla de tres"], ["proporcion"], ["divid"], ["multiplic"]]}, {"d": "Si piden la masa de compuesto, usa Lavoisier (suma de masas)", "k": [["lavoisier"], ["suma"], ["conserv"]]}]}, {"t": "free", "tp": "Teoría · 4.3 · Propiedades coligativas", "p": "Define <b>ósmosis</b> y <b>presión osmótica</b> y escribe la fórmula para calcularla.", "m": "<b>Ósmosis</b>: paso de un <b>disolvente</b> a través de una <b>membrana semipermeable</b>, de la disolución menos concentrada a la más concentrada ([A] &gt; [B]). <b>Presión osmótica</b>: presión que hay que ejercer para <b>impedir el paso</b> del disolvente a través de la membrana. Se calcula con <b>π · V = n · R · T</b>.", "ideas": [{"d": "Paso del disolvente", "k": [["disolvente"]]}, {"d": "Membrana semipermeable", "k": [["semipermeable"], ["membrana"]]}, {"d": "Presión para impedir el paso", "k": [["impedir"], ["frenar"], ["evitar"], ["parar"]]}, {"d": "πV = nRT", "k": [["nrt"]]}]}, {"t": "num", "tp": "Mol", "p": "¿Cuántas <b>moléculas</b> hay en <b>0,5 mol de H₂O</b>? Escribe el resultado en notación científica como <span class=\"f\">1,2e24</span> (es decir, 1,2 · 10²⁴).", "v": 3.0115e+23, "u": "moléculas", "tol": 0.03, "e": "N = n · N<sub>A</sub> = 0,5 · 6,023 · 10²³ = <b>0,301 · 10²⁴ moléculas</b>.", "show": "0,301 · 10²⁴ moléculas", "ideas": [{"d": "Define el mol o la masa molar", "k": [["mol"]]}, {"d": "Usa n = m/M (o N = n · N_A)", "k": [["m/m"], ["masa molar"], ["avogadro"], ["6,02"], ["6.02"]]}, {"d": "Explica las unidades (g/mol, moléculas)", "k": [["g/mol"], ["molecula"], ["gramo"]]}]}, {"t": "free", "tp": "Teoría · 4.3 · Propiedades coligativas", "p": "Dos disoluciones acuosas de glucosa y de sacarosa tienen la misma molalidad. ¿Cuál congela a menor temperatura? Razónalo.", "m": "Las dos <b>igual</b>: el descenso crioscópico es una propiedad <b>coligativa</b>, depende del <b>número de partículas</b> de soluto (de la molalidad) y no de cuál sea el soluto. Δt = K<sub>c</sub>·m es el mismo.", "ideas": [{"d": "Las dos igual", "k": [["igual"], ["misma"], ["las dos"]]}, {"d": "Coligativa: depende del número de partículas, no del soluto", "k": [["coligativ"], ["numero"], ["no de"], ["naturaleza"]]}, {"d": "Δt = Kc · m con la misma m", "k": [["k·m"], ["k m"], ["molal"]]}]}, {"t": "num", "tp": "Concentración", "p": "Se disuelven <b>40 g de Na₂SO₄</b> (M = 142 g/mol) en agua hasta tener <b>500 mL</b> de disolución. ¿Molaridad (mol/L)?", "v": 0.5634, "u": "M", "tol": 0.03, "e": "n = 40/142 = 0,2817 mol; V = 0,5 L. M = n/V = <b>0,563 mol/L</b>.", "show": "0,563 M", "ideas": [{"d": "Define la concentración que calculas (molaridad = moles de soluto / litros de disolución; g/L)", "k": [["soluto"], ["disolucion"]]}, {"d": "Pasa gramos a moles con la masa molar (o moles a gramos)", "k": [["masa molar"], ["m/m"], ["moles"]]}, {"d": "Pasa mL a litros", "k": [["litro"], ["0,"], ["0."]]}, {"d": "Divide (o multiplica) y da las unidades", "k": [["mol/l"], ["g/l"], ["divid"], ["unidad"], ["molar"]]}]}, {"t": "free", "tp": "Teoría · 5 · Fórmulas", "p": "Explica cómo se obtiene la masa molar de un gas desconocido a partir de su densidad para hallar la fórmula molecular.", "m": "Con la ecuación de estado escrita con la masa, PV = (m/M)RT, y d = m/V, se obtiene <b>M = dRT/P</b>. Esa masa molar dividida entre la masa de la fórmula empírica da <b>p</b>, y la molecular es (empírica)<sub>p</sub>.", "ideas": [{"d": "PV = (m/M)RT", "k": [["m/m"], ["nrt"]]}, {"d": "M = dRT/P", "k": [["drt"], ["d·r·t"]]}, {"d": "p = M / M(empírica)", "k": [["p ="], ["p="], ["dividir"], ["cociente"]]}, {"d": "Molecular = (empírica)p", "k": [["veces"], ["repet"], ["("]]}]}, {"t": "num", "tp": "Concentración", "p": "Se disuelven <b>40 g de sal</b> en <b>150 g de agua</b>. ¿% en masa de la disolución?", "v": 21.0526, "u": "%", "tol": 0.03, "e": "Masa de disolución = 40 + 150 = 190 g. % = 40 / 190 · 100 = <b>21,05 %</b>.", "show": "21,05 %", "ideas": [{"d": "Define el % en masa: masa de soluto / masa de disolución · 100", "k": [["100"], ["tanto por ciento"], ["porcentaje"]]}, {"d": "La masa de disolución es soluto + disolvente", "k": [["soluto", "disolvente"], ["suma"], ["total"]]}, {"d": "Misma unidad arriba y abajo", "k": [["unidad"], ["gramos"]]}]}, {"t": "free", "tp": "Teoría · 5 · Fórmulas", "p": "¿Qué diferencia hay entre la <b>fórmula empírica</b> y la <b>molecular</b>? ¿Qué dato hace falta para pasar de una a otra?", "m": "La <b>empírica</b> da la <b>proporción más sencilla</b> entre los átomos (CH₂); la <b>molecular</b> da el número <b>real</b> de átomos de la molécula (C₅H₁₀), y es la empírica repetida p veces. Hace falta la <b>masa molar</b> del compuesto: p = M<sub>molecular</sub> / M<sub>empírica</sub>.", "ideas": [{"d": "Empírica: proporción más sencilla", "k": [["sencill"], ["proporcion"]]}, {"d": "Molecular: número real de átomos", "k": [["real"], ["molecula"]]}, {"d": "Hace falta la masa molar", "k": [["masa molar"], ["masa molecular"]]}, {"d": "p = masa molar / masa de la empírica", "k": [["divid"], ["cociente"], ["veces"], ["p ="]]}]}, {"t": "num", "tp": "Propiedades coligativas", "p": "Una disolución acuosa es <b>2 molal</b>. K<sub>e</sub>(agua) = 0,52 °C·kg/mol. ¿Cuánto <b>sube</b> la temperatura de ebullición (°C)?", "v": 1.04, "u": "°C", "tol": 0.03, "e": "<b>Raoult</b>: Δt = K<sub>e</sub> · m = 0,52 · 2 = <b>1,04 °C</b>.", "show": "1,04 °C", "ideas": [{"d": "Nombra la ley de Raoult (propiedades coligativas)", "k": [["raoult"], ["coligativ"]]}, {"d": "Fórmula Δt = K · m con m en molalidad", "k": [["molal"], ["k·m"], ["k m"], ["k.m"], ["k*m"]]}, {"d": "K depende del disolvente (crioscópica / ebulloscópica)", "k": [["disolvente"], ["criosc"], ["ebullosc"]]}, {"d": "La ebullición sube y la congelación baja", "k": [["sube"], ["baja"], ["aumenta"], ["disminu"]]}]}, {"t": "free", "tp": "Teoría · 3 · Leyes volumétricas", "p": "¿Cómo explica la <b>hipótesis de Avogadro</b> la ley de los volúmenes de combinación de Gay-Lussac?", "m": "Si volúmenes iguales de gases tienen el <b>mismo número de moléculas</b>, la relación entre volúmenes es la misma que entre <b>moléculas</b>, y las moléculas reaccionan según los <b>coeficientes</b> de la ecuación (números enteros sencillos). Por eso 1 L de N₂ + 3 L de H₂ → 2 L de NH₃.", "ideas": [{"d": "Volúmenes iguales → mismo número de moléculas", "k": [["mismo numero"], ["igual numero"], ["mismas moleculas"]]}, {"d": "Relación de volúmenes = relación de moléculas", "k": [["relacion"], ["proporcion"]]}, {"d": "Coeficientes de la ecuación", "k": [["coeficiente"], ["ecuacion"]]}]}, {"t": "txt", "tp": "Fórmula empírica", "p": "Un compuesto tiene <b>82,8 % de C</b> y <b>17,2 % de H</b> (masas atómicas: C = 12, H = 1). Escribe su <b>fórmula empírica</b> (sin subíndices, p. ej. CH2).", "a": ["C2H5"], "e": "En 100 g: C: 82,8/12 = 6,9 at-g; H: 17,2/1 = 17,2 at-g. Divido entre el menor (6,9): C 1, H 2,49 → <b>C₂H₅</b> (hay que multiplicar para que salgan enteros).", "show": "C2H5", "ideas": [{"d": "Supón 100 g de compuesto: los % pasan a gramos", "k": [["100"]]}, {"d": "Pasa los gramos de cada elemento a moles de átomos (at-g) dividiendo por la masa atómica", "k": [["mol"], ["at-g"], ["atomo"], ["masa atomica"]]}, {"d": "Divide entre el menor", "k": [["menor"], ["pequen"]]}, {"d": "Si quedan decimales, multiplica hasta enteros", "k": [["entero"], ["multiplic"], ["decimal"]]}]}];
+const SUP={'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁺':'+','⁻':'-'};
+const SUBS={'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4','₅':'5','₆':'6','₇':'7','₈':'8','₉':'9'};
+function nz(s){
+  s=String(s).normalize('NFC').toLowerCase();
+  s=s.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻]/g,function(c){return SUP[c]}).replace(/[₀-₉]/g,function(c){return SUBS[c]});
+  s=s.replace(/[−–—‐]/g,'-').replace(/\^/g,'').replace(/[\[\]\(\)\{\}]/g,'').replace(/\s+/g,'').replace(/,/g,'.');
+  return s;
+}
+function nf(s){
+  s=String(s).normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
+  s=s.replace(/[−–—]/g,'-');
+  s=s.replace(/[₀-₉]/g,function(c){return String(c.charCodeAt(0)-8320)});
+  s=s.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻]/g,function(c){return SUP[c]});
+  return s.replace(/<[^>]+>/g,'');
+}
+function parseNum(s){
+  s=String(s).trim().toLowerCase().replace(/[−–—]/g,'-').replace(/\s+/g,'');
+  s=s.replace(/[a-df-z%°º]+.*$/,''); // quita unidades escritas detrás
+  s=s.replace(/·10\^?/,'e').replace(/x10\^?/,'e').replace(/\*10\^?/,'e');
+  s=s.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻]/g,function(c){return SUP[c]});
+  if(/^-?\d+[.,]\d+[.,]\d+/.test(s)){s=s.replace(/\./g,'')} // 1.234,5
+  s=s.replace(',', '.');
+  const v=parseFloat(s); return isNaN(v)?null:v;
+}
+function detect(text,ideas){
+  const t=nf(text), ts=t.replace(/\s+/g,'');
+  return ideas.map(function(id){
+    return id.k.some(function(alt){return alt.every(function(kw){const k=nf(kw);return t.indexOf(k)>=0||ts.indexOf(k.replace(/\s+/g,''))>=0})});
+  });
+}
+function esc(t){return String(t).replace(/&/g,'&amp;').replace(new RegExp(String.fromCharCode(60),'g'),'&lt;')}
+function fx(x){return (Math.round(x*10)/10).toString().replace('.',',')}
+let lastInput=null, corrected=false;
+const FREE={};
+const list=document.getElementById('qs');
+QS.forEach(function(q,i){
+  const n=i+1, li=document.createElement('li'); li.className='qcard'; li.id='q'+n;
+  let ans='';
+  if(q.t==='mc'){
+    ans='<div class="opts" role="radiogroup" aria-label="Opciones de la pregunta '+n+'">'+q.o.map(function(o,k){
+      return '<label><input type="radio" name="q'+n+'" value="'+k+'"><span><b>'+'ABCD'[k]+'.</b> '+o+'</span></label>';}).join('')+'</div>';
+  } else if(q.t==='free'){
+    ans='<textarea id="r'+n+'" class="ans-in" rows="5" style="width:100%;font:inherit;padding:10px;border-radius:8px;border:1.5px solid var(--line,#999);background:var(--surface,#fff);color:inherit" autocomplete="off" spellcheck="true" aria-label="Respuesta '+n+'" placeholder="Explícalo con tus propias palabras"></textarea>';
+  } else if(q.t==='num'){
+    ans='<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><input type="text" inputmode="decimal" id="r'+n+'" class="ans-in" style="max-width:14rem" autocomplete="off" aria-label="Respuesta '+n+'" placeholder="Resultado"><span class="k" style="text-transform:none;letter-spacing:0;font-size:1rem">'+(q.u||'')+'</span></div>';
+  } else {
+    ans='<input type="text" id="r'+n+'" class="ans-in" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Respuesta '+n+'" placeholder="Escribe tu respuesta">';
+  }
+  if(q.ideas&&q.t!=='free'){
+    ans+='<label class="k" for="x'+n+'" style="text-transform:none;letter-spacing:0;font-size:.95rem;margin-top:4px">Enuncia la ley que usas y explica el proceso (medio punto):</label><textarea id="x'+n+'" class="ans-x" rows="4" style="width:100%;font:inherit;padding:10px;border-radius:8px;border:1.5px solid var(--line,#999);background:var(--surface,#fff);color:inherit" spellcheck="true" aria-label="Explicación '+n+'" placeholder="Nombre de la ley, su enunciado, unidades y pasos"></textarea>';
+  }
+  li.innerHTML='<div class="qn">'+n+'</div><div class="qb"><span class="tp">'+q.tp+'</span><div class="qp">'+q.p+'</div>'+ans+'<div class="qf" id="f'+n+'"></div></div>';
+  list.appendChild(li);
+  const inp=li.querySelector('input[type=text]'); if(inp) inp.addEventListener('focus',function(e){lastInput=e.target});
+});
+document.querySelectorAll('button.sym').forEach(function(b){
+  b.addEventListener('mousedown',function(e){e.preventDefault()});
+  b.addEventListener('click',function(){
+    const inp=lastInput||document.querySelector('input.ans-in'); if(!inp||inp.readOnly) return;
+    const s=inp.selectionStart==null?inp.value.length:inp.selectionStart, e2=inp.selectionEnd==null?s:inp.selectionEnd;
+    inp.value=inp.value.slice(0,s)+b.dataset.c+inp.value.slice(e2); inp.focus(); const p=s+b.dataset.c.length; inp.setSelectionRange(p,p);
+  });
+});
+function given(i){
+  const q=QS[i];
+  if(q.t==='mc'){const r=document.querySelector('input[name=q'+(i+1)+']:checked'); return r?+r.value:-1;}
+  return document.getElementById('r'+(i+1)).value;
+}
+function isRight(i){
+  const q=QS[i], g=given(i);
+  if(q.t==='mc') return g===q.a;
+  if(!String(g).trim()) return false;
+  if(q.t==='num'){const v=parseNum(g); if(v===null) return false; const tol=Math.max(Math.abs(q.v)*(q.tol||0.03),1e-9); return Math.abs(v-q.v)<=tol;}
+  const x=nz(g); return q.a.some(function(a){return nz(a)===x});
+}
+function correct(i){const q=QS[i]; return q.t==='mc'?q.o[q.a]:q.show;}
+function score(i){
+  const q=QS[i];
+  if(q.t==='free'){const f=FREE[i]; return f.filter(Boolean).length/f.length;}
+  if(q.ideas){const f=FREE[i]||[]; const fr=f.length?f.filter(Boolean).length/f.length:0; return 0.5*(isRight(i)?1:0)+0.5*fr;}
+  return isRight(i)?1:0;
+}
+function ideasBox(i,q){
+  let h='<p style="margin:10px 0 4px"><b>Ideas clave de la explicación.</b> Se han marcado las que se detectan en tu texto; ajústalas si las dijiste con otras palabras:</p>';
+  h+=q.ideas.map(function(id,k){return '<label style="display:block;margin:4px 0"><input type="checkbox" data-q="'+i+'" data-k="'+k+'"'+(FREE[i][k]?' checked':'')+'> '+id.d+'</label>';}).join('');
+  h+='<p class="sc" id="sc'+i+'" style="margin-top:8px"></p>'; return h;
+}
+function renderResult(){
+  const by={}, goods=[], fails=[]; let tot=0;
+  QS.forEach(function(q,i){
+    const s=score(i); tot+=s;
+    by[q.tp]=by[q.tp]||[0,0]; by[q.tp][0]+=s; by[q.tp][1]++;
+    if(s>=0.999) goods.push(i+1); else fails.push(i);
+  });
+  const N=QS.length, pct=Math.round(100*tot/N), res=document.getElementById('result');
+  let h='<h2>Resultado</h2><p class="big"><b>'+fx(tot)+'</b> de '+N+' ('+pct+' %)</p>';
+  h+='<div class="two"><div class="card"><span class="k">Completas ('+goods.length+')</span><p>'+(goods.length?goods.join(', '):'Ninguna')+'</p></div>';
+  h+='<div class="card"><span class="k">Por repasar ('+fails.length+')</span><p>'+(fails.length?fails.map(function(f){return f+1}).join(', '):'Ninguna: examen perfecto.')+'</p></div></div>';
+  h+='<h3>Por temas</h3><div class="tw"><table style="min-width:0"><tr><th>Tema</th><th>Puntos</th></tr>';
+  Object.keys(by).forEach(function(t){h+='<tr><td>'+t+'</td><td><b>'+fx(by[t][0])+'</b> de '+by[t][1]+'</td></tr>'});
+  h+='</table></div>';
+  const nonfree=fails.filter(function(i){return QS[i].t!=='free'});
+  if(nonfree.length){
+    h+='<h3>Repasa estos casos</h3><div class="tw"><table><tr><th>Nº</th><th>Enunciado</th><th>Tu respuesta</th><th>Respuesta correcta</th></tr>';
+    nonfree.forEach(function(i){
+      const q=QS[i], g=given(i); let mine=q.t==='mc'?(g<0?'(sin responder)':esc(q.o[g])):(String(g).trim()?esc(g):'(vacía)');
+      h+='<tr><td>'+(i+1)+'</td><td>'+q.p+'</td><td class="f">'+mine+'</td><td class="f good">'+esc(correct(i))+'</td></tr>';
+    });
+    h+='</table></div>';
+  }
+  res.innerHTML=h; res.hidden=false;
+}
+document.getElementById('check').addEventListener('click',function(){
+  if(corrected) return; corrected=true;
+  QS.forEach(function(q,i){
+    const n=i+1, card=document.getElementById('q'+n), fb=document.getElementById('f'+n), g=given(i);
+    const tag='<span class="nom">'+q.tp+'</span>';
+    if(q.t==='free'){
+      document.getElementById('r'+n).readOnly=true;
+      FREE[i]=detect(g,q.ideas);
+      let h='<div class="fbok" style="border-color:var(--line,#999)"><b>Respuesta modelo.</b> '+tag+'<div class="expl">'+q.m+'</div>';
+      h+='<p style="margin:10px 0 4px"><b>Ideas clave.</b> Se han marcado las que se detectan en tu texto. Si has dicho una con otras palabras, márcala tú; si no la decías, desmárcala:</p>';
+      h+=q.ideas.map(function(id,k){return '<label style="display:block;margin:4px 0"><input type="checkbox" data-q="'+i+'" data-k="'+k+'"'+(FREE[i][k]?' checked':'')+'> '+id.d+'</label>';}).join('');
+      h+='<p class="sc" id="sc'+i+'" style="margin-top:8px"></p></div>';
+      fb.innerHTML=h;
+      const upd=function(){const f=FREE[i]; document.getElementById('sc'+i).innerHTML='Puntuación: <b>'+f.filter(Boolean).length+'</b> de '+f.length+' ideas.'; card.classList.remove('ok','no'); card.classList.add(f.every(Boolean)?'ok':'no');};
+      upd();
+      fb.querySelectorAll('input[type=checkbox]').forEach(function(c){c.addEventListener('change',function(){FREE[i][+c.dataset.k]=c.checked; upd(); renderResult();});});
+      return;
+    }
+    const good=isRight(i);
+    card.classList.add(good?'ok':'no');
+    if(q.ideas){const xa=document.getElementById('x'+n); xa.readOnly=true; FREE[i]=detect(xa.value,q.ideas);}
+    if(q.t==='mc'){
+      card.querySelectorAll('.opts label').forEach(function(l,k){
+        const inp=l.querySelector('input'); inp.disabled=true;
+        if(k===q.a) l.classList.add('right'); else if(k===g) l.classList.add('wrong');
+      });
+    } else document.getElementById('r'+n).readOnly=true;
+    if(good) fb.innerHTML='<div class="fbok"><b>Resultado correcto.</b> '+tag+'<div class="expl">'+q.e+'</div>'+(q.ideas?ideasBox(i,q):'')+'</div>';
+    else{
+      let mine;
+      if(q.t==='mc') mine=(g<0)?'(sin responder)':esc(q.o[g]); else mine=String(g).trim()?esc(g):'(vacía)';
+      fb.innerHTML='<div class="fbno"><b>Resultado incorrecto.</b> Tu respuesta: <span class="f">'+mine+'</span><br>Respuesta correcta: <span class="f good">'+esc(correct(i))+'</span><div class="expl" style="margin-top:6px">'+q.e+'</div>'+tag+(q.ideas?ideasBox(i,q):'')+'</div>';
+    }
+    if(q.ideas){
+      const upd=function(){const f=FREE[i]; document.getElementById('sc'+i).innerHTML='Explicación: <b>'+f.filter(Boolean).length+'</b> de '+f.length+' ideas. Puntos de la pregunta: <b>'+fx(score(i))+'</b> de 1.'; card.classList.remove('ok','no'); card.classList.add(score(i)>=0.999?'ok':'no');};
+      upd();
+      fb.querySelectorAll('input[type=checkbox]').forEach(function(c){c.addEventListener('change',function(){FREE[i][+c.dataset.k]=c.checked; upd(); renderResult();});});
+    }
+  });
+  renderResult();
+  document.getElementById('check').disabled=true;
+  document.getElementById('result').scrollIntoView({behavior:'smooth',block:'start'});
+});
+document.getElementById('reset').addEventListener('click',function(){
+  corrected=false;
+  QS.forEach(function(q,i){
+    const n=i+1, card=document.getElementById('q'+n);
+    if(q.t==='mc'){card.querySelectorAll('.opts label').forEach(function(l){l.classList.remove('right','wrong'); const inp=l.querySelector('input'); inp.disabled=false; inp.checked=false;});}
+    else{const inp=document.getElementById('r'+n); inp.readOnly=false; inp.value='';}
+    const xa=document.getElementById('x'+n); if(xa){xa.readOnly=false; xa.value='';}
+    document.getElementById('f'+n).innerHTML=''; card.classList.remove('ok','no');
+  });
+  document.getElementById('result').hidden=true; document.getElementById('check').disabled=false;
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+</script></body></html>

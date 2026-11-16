@@ -1,0 +1,212 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Naturaleza de la materia</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap"><style>
+:root{
+  --bg:#f6f7fb; --surface:#ffffff; --fg:#1d2233; --muted:#5b6379; --line:#dde1ec;
+  --oxi:#1f5fbf; --oxi-bg:#e4edfb;
+  --hid:#17805a; --hid-bg:#dff3ea;
+  --hox:#c0284f; --hox-bg:#fbe3ea;
+  --aci:#c2570c; --aci-bg:#fdebd9;
+  --sal:#8a3fb0; --sal-bg:#f1e5f8;
+  --guide:#3a4160; --guide-bg:#e8eaf3;
+  --bad:#b3261e; --bad-bg:#fbe4e2; --good:#17805a; --good-bg:#dff3ea;
+
+  --display:"Bricolage Grotesque","Trebuchet MS",sans-serif;
+  --body:"Source Sans 3","Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  --fam:var(--guide); --fam-bg:var(--guide-bg);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12151f; --surface:#1b2030; --fg:#e9ecf6; --muted:#a2a9bf; --line:#2f3650;
+  --oxi:#7fb0ff; --oxi-bg:#1b2b4a;
+  --hid:#5fd0a2; --hid-bg:#173a2e;
+  --hox:#ff8fa8; --hox-bg:#4a1f2d;
+  --aci:#ffa45c; --aci-bg:#4a2b12;
+  --sal:#d29bf0; --sal-bg:#3a2248;
+  --guide:#b9c0e0; --guide-bg:#262c45;
+  --bad:#ff8d85; --bad-bg:#4a1f1c; --good:#5fd0a2; --good-bg:#173a2e;
+ color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12151f; --surface:#1b2030; --fg:#e9ecf6; --muted:#a2a9bf; --line:#2f3650;
+  --oxi:#7fb0ff; --oxi-bg:#1b2b4a;
+  --hid:#5fd0a2; --hid-bg:#173a2e;
+  --hox:#ff8fa8; --hox-bg:#4a1f2d;
+  --aci:#ffa45c; --aci-bg:#4a2b12;
+  --sal:#d29bf0; --sal-bg:#3a2248;
+  --guide:#b9c0e0; --guide-bg:#262c45;
+  --bad:#ff8d85; --bad-bg:#4a1f1c; --good:#5fd0a2; --good-bg:#173a2e;
+ color-scheme:dark}
+body.fam-oxi{--fam:var(--oxi);--fam-bg:var(--oxi-bg)}
+body.fam-hid{--fam:var(--hid);--fam-bg:var(--hid-bg)}
+body.fam-hox{--fam:var(--hox);--fam-bg:var(--hox-bg)}
+body.fam-aci{--fam:var(--aci);--fam-bg:var(--aci-bg)}
+body.fam-sal{--fam:var(--sal);--fam-bg:var(--sal-bg)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.55}
+.wrap{max-width:62rem;margin-inline:auto;padding-inline:16px;padding-block:20px 56px;display:flex;flex-direction:column;gap:40px}
+h1,h2,h3,h4{font-family:var(--display);line-height:1.12;text-wrap:balance;margin:0}
+h1{font-size:clamp(2rem,6vw,3.1rem);font-weight:800}
+h2{font-size:1.55rem;font-weight:800}
+h3{font-size:1.2rem;font-weight:600}
+h4{font-size:1.02rem;font-weight:600}
+p{margin:0}
+a{color:var(--fg);font-weight:700}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--fg);outline-offset:2px}
+.lead{color:var(--muted);max-width:44rem}
+sub{font-size:.75em}
+.f{font-family:var(--mono);font-weight:700}
+.k{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.top{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;justify-content:space-between;font-size:.95rem}
+.top .r{display:flex;gap:8px 18px;flex-wrap:wrap}
+.hero{display:flex;gap:20px;align-items:center;background:var(--fam-bg);color:var(--fam);border-radius:14px;padding:22px}
+.hero svg{flex:none;width:76px;height:76px}
+.hero > div{min-width:0;display:flex;flex-direction:column;gap:8px}
+.hero h1{color:var(--fam)}
+.hero p{color:var(--fg);max-width:42rem}
+.sec{display:flex;flex-direction:column;gap:16px}
+.sh{display:flex;align-items:center;gap:12px}
+.sh::before{content:"";width:12px;height:30px;border-radius:3px;background:var(--fam);flex:none}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));gap:16px}
+.three{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));gap:16px}
+.tag{display:inline-block;padding:2px 10px;border-radius:6px;font-weight:700;font-size:.88rem;background:var(--fam-bg);color:var(--fam)}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:99px;font-weight:700;font-size:.9rem;background:var(--fam-bg);color:var(--fam)}
+.oxi{background:var(--oxi-bg);color:var(--oxi)}.hid{background:var(--hid-bg);color:var(--hid)}
+.hox{background:var(--hox-bg);color:var(--hox)}.aci{background:var(--aci-bg);color:var(--aci)}
+.sal{background:var(--sal-bg);color:var(--sal)}
+.nom{display:inline-block;padding:3px 10px;border:1.5px solid var(--fg);border-radius:6px;font-weight:700;font-size:.9rem;background:var(--surface);color:var(--fg)}
+.pend{border-style:dashed;border-color:var(--muted);color:var(--muted);font-weight:600}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:36rem}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+tr:last-child td{border-bottom:0}
+.cell{white-space:nowrap}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+.q b.t{font-family:var(--display);font-size:1.1rem}
+.q.warn{border-color:var(--aci)}
+.q.pending{border-style:dashed;border-color:var(--muted)}
+.steps{display:flex;flex-direction:column;gap:10px;counter-reset:s;padding:0;margin:0;list-style:none}
+.steps li{counter-increment:s;padding:2px 0 2px 42px;position:relative}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:28px;height:28px;border-radius:50%;background:var(--fam);color:var(--bg);font-family:var(--display);font-weight:800;display:grid;place-items:center;font-size:.95rem}
+.ex{background:var(--fam-bg);border-left:5px solid var(--fam);border-radius:8px;padding:12px 14px;color:var(--fg)}
+.ex .f{color:var(--fam)}
+.nomblock{background:var(--surface);border:1px solid var(--line);border-top:6px solid var(--fam);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.nomblock > header{display:flex;flex-direction:column;gap:6px}
+.dir{display:flex;flex-direction:column;gap:12px;min-width:0}
+.dir h4{color:var(--fam)}
+.struct{font-family:var(--mono);font-weight:700;background:var(--bg);border-radius:8px;padding:10px 14px;overflow-wrap:anywhere}
+.trap{display:grid;grid-template-columns:auto 1fr;gap:10px 14px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:0}
+.trap dt{font-family:var(--mono);font-weight:700;color:var(--fam)}
+.trap dd{margin:0}
+button{font:inherit;font-weight:700;border:2px solid transparent;border-radius:8px;padding:10px 14px;cursor:pointer}
+button.rv{background:var(--fg);color:var(--bg)}
+.ans{font-weight:600}
+.pager{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,16rem),1fr));gap:12px}
+.pager a{display:flex;flex-direction:column;gap:2px;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--surface);text-decoration:none}
+.pager a span.k{font-size:.72rem}
+.pager a:hover{border-color:var(--fam)}
+
+th{text-transform:none;letter-spacing:.02em;font-size:.84rem}
+.sv{width:100%;height:auto;display:block}
+.sv text{fill:var(--fg);font-family:var(--body);font-size:12px}
+.sv text.m{fill:var(--muted)}
+.sv text.b{font-weight:700}
+.sv text.mo{font-family:var(--mono);font-weight:700}
+.sv .ax{stroke:var(--muted);stroke-width:1.3;fill:none}
+.sv .gd{stroke:var(--line);stroke-width:1;fill:none}
+.fig{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.fig .cap{color:var(--muted);font-size:.92rem}
+.tl{display:flex;gap:12px;overflow-x:auto;padding:6px 2px 16px;scroll-snap-type:x proximity}
+.tlc{flex:0 0 17rem;scroll-snap-align:start;background:var(--surface);border:1px solid var(--line);border-top:6px solid var(--fam);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.tlc.out{border-left-style:dashed;border-right-style:dashed;border-bottom-style:dashed}
+.tlc .yr{font-family:var(--display);font-weight:800;font-size:1.5rem;color:var(--fam);line-height:1}
+.tlc .who{font-weight:700}
+.tlc svg{width:100%;height:auto;background:var(--fam-bg);border-radius:8px;color:var(--fam)}
+.tlc svg text{fill:var(--fam);font-family:var(--body);font-size:10px;font-weight:700}
+.tlc .mini{font-size:.93rem;color:var(--fg)}
+.tlc ul{margin:0;padding-left:1.1rem;font-size:.93rem}
+.gap{flex:0 0 3.2rem;display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:700;font-size:.85rem;writing-mode:vertical-rl;text-orientation:mixed;border-inline:2px dotted var(--line)}
+.noex{display:inline-block;font-size:.78rem;font-weight:700;padding:2px 8px;border-radius:6px;background:var(--bg);border:1px dashed var(--muted);color:var(--muted);width:fit-content}
+.pt{display:grid;grid-template-columns:1.5rem repeat(18,minmax(2.7rem,1fr));gap:3px;min-width:56rem}
+.pt .gh,.pt .ph0{font-size:.72rem;font-weight:700;color:var(--muted);text-align:center;align-self:center}
+.pt .e{aspect-ratio:1/1.08;border-radius:5px;padding:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.55rem;line-height:1.05;background:color-mix(in srgb,var(--c,var(--muted)) 24%,var(--surface));border:1px solid color-mix(in srgb,var(--c,var(--muted)) 55%,var(--surface));min-width:0;overflow:hidden}
+.pt .e b{font-family:var(--mono);font-size:.98rem;line-height:1.1}
+.pt .e i{font-style:normal;color:var(--muted);font-size:.58rem}
+.pt .e small{font-size:.5rem;color:var(--muted);max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pt .e.ph{background:transparent;border-style:dashed;color:var(--muted);font-size:.6rem;text-align:center}
+.pt[data-v=bloque] .e.s{--c:var(--oxi)}.pt[data-v=bloque] .e.p{--c:var(--hid)}.pt[data-v=bloque] .e.d{--c:var(--hox)}.pt[data-v=bloque] .e.f{--c:var(--aci)}
+.pt[data-v=tipo] .e.t-alc{--c:#e0524a}.pt[data-v=tipo] .e.t-ake{--c:#e58a2b}.pt[data-v=tipo] .e.t-tr{--c:#d8b020}.pt[data-v=tipo] .e.t-pt{--c:#6aa84f}.pt[data-v=tipo] .e.t-la{--c:#c0599a}.pt[data-v=tipo] .e.t-ac{--c:#9a5fc0}
+.pt[data-v=tipo] .e.t-mo{--c:#2aa198}.pt[data-v=tipo] .e.t-nm{--c:#3b82d6}.pt[data-v=tipo] .e.t-ha{--c:#6c63d9}.pt[data-v=tipo] .e.t-ng{--c:#8a8fa8}
+.pt[data-v=metal] .e.m1{--c:#d8a020}.pt[data-v=metal] .e.m2{--c:#2aa198}.pt[data-v=metal] .e.m3{--c:#3b82d6}
+.pt[data-v=grupo] .e.g1{--c:#e0524a}.pt[data-v=grupo] .e.g2{--c:#e58a2b}.pt[data-v=grupo] .e.g13{--c:#d8b020}.pt[data-v=grupo] .e.g14{--c:#6aa84f}.pt[data-v=grupo] .e.g15{--c:#2aa198}.pt[data-v=grupo] .e.g16{--c:#3b82d6}.pt[data-v=grupo] .e.g17{--c:#6c63d9}.pt[data-v=grupo] .e.g18{--c:#c0599a}.pt[data-v=grupo] .e.gd{--c:var(--muted)}
+.lg{display:flex;flex-wrap:wrap;gap:6px}
+.lg[hidden]{display:none}
+.lg span{display:inline-flex;gap:6px;align-items:center;padding:3px 10px;border-radius:99px;border:1px solid var(--line);background:var(--surface);font-size:.85rem;font-weight:600}
+.lg span::before{content:"";width:12px;height:12px;border-radius:3px;background:var(--c)}
+.ptw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:10px}
+.vb{display:flex;flex-wrap:wrap;gap:8px}
+button.vbtn{background:var(--surface);color:var(--fg);border:1.5px solid var(--line);padding:6px 14px}
+button.vbtn[aria-pressed=true]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+table.heat{min-width:0;width:auto}
+table.heat th,table.heat td{text-align:center;padding:6px 10px}
+table.heat td.hv{font-family:var(--mono);font-weight:700;background:color-mix(in srgb,var(--fam) calc(var(--p,0) * 1%),var(--surface));min-width:4.4rem}
+table.heat td.hv span{display:block;font-family:var(--body);font-size:.78rem;font-weight:600;color:var(--muted)}
+table.heat td.na{color:var(--muted);font-weight:600}
+.bx{display:inline-block;min-width:2.5rem;height:1.7rem;line-height:1.55rem;text-align:center;border:1.6px solid var(--fam);border-radius:4px;font-family:var(--mono);font-weight:700;margin-right:3px;background:var(--surface)}
+.arrowtbl td{vertical-align:middle}
+.up{color:var(--good)}.dn{color:var(--bad)}
+.tr3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr));gap:12px}
+.tr3 .card b{font-family:var(--display)}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opts label{display:flex;gap:10px;align-items:flex-start;padding:8px 12px;border:1.5px solid var(--line);border-radius:8px;background:var(--bg);cursor:pointer}
+.opts input{margin-top:.35rem}
+.opts label.sel{border-color:var(--fg)}
+.opts label.right{border-color:var(--good);background:var(--good-bg)}
+.opts label.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.expl{color:var(--fg);font-size:.97rem}
+.tp{font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.hero0{display:flex;flex-direction:column;gap:12px;padding-block:8px}
+.hero0 h1{font-size:clamp(2.2rem,7vw,3.6rem)}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,19rem),1fr));gap:14px}
+.fcard{display:flex;gap:14px;align-items:center;padding:16px;border-radius:12px;background:var(--surface);border:1px solid var(--line);text-decoration:none;color:var(--fg);min-width:0}
+.fcard:hover{border-color:var(--fam)}
+.fcard .ic{width:68px;height:68px;border-radius:16px;display:grid;place-items:center;flex:none;background:var(--fam-bg);color:var(--fam)}
+.fcard .ic svg{width:44px;height:44px}
+.fcard .tx{display:flex;flex-direction:column;gap:2px;min-width:0}
+.fcard .tx b{font-family:var(--display);font-size:1.15rem;line-height:1.15}
+.fcard .tx .s{color:var(--muted);font-size:.93rem;line-height:1.3}
+.fcard .tx .n{font-size:.8rem;font-weight:700;color:var(--fam);letter-spacing:.04em;text-transform:uppercase}
+.fcard.oxi{--fam:var(--oxi);--fam-bg:var(--oxi-bg)}.fcard.hid{--fam:var(--hid);--fam-bg:var(--hid-bg)}
+.fcard.hox{--fam:var(--hox);--fam-bg:var(--hox-bg)}.fcard.aci{--fam:var(--aci);--fam-bg:var(--aci-bg)}
+.fcard.sal{--fam:var(--sal);--fam-bg:var(--sal-bg)}.fcard.gd{--fam:var(--guide);--fam-bg:var(--guide-bg)}
+.exgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(8.2rem,1fr));gap:10px}
+.exgrid a{display:flex;flex-direction:column;align-items:center;gap:4px;padding:14px 8px;border-radius:12px;background:var(--surface);border:1px solid var(--line);text-decoration:none;color:var(--fg);--fam:var(--guide);--fam-bg:var(--guide-bg)}
+.exgrid a:hover{border-color:var(--fg)}
+.exgrid .ic svg{width:34px;height:34px;color:var(--guide)}
+.exgrid b{font-family:var(--display);font-size:1.1rem}
+.exgrid span.s{font-size:.8rem;color:var(--muted)}
+.steps3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));gap:14px}
+.steps3 .card b{font-family:var(--display);font-size:1.05rem}
+.steps3 .num{font-family:var(--display);font-weight:800;font-size:2rem;color:var(--muted);line-height:1}
+.sh0{display:flex;align-items:center;gap:12px}
+.sh0 .bar{width:12px;height:30px;border-radius:3px;background:var(--fg);flex:none}</style></head><body class=""><a href="../../index.html" style="display:block;padding:8px 16px;background:#1b2033;color:#fff;font:600 15px/1.3 system-ui,'Segoe UI',sans-serif;text-decoration:none;position:relative;z-index:60">← Índice principal</a><div class="wrap"><header class="hero0"><span class="k">Química · Naturaleza de la materia</span><h1>Naturaleza de la materia</h1><p class="lead">Todo el material para estudiar el tema: los modelos atómicos con su línea del tiempo, la tabla periódica y sus propiedades, y los enlaces químicos. Cada apartado tiene explicación, tablas, dibujos y práctica; al final hay diez exámenes con corrección automática. Los <a href="apuntes-originales.pdf">apuntes originales de la profesora</a> están en esta misma carpeta.</p></header><div class="steps3"><div class="card"><span class="num">1</span><b>Aprende cada apartado</b><p>Definición, cómo se razona, ejemplos resueltos y errores típicos.</p></div><div class="card"><span class="num">2</span><b>Repasa con el resumen</b><p>Una página con lo esencial de cada bloque.</p></div><div class="card"><span class="num">3</span><b>Practica</b><p>Diez exámenes de veinte preguntas (configuraciones, comparaciones y teoría) con explicación.</p></div></div><section class="sec"><div class="sh0"><span class="bar"></span><h2>1 · Modelos atómicos</h2></div><div class="grid3"><a class="fcard oxi" href="modelos-atomicos.html"><span class="ic"><svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="24" cy="24" r="3.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(120 24 24)"/></svg></span><span class="tx"><b>Modelos atómicos</b><span class="s">Thomson, Rutherford, Bohr y Schrödinger, con la línea del tiempo</span><span class="n">Números cuánticos, Z, A e isótopos</span></span></a></div></section><section class="sec"><div class="sh0"><span class="bar"></span><h2>2 · Clasificar el sistema periódico</h2></div><div class="grid3"><a class="fcard hid" href="tabla-periodica.html"><span class="ic"><svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="9" width="38" height="30" rx="3"/><path d="M5 19h38M5 29h38M17 9v30M30 9v30"/></svg></span><span class="tx"><b>Moseley y la tabla periódica</b><span class="s">Moseley, periodos, grupos y representativos</span><span class="n">Clasificación del sistema periódico</span></span></a><a class="fcard hid" href="aprender-tabla.html"><span class="ic"><svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="9" width="38" height="30" rx="3"/><path d="M5 19h38M5 29h38M17 9v30M30 9v30"/></svg></span><span class="tx"><b>Aprenderse la tabla periódica</b><span class="s">Reglas para memorizar los elementos y muchos ejercicios (extra, no está en los apuntes)</span><span class="n">Entrenador y tabla vacía</span></span></a><a class="fcard hox" href="configuracion-electronica.html"><span class="ic"><svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="30" width="9" height="9" rx="1"/><rect x="19" y="30" width="9" height="9" rx="1"/><rect x="32" y="30" width="9" height="9" rx="1"/><path d="M10.5 36V26M10.5 26l-3 3M10.5 26l3 3M23.5 36V26M23.5 26l-3 3M23.5 26l3 3M36.5 26v10M36.5 36l-3-3M36.5 36l3-3" /><path d="M24 6v12M24 6l-4 4M24 6l4 4"/></svg></span><span class="tx"><b>Configuración electrónica</b><span class="s">Pauli, mínima energía, Hund y orden de llenado</span><span class="n">Base de las propiedades</span></span></a></div></section><section class="sec"><div class="sh0"><span class="bar"></span><h2>3 · Propiedades periódicas</h2></div><div class="grid3"><a class="fcard aci" href="propiedades-periodicas.html"><span class="ic"><svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 38h36"/><path d="M8 34l8-10 8 4 8-14 8 6"/><circle cx="16" cy="24" r="2"/><circle cx="24" cy="28" r="2"/><circle cx="32" cy="14" r="2"/><circle cx="40" cy="20" r="2"/></svg></span><span class="tx"><b>Resumen de tendencias</b><span class="s">Hacia dónde aumentan las tres propiedades</span></span></a><a class="fcard aci" href="potencial-ionizacion.html"><span class="ic"><svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="26" r="9"/><circle cx="38" cy="14" r="3" fill="currentColor"/><path d="M26 22l8-6"/><path d="M6 8h10"/></svg></span><span class="tx"><b>Potencial de ionización</b><span class="s">Definición, variación, Coulomb y apantallamiento</span></span></a><a class="fcard aci" href="afinidad-electronica.html"><span class="ic"><svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="30" cy="26" r="9"/><circle cx="9" cy="12" r="3" fill="currentColor"/><path d="M13 14l9 7"/><path d="M36 10h8"/></svg></span><span class="tx"><b>Afinidad electrónica</b><span class="s">Definición y variación</span></span></a><a class="fcard aci" href="electronegatividad.html"><span class="ic"><svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="14" cy="24" r="8"/><circle cx="34" cy="24" r="12"/><path d="M22 24h0"/><path d="M20 20c4-3 8-3 10 0M20 28c4 3 8 3 10 0"/></svg></span><span class="tx"><b>Electronegatividad</b><span class="s">Definición y variación</span></span></a><a class="fcard aci" href="valencia.html"><span class="ic"><svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="24" cy="24" r="7"/><circle cx="24" cy="6" r="3"/><circle cx="24" cy="42" r="3"/><circle cx="6" cy="24" r="3"/><circle cx="42" cy="24" r="3"/><path d="M24 9v8M24 31v8M9 24h8M31 24h8"/></svg></span><span class="tx"><b>Valencia</b><span class="s">Valencia iónica y covalente</span></span></a><a class="fcard aci" href="caracter-metalico.html"><span class="ic"><svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="14" r="5"/><circle cx="28" cy="14" r="5"/><circle cx="12" cy="32" r="5"/><circle cx="28" cy="32" r="5"/><circle cx="40" cy="23" r="2" fill="currentColor"/><circle cx="20" cy="23" r="2" fill="currentColor"/><circle cx="36" cy="40" r="2" fill="currentColor"/></svg></span><span class="tx"><b>Metal y no metal</b><span class="s">Qué es un metal y un no metal</span></span></a></div></section><section class="sec"><div class="sh0"><span class="bar"></span><h2>4 · Enlaces químicos</h2></div><div class="grid3"><a class="fcard sal" href="enlace-conceptos.html"><span class="ic"><svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="14" cy="24" r="9"/><circle cx="34" cy="24" r="9"/><path d="M23 24h2"/></svg></span><span class="tx"><b>Conceptos y diagrama de Morse</b><span class="s">Mínima energía, máximo desorden y electrones de valencia</span><span class="n">Diagrama de Morse</span></span></a><a class="fcard sal" href="enlace-atomos.html"><span class="ic"><svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="14" cy="24" r="8"/><circle cx="35" cy="24" r="11"/><path d="M10 24h8M31 24h8M35 20v8"/></svg></span><span class="tx"><b>Entre átomos</b><span class="s">Iónico, covalente y metálico</span><span class="n">3 tipos</span></span></a><a class="fcard sal" href="enlace-moleculares.html"><span class="ic"><svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="14" r="6"/><circle cx="26" cy="22" r="6"/><circle cx="12" cy="34" r="6"/><circle cx="38" cy="36" r="5" stroke-dasharray="3 3"/><path d="M17 17l6 3M17 31l6-5"/></svg></span><span class="tx"><b>Enlaces moleculares</b><span class="s">Lewis, σ y π, sp³, dativo, geometría y uniones entre moléculas</span><span class="n">Geometría molecular</span></span></a></div></section><section class="sec"><div class="sh0"><span class="bar"></span><h2>Repaso</h2></div><div class="grid3"><a class="fcard gd" href="resumen.html"><span class="ic"><svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="5" width="30" height="38" rx="4"/><path d="M16 15h16M16 23h16M16 31h10"/></svg></span><span class="tx"><b>Resumen para el examen</b><span class="s">Lo esencial de cada tema en una sola página</span></span></a><a class="fcard gd" href="banco-teoria.html"><span class="ic"><svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="5" width="30" height="38" rx="4"/><path d="M16 15h16M16 23h16M16 31h10"/></svg></span><span class="tx"><b>Banco de preguntas de teoría</b><span class="s">Las preguntas de teoría con respuesta modelo</span></span></a></div></section><section class="sec" id="examenes"><div class="sh0"><span class="bar"></span><h2>5 · Exámenes</h2></div><p class="lead">Cada examen tiene 20 preguntas: <b>16 de teoría</b> (de detalle, para responder <b>con tus propias palabras</b>; te marca las ideas clave que has incluido) y 4 prácticas (2 configuraciones electrónicas y 2 comparaciones de PI, AE o EN). Hay 119 preguntas de teoría distintas, repartidas entre los diez exámenes (algunas se repiten en dos exámenes).</p><div class="exgrid"><a href="examen-01.html"><span class="ic"><svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="5" width="30" height="38" rx="4"/><path d="M16 17l3 3 6-7M16 31h16"/></svg></span><b>Examen 01</b><span class="s">20 preguntas</span></a><a href="examen-02.html"><span class="ic"><svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="5" width="30" height="38" rx="4"/><path d="M16 17l3 3 6-7M16 31h16"/></svg></span><b>Examen 02</b><span class="s">20 preguntas</span></a><a href="examen-03.html"><span class="ic"><svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="5" width="30" height="38" rx="4"/><path d="M16 17l3 3 6-7M16 31h16"/></svg></span><b>Examen 03</b><span class="s">20 preguntas</span></a><a href="examen-04.html"><span class="ic"><svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="5" width="30" height="38" rx="4"/><path d="M16 17l3 3 6-7M16 31h16"/></svg></span><b>Examen 04</b><span class="s">20 preguntas</span></a><a href="examen-05.html"><span class="ic"><svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="5" width="30" height="38" rx="4"/><path d="M16 17l3 3 6-7M16 31h16"/></svg></span><b>Examen 05</b><span class="s">20 preguntas</span></a><a href="examen-06.html"><span class="ic"><svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="5" width="30" height="38" rx="4"/><path d="M16 17l3 3 6-7M16 31h16"/></svg></span><b>Examen 06</b><span class="s">20 preguntas</span></a><a href="examen-07.html"><span class="ic"><svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="5" width="30" height="38" rx="4"/><path d="M16 17l3 3 6-7M16 31h16"/></svg></span><b>Examen 07</b><span class="s">20 preguntas</span></a><a href="examen-08.html"><span class="ic"><svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="5" width="30" height="38" rx="4"/><path d="M16 17l3 3 6-7M16 31h16"/></svg></span><b>Examen 08</b><span class="s">20 preguntas</span></a><a href="examen-09.html"><span class="ic"><svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="5" width="30" height="38" rx="4"/><path d="M16 17l3 3 6-7M16 31h16"/></svg></span><b>Examen 09</b><span class="s">20 preguntas</span></a><a href="examen-10.html"><span class="ic"><svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="5" width="30" height="38" rx="4"/><path d="M16 17l3 3 6-7M16 31h16"/></svg></span><b>Examen 10</b><span class="s">20 preguntas</span></a></div></section><section class="sec"><div class="sh0"><span class="bar"></span><h2>Dudas por confirmar</h2></div><p class="lead">Con los apuntes completos algunas dudas se han resuelto y otras son nuevas (l desde 0 o desde 1, la fila del SO₂, F frente a Cl en afinidad…). Están reunidas aquí.</p><div class="grid3"><a class="fcard gd" href="dudas.html"><span class="ic"><svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h20l16 16-16 16L6 24z"/><circle cx="14" cy="16" r="2.5"/></svg></span><span class="tx"><b>Dudas pendientes</b><span class="s">0 abiertas y 15 resueltas</span></span></a></div></section><section class="sec"><div class="sh0"><span class="bar"></span><h2>Otros temas</h2></div><div class="grid3"><a class="fcard gd" href="../cuantitativos/index.html"><span class="ic"><svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h20l16 16-16 16L6 24z"/><circle cx="14" cy="16" r="2.5"/></svg></span><span class="tx"><b>Aspectos cuantitativos de la materia</b><span class="s">El tema siguiente (tema 3)</span></span></a><a class="fcard gd" href="../global/index.html"><span class="ic"><svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h20l16 16-16 16L6 24z"/><circle cx="14" cy="16" r="2.5"/></svg></span><span class="tx"><b>Global: temas 2 y 3</b><span class="s">Gran resumen y exámenes mezclados</span></span></a><a class="fcard gd" href="../formulacion/index.html"><span class="ic"><svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h20l16 16-16 16L6 24z"/><circle cx="14" cy="16" r="2.5"/></svg></span><span class="tx"><b>Formulación inorgánica</b><span class="s">El tema anterior</span></span></a></div></section></div><script>
+(function(){
+  document.querySelectorAll('button.rv').forEach(function(b){
+    b.addEventListener('click',function(){
+      var t=document.getElementById(b.dataset.t);
+      var open=t.classList.toggle('shown');
+      t.querySelectorAll('.ans').forEach(function(c){c.hidden=!open});
+      b.textContent=open?'Ocultar respuestas':'Mostrar respuestas';
+    });
+  });
+  document.querySelectorAll('.vb').forEach(function(g){
+    g.querySelectorAll('button.vbtn').forEach(function(b){
+      b.addEventListener('click',function(){
+        var t=document.getElementById(g.dataset.t); t.dataset.v=b.dataset.v;
+        g.querySelectorAll('button.vbtn').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});
+        var l=document.getElementById(g.dataset.t+'-lg'); if(l){l.querySelectorAll('[data-for]').forEach(function(x){x.hidden=x.dataset.for!==b.dataset.v})}
+      });
+    });
+  });
+})();
+</script></body></html>

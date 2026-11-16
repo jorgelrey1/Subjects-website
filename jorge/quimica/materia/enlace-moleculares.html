@@ -1,0 +1,188 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Enlaces moleculares</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap"><style>
+:root{
+  --bg:#f6f7fb; --surface:#ffffff; --fg:#1d2233; --muted:#5b6379; --line:#dde1ec;
+  --oxi:#1f5fbf; --oxi-bg:#e4edfb;
+  --hid:#17805a; --hid-bg:#dff3ea;
+  --hox:#c0284f; --hox-bg:#fbe3ea;
+  --aci:#c2570c; --aci-bg:#fdebd9;
+  --sal:#8a3fb0; --sal-bg:#f1e5f8;
+  --guide:#3a4160; --guide-bg:#e8eaf3;
+  --bad:#b3261e; --bad-bg:#fbe4e2; --good:#17805a; --good-bg:#dff3ea;
+
+  --display:"Bricolage Grotesque","Trebuchet MS",sans-serif;
+  --body:"Source Sans 3","Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  --fam:var(--guide); --fam-bg:var(--guide-bg);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12151f; --surface:#1b2030; --fg:#e9ecf6; --muted:#a2a9bf; --line:#2f3650;
+  --oxi:#7fb0ff; --oxi-bg:#1b2b4a;
+  --hid:#5fd0a2; --hid-bg:#173a2e;
+  --hox:#ff8fa8; --hox-bg:#4a1f2d;
+  --aci:#ffa45c; --aci-bg:#4a2b12;
+  --sal:#d29bf0; --sal-bg:#3a2248;
+  --guide:#b9c0e0; --guide-bg:#262c45;
+  --bad:#ff8d85; --bad-bg:#4a1f1c; --good:#5fd0a2; --good-bg:#173a2e;
+ color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12151f; --surface:#1b2030; --fg:#e9ecf6; --muted:#a2a9bf; --line:#2f3650;
+  --oxi:#7fb0ff; --oxi-bg:#1b2b4a;
+  --hid:#5fd0a2; --hid-bg:#173a2e;
+  --hox:#ff8fa8; --hox-bg:#4a1f2d;
+  --aci:#ffa45c; --aci-bg:#4a2b12;
+  --sal:#d29bf0; --sal-bg:#3a2248;
+  --guide:#b9c0e0; --guide-bg:#262c45;
+  --bad:#ff8d85; --bad-bg:#4a1f1c; --good:#5fd0a2; --good-bg:#173a2e;
+ color-scheme:dark}
+body.fam-oxi{--fam:var(--oxi);--fam-bg:var(--oxi-bg)}
+body.fam-hid{--fam:var(--hid);--fam-bg:var(--hid-bg)}
+body.fam-hox{--fam:var(--hox);--fam-bg:var(--hox-bg)}
+body.fam-aci{--fam:var(--aci);--fam-bg:var(--aci-bg)}
+body.fam-sal{--fam:var(--sal);--fam-bg:var(--sal-bg)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.55}
+.wrap{max-width:62rem;margin-inline:auto;padding-inline:16px;padding-block:20px 56px;display:flex;flex-direction:column;gap:40px}
+h1,h2,h3,h4{font-family:var(--display);line-height:1.12;text-wrap:balance;margin:0}
+h1{font-size:clamp(2rem,6vw,3.1rem);font-weight:800}
+h2{font-size:1.55rem;font-weight:800}
+h3{font-size:1.2rem;font-weight:600}
+h4{font-size:1.02rem;font-weight:600}
+p{margin:0}
+a{color:var(--fg);font-weight:700}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--fg);outline-offset:2px}
+.lead{color:var(--muted);max-width:44rem}
+sub{font-size:.75em}
+.f{font-family:var(--mono);font-weight:700}
+.k{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.top{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;justify-content:space-between;font-size:.95rem}
+.top .r{display:flex;gap:8px 18px;flex-wrap:wrap}
+.hero{display:flex;gap:20px;align-items:center;background:var(--fam-bg);color:var(--fam);border-radius:14px;padding:22px}
+.hero svg{flex:none;width:76px;height:76px}
+.hero > div{min-width:0;display:flex;flex-direction:column;gap:8px}
+.hero h1{color:var(--fam)}
+.hero p{color:var(--fg);max-width:42rem}
+.sec{display:flex;flex-direction:column;gap:16px}
+.sh{display:flex;align-items:center;gap:12px}
+.sh::before{content:"";width:12px;height:30px;border-radius:3px;background:var(--fam);flex:none}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));gap:16px}
+.three{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));gap:16px}
+.tag{display:inline-block;padding:2px 10px;border-radius:6px;font-weight:700;font-size:.88rem;background:var(--fam-bg);color:var(--fam)}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:99px;font-weight:700;font-size:.9rem;background:var(--fam-bg);color:var(--fam)}
+.oxi{background:var(--oxi-bg);color:var(--oxi)}.hid{background:var(--hid-bg);color:var(--hid)}
+.hox{background:var(--hox-bg);color:var(--hox)}.aci{background:var(--aci-bg);color:var(--aci)}
+.sal{background:var(--sal-bg);color:var(--sal)}
+.nom{display:inline-block;padding:3px 10px;border:1.5px solid var(--fg);border-radius:6px;font-weight:700;font-size:.9rem;background:var(--surface);color:var(--fg)}
+.pend{border-style:dashed;border-color:var(--muted);color:var(--muted);font-weight:600}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:36rem}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+tr:last-child td{border-bottom:0}
+.cell{white-space:nowrap}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+.q b.t{font-family:var(--display);font-size:1.1rem}
+.q.warn{border-color:var(--aci)}
+.q.pending{border-style:dashed;border-color:var(--muted)}
+.steps{display:flex;flex-direction:column;gap:10px;counter-reset:s;padding:0;margin:0;list-style:none}
+.steps li{counter-increment:s;padding:2px 0 2px 42px;position:relative}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:28px;height:28px;border-radius:50%;background:var(--fam);color:var(--bg);font-family:var(--display);font-weight:800;display:grid;place-items:center;font-size:.95rem}
+.ex{background:var(--fam-bg);border-left:5px solid var(--fam);border-radius:8px;padding:12px 14px;color:var(--fg)}
+.ex .f{color:var(--fam)}
+.nomblock{background:var(--surface);border:1px solid var(--line);border-top:6px solid var(--fam);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.nomblock > header{display:flex;flex-direction:column;gap:6px}
+.dir{display:flex;flex-direction:column;gap:12px;min-width:0}
+.dir h4{color:var(--fam)}
+.struct{font-family:var(--mono);font-weight:700;background:var(--bg);border-radius:8px;padding:10px 14px;overflow-wrap:anywhere}
+.trap{display:grid;grid-template-columns:auto 1fr;gap:10px 14px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:0}
+.trap dt{font-family:var(--mono);font-weight:700;color:var(--fam)}
+.trap dd{margin:0}
+button{font:inherit;font-weight:700;border:2px solid transparent;border-radius:8px;padding:10px 14px;cursor:pointer}
+button.rv{background:var(--fg);color:var(--bg)}
+.ans{font-weight:600}
+.pager{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,16rem),1fr));gap:12px}
+.pager a{display:flex;flex-direction:column;gap:2px;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--surface);text-decoration:none}
+.pager a span.k{font-size:.72rem}
+.pager a:hover{border-color:var(--fam)}
+
+th{text-transform:none;letter-spacing:.02em;font-size:.84rem}
+.sv{width:100%;height:auto;display:block}
+.sv text{fill:var(--fg);font-family:var(--body);font-size:12px}
+.sv text.m{fill:var(--muted)}
+.sv text.b{font-weight:700}
+.sv text.mo{font-family:var(--mono);font-weight:700}
+.sv .ax{stroke:var(--muted);stroke-width:1.3;fill:none}
+.sv .gd{stroke:var(--line);stroke-width:1;fill:none}
+.fig{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.fig .cap{color:var(--muted);font-size:.92rem}
+.tl{display:flex;gap:12px;overflow-x:auto;padding:6px 2px 16px;scroll-snap-type:x proximity}
+.tlc{flex:0 0 17rem;scroll-snap-align:start;background:var(--surface);border:1px solid var(--line);border-top:6px solid var(--fam);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.tlc.out{border-left-style:dashed;border-right-style:dashed;border-bottom-style:dashed}
+.tlc .yr{font-family:var(--display);font-weight:800;font-size:1.5rem;color:var(--fam);line-height:1}
+.tlc .who{font-weight:700}
+.tlc svg{width:100%;height:auto;background:var(--fam-bg);border-radius:8px;color:var(--fam)}
+.tlc svg text{fill:var(--fam);font-family:var(--body);font-size:10px;font-weight:700}
+.tlc .mini{font-size:.93rem;color:var(--fg)}
+.tlc ul{margin:0;padding-left:1.1rem;font-size:.93rem}
+.gap{flex:0 0 3.2rem;display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:700;font-size:.85rem;writing-mode:vertical-rl;text-orientation:mixed;border-inline:2px dotted var(--line)}
+.noex{display:inline-block;font-size:.78rem;font-weight:700;padding:2px 8px;border-radius:6px;background:var(--bg);border:1px dashed var(--muted);color:var(--muted);width:fit-content}
+.pt{display:grid;grid-template-columns:1.5rem repeat(18,minmax(2.7rem,1fr));gap:3px;min-width:56rem}
+.pt .gh,.pt .ph0{font-size:.72rem;font-weight:700;color:var(--muted);text-align:center;align-self:center}
+.pt .e{aspect-ratio:1/1.08;border-radius:5px;padding:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.55rem;line-height:1.05;background:color-mix(in srgb,var(--c,var(--muted)) 24%,var(--surface));border:1px solid color-mix(in srgb,var(--c,var(--muted)) 55%,var(--surface));min-width:0;overflow:hidden}
+.pt .e b{font-family:var(--mono);font-size:.98rem;line-height:1.1}
+.pt .e i{font-style:normal;color:var(--muted);font-size:.58rem}
+.pt .e small{font-size:.5rem;color:var(--muted);max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pt .e.ph{background:transparent;border-style:dashed;color:var(--muted);font-size:.6rem;text-align:center}
+.pt[data-v=bloque] .e.s{--c:var(--oxi)}.pt[data-v=bloque] .e.p{--c:var(--hid)}.pt[data-v=bloque] .e.d{--c:var(--hox)}.pt[data-v=bloque] .e.f{--c:var(--aci)}
+.pt[data-v=tipo] .e.t-alc{--c:#e0524a}.pt[data-v=tipo] .e.t-ake{--c:#e58a2b}.pt[data-v=tipo] .e.t-tr{--c:#d8b020}.pt[data-v=tipo] .e.t-pt{--c:#6aa84f}.pt[data-v=tipo] .e.t-la{--c:#c0599a}.pt[data-v=tipo] .e.t-ac{--c:#9a5fc0}
+.pt[data-v=tipo] .e.t-mo{--c:#2aa198}.pt[data-v=tipo] .e.t-nm{--c:#3b82d6}.pt[data-v=tipo] .e.t-ha{--c:#6c63d9}.pt[data-v=tipo] .e.t-ng{--c:#8a8fa8}
+.pt[data-v=metal] .e.m1{--c:#d8a020}.pt[data-v=metal] .e.m2{--c:#2aa198}.pt[data-v=metal] .e.m3{--c:#3b82d6}
+.pt[data-v=grupo] .e.g1{--c:#e0524a}.pt[data-v=grupo] .e.g2{--c:#e58a2b}.pt[data-v=grupo] .e.g13{--c:#d8b020}.pt[data-v=grupo] .e.g14{--c:#6aa84f}.pt[data-v=grupo] .e.g15{--c:#2aa198}.pt[data-v=grupo] .e.g16{--c:#3b82d6}.pt[data-v=grupo] .e.g17{--c:#6c63d9}.pt[data-v=grupo] .e.g18{--c:#c0599a}.pt[data-v=grupo] .e.gd{--c:var(--muted)}
+.lg{display:flex;flex-wrap:wrap;gap:6px}
+.lg[hidden]{display:none}
+.lg span{display:inline-flex;gap:6px;align-items:center;padding:3px 10px;border-radius:99px;border:1px solid var(--line);background:var(--surface);font-size:.85rem;font-weight:600}
+.lg span::before{content:"";width:12px;height:12px;border-radius:3px;background:var(--c)}
+.ptw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:10px}
+.vb{display:flex;flex-wrap:wrap;gap:8px}
+button.vbtn{background:var(--surface);color:var(--fg);border:1.5px solid var(--line);padding:6px 14px}
+button.vbtn[aria-pressed=true]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+table.heat{min-width:0;width:auto}
+table.heat th,table.heat td{text-align:center;padding:6px 10px}
+table.heat td.hv{font-family:var(--mono);font-weight:700;background:color-mix(in srgb,var(--fam) calc(var(--p,0) * 1%),var(--surface));min-width:4.4rem}
+table.heat td.hv span{display:block;font-family:var(--body);font-size:.78rem;font-weight:600;color:var(--muted)}
+table.heat td.na{color:var(--muted);font-weight:600}
+.bx{display:inline-block;min-width:2.5rem;height:1.7rem;line-height:1.55rem;text-align:center;border:1.6px solid var(--fam);border-radius:4px;font-family:var(--mono);font-weight:700;margin-right:3px;background:var(--surface)}
+.arrowtbl td{vertical-align:middle}
+.up{color:var(--good)}.dn{color:var(--bad)}
+.tr3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr));gap:12px}
+.tr3 .card b{font-family:var(--display)}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opts label{display:flex;gap:10px;align-items:flex-start;padding:8px 12px;border:1.5px solid var(--line);border-radius:8px;background:var(--bg);cursor:pointer}
+.opts input{margin-top:.35rem}
+.opts label.sel{border-color:var(--fg)}
+.opts label.right{border-color:var(--good);background:var(--good-bg)}
+.opts label.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.expl{color:var(--fg);font-size:.97rem}
+.tp{font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+</style></head><body class="fam-sal"><a href="../../index.html" style="display:block;padding:8px 16px;background:#1b2033;color:#fff;font:600 15px/1.3 system-ui,'Segoe UI',sans-serif;text-decoration:none;position:relative;z-index:60">← Índice principal</a><div class="wrap"><nav class="top"><a href="index.html">← Índice</a><div class="r"><a href="modelos-atomicos.html">Modelos atómicos</a><a href="tabla-periodica.html">Tabla periódica</a><a href="propiedades-periodicas.html">Propiedades</a><a href="enlace-conceptos.html">Enlaces</a><a href="resumen.html">Resumen</a></div></nav><header class="hero"><svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="14" r="6"/><circle cx="26" cy="22" r="6"/><circle cx="12" cy="34" r="6"/><circle cx="38" cy="36" r="5" stroke-dasharray="3 3"/><path d="M17 17l6 3M17 31l6-5"/></svg><div><span class="k">Naturaleza de la materia</span><h1>Enlaces moleculares: geometría y uniones entre moléculas</h1><p>Lewis, enlaces σ y π, hibridación sp³, enlace dativo, geometría molecular y uniones entre moléculas, como en tus apuntes.</p></div></header><section class="sec"><div class="sh"><h2>Estructuras de Lewis: pares enlazantes y no enlazantes</h2></div><p>En las moléculas covalentes los átomos <b>comparten electrones</b> (de valencia). Por ejemplo, en el <b>HCl</b> el Cl pasa de s²p⁵ a s² p<sub>x</sub>² p<sub>y</sub>² p<sub>z</sub>¹: el electrón de valencia del H (s¹) y el p<sub>z</sub>¹ del Cl se unen. Los pares de electrones que se comparten son <b>enlazantes</b> y los que no, <b>no enlazantes</b>.</p><div class="tw"><table><tr><th>Molécula</th><th>Lewis</th><th>Enlazantes</th><th>No enlazantes</th><th>Enlace</th></tr><tr><td>HCl</td><td>H–Cl</td><td>1</td><td>3 en el Cl</td><td>sencillo</td></tr><tr><td>Cl<sub>2</sub></td><td>Cl–Cl</td><td>1</td><td>3 en cada Cl</td><td>sencillo</td></tr><tr><td>O<sub>2</sub></td><td>O=O</td><td>2</td><td>2 en cada O</td><td>doble</td></tr><tr><td>N<sub>2</sub></td><td>N≡N</td><td>3</td><td>1 en cada N</td><td>triple</td></tr></table></div></section><section class="sec"><div class="sh"><h2>Enlaces σ y π</h2></div><p>En el <b>Cl<sub>2</sub></b> el enlace es <b>σ</b> (sigma): solape frontal de los orbitales. En el <b>O<sub>2</sub></b> y el <b>N<sub>2</sub></b> los enlaces extra son <b>π</b> (pi): solape lateral.</p><div class="fig"><svg class="sv" viewBox="0 0 720 220" role="img" aria-label="Enlaces sigma y pi"><text class="b" x="100" y="22" text-anchor="middle">σ  s – s (H₂)</text><circle cx="76" cy="90" r="34" style="fill:var(--oxi);fill-opacity:.3;stroke:var(--oxi);stroke-width:2"/><circle cx="124" cy="90" r="34" style="fill:var(--hid);fill-opacity:.3;stroke:var(--hid);stroke-width:2"/><path d="M20 90H180" style="stroke:var(--muted);stroke-dasharray:3 4"/><text class="m" x="100" y="150" text-anchor="middle">solape frontal</text><text class="b" x="320" y="22" text-anchor="middle">σ  p – p (Cl₂)</text><ellipse cx="256" cy="90" rx="30" ry="15" style="fill:var(--oxi);fill-opacity:.3;stroke:var(--oxi);stroke-width:2"/><ellipse cx="300" cy="90" rx="30" ry="15" style="fill:var(--hid);fill-opacity:.35;stroke:var(--hid);stroke-width:2"/><ellipse cx="344" cy="90" rx="30" ry="15" style="fill:var(--hid);fill-opacity:.35;stroke:var(--hid);stroke-width:2"/><ellipse cx="388" cy="90" rx="30" ry="15" style="fill:var(--oxi);fill-opacity:.3;stroke:var(--oxi);stroke-width:2"/><path d="M220 90H420" style="stroke:var(--muted);stroke-dasharray:3 4"/><text class="m" x="320" y="150" text-anchor="middle">solape frontal (sobre el eje)</text><text class="b" x="580" y="22" text-anchor="middle">π  p – p (en O₂ y N₂)</text><ellipse cx="548" cy="62" rx="22" ry="26" style="fill:var(--oxi);fill-opacity:.3;stroke:var(--oxi);stroke-width:2"/><ellipse cx="548" cy="122" rx="22" ry="26" style="fill:var(--oxi);fill-opacity:.3;stroke:var(--oxi);stroke-width:2"/><ellipse cx="612" cy="62" rx="22" ry="26" style="fill:var(--hid);fill-opacity:.3;stroke:var(--hid);stroke-width:2"/><ellipse cx="612" cy="122" rx="22" ry="26" style="fill:var(--hid);fill-opacity:.3;stroke:var(--hid);stroke-width:2"/><path d="M500 92H660" style="stroke:var(--muted);stroke-dasharray:3 4"/><text class="m" x="580" y="170" text-anchor="middle">solape lateral (arriba y abajo del eje)</text><text class="m" x="360" y="204" text-anchor="middle">Un enlace simple es un σ. Uno doble es un σ y un π. Uno triple es un σ y dos π.</text></svg><p class="cap">σ: solape frontal; π: solape lateral.</p></div><div class="tw"><table><tr><th>Enlace</th><th>Composición</th></tr><tr><td>Sencillo (Cl–Cl)</td><td>1 σ</td></tr><tr><td>Doble (O=O)</td><td>1 σ + 1 π</td></tr><tr><td>Triple (N≡N)</td><td>1 σ + 2 π</td></tr></table></div></section><section class="sec"><div class="sh"><h2>Hibridación sp³ del carbono (metano)</h2></div><p>El carbono es <b>s²p²</b> y pasa a <b>s¹ p<sub>x</sub>¹ p<sub>y</sub>¹ p<sub>z</sub>¹</b>. Los cuatro orbitales se mezclan en una <b>hibridación sp³</b> y el C forma <b>4 enlaces</b> (CH<sub>4</sub>).</p><div class="two"><div class="card"><h3>Antes</h3><p>2s: <span class="bx">↑↓</span> &nbsp; 2p: <span class="bx">↑</span><span class="bx">↑</span><span class="bx">&nbsp;</span></p></div><div class="card"><h3>Después (4 sp³)</h3><p><span class="bx">↑</span><span class="bx">↑</span><span class="bx">↑</span><span class="bx">↑</span></p><p>Cada uno forma un enlace σ con un H.</p></div></div></section><section class="sec"><div class="sh"><h2>Enlace covalente dativo</h2></div><p>En el enlace <b>normal</b>, cada átomo aporta <b>1 electrón</b> para compartir. En el <b>dativo</b>, <b>uno solo aporta los 2 electrones</b> para compartir.</p><div class="tw"><table><tr><th>Especie</th><th>Enlaces</th></tr><tr><td>NH<sub>4</sub><sup>+</sup> (ion amonio)</td><td>Tres covalentes normales N–H y uno dativo (el N aporta los dos electrones)</td></tr><tr><td>H<sub>2</sub>SO<sub>4</sub></td><td>4 enlaces covalentes y 2 dativos</td></tr><tr><td>HCN</td><td>H–C≡N</td></tr><tr><td>BH<sub>3</sub></td><td>Tres enlaces B–H</td></tr></table></div><div class="ex">En los apuntes el H<sub>2</sub>SO<sub>4</sub> aparece con <b>4 covalentes y 2 dativos</b>.</div></section><section class="sec"><div class="sh"><h2>Geometría molecular</h2></div><div class="tw"><table style="min-width:44rem"><tr><th>Átomos unidos (pares enlazantes)</th><th>Pares totales</th><th>Pares libres</th><th>Geometría molecular</th><th>Geometría electrónica</th><th>Ángulo</th><th>Ejemplo</th></tr><tr><td class="cell">1</td><td>1</td><td>0</td><td>Diatómica lineal</td><td>Lineal</td><td>180°</td><td>H<sub>2</sub></td></tr><tr><td class="cell">2</td><td>2</td><td>0</td><td>Lineal</td><td>Lineal</td><td>180°</td><td>HCN</td></tr><tr><td class="cell">3</td><td>3</td><td>0</td><td>Trigonal plana</td><td>Trigonal plana</td><td>120°</td><td>BH<sub>3</sub></td></tr><tr><td class="cell">2</td><td>3</td><td>1</td><td>Angular</td><td>Triangular</td><td>&lt;120°</td><td>SO<sub>2</sub></td></tr><tr><td class="cell">4</td><td>4</td><td>0</td><td>Tetraédrica</td><td>Tetraédrica</td><td>109,5°</td><td>CH<sub>4</sub></td></tr><tr><td class="cell">3</td><td>4</td><td>1</td><td>Trigonal piramidal</td><td>Tetraédrica</td><td>&lt;109,5°</td><td>NH<sub>3</sub></td></tr><tr><td class="cell">2</td><td>4</td><td>2</td><td>Angular</td><td>Tetraédrica</td><td>—</td><td>H<sub>2</sub>O</td></tr></table></div><div class="fig"><svg class="sv" viewBox="0 0 780 180" role="img" aria-label="Geometrías moleculares"><g transform="translate(0 0)"><path d="M20 62L65 62" style="stroke:var(--fg);stroke-width:2.4;fill:none"/><path d="M65 62L110 62" style="stroke:var(--fg);stroke-width:2.4;fill:none"/><circle cx="20" cy="62" r="11" style="fill:var(--oxi);fill-opacity:.22;stroke:var(--oxi);stroke-width:2"/><text class="b" x="20" y="67" text-anchor="middle" style="font-size:13px">H</text><circle cx="65" cy="62" r="13" style="fill:var(--hid);fill-opacity:.22;stroke:var(--hid);stroke-width:2"/><text class="b" x="65" y="67" text-anchor="middle" style="font-size:13px">C</text><circle cx="110" cy="62" r="11" style="fill:var(--aci);fill-opacity:.22;stroke:var(--aci);stroke-width:2"/><text class="b" x="110" y="67" text-anchor="middle" style="font-size:13px">N</text><text class="m" x="65" y="102" text-anchor="middle">180°</text><text class="b" x="65" y="152" text-anchor="middle">Lineal</text><text class="m" x="65" y="170" text-anchor="middle">HCN, CO₂</text></g><g transform="translate(130 0)"><path d="M65 58L65 18" style="stroke:var(--fg);stroke-width:2.4;fill:none"/><path d="M65 58L100 78" style="stroke:var(--fg);stroke-width:2.4;fill:none"/><path d="M65 58L30 78" style="stroke:var(--fg);stroke-width:2.4;fill:none"/><circle cx="65" cy="58" r="13" style="fill:var(--hid);fill-opacity:.22;stroke:var(--hid);stroke-width:2"/><text class="b" x="65" y="63" text-anchor="middle" style="font-size:13px">B</text><circle cx="65" cy="16" r="10" style="fill:var(--oxi);fill-opacity:.22;stroke:var(--oxi);stroke-width:2"/><text class="b" x="65" y="20" text-anchor="middle" style="font-size:11px">H</text><circle cx="103" cy="80" r="10" style="fill:var(--oxi);fill-opacity:.22;stroke:var(--oxi);stroke-width:2"/><text class="b" x="103" y="84" text-anchor="middle" style="font-size:11px">H</text><circle cx="27" cy="80" r="10" style="fill:var(--oxi);fill-opacity:.22;stroke:var(--oxi);stroke-width:2"/><text class="b" x="27" y="84" text-anchor="middle" style="font-size:11px">H</text><text class="m" x="65" y="112" text-anchor="middle">120°</text><text class="b" x="65" y="152" text-anchor="middle">Trigonal plana</text><text class="m" x="65" y="170" text-anchor="middle">BH₃</text></g><g transform="translate(260 0)"><path d="M65 50L28 92" style="stroke:var(--fg);stroke-width:2.4;fill:none"/><path d="M65 50L102 92" style="stroke:var(--fg);stroke-width:2.4;fill:none"/><circle cx="65" cy="50" r="13" style="fill:var(--hid);fill-opacity:.22;stroke:var(--hid);stroke-width:2"/><text class="b" x="65" y="55" text-anchor="middle" style="font-size:13px">S</text><circle cx="24" cy="98" r="11" style="fill:var(--aci);fill-opacity:.22;stroke:var(--aci);stroke-width:2"/><text class="b" x="24" y="103" text-anchor="middle" style="font-size:13px">O</text><circle cx="106" cy="98" r="11" style="fill:var(--aci);fill-opacity:.22;stroke:var(--aci);stroke-width:2"/><text class="b" x="106" y="103" text-anchor="middle" style="font-size:13px">O</text><ellipse cx="65" cy="24" rx="9" ry="5" transform="rotate(0 65 24)" style="fill:var(--sal);fill-opacity:.35;stroke:var(--sal);stroke-width:1.5"/><circle cx="62" cy="24" r="1.8" style="fill:var(--sal)" transform="rotate(0 65 24)" /><circle cx="68" cy="24" r="1.8" style="fill:var(--sal)" transform="rotate(0 65 24)"/><text class="m" x="65" y="122" text-anchor="middle">&lt; 120°</text><text class="b" x="65" y="152" text-anchor="middle">Angular</text><text class="m" x="65" y="170" text-anchor="middle">SO₂ (3 pares)</text></g><g transform="translate(390 0)"><path d="M65 56L65 14" style="stroke:var(--fg);stroke-width:2.4;fill:none"/><path d="M65 56L26 92" style="stroke:var(--fg);stroke-width:2.4;fill:none"/><path d="M65 56L104 92" style="stroke:var(--fg);stroke-width:2.4;fill:none"/><path d="M65 56L75.2 105.5L84.8 102.5z" style="fill:var(--fg)"/><circle cx="65" cy="56" r="13" style="fill:var(--hid);fill-opacity:.22;stroke:var(--hid);stroke-width:2"/><text class="b" x="65" y="61" text-anchor="middle" style="font-size:13px">C</text><circle cx="65" cy="12" r="10" style="fill:var(--oxi);fill-opacity:.22;stroke:var(--oxi);stroke-width:2"/><text class="b" x="65" y="16" text-anchor="middle" style="font-size:11px">H</text><circle cx="22" cy="96" r="10" style="fill:var(--oxi);fill-opacity:.22;stroke:var(--oxi);stroke-width:2"/><text class="b" x="22" y="100" text-anchor="middle" style="font-size:11px">H</text><circle cx="108" cy="96" r="10" style="fill:var(--oxi);fill-opacity:.22;stroke:var(--oxi);stroke-width:2"/><text class="b" x="108" y="100" text-anchor="middle" style="font-size:11px">H</text><circle cx="82" cy="110" r="10" style="fill:var(--oxi);fill-opacity:.22;stroke:var(--oxi);stroke-width:2"/><text class="b" x="82" y="114" text-anchor="middle" style="font-size:11px">H</text><text class="m" x="65" y="136" text-anchor="middle">109,5°</text><text class="b" x="65" y="152" text-anchor="middle">Tetraédrica</text><text class="m" x="65" y="170" text-anchor="middle">CH₄</text></g><g transform="translate(520 0)"><path d="M65 58L26 100" style="stroke:var(--fg);stroke-width:2.4;fill:none"/><path d="M65 58L104 100" style="stroke:var(--fg);stroke-width:2.4;fill:none"/><path d="M65 58L60.0 108.0L70.0 108.0z" style="fill:var(--fg)"/><circle cx="65" cy="58" r="13" style="fill:var(--hid);fill-opacity:.22;stroke:var(--hid);stroke-width:2"/><text class="b" x="65" y="63" text-anchor="middle" style="font-size:13px">N</text><ellipse cx="65" cy="28" rx="9" ry="5" transform="rotate(0 65 28)" style="fill:var(--sal);fill-opacity:.35;stroke:var(--sal);stroke-width:1.5"/><circle cx="62" cy="28" r="1.8" style="fill:var(--sal)" transform="rotate(0 65 28)" /><circle cx="68" cy="28" r="1.8" style="fill:var(--sal)" transform="rotate(0 65 28)"/><circle cx="22" cy="104" r="10" style="fill:var(--oxi);fill-opacity:.22;stroke:var(--oxi);stroke-width:2"/><text class="b" x="22" y="108" text-anchor="middle" style="font-size:11px">H</text><circle cx="108" cy="104" r="10" style="fill:var(--oxi);fill-opacity:.22;stroke:var(--oxi);stroke-width:2"/><text class="b" x="108" y="108" text-anchor="middle" style="font-size:11px">H</text><circle cx="65" cy="114" r="10" style="fill:var(--oxi);fill-opacity:.22;stroke:var(--oxi);stroke-width:2"/><text class="b" x="65" y="118" text-anchor="middle" style="font-size:11px">H</text><text class="m" x="65" y="136" text-anchor="middle">&lt; 109,5°</text><text class="b" x="65" y="152" text-anchor="middle">Piramidal</text><text class="m" x="65" y="170" text-anchor="middle">NH₃</text></g><g transform="translate(650 0)"><path d="M65 46L28 88" style="stroke:var(--fg);stroke-width:2.4;fill:none"/><path d="M65 46L102 88" style="stroke:var(--fg);stroke-width:2.4;fill:none"/><circle cx="65" cy="46" r="13" style="fill:var(--aci);fill-opacity:.22;stroke:var(--aci);stroke-width:2"/><text class="b" x="65" y="51" text-anchor="middle" style="font-size:13px">O</text><ellipse cx="48" cy="20" rx="9" ry="5" transform="rotate(-30 48 20)" style="fill:var(--sal);fill-opacity:.35;stroke:var(--sal);stroke-width:1.5"/><circle cx="45" cy="20" r="1.8" style="fill:var(--sal)" transform="rotate(-30 48 20)" /><circle cx="51" cy="20" r="1.8" style="fill:var(--sal)" transform="rotate(-30 48 20)"/><ellipse cx="82" cy="20" rx="9" ry="5" transform="rotate(30 82 20)" style="fill:var(--sal);fill-opacity:.35;stroke:var(--sal);stroke-width:1.5"/><circle cx="79" cy="20" r="1.8" style="fill:var(--sal)" transform="rotate(30 82 20)" /><circle cx="85" cy="20" r="1.8" style="fill:var(--sal)" transform="rotate(30 82 20)"/><circle cx="24" cy="94" r="10" style="fill:var(--oxi);fill-opacity:.22;stroke:var(--oxi);stroke-width:2"/><text class="b" x="24" y="98" text-anchor="middle" style="font-size:11px">H</text><circle cx="106" cy="94" r="10" style="fill:var(--oxi);fill-opacity:.22;stroke:var(--oxi);stroke-width:2"/><text class="b" x="106" y="98" text-anchor="middle" style="font-size:11px">H</text><text class="b" x="65" y="152" text-anchor="middle">Angular</text><text class="m" x="65" y="170" text-anchor="middle">H₂O (4 pares)</text></g></svg><p class="cap">Las geometrías de tus apuntes.</p></div></section><section class="sec"><div class="sh"><h2>Uniones entre moléculas</h2></div><div class="two"><div class="card"><h3>Puentes de hidrógeno</h3><p>Se dan cuando un <b>H</b> está unido a <b>F, O o N</b>. El H tiene carga δ<sup>+</sup> y el F, O o N de la otra molécula δ<sup>−</sup>, y se unen entre sí (ejemplos: HF con HF, H<sub>2</sub>O con H<sub>2</sub>O).</p></div><div class="card"><h3>Van der Waals</h3><p>Uniones por <b>dipolos instantáneos</b>. Son <b>muy débiles</b>.</p></div></div></section><section class="sec"><div class="sh"><h2>Errores típicos</h2></div><dl class="trap"><dt>1</dt><dd>Enlace normal: cada átomo aporta 1 e⁻. Dativo: uno aporta los 2.</dd><dt>2</dt><dd>Puente de hidrógeno: el H debe estar unido a F, O o N.</dd><dt>3</dt><dd>Van der Waals: dipolos instantáneos, muy débiles.</dd><dt>4</dt><dd>El C pasa de s²p² a una hibridación sp³ (4 enlaces).</dd></dl></section><section class="sec"><div class="sh"><h2>Práctica: tapa y comprueba</h2></div><div class="tw"><table id="pr"><tr><th>Enunciado</th><th>Respuesta</th></tr><tr><td>¿Qué son los pares enlazantes y los no enlazantes?</td><td class="ans" hidden>Enlazantes: los que se comparten; no enlazantes: los que no</td></tr><tr><td>¿Cuántos pares enlazantes y no enlazantes tiene el Cl₂?</td><td class="ans" hidden>1 enlazante y 3 no enlazantes en cada Cl</td></tr><tr><td>¿Qué enlace hay en el O₂ y en el N₂?</td><td class="ans" hidden>O=O (doble) y N≡N (triple)</td></tr><tr><td>¿Qué tipos de enlace son σ y π?</td><td class="ans" hidden>σ: solape frontal; π: solape lateral</td></tr><tr><td>¿Qué hibridación tiene el C en el CH₄ y cómo pasa de s²p²?</td><td class="ans" hidden>sp³: de s²p² a s¹pₓ¹pᵧ¹p_z¹; forma 4 enlaces</td></tr><tr><td>Diferencia entre enlace covalente normal y dativo.</td><td class="ans" hidden>En el normal cada átomo aporta 1 electrón; en el dativo uno aporta los 2</td></tr><tr><td>¿Cuántos enlaces covalentes y dativos hay en el H₂SO₄?</td><td class="ans" hidden>4 covalentes y 2 dativos</td></tr><tr><td>¿Cuántos átomos unidos, pares y pares libres tiene el CH₄? ¿Geometría y ángulo?</td><td class="ans" hidden>4 átomos unidos, 4 pares, 0 libres; tetraédrica; 109,5°</td></tr><tr><td>¿Y el NH₃?</td><td class="ans" hidden>3 átomos unidos, 4 pares, 1 libre; trigonal piramidal; <109,5°</td></tr><tr><td>¿Y el BH₃?</td><td class="ans" hidden>3 átomos unidos, 3 pares, 0 libres; trigonal plana; 120°</td></tr><tr><td>¿Y el H₂O?</td><td class="ans" hidden>2 átomos unidos, 4 pares, 2 libres; angular (geometría electrónica tetraédrica)</td></tr><tr><td>¿Cuándo se forma un puente de hidrógeno?</td><td class="ans" hidden>Cuando un H está unido a F, O o N (δ⁺) y se une al F, O o N (δ⁻) de otra molécula</td></tr><tr><td>¿Qué son las uniones de Van der Waals?</td><td class="ans" hidden>Uniones por dipolos instantáneos, muy débiles</td></tr></table></div><div><button class="rv" data-t="pr" type="button">Mostrar respuestas</button></div></section><section class="sec"><div class="sh"><h2>Teoría: explícalo con tus propias palabras</h2></div><div class="tw"><table id="pr2"><tr><th>Enunciado</th><th>Respuesta</th></tr><tr><td>Explica qué son los <b>pares enlazantes y no enlazantes</b> en una estructura de Lewis y cuenta los del Cl₂, O₂ y N₂.</td><td class="ans" hidden><p>Los pares <b>enlazantes</b> son los que se comparten (la raya del enlace); los <b>no enlazantes</b> son los pares libres. <b>Cl₂</b> (Cl–Cl): 1 enlazante y 3 no enlazantes en cada Cl. <b>O₂</b> (O=O): 2 enlazantes y 2 no enlazantes en cada O. <b>N₂</b> (N≡N): 3 enlazantes y 1 no enlazante en cada N.</p><p><b>Ideas clave que debería tener tu respuesta:</b></p><ul><li>Enlazantes: se comparten</li><li>No enlazantes: pares libres</li><li>Cl₂: enlace sencillo con 3 pares libres por átomo</li><li>O₂ doble y N₂ triple</li></ul></td></tr><tr><td>Explica la diferencia entre un enlace <b>σ</b> y un enlace <b>π</b> y cuántos de cada tipo tienen el Cl₂, el O₂ y el N₂.</td><td class="ans" hidden><p>El enlace <b>σ</b> (sigma) es un solape frontal de orbitales; el <b>π</b> (pi) es un solape lateral. <b>Cl₂</b>: 1 σ. <b>O₂</b> (doble): 1 σ + 1 π. <b>N₂</b> (triple): 1 σ + 2 π.</p><p><b>Ideas clave que debería tener tu respuesta:</b></p><ul><li>σ: solape frontal</li><li>π: solape lateral</li><li>Cl₂: 1 σ</li><li>O₂: 1 σ + 1 π; N₂: 1 σ + 2 π</li></ul></td></tr><tr><td>Explica qué es un <b>enlace covalente dativo</b> y en qué se diferencia del normal. Pon dos ejemplos de tus apuntes.</td><td class="ans" hidden><p>En el enlace covalente <b>normal</b> cada átomo aporta <b>1 electrón</b> para compartir. En el <b>dativo</b>, <b>uno solo aporta los 2 electrones</b>. Ejemplos: en el <b>NH₄⁺</b> (ion amonio) el N aporta los dos electrones; el <b>H₂SO₄</b> tiene 4 enlaces covalentes y 2 dativos.</p><p><b>Ideas clave que debería tener tu respuesta:</b></p><ul><li>Normal: cada uno aporta 1 electrón</li><li>Dativo: uno aporta los 2 electrones</li><li>Ejemplo NH₄⁺</li><li>Ejemplo H₂SO₄: 4 covalentes y 2 dativos</li></ul></td></tr><tr><td>Explica cómo se describe la <b>geometría de una molécula</b> con la tabla de tus apuntes: qué datos se miran y qué geometría resulta con 2, 3 y 4 átomos unidos y sin pares libres.</td><td class="ans" hidden><p>Se mira el número de <b>átomos unidos</b>, el de <b>pares enlazantes</b> y el de <b>pares no enlazantes</b> (libres). Sin pares libres: con 2 átomos, <b>lineal</b> (180°); con 3, <b>trigonal plana</b> (120°); con 4, <b>tetraédrica</b> (109,5°).</p><p><b>Ideas clave que debería tener tu respuesta:</b></p><ul><li>Se miran átomos unidos, pares enlazantes y no enlazantes</li><li>2 átomos → lineal, 180°</li><li>3 átomos → trigonal plana, 120°</li><li>4 átomos → tetraédrica, 109,5°</li></ul></td></tr><tr><td>Explica las <b>uniones entre moléculas</b> que aparecen en tus apuntes.</td><td class="ans" hidden><p>Hay dos: los <b>puentes de hidrógeno</b> y las uniones de <b>Van der Waals</b>. En los puentes de hidrógeno un <b>H</b> unido a <b>F, O o N</b> (δ⁺) se une al F, O o N (δ⁻) de otra molécula. En Van der Waals hay <b>dipolos instantáneos</b> y son <b>muy débiles</b>.</p><p><b>Ideas clave que debería tener tu respuesta:</b></p><ul><li>Puentes de hidrógeno</li><li>Van der Waals</li><li>H con F, O o N</li><li>Dipolos instantáneos, muy débiles</li></ul></td></tr></table></div><div><button class="rv" data-t="pr2" type="button">Mostrar respuestas</button></div></section><nav class="pager"><a href="enlace-atomos.html"><span class="k">Anterior</span><b>Enlace entre átomos</b></a><a href="resumen.html"><span class="k">Siguiente</span><b>Resumen</b></a><a href="index.html"><span class="k">Volver</span><b>Índice</b></a></nav></div><script>
+(function(){
+  document.querySelectorAll('button.rv').forEach(function(b){
+    b.addEventListener('click',function(){
+      var t=document.getElementById(b.dataset.t);
+      var open=t.classList.toggle('shown');
+      t.querySelectorAll('.ans').forEach(function(c){c.hidden=!open});
+      b.textContent=open?'Ocultar respuestas':'Mostrar respuestas';
+    });
+  });
+  document.querySelectorAll('.vb').forEach(function(g){
+    g.querySelectorAll('button.vbtn').forEach(function(b){
+      b.addEventListener('click',function(){
+        var t=document.getElementById(g.dataset.t); t.dataset.v=b.dataset.v;
+        g.querySelectorAll('button.vbtn').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});
+        var l=document.getElementById(g.dataset.t+'-lg'); if(l){l.querySelectorAll('[data-for]').forEach(function(x){x.hidden=x.dataset.for!==b.dataset.v})}
+      });
+    });
+  });
+})();
+</script></body></html>
