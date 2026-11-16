@@ -1,0 +1,195 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Valencias y números de oxidación</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap"><style>
+:root{
+  --bg:#f6f7fb; --surface:#ffffff; --fg:#1d2233; --muted:#5b6379; --line:#dde1ec;
+  --oxi:#1f5fbf; --oxi-bg:#e4edfb;
+  --hid:#17805a; --hid-bg:#dff3ea;
+  --hox:#c0284f; --hox-bg:#fbe3ea;
+  --aci:#c2570c; --aci-bg:#fdebd9;
+  --sal:#8a3fb0; --sal-bg:#f1e5f8;
+  --guide:#3a4160; --guide-bg:#e8eaf3;
+  --bad:#b3261e; --bad-bg:#fbe4e2; --good:#17805a; --good-bg:#dff3ea;
+
+  --display:"Bricolage Grotesque","Trebuchet MS",sans-serif;
+  --body:"Source Sans 3","Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  --fam:var(--guide); --fam-bg:var(--guide-bg);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12151f; --surface:#1b2030; --fg:#e9ecf6; --muted:#a2a9bf; --line:#2f3650;
+  --oxi:#7fb0ff; --oxi-bg:#1b2b4a;
+  --hid:#5fd0a2; --hid-bg:#173a2e;
+  --hox:#ff8fa8; --hox-bg:#4a1f2d;
+  --aci:#ffa45c; --aci-bg:#4a2b12;
+  --sal:#d29bf0; --sal-bg:#3a2248;
+  --guide:#b9c0e0; --guide-bg:#262c45;
+  --bad:#ff8d85; --bad-bg:#4a1f1c; --good:#5fd0a2; --good-bg:#173a2e;
+ color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12151f; --surface:#1b2030; --fg:#e9ecf6; --muted:#a2a9bf; --line:#2f3650;
+  --oxi:#7fb0ff; --oxi-bg:#1b2b4a;
+  --hid:#5fd0a2; --hid-bg:#173a2e;
+  --hox:#ff8fa8; --hox-bg:#4a1f2d;
+  --aci:#ffa45c; --aci-bg:#4a2b12;
+  --sal:#d29bf0; --sal-bg:#3a2248;
+  --guide:#b9c0e0; --guide-bg:#262c45;
+  --bad:#ff8d85; --bad-bg:#4a1f1c; --good:#5fd0a2; --good-bg:#173a2e;
+ color-scheme:dark}
+body.fam-oxi{--fam:var(--oxi);--fam-bg:var(--oxi-bg)}
+body.fam-hid{--fam:var(--hid);--fam-bg:var(--hid-bg)}
+body.fam-hox{--fam:var(--hox);--fam-bg:var(--hox-bg)}
+body.fam-aci{--fam:var(--aci);--fam-bg:var(--aci-bg)}
+body.fam-sal{--fam:var(--sal);--fam-bg:var(--sal-bg)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.55}
+.wrap{max-width:62rem;margin-inline:auto;padding-inline:16px;padding-block:20px 56px;display:flex;flex-direction:column;gap:40px}
+h1,h2,h3,h4{font-family:var(--display);line-height:1.12;text-wrap:balance;margin:0}
+h1{font-size:clamp(2rem,6vw,3.1rem);font-weight:800}
+h2{font-size:1.55rem;font-weight:800}
+h3{font-size:1.2rem;font-weight:600}
+h4{font-size:1.02rem;font-weight:600}
+p{margin:0}
+a{color:var(--fg);font-weight:700}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--fg);outline-offset:2px}
+.lead{color:var(--muted);max-width:44rem}
+sub{font-size:.75em}
+.f{font-family:var(--mono);font-weight:700}
+.k{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.top{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;justify-content:space-between;font-size:.95rem}
+.top .r{display:flex;gap:8px 18px;flex-wrap:wrap}
+.hero{display:flex;gap:20px;align-items:center;background:var(--fam-bg);color:var(--fam);border-radius:14px;padding:22px}
+.hero svg{flex:none;width:76px;height:76px}
+.hero > div{min-width:0;display:flex;flex-direction:column;gap:8px}
+.hero h1{color:var(--fam)}
+.hero p{color:var(--fg);max-width:42rem}
+.sec{display:flex;flex-direction:column;gap:16px}
+.sh{display:flex;align-items:center;gap:12px}
+.sh::before{content:"";width:12px;height:30px;border-radius:3px;background:var(--fam);flex:none}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));gap:16px}
+.three{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));gap:16px}
+.tag{display:inline-block;padding:2px 10px;border-radius:6px;font-weight:700;font-size:.88rem;background:var(--fam-bg);color:var(--fam)}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:99px;font-weight:700;font-size:.9rem;background:var(--fam-bg);color:var(--fam)}
+.oxi{background:var(--oxi-bg);color:var(--oxi)}.hid{background:var(--hid-bg);color:var(--hid)}
+.hox{background:var(--hox-bg);color:var(--hox)}.aci{background:var(--aci-bg);color:var(--aci)}
+.sal{background:var(--sal-bg);color:var(--sal)}
+.nom{display:inline-block;padding:3px 10px;border:1.5px solid var(--fg);border-radius:6px;font-weight:700;font-size:.9rem;background:var(--surface);color:var(--fg)}
+.pend{border-style:dashed;border-color:var(--muted);color:var(--muted);font-weight:600}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:36rem}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+tr:last-child td{border-bottom:0}
+.cell{white-space:nowrap}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+.q b.t{font-family:var(--display);font-size:1.1rem}
+.q.warn{border-color:var(--aci)}
+.q.pending{border-style:dashed;border-color:var(--muted)}
+.steps{display:flex;flex-direction:column;gap:10px;counter-reset:s;padding:0;margin:0;list-style:none}
+.steps li{counter-increment:s;padding:2px 0 2px 42px;position:relative}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:28px;height:28px;border-radius:50%;background:var(--fam);color:var(--bg);font-family:var(--display);font-weight:800;display:grid;place-items:center;font-size:.95rem}
+.ex{background:var(--fam-bg);border-left:5px solid var(--fam);border-radius:8px;padding:12px 14px;color:var(--fg)}
+.ex .f{color:var(--fam)}
+.nomblock{background:var(--surface);border:1px solid var(--line);border-top:6px solid var(--fam);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.nomblock > header{display:flex;flex-direction:column;gap:6px}
+.dir{display:flex;flex-direction:column;gap:12px;min-width:0}
+.dir h4{color:var(--fam)}
+.struct{font-family:var(--mono);font-weight:700;background:var(--bg);border-radius:8px;padding:10px 14px;overflow-wrap:anywhere}
+.trap{display:grid;grid-template-columns:auto 1fr;gap:10px 14px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:0}
+.trap dt{font-family:var(--mono);font-weight:700;color:var(--fam)}
+.trap dd{margin:0}
+button{font:inherit;font-weight:700;border:2px solid transparent;border-radius:8px;padding:10px 14px;cursor:pointer}
+button.rv{background:var(--fg);color:var(--bg)}
+.ptablist{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+.ptab{font:inherit;font-weight:700;padding:8px 16px;border-radius:99px;border:1.5px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer}
+.ptab.on{background:var(--fam);border-color:var(--fam);color:#fff}
+.ptab:focus-visible{outline:3px solid var(--fam);outline-offset:2px}
+.plabel{margin:0 0 8px;color:var(--muted)}
+.pnote{margin:0 0 10px;color:var(--muted);font-size:.95rem}
+.ptable td{vertical-align:top}.pcell{min-width:15rem;width:55%}
+.prow{display:flex;flex-wrap:wrap;gap:8px}
+input.pin{flex:1 1 100%;min-width:0;font-family:var(--mono);font-weight:700;font-size:1.02rem;padding:9px 11px;border:2px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg)}
+input.pin:read-only{opacity:.9}
+tr.pok input.pin{border-color:var(--good)}tr.pno input.pin{border-color:var(--bad)}
+button.chk{background:var(--fam);color:#fff;padding:8px 14px}
+button.rvr{background:transparent;color:var(--fam);border-color:var(--fam);padding:8px 12px}
+button.main{background:var(--fg);color:var(--bg)}
+button.ghost{background:transparent;color:var(--fg);border-color:var(--fg)}
+.pfb{margin-top:8px;overflow-wrap:anywhere}
+.pfb .ok{display:block;background:var(--good-bg);color:var(--good);padding:8px 10px;border-radius:8px;font-weight:700}
+.pfb .no{display:block;background:var(--bad-bg);color:var(--bad);padding:8px 10px;border-radius:8px}
+.pfb .sw{display:block;background:var(--fam-bg);color:var(--fg);padding:8px 10px;border-radius:8px}
+.pfb .good{color:var(--good)}
+.pact{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.pres{margin-top:12px;background:var(--surface);border:2px solid var(--fg);border-radius:12px;padding:14px 16px;font-size:1.1rem}
+.ans{font-weight:600}
+.pager{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,16rem),1fr));gap:12px}
+.pager a{display:flex;flex-direction:column;gap:2px;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--surface);text-decoration:none}
+.pager a span.k{font-size:.72rem}
+.pager a:hover{border-color:var(--fam)}
+
+.chip2{display:inline-block;padding:2px 10px;border-radius:999px;font-weight:700;font-family:var(--mono);font-size:.92rem;border:1px solid var(--line);background:var(--surface);margin:2px 4px 2px 0}
+.chip2.fix{background:var(--hid-bg);color:var(--hid)}
+.chip2.var{background:var(--aci-bg);color:var(--aci)}
+.big{font-family:var(--mono);font-weight:700}
+.rule{border-left:6px solid var(--fg);padding:10px 16px;background:var(--surface);border-radius:0 10px 10px 0}
+#qbox{background:var(--surface);border:2px solid var(--fg);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:14px}
+#qtext{font-size:1.25rem;font-weight:700}
+#ans{font:inherit;font-size:1.1rem;padding:10px 12px;border:2px solid var(--fg);border-radius:8px;background:var(--bg);color:var(--fg);width:100%;box-sizing:border-box;font-family:var(--mono)}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap}
+.btnrow button{font:inherit;font-weight:700;padding:10px 18px;border-radius:8px;border:2px solid var(--fg);background:var(--fg);color:var(--bg);cursor:pointer}
+.btnrow button.ghost{background:transparent;color:var(--fg)}
+#fb .ok,#fb .no{padding:10px 14px;border-radius:8px;border:2px solid var(--fg)}
+#fb .ok{background:var(--hid-bg);color:var(--fg)}#fb .no{background:var(--hox-bg);color:var(--fg)}
+</style></head><body class=""><a href="../../index.html" style="display:block;padding:8px 16px;background:#1b2033;color:#fff;font:600 15px/1.3 system-ui,'Segoe UI',sans-serif;text-decoration:none;position:relative;z-index:60">← Índice principal</a><div class="wrap"><nav class="top"><a href="index.html">← Índice</a><div class="r"><a href="guia-formula.html">Guía por fórmula</a><a href="guia-nombre.html">Guía por nombre</a></div></nav><header><span class="k">Herramienta</span><h1>Valencias y números de oxidación</h1><p class="lead">Casi todo se puede calcular. Aquí está lo poco que hay que recordar, cómo se calcula el resto y un test para practicar.</p></header><section class="sec"><div class="sh"><h2>Valencia y número de oxidación</h2></div><div class="two"><div class="card"><h3>Valencia</h3><p>Es «cuántos enlaces hace» un átomo. En los metales es el número que va después del nombre en Stock: hierro(III) tiene valencia 3.</p></div><div class="card"><h3>Número de oxidación</h3><p>Es la carga que tendría el átomo en el compuesto, con signo: +3, −2. En los metales coincide con la valencia. En los no metales cambia según el compuesto.</p></div></div></section><section class="sec"><div class="sh"><h2>1 · Metales: lo único que se memoriza</h2></div><p class="lead">Verde = valencia única (no se escribe romano en Stock). Naranja = valencias variables (el romano es obligatorio).</p><div class="tw"><table><tr><th>Metal</th><th>Valencias</th><th>Cómo recordarlo</th></tr><tr><td>Li, Na, K, Rb, Cs, Ag, NH<sub>4</sub></td><td class="cell"><span class="chip2 fix">+1</span></td><td>Grupo 1: siempre +1. La plata también, y el amonio (que hace de metal).</td></tr><tr><td>Be, Mg, Ca, Sr, Ba, Zn, Cd</td><td class="cell"><span class="chip2 fix">+2</span></td><td>Grupo 2: siempre +2. El cinc y el cadmio también.</td></tr><tr><td>Al</td><td class="cell"><span class="chip2 fix">+3</span></td><td>Grupo 13: +3.</td></tr><tr><td>Cu, Hg</td><td class="cell"><span class="chip2 var">+1</span><span class="chip2 var">+2</span></td><td>Pareja del +1 y +2.</td></tr><tr><td>Fe, Co, Ni</td><td class="cell"><span class="chip2 var">+2</span><span class="chip2 var">+3</span></td><td>Pareja del +2 y +3: los tres seguidos en la tabla.</td></tr><tr><td>Sn, Pb, Pt</td><td class="cell"><span class="chip2 var">+2</span><span class="chip2 var">+4</span></td><td>Pareja del +2 y +4.</td></tr><tr><td>Au</td><td class="cell"><span class="chip2 var">+1</span><span class="chip2 var">+3</span></td><td>El oro va aparte: +1 y +3.</td></tr><tr><td>Cr, Mn</td><td class="cell"><span class="chip2 var">+2</span><span class="chip2 var">+3</span></td><td>Las que se usan en los ejercicios de las familias y de los exámenes.</td></tr></table></div></section><section class="sec"><div class="sh"><h2>2 · No metales: lo dice la tabla periódica</h2></div><div class="rule"><p><b>El número más alto es el número del grupo</b> (la unidad: grupo 17 → +7). <b>Los demás bajan de dos en dos</b>, y por eso todos tienen la misma paridad. <b>El negativo es el grupo menos 8</b> (grupo 17 → 7 − 8 = −1).</p></div><div class="tw"><table><tr><th>Grupo</th><th>Elementos</th><th>Negativo</th><th>Positivos</th></tr><tr><td>17</td><td>Cl, Br, I</td><td class="cell">−1</td><td class="cell">+1, +3, +5, +7</td></tr><tr><td>16</td><td>S, Se, Te</td><td class="cell">−2</td><td class="cell">+2, +4, +6</td></tr><tr><td>15</td><td>N, P, As, Sb</td><td class="cell">−3</td><td class="cell">+3, +5 (el N también +1)</td></tr><tr><td>14</td><td>C, Si</td><td class="cell">−4</td><td class="cell">+2, +4</td></tr><tr><td>13</td><td>B</td><td class="cell">—</td><td class="cell">+3</td></tr></table></div><p class="lead">El F siempre es −1. El O es −2 (en los peróxidos −1). El H es +1 (en los hidruros metálicos −1).</p></section><section class="sec"><div class="sh"><h2>3 · Calcular un número de oxidación en un compuesto</h2></div><div class="card"><ol class="steps"><li>Escribe los números que ya conoces: H = +1, O = −2 y los metales de valencia única.</li><li>Multiplícalos por el subíndice y suma.</li><li>El total del compuesto es 0, así que lo que falta es el del elemento que buscas (dividido entre su subíndice).</li></ol><div class="ex"><p>H<sub>2</sub>SO<sub>4</sub>: 2·(+1) + n + 4·(−2) = 0, luego n = +6.</p><p>Fe<sub>2</sub>O<sub>3</sub>: 3·(−2) = −6; dos Fe suman +6, así que cada Fe es +3.</p><p>H<sub>2</sub>Cr<sub>2</sub>O<sub>7</sub>: 2 + 2n − 14 = 0, luego n = +6.</p></div></div></section><section class="sec"><div class="sh"><h2>Practica</h2></div><p class="lead">Escribe el número (con o sin signo, por ejemplo +5 o 5, o en romano) y pulsa Enter. Cuando piden varios, sepáralos con comas.</p><div id="qbox"><span class="k" id="sc"></span><div id="qtext"></div><input id="ans" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Respuesta"><div class="btnrow"><button id="ck" type="button">Comprobar</button><button id="nx" type="button" class="ghost" hidden>Siguiente</button></div><div id="fb"></div></div></section><nav class="top"><a href="index.html">← Índice</a></nav></div><script>
+(function(){
+var Q=[["Valencia del sodio (Na)", "1", "Grupo 1: siempre +1."], ["Valencia del calcio (Ca)", "2", "Grupo 2: siempre +2."], ["Valencia del aluminio (Al)", "3", "Grupo 13: +3."], ["Valencia de la plata (Ag)", "1", "Valencia fija +1."], ["Valencia del cinc (Zn)", "2", "Valencia fija +2."], ["Valencias del cobre (Cu). Escribe todas separadas por comas.", "1,2", "Pareja Cu y Hg: +1 y +2."], ["Valencias del hierro (Fe). Escribe todas separadas por comas.", "2,3", "Pareja Fe, Co, Ni: +2 y +3."], ["Valencias del estaño (Sn). Escribe todas separadas por comas.", "2,4", "Pareja Sn, Pb, Pt: +2 y +4."], ["Valencias del oro (Au). Escribe todas separadas por comas.", "1,3", "El oro es el caso aparte: +1 y +3."], ["Valencias del mercurio (Hg). Escribe todas separadas por comas.", "1,2", "Pareja Cu y Hg: +1 y +2."], ["Número de oxidación positivos del cloro (Cl). Escribe todos separados por comas.", "1,3,5,7", "Grupo 17: del +7 bajando de dos en dos."], ["Números de oxidación positivos del azufre (S). Escribe todos separados por comas.", "2,4,6", "Grupo 16: del +6 bajando de dos en dos."], ["Número de oxidación negativo del azufre (S)", "-2", "Grupo 16: 6 − 8 = −2 (la unidad del grupo menos 8)."], ["Número de oxidación negativo del nitrógeno (N)", "-3", "Grupo 15: 5 − 8 = −3 (la unidad del grupo menos 8)."], ["Número de oxidación negativo del cloro (Cl)", "-1", "Grupo 17: 7 − 8 = −1 (la unidad del grupo menos 8)."], ["Mayor número de oxidación del nitrógeno (N)", "5", "Grupo 15: la unidad del grupo, +5."], ["Número de oxidación del azufre en H₂SO₄", "6", "2·(+1) + n + 4·(−2) = 0, así que n = +6."], ["Número de oxidación del cloro en HClO₃", "5", "+1 + n − 6 = 0, así que n = +5."], ["Número de oxidación del cloro en HClO", "1", "+1 + n − 2 = 0, así que n = +1."], ["Número de oxidación del nitrógeno en HNO₂", "3", "+1 + n − 4 = 0, así que n = +3."], ["Número de oxidación del fósforo en H₃PO₄", "5", "3 − 8 + n = 0, así que n = +5."], ["Número de oxidación del carbono en H₂CO₃", "4", "2 − 6 + n = 0, así que n = +4."], ["Número de oxidación del hierro en Fe₂O₃", "3", "3·(−2) = −6; los dos Fe suman +6, cada uno +3."], ["Número de oxidación del cobre en CuO", "2", "El O es −2, así que el Cu es +2."]];
+var order=[],i=0,ok=0,fails=[];
+var qt=document.getElementById('qtext'),an=document.getElementById('ans'),fb=document.getElementById('fb'),
+    ck=document.getElementById('ck'),nx=document.getElementById('nx'),sc=document.getElementById('sc');
+var ROM={I:1,II:2,III:3,IV:4,V:5,VI:6,VII:7};
+function parse(s){
+  s=String(s).toUpperCase().replace(/[−–—]/g,'-').replace(/₂/g,'2');
+  var parts=s.split(/[,;\/ Y]+/).filter(Boolean),out=[];
+  for(var k=0;k<parts.length;k++){
+    var p=parts[k].replace(/[()+]/g,'').replace(/^-(?=[IV])/,'');
+    var n=ROM[p]!==undefined?ROM[p]:parseInt(p,10);
+    if(isNaN(n))return null;
+    if(parts[k].charAt(0)==='-'&&ROM[p]===undefined&&n>0)n=-n;
+    out.push(n);
+  }
+  out.sort(function(a,b){return a-b});
+  return out.filter(function(v,ix){return ix===0||v!==out[ix-1]});
+}
+function shuffle(a){a=a.slice();for(var j=a.length-1;j>0;j--){var k=Math.floor(Math.random()*(j+1));var t=a[j];a[j]=a[k];a[k]=t}return a}
+function show(){
+  qt.innerHTML=Q[order[i]][0];an.value='';an.disabled=false;fb.innerHTML='';ck.hidden=false;nx.hidden=true;an.focus();
+  sc.textContent='Pregunta '+(i+1)+' de '+Q.length+' · Aciertos: '+ok;
+}
+function check(){
+  var q=Q[order[i]],a=parse(an.value),c=parse(q[1]);
+  var right=a&&JSON.stringify(a)===JSON.stringify(c);
+  if(right)ok++;else fails.push([q[0],an.value.trim()||'(vacía)',q[1].split(',').map(function(x){return (x.charAt(0)==='-'?'':'+')+x}).join(', ')]);
+  an.disabled=true;ck.hidden=true;
+  fb.innerHTML='<div class="'+(right?'ok':'no')+'"><b>'+(right?'Correcto.':'Respuesta correcta: '+q[1].split(',').map(function(x){return (x.charAt(0)==='-'?'':'+')+x}).join(', ')+'.')+'</b> '+q[2]+'</div>';
+  nx.textContent=i===Q.length-1?'Ver resultado':'Siguiente';nx.hidden=false;nx.focus();
+  sc.textContent='Pregunta '+(i+1)+' de '+Q.length+' · Aciertos: '+ok;
+}
+function result(){
+  qt.textContent=ok+' de '+Q.length;an.hidden=true;ck.hidden=true;
+  var h='';
+  if(fails.length){h='<p><b>Para repasar:</b></p><ul>'+fails.map(function(f){return '<li>'+f[0]+'. Tu respuesta: '+f[1]+'. Correcta: '+f[2]+'</li>'}).join('')+'</ul>'}
+  else h='<div class="ok"><b>Sin fallos.</b></div>';
+  fb.innerHTML=h;nx.textContent='Empezar de nuevo';nx.hidden=false;i=Q.length;
+}
+function start(){order=shuffle(Q.map(function(_,n){return n}));i=0;ok=0;fails=[];an.hidden=false;show()}
+ck.addEventListener('click',check);
+an.addEventListener('keydown',function(e){if(e.key==='Enter'){if(!ck.hidden)check();else if(!nx.hidden)nx.click()}});
+nx.addEventListener('click',function(){
+  if(i>=Q.length){start();return}
+  if(i===Q.length-1){result();return}
+  i++;show();
+});
+start();
+})();
+</script></body></html>

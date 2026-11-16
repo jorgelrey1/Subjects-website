@@ -1,0 +1,358 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Clasificar compuestos</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: una página de estudio. Cada familia de compuestos tiene su color y ese color se repite en todas las secciones. */
+:root{
+  --bg:#f6f7fb; --surface:#ffffff; --fg:#1d2233; --muted:#5b6379; --line:#dde1ec;
+  --oxi:#1f5fbf; --oxi-bg:#e4edfb;
+  --hid:#17805a; --hid-bg:#dff3ea;
+  --aci:#c2570c; --aci-bg:#fdebd9;
+  --sal:#8a3fb0; --sal-bg:#f1e5f8;
+  --hox:#c0284f; --hox-bg:#fbe3ea;
+  --bad:#b3261e; --bad-bg:#fbe4e2; --good:#17805a; --good-bg:#dff3ea;
+  --display:"Bricolage Grotesque","Trebuchet MS",sans-serif;
+  --body:"Source Sans 3","Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12151f; --surface:#1b2030; --fg:#e9ecf6; --muted:#a2a9bf; --line:#2f3650;
+  --oxi:#7fb0ff; --oxi-bg:#1b2b4a;
+  --hid:#5fd0a2; --hid-bg:#173a2e;
+  --aci:#ffa45c; --aci-bg:#4a2b12;
+  --sal:#d29bf0; --sal-bg:#3a2248;
+  --hox:#ff8fa8; --hox-bg:#4a1f2d;
+  --bad:#ff8d85; --bad-bg:#4a1f1c; --good:#5fd0a2; --good-bg:#173a2e;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12151f; --surface:#1b2030; --fg:#e9ecf6; --muted:#a2a9bf; --line:#2f3650;
+  --oxi:#7fb0ff; --oxi-bg:#1b2b4a;
+  --hid:#5fd0a2; --hid-bg:#173a2e;
+  --aci:#ffa45c; --aci-bg:#4a2b12;
+  --sal:#d29bf0; --sal-bg:#3a2248;
+  --hox:#ff8fa8; --hox-bg:#4a1f2d;
+  --bad:#ff8d85; --bad-bg:#4a1f1c; --good:#5fd0a2; --good-bg:#173a2e;
+  color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.55}
+.wrap{max-width:60rem;margin-inline:auto;padding-inline:16px;padding-block:28px 56px;display:flex;flex-direction:column;gap:40px}
+h1,h2,h3{font-family:var(--display);line-height:1.1;text-wrap:balance;margin:0}
+h1{font-size:clamp(2rem,6vw,3.2rem);font-weight:800}
+h2{font-size:1.6rem;font-weight:800}
+h3{font-size:1.15rem;font-weight:600}
+p{margin:0}
+.lead{color:var(--muted);max-width:42rem;margin-top:10px}
+sub{font-size:.75em}
+.f{font-family:var(--mono);font-weight:700;white-space:nowrap}
+.k{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:99px;font-weight:700;font-size:.9rem}
+.oxi{background:var(--oxi-bg);color:var(--oxi)}
+.hid{background:var(--hid-bg);color:var(--hid)}
+.aci{background:var(--aci-bg);color:var(--aci)}
+.sal{background:var(--sal-bg);color:var(--sal)}
+.hox{background:var(--hox-bg);color:var(--hox)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr));gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.card.oxi{border-top:6px solid var(--oxi);color:var(--fg);background:var(--surface)}
+.card.hid{border-top:6px solid var(--hid);color:var(--fg);background:var(--surface)}
+.card.aci{border-top:6px solid var(--aci);color:var(--fg);background:var(--surface)}
+.card.sal{border-top:6px solid var(--sal);color:var(--fg);background:var(--surface)}
+.card.hox{border-top:6px solid var(--hox);color:var(--fg);background:var(--surface)}
+.card h3.oxi,.card h3.hid,.card h3.aci,.card h3.sal{background:none}
+.oxi-t{color:var(--oxi)}.hid-t{color:var(--hid)}.aci-t{color:var(--aci)}.sal-t{color:var(--sal)}.hox-t{color:var(--hox)}
+.step{display:flex;flex-direction:column;gap:16px}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+.q b{font-family:var(--display);font-size:1.15rem}
+.branches{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));gap:16px}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:34rem}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+tr:last-child td{border-bottom:0}
+td:first-child{white-space:nowrap}
+.tag{display:inline-block;padding:2px 10px;border-radius:6px;font-weight:700;font-size:.88rem}
+.sec{display:flex;flex-direction:column;gap:14px}
+.sechead{display:flex;align-items:center;gap:12px}
+.sechead::before{content:"";width:14px;height:34px;border-radius:3px;background:currentColor}
+.sechead.oxi{color:var(--oxi);background:none}.sechead.hid{color:var(--hid);background:none}
+.sechead.aci{color:var(--aci);background:none}.sechead.sal{color:var(--sal);background:none}.sechead.hox{color:var(--hox);background:none}
+.sechead h2{color:var(--fg)}
+.trap{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+.trap dt{font-family:var(--mono);font-weight:700}
+.trap dd{margin:0}
+.pos{display:flex;flex-wrap:wrap;gap:12px}
+.pos > div{flex:1 1 12rem;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;min-width:0}
+.pos .f{font-size:1.4rem;display:block}
+.ptablist{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+.ptab{font:inherit;font-weight:700;padding:8px 16px;border-radius:99px;border:1.5px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer}
+.ptab.on{background:var(--fg);border-color:var(--fg);color:var(--bg)}
+.ptab:focus-visible{outline:3px solid var(--fg);outline-offset:2px}
+.quiz{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:16px}
+.qf{font-family:var(--mono);font-weight:700;font-size:2.2rem;text-align:center;padding:14px;background:var(--bg);border-radius:8px}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr));gap:8px}
+button{font:inherit;font-weight:700;border:2px solid transparent;border-radius:8px;padding:10px 12px;cursor:pointer;text-align:left}
+button.oxi{background:var(--oxi-bg);color:var(--oxi)}button.hid{background:var(--hid-bg);color:var(--hid)}
+button.aci{background:var(--aci-bg);color:var(--aci)}button.sal{background:var(--sal-bg);color:var(--sal)}button.hox{background:var(--hox-bg);color:var(--hox)}
+button:hover{border-color:currentColor}
+button:focus-visible{outline:3px solid var(--fg);outline-offset:2px}
+button:disabled{cursor:default;opacity:.55}
+button.next{background:var(--fg);color:var(--bg);align-self:flex-start}
+.fb{padding:12px 14px;border-radius:8px;font-weight:600}
+.fb.ok{background:var(--good-bg);color:var(--good)}.fb.no{background:var(--bad-bg);color:var(--bad)}
+.score{color:var(--muted);font-weight:600}
+</style>
+
+<style>body{margin:0}</style></head><body><a href="../../index.html" style="display:block;padding:8px 16px;background:#1b2033;color:#fff;font:600 15px/1.3 system-ui,'Segoe UI',sans-serif;text-decoration:none;position:relative;z-index:60">← Índice principal</a><div style="max-width:62rem;margin-inline:auto;padding:16px 16px 0;display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:space-between;font-size:.95rem"><a href="index.html" style="color:var(--fg);font-weight:700">← Índice</a><span style="display:flex;gap:8px 18px;flex-wrap:wrap"><a href="guia-nombre.html" style="color:var(--fg);font-weight:700">Guía por nombre</a></span></div><main class="wrap">
+
+<header>
+  <span class="k">Formulación inorgánica</span>
+  <h1>Clasificar compuestos mirando la fórmula</h1>
+  <p class="lead">Antes de nombrar un compuesto hay que saber qué es. Se decide en dos pasos: primero si lleva oxígeno, y luego dónde está el H, cuántos elementos hay y de qué tipo son. Para hacer lo mismo a partir del nombre, tienes la guía hermana: <a href="guia-nombre.html" style="color:var(--fg);font-weight:700">clasificar mirando el nombre</a>.</p>
+  <div class="legend">
+    <span class="chip oxi">Óxidos</span>
+    <span class="chip hid">Hidruros</span>
+    <span class="chip hox">Hidróxidos</span>
+    <span class="chip aci">Ácidos oxácidos</span>
+    <span class="chip sal">Sales</span>
+  </div>
+</header>
+
+<section class="step" aria-labelledby="p1">
+  <h2 id="p1">Paso 1. ¿Lleva oxígeno?</h2>
+  <div class="branches">
+    <div class="card">
+      <h3>No lleva O</h3>
+      <div class="pos">
+        <div><span class="f hid-t">NaH</span><span class="hid tag">H al final</span><p>Metal + H: hidruro metálico.</p></div>
+        <div><span class="f hid-t">HCl</span><span class="hid tag">H al principio</span><p>H + no metal: hidruro de G16/17.</p></div>
+        <div><span class="f sal-t">NaCl</span><span class="sal tag">sin H</span><p>Metal + no metal: sal binaria.</p></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Lleva O</h3>
+      <div class="pos">
+        <div><span class="f oxi-t">CaO</span><span class="oxi tag">2 elementos</span><p>X + O: óxido o peróxido. Ojo: <b>H<sub>2</sub>O</b> (H + O) es el agua, un hidruro.</p></div>
+        <div><span class="f hox-t">Ca(OH)<sub>2</sub></span><span class="hox tag">metal + OH</span><p>Metal + grupo OH: hidróxido.</p></div>
+        <div><span class="f aci-t">H<sub>2</sub>SO<sub>4</sub></span><span class="aci tag">H + X + O</span><p>H primero: ácido oxácido.</p></div>
+        <div><span class="f sal-t">CaCO<sub>3</sub></span><span class="sal tag">metal + X + O</span><p>Sin H: sal de oxácido.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="sechead oxi"><h2>Óxidos</h2></div>
+  <p class="lead" style="margin-top:0">Solo dos elementos, uno de ellos el oxígeno.</p>
+  <div class="tw"><table>
+    <tr><th>Tipo</th><th>Cómo se reconoce</th><th>Ejemplos</th></tr>
+    <tr><td><span class="tag oxi">Óxido básico</span></td><td>Metal + O, con O en -2.</td><td class="f">Na<sub>2</sub>O · CaO · Fe<sub>2</sub>O<sub>3</sub></td></tr>
+    <tr><td><span class="tag oxi">Peróxido</span></td><td>Metal + grupo O<sub>2</sub> que no se puede simplificar (O en -1).</td><td class="f">Na<sub>2</sub>O<sub>2</sub> · CaO<sub>2</sub> · BaO<sub>2</sub></td></tr>
+    <tr><td><span class="tag oxi">Peróxido de hidrógeno</span></td><td>H + grupo O<sub>2</sub> (O en -1). No lleva metal, pero se clasifica con los peróxidos.</td><td class="f">H<sub>2</sub>O<sub>2</sub></td></tr>
+    <tr><td><span class="tag oxi">Óxido ácido</span></td><td>No metal + O.</td><td class="f">SO<sub>3</sub> · CO<sub>2</sub> · N<sub>2</sub>O<sub>5</sub></td></tr>
+    <tr><td><span class="tag oxi">Óxido de halógeno</span></td><td>Halógeno (G17) + O. Actúa con n impar: +1, +3, +5, +7.</td><td class="f">Cl<sub>2</sub>O · Br<sub>2</sub>O<sub>3</sub> · I<sub>2</sub>O<sub>5</sub></td></tr>
+  </table></div>
+  <div class="q">
+    <b>Excepción: oxígeno con flúor. Es OF<sub>2</sub>, nunca F<sub>2</sub>O.</b>
+    <p>El flúor es más electronegativo que el oxígeno, así que el oxígeno se escribe primero y actúa con +2. En un óxido normal el oxígeno es el que tiene -2, y aquí no. Se llama difluoruro de oxígeno. La profesora habla de combinaciones con oxígeno y no solo de óxidos, así que el OF<sub>2</sub> se clasifica con los <b class="oxi-t">óxidos</b> y usa todas sus nomenclaturas.</p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="sechead hid"><h2>Hidruros</h2></div>
+  <p class="lead" style="margin-top:0">Solo dos elementos, uno de ellos el hidrógeno. La posición del H cambia el tipo.</p>
+  <div class="tw"><table>
+    <tr><th>Tipo</th><th>Cómo se reconoce</th><th>Ejemplos</th></tr>
+    <tr><td><span class="tag hid">Hidruro metálico (básico)</span></td><td>Metal primero, H al final.</td><td class="f">NaH · CaH<sub>2</sub> · FeH<sub>3</sub></td></tr>
+    <tr><td><span class="tag hid">Hidruro progenitor</span></td><td>H con no metal de G13, 14 o 15.</td><td class="f">BH<sub>3</sub> · CH<sub>4</sub> · SiH<sub>4</sub> · NH<sub>3</sub> · PH<sub>3</sub></td></tr>
+    <tr><td><span class="tag hid">Agua</span></td><td>H con oxígeno (G16). Es el caso especial de los hidruros progenitores: aunque lleva O, no es un óxido ni un hidróxido, y se escribe H<sub>2</sub>O con el H primero.</td><td class="f">H<sub>2</sub>O</td></tr>
+    <tr><td><span class="tag hid">Hidruro de G16 y G17</span></td><td>H primero, luego S, Se, Te o un halógeno. En disolución acuosa son hidrácidos.</td><td class="f">HF · HCl · H<sub>2</sub>S · H<sub>2</sub>Se</td></tr>
+  </table></div>
+</section>
+
+<section class="sec">
+  <div class="sechead hox"><h2>Hidróxidos</h2></div>
+  <p class="lead" style="margin-top:0">Un metal unido al grupo <b>OH</b>, que se comporta como una sola pieza. Van después de los hidruros y antes de los oxácidos porque tienen O y H pero no son ácidos.</p>
+  <div class="tw"><table>
+    <tr><th>Tipo</th><th>Cómo se reconoce</th><th>Ejemplos</th></tr>
+    <tr><td><span class="tag hox">Hidróxido</span></td><td>Metal primero y grupo OH al final. Si hay dos OH o más, el grupo va entre <b>paréntesis</b>.</td><td class="f">NaOH · Ca(OH)<sub>2</sub> · Fe(OH)<sub>3</sub> · Al(OH)<sub>3</sub></td></tr>
+  </table></div>
+  <div class="q">
+    <b>Truco: hidróxido = óxido básico + agua.</b>
+    <p>CaO + H<sub>2</sub>O da Ca(OH)<sub>2</sub>. El número de grupos OH es la valencia del metal: en Fe(OH)<sub>3</sub> el hierro actúa con +3.</p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="sechead aci"><h2>Ácidos oxácidos</h2></div>
+  <p class="lead" style="margin-top:0">Fórmula H<sub>a</sub>X<sub>b</sub>O<sub>c</sub>, con el H primero. Los cuatro tipos se separan por cuánta agua tienen y por cuántas veces aparece X.</p>
+  <div class="grid">
+    <div class="card aci"><span class="k">Poca agua</span><h3 class="aci-t">Meta</h3><p>Menos H y O que el orto.</p><p class="f">HPO<sub>3</sub> · HBO<sub>2</sub> · H<sub>2</sub>SiO<sub>3</sub></p></div>
+    <div class="card aci"><span class="k">Más agua</span><h3 class="aci-t">Orto / polihidratado</h3><p>Es el ácido "de siempre" de P, B, Si, Te.</p><p class="f">H<sub>3</sub>PO<sub>4</sub> · H<sub>3</sub>BO<sub>3</sub> · H<sub>4</sub>SiO<sub>4</sub> · H<sub>6</sub>TeO<sub>6</sub></p></div>
+    <div class="card aci"><span class="k">Dos X o más (n)</span><h3 class="aci-t">Poliácido</h3><p>Dos o más átomos del elemento central: n ácidos − (n − 1) H<sub>2</sub>O.</p><p class="f">H<sub>2</sub>S<sub>2</sub>O<sub>7</sub> · H<sub>2</sub>Cr<sub>2</sub>O<sub>7</sub> · H<sub>4</sub>P<sub>2</sub>O<sub>7</sub> · H<sub>5</sub>P<sub>3</sub>O<sub>10</sub></p></div>
+    <div class="card aci"><span class="k">Un O cambiado por S</span><h3 class="aci-t">Tioácido</h3><p>S de más y un O de menos que el ácido normal.</p><p class="f">H<sub>2</sub>S<sub>2</sub>O<sub>3</sub></p></div>
+  </div>
+  <div class="q">
+    <b>No confundir H<sub>2</sub>S<sub>2</sub>O<sub>3</sub> con H<sub>2</sub>S<sub>2</sub>O<sub>7</sub>.</b>
+    <p>Los dos tienen dos S. En el <b class="aci-t">tioácido</b> se cambia un O de H<sub>2</sub>SO<sub>4</sub> por un S y queda H<sub>2</sub>S<sub>2</sub>O<sub>3</sub>. En el <b class="aci-t">poliácido</b> se unen dos H<sub>2</sub>SO<sub>4</sub> y se quita un agua, y queda H<sub>2</sub>S<sub>2</sub>O<sub>7</sub>.</p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="sechead sal"><h2>Sales</h2></div>
+  <p class="lead" style="margin-top:0">Una pregunta lo decide todo: ¿queda algún H? Si no queda, es neutra. Si queda, escrito entre el metal y el anión, es ácida.</p>
+  <div class="tw"><table>
+    <tr><th>Grupo</th><th>Subtipo</th><th>Cómo se reconoce</th><th>Ejemplos</th></tr>
+    <tr><td rowspan="3"><span class="tag sal">Neutras</span><br>sin H</td><td>De hidrácido, normal</td><td>Metal + no metal.</td><td class="f">NaCl · FeS · CaF<sub>2</sub></td></tr>
+    <tr><td>De hidrácido, volátil</td><td>No metal + no metal.</td><td class="f">CCl<sub>4</sub> · PCl<sub>3</sub> · SF<sub>6</sub></td></tr>
+    <tr><td>De oxácido</td><td>Metal + oxoanión.</td><td class="f">Na<sub>2</sub>SO<sub>4</sub> · CaCO<sub>3</sub> · Fe(NO<sub>3</sub>)<sub>3</sub></td></tr>
+    <tr><td rowspan="2"><span class="tag sal">Ácidas</span><br>con H</td><td>De hidrácido, normal</td><td>Metal + H + no metal (S, Se, Te, N, P).</td><td class="f">NaHS · Ca(HS)<sub>2</sub> · CaHN</td></tr>
+    <tr><td>De oxácido</td><td>Metal + H + oxoanión.</td><td class="f">NaHSO<sub>4</sub> · Ca(HCO<sub>3</sub>)<sub>2</sub> · NaH<sub>2</sub>PO<sub>4</sub></td></tr>
+  </table></div>
+</section>
+
+<section class="sec">
+  <h2>Cinco trampas</h2>
+  <dl class="trap">
+    <dt>1</dt><dd><b>La posición del H manda.</b> <span class="f hid-t">HCl</span> tiene el H primero (hidruro de G17). <span class="f hid-t">NaH</span> lo tiene al final (hidruro metálico). <span class="f sal-t">NaHS</span> lo tiene en medio (sal ácida).</dd>
+    <dt>2</dt><dd><b>Cuenta los elementos.</b> Dos elementos con O: óxido. Tres con el H primero: oxácido. Tres sin H: sal. Metal + grupo OH: hidróxido.</dd>
+    <dt>3</dt><dd><b>Óxido o peróxido.</b> Si el O va como O<sub>2</sub> y no se simplifica, es peróxido. <span class="f oxi-t">Na<sub>2</sub>O<sub>2</sub></span> no es Na<sub>2</sub>O con un O de más. Además, OF<sub>2</sub> se escribe con el O primero (mira la excepción del flúor en la sección de óxidos).</dd>
+    <dt>4</dt><dd><b>Hidruro o hidróxido.</b> <span class="f hid-t">NaH</span> es un hidruro y <span class="f hox-t">NaOH</span> es un hidróxido: los separa una O. Con más de un OH se usa paréntesis: <span class="f hox-t">Ca(OH)<sub>2</sub></span>, no CaOH<sub>2</sub>.</dd>
+      <dt>5</dt><dd><b>H<sub>2</sub>O y H<sub>2</sub>O<sub>2</sub>.</b> Son dos elementos, uno de ellos O, pero no son óxidos normales. <span class="f hid-t">H<sub>2</sub>O</span> es el agua (hidruro progenitor, con nomenclatura propia). <span class="f oxi-t">H<sub>2</sub>O<sub>2</sub></span> lleva el grupo O<sub>2</sub>, así que es peróxido de hidrógeno (agua oxigenada).</dd>
+  </dl>
+</section>
+
+<section class="sec" aria-labelledby="qz">
+  <h2 id="qz">Ponte a prueba</h2>
+  <p class="lead" style="margin-bottom:10px">Cuatro series de 15 fórmulas. Cada serie se hace por separado y tiene su propio resultado.</p>
+  <div class="ptablist" id="qtabs" role="tablist"><button type="button" role="tab" class="ptab on" aria-selected="true">Serie 1</button><button type="button" role="tab" class="ptab" aria-selected="false">Serie 2</button><button type="button" role="tab" class="ptab" aria-selected="false">Serie 3</button><button type="button" role="tab" class="ptab" aria-selected="false">Serie 4</button></div>
+  <div class="quiz">
+    <div class="score" id="score" aria-live="polite"></div>
+    <div class="qf" id="qf" aria-live="polite"></div>
+    <div class="opts" id="opts"></div>
+    <div id="fb"></div>
+    <button class="next" id="next" hidden>Siguiente</button>
+  </div>
+</section>
+
+</main>
+
+<script>
+(function(){
+  var T={
+    oxb:["Óxido básico","oxi"],per:["Peróxido","oxi"],oxa:["Óxido ácido","oxi"],
+    hm:["Hidruro metálico","hid"],hp:["Hidruro progenitor","hid"],hg:["Hidruro G16/17","hid"],
+    hox:["Hidróxido","hox"],
+    ac:["Ácido oxácido","aci"],
+    sn:["Sal neutra de hidrácido","sal"],sv:["Sal volátil","sal"],so:["Sal neutra de oxácido","sal"],
+    sa:["Sal ácida de hidrácido","sal"],sao:["Sal ácida de oxácido","sal"]
+  };
+  var Q0=[
+    ["CaO","oxb","Metal + O con O en -2."],
+    ["Na<sub>2</sub>O<sub>2</sub>","per","Grupo O<sub>2</sub> con O en -1."],
+    ["H<sub>2</sub>O<sub>2</sub>","per","Grupo O<sub>2</sub> con O en -1: peróxido de hidrógeno."],
+    ["SO<sub>3</sub>","oxa","No metal + O."],
+    ["NaH","hm","Metal primero, H al final."],
+    ["CH<sub>4</sub>","hp","H con un no metal del grupo 14."],
+    ["H<sub>2</sub>O","hp","Es el agua: H con O, caso especial de los hidruros progenitores."],
+    ["HCl","hg","H primero y un halógeno."],
+    ["Ca(OH)<sub>2</sub>","hox","Metal + grupo OH."],
+    ["H<sub>2</sub>SO<sub>4</sub>","ac","H primero, X y O."],
+    ["NaCl","sn","Metal + no metal, sin H."],
+    ["CCl<sub>4</sub>","sv","No metal + no metal."],
+    ["CaCO<sub>3</sub>","so","Metal + oxoanión, sin H."],
+    ["NaHS","sa","Queda un H entre el metal y el no metal."],
+    ["NaHCO<sub>3</sub>","sao","Queda un H entre el metal y el oxoanión."]
+  ];
+  var SETS=[Q0,[
+    ["NiH<sub>2</sub>", "hm", "Metal primero, H al final."],
+    ["NH<sub>4</sub>H<sub>2</sub>PO<sub>3</sub>", "sao", "Queda un H entre el metal y el oxoanión."],
+    ["Fe(HS)<sub>3</sub>", "sa", "Queda un H entre el metal y el no metal."],
+    ["FeH<sub>2</sub>", "hm", "Metal primero, H al final."],
+    ["Fe<sub>2</sub>O<sub>3</sub>", "oxb", "Metal + O con O en -2."],
+    ["NH<sub>3</sub>", "hp", "H con un no metal del grupo 15."],
+    ["K<sub>2</sub>O<sub>2</sub>", "per", "Grupo O<sub>2</sub> con O en -1."],
+    ["H<sub>2</sub>Te", "hg", "H primero y un no metal del grupo 16."],
+    ["LiCl", "sn", "Metal + no metal, sin H."],
+    ["HNO<sub>2</sub>", "ac", "H primero, X y O."],
+    ["CS<sub>2</sub>", "sv", "No metal + no metal."],
+    ["H<sub>2</sub>Se", "hg", "H primero y un no metal del grupo 16."],
+    ["Cl<sub>2</sub>O<sub>5</sub>", "oxa", "No metal + O."],
+    ["Cr(OH)<sub>2</sub>", "hox", "Metal + grupo OH."],
+    ["Mn(NO<sub>3</sub>)<sub>2</sub>", "so", "Metal + oxoanión, sin H."]
+  ],[
+    ["Na<sub>2</sub>SO<sub>3</sub>", "so", "Metal + oxoanión, sin H."],
+    ["Li<sub>2</sub>O<sub>2</sub>", "per", "Grupo O<sub>2</sub> con O en -1."],
+    ["K<sub>2</sub>Se", "sn", "Metal + no metal, sin H."],
+    ["Br<sub>2</sub>O", "oxa", "No metal + O."],
+    ["Mg(H<sub>2</sub>N)<sub>2</sub>", "sa", "Queda un H entre el metal y el no metal."],
+    ["CaHPO<sub>4</sub>", "sao", "Queda un H entre el metal y el oxoanión."],
+    ["CBr<sub>4</sub>", "sv", "No metal + no metal."],
+    ["AsH<sub>3</sub>", "hp", "H con un no metal del grupo 15."],
+    ["Fe(OH)<sub>2</sub>", "hox", "Metal + grupo OH."],
+    ["H<sub>2</sub>MnO<sub>4</sub>", "ac", "H primero, X y O."],
+    ["CsH", "hm", "Metal primero, H al final."],
+    ["HBr", "hg", "H primero y un halógeno."],
+    ["As<sub>2</sub>O<sub>5</sub>", "oxa", "No metal + O."],
+    ["Co(PO<sub>3</sub>)<sub>2</sub>", "so", "Metal + oxoanión, sin H."],
+    ["Mn<sub>2</sub>O<sub>3</sub>", "oxb", "Metal + O con O en -2."]
+  ],[
+    ["Fe(OH)<sub>3</sub>", "hox", "Metal + grupo OH."],
+    ["SbH<sub>3</sub>", "hp", "H con un no metal del grupo 15."],
+    ["PBr<sub>3</sub>", "sv", "No metal + no metal."],
+    ["H<sub>2</sub>S", "hg", "H primero y un no metal del grupo 16."],
+    ["CdO<sub>2</sub>", "per", "Grupo O<sub>2</sub> con O en -1."],
+    ["CuHCO<sub>3</sub>", "sao", "Queda un H entre el metal y el oxoanión."],
+    ["NiI<sub>2</sub>", "sn", "Metal + no metal, sin H."],
+    ["PbH<sub>4</sub>", "hm", "Metal primero, H al final."],
+    ["PtO", "oxb", "Metal + O con O en -2."],
+    ["Cl<sub>2</sub>O<sub>7</sub>", "oxa", "No metal + O."],
+    ["Ca(HS)<sub>2</sub>", "sa", "Queda un H entre el metal y el no metal."],
+    ["H<sub>2</sub>SO<sub>3</sub>", "ac", "H primero, X y O."],
+    ["Mn<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub>", "so", "Metal + oxoanión, sin H."],
+    ["Mg(H<sub>2</sub>P)<sub>2</sub>", "sa", "Queda un H entre el metal y el no metal."],
+    ["Ni(NO<sub>2</sub>)<sub>3</sub>", "so", "Metal + oxoanión, sin H."]
+  ]];
+  var Q=SETS[0];
+  var i=0,ok=0,order=[];
+  var qf=document.getElementById("qf"),opts=document.getElementById("opts"),fb=document.getElementById("fb"),
+      nx=document.getElementById("next"),sc=document.getElementById("score");
+  function shuffle(a){a=a.slice();for(var j=a.length-1;j>0;j--){var k=Math.floor(Math.random()*(j+1));var t=a[j];a[j]=a[k];a[k]=t}return a}
+  function build(){
+    opts.innerHTML="";
+    Object.keys(T).forEach(function(key){
+      var b=document.createElement("button");b.type="button";b.className=T[key][1];b.textContent=T[key][0];b.dataset.k=key;
+      b.addEventListener("click",function(){answer(key)});opts.appendChild(b);
+    });
+  }
+  function show(){
+    var q=Q[order[i]];
+    qf.innerHTML=q[0];fb.innerHTML="";nx.hidden=true;
+    sc.textContent="Fórmula "+(i+1)+" de "+Q.length+" · Aciertos: "+ok;
+    Array.prototype.forEach.call(opts.children,function(b){b.disabled=false});
+  }
+  function answer(key){
+    var q=Q[order[i]],right=key===q[1];
+    if(right)ok++;
+    Array.prototype.forEach.call(opts.children,function(b){b.disabled=true});
+    fb.innerHTML='<div class="fb '+(right?"ok":"no")+'">'+(right?"Correcto. ":"Es "+T[q[1]][0].toLowerCase()+". ")+q[2]+"</div>";
+    sc.textContent="Fórmula "+(i+1)+" de "+Q.length+" · Aciertos: "+ok;
+    nx.textContent=i===Q.length-1?"Ver resultado":"Siguiente";nx.hidden=false;nx.focus();
+  }
+  nx.addEventListener("click",function(){
+    if(i>=Q.length){start();return}
+    if(i===Q.length-1){
+      qf.textContent=ok+" / "+Q.length;
+      fb.innerHTML='<div class="fb '+(ok>=11?"ok":"no")+'">'+(ok>=11?"Muy bien.":"Repasa las trampas y vuelve a intentarlo.")+"</div>";
+      opts.innerHTML="";nx.textContent="Empezar de nuevo";i=Q.length;return;
+    }
+    i++;show();
+  });
+  var tabs=document.querySelectorAll("#qtabs .ptab");
+  Array.prototype.forEach.call(tabs,function(tb,k){tb.addEventListener("click",function(){
+    Array.prototype.forEach.call(tabs,function(o){var on=o===tb;o.classList.toggle("on",on);o.setAttribute("aria-selected",on?"true":"false")});
+    Q=SETS[k];start();
+  })});
+  function start(){i=0;ok=0;order=shuffle(Q.map(function(_,n){return n}));build();show()}
+  start();
+})();
+</script>
+</body></html>

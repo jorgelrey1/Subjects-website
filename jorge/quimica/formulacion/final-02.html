@@ -1,0 +1,245 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Examen final 02</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap"><style>
+:root{
+  --bg:#f6f7fb; --surface:#ffffff; --fg:#1d2233; --muted:#5b6379; --line:#dde1ec;
+  --oxi:#1f5fbf; --oxi-bg:#e4edfb;
+  --hid:#17805a; --hid-bg:#dff3ea;
+  --hox:#c0284f; --hox-bg:#fbe3ea;
+  --aci:#c2570c; --aci-bg:#fdebd9;
+  --sal:#8a3fb0; --sal-bg:#f1e5f8;
+  --guide:#3a4160; --guide-bg:#e8eaf3;
+  --bad:#b3261e; --bad-bg:#fbe4e2; --good:#17805a; --good-bg:#dff3ea;
+
+  --display:"Bricolage Grotesque","Trebuchet MS",sans-serif;
+  --body:"Source Sans 3","Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  --fam:var(--guide); --fam-bg:var(--guide-bg);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12151f; --surface:#1b2030; --fg:#e9ecf6; --muted:#a2a9bf; --line:#2f3650;
+  --oxi:#7fb0ff; --oxi-bg:#1b2b4a;
+  --hid:#5fd0a2; --hid-bg:#173a2e;
+  --hox:#ff8fa8; --hox-bg:#4a1f2d;
+  --aci:#ffa45c; --aci-bg:#4a2b12;
+  --sal:#d29bf0; --sal-bg:#3a2248;
+  --guide:#b9c0e0; --guide-bg:#262c45;
+  --bad:#ff8d85; --bad-bg:#4a1f1c; --good:#5fd0a2; --good-bg:#173a2e;
+ color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12151f; --surface:#1b2030; --fg:#e9ecf6; --muted:#a2a9bf; --line:#2f3650;
+  --oxi:#7fb0ff; --oxi-bg:#1b2b4a;
+  --hid:#5fd0a2; --hid-bg:#173a2e;
+  --hox:#ff8fa8; --hox-bg:#4a1f2d;
+  --aci:#ffa45c; --aci-bg:#4a2b12;
+  --sal:#d29bf0; --sal-bg:#3a2248;
+  --guide:#b9c0e0; --guide-bg:#262c45;
+  --bad:#ff8d85; --bad-bg:#4a1f1c; --good:#5fd0a2; --good-bg:#173a2e;
+ color-scheme:dark}
+body.fam-oxi{--fam:var(--oxi);--fam-bg:var(--oxi-bg)}
+body.fam-hid{--fam:var(--hid);--fam-bg:var(--hid-bg)}
+body.fam-hox{--fam:var(--hox);--fam-bg:var(--hox-bg)}
+body.fam-aci{--fam:var(--aci);--fam-bg:var(--aci-bg)}
+body.fam-sal{--fam:var(--sal);--fam-bg:var(--sal-bg)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.55}
+.wrap{max-width:62rem;margin-inline:auto;padding-inline:16px;padding-block:20px 56px;display:flex;flex-direction:column;gap:40px}
+h1,h2,h3,h4{font-family:var(--display);line-height:1.12;text-wrap:balance;margin:0}
+h1{font-size:clamp(2rem,6vw,3.1rem);font-weight:800}
+h2{font-size:1.55rem;font-weight:800}
+h3{font-size:1.2rem;font-weight:600}
+h4{font-size:1.02rem;font-weight:600}
+p{margin:0}
+a{color:var(--fg);font-weight:700}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--fg);outline-offset:2px}
+.lead{color:var(--muted);max-width:44rem}
+sub{font-size:.75em}
+.f{font-family:var(--mono);font-weight:700}
+.k{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.top{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;justify-content:space-between;font-size:.95rem}
+.top .r{display:flex;gap:8px 18px;flex-wrap:wrap}
+.hero{display:flex;gap:20px;align-items:center;background:var(--fam-bg);color:var(--fam);border-radius:14px;padding:22px}
+.hero svg{flex:none;width:76px;height:76px}
+.hero > div{min-width:0;display:flex;flex-direction:column;gap:8px}
+.hero h1{color:var(--fam)}
+.hero p{color:var(--fg);max-width:42rem}
+.sec{display:flex;flex-direction:column;gap:16px}
+.sh{display:flex;align-items:center;gap:12px}
+.sh::before{content:"";width:12px;height:30px;border-radius:3px;background:var(--fam);flex:none}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));gap:16px}
+.three{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));gap:16px}
+.tag{display:inline-block;padding:2px 10px;border-radius:6px;font-weight:700;font-size:.88rem;background:var(--fam-bg);color:var(--fam)}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:99px;font-weight:700;font-size:.9rem;background:var(--fam-bg);color:var(--fam)}
+.oxi{background:var(--oxi-bg);color:var(--oxi)}.hid{background:var(--hid-bg);color:var(--hid)}
+.hox{background:var(--hox-bg);color:var(--hox)}.aci{background:var(--aci-bg);color:var(--aci)}
+.sal{background:var(--sal-bg);color:var(--sal)}
+.nom{display:inline-block;padding:3px 10px;border:1.5px solid var(--fg);border-radius:6px;font-weight:700;font-size:.9rem;background:var(--surface);color:var(--fg)}
+.pend{border-style:dashed;border-color:var(--muted);color:var(--muted);font-weight:600}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:36rem}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+tr:last-child td{border-bottom:0}
+.cell{white-space:nowrap}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+.q b.t{font-family:var(--display);font-size:1.1rem}
+.q.warn{border-color:var(--aci)}
+.q.pending{border-style:dashed;border-color:var(--muted)}
+.steps{display:flex;flex-direction:column;gap:10px;counter-reset:s;padding:0;margin:0;list-style:none}
+.steps li{counter-increment:s;padding:2px 0 2px 42px;position:relative}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:28px;height:28px;border-radius:50%;background:var(--fam);color:var(--bg);font-family:var(--display);font-weight:800;display:grid;place-items:center;font-size:.95rem}
+.ex{background:var(--fam-bg);border-left:5px solid var(--fam);border-radius:8px;padding:12px 14px;color:var(--fg)}
+.ex .f{color:var(--fam)}
+.nomblock{background:var(--surface);border:1px solid var(--line);border-top:6px solid var(--fam);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.nomblock > header{display:flex;flex-direction:column;gap:6px}
+.dir{display:flex;flex-direction:column;gap:12px;min-width:0}
+.dir h4{color:var(--fam)}
+.struct{font-family:var(--mono);font-weight:700;background:var(--bg);border-radius:8px;padding:10px 14px;overflow-wrap:anywhere}
+.trap{display:grid;grid-template-columns:auto 1fr;gap:10px 14px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:0}
+.trap dt{font-family:var(--mono);font-weight:700;color:var(--fam)}
+.trap dd{margin:0}
+button{font:inherit;font-weight:700;border:2px solid transparent;border-radius:8px;padding:10px 14px;cursor:pointer}
+button.rv{background:var(--fg);color:var(--bg)}
+.ptablist{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+.ptab{font:inherit;font-weight:700;padding:8px 16px;border-radius:99px;border:1.5px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer}
+.ptab.on{background:var(--fam);border-color:var(--fam);color:#fff}
+.ptab:focus-visible{outline:3px solid var(--fam);outline-offset:2px}
+.plabel{margin:0 0 8px;color:var(--muted)}
+.pnote{margin:0 0 10px;color:var(--muted);font-size:.95rem}
+.ptable td{vertical-align:top}.pcell{min-width:15rem;width:55%}
+.prow{display:flex;flex-wrap:wrap;gap:8px}
+input.pin{flex:1 1 100%;min-width:0;font-family:var(--mono);font-weight:700;font-size:1.02rem;padding:9px 11px;border:2px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg)}
+input.pin:read-only{opacity:.9}
+tr.pok input.pin{border-color:var(--good)}tr.pno input.pin{border-color:var(--bad)}
+button.chk{background:var(--fam);color:#fff;padding:8px 14px}
+button.rvr{background:transparent;color:var(--fam);border-color:var(--fam);padding:8px 12px}
+button.main{background:var(--fg);color:var(--bg)}
+button.ghost{background:transparent;color:var(--fg);border-color:var(--fg)}
+.pfb{margin-top:8px;overflow-wrap:anywhere}
+.pfb .ok{display:block;background:var(--good-bg);color:var(--good);padding:8px 10px;border-radius:8px;font-weight:700}
+.pfb .no{display:block;background:var(--bad-bg);color:var(--bad);padding:8px 10px;border-radius:8px}
+.pfb .sw{display:block;background:var(--fam-bg);color:var(--fg);padding:8px 10px;border-radius:8px}
+.pfb .good{color:var(--good)}
+.pact{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.pres{margin-top:12px;background:var(--surface);border:2px solid var(--fg);border-radius:12px;padding:14px 16px;font-size:1.1rem}
+.ans{font-weight:600}
+.pager{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,16rem),1fr));gap:12px}
+.pager a{display:flex;flex-direction:column;gap:2px;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--surface);text-decoration:none}
+.pager a span.k{font-size:.72rem}
+.pager a:hover{border-color:var(--fam)}
+
+.qcard{display:grid;grid-template-columns:auto 1fr;gap:0 14px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;list-style:none;border-left:6px solid var(--line)}
+.qcard.ok{border-left-color:var(--good)}.qcard.no{border-left-color:var(--bad)}
+#qs{display:flex;flex-direction:column;gap:12px;padding:0;margin:0}
+.qn{font-family:var(--display);font-weight:800;font-size:1.3rem;color:var(--muted);min-width:1.8rem}
+.qb{display:flex;flex-direction:column;gap:10px;min-width:0}
+.qp{font-size:1.08rem;overflow-wrap:anywhere}
+.qp .f{font-size:1.2rem}
+input.ans-in{font-family:var(--mono);font-weight:700;font-size:1.05rem;width:100%;padding:10px 12px;border:2px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg)}
+input.ans-in:read-only{opacity:.9}
+.fbok{background:var(--good-bg);color:var(--good);padding:10px 12px;border-radius:8px}
+.fbno{background:var(--bad-bg);color:var(--bad);padding:10px 12px;border-radius:8px;overflow-wrap:anywhere}
+.fbno .f.good,.f.good{color:var(--good)}
+.fbno .alt{font-size:.92rem;opacity:.9}
+.fbok .chip,.fbno .chip{margin-top:6px}
+.toolbar{display:flex;flex-wrap:wrap;gap:6px;position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:8px}
+button.sym{background:var(--surface);color:var(--fg);border:1.5px solid var(--line);font-family:var(--mono);padding:6px 12px;font-size:1.05rem}
+button.main{background:var(--fg);color:var(--bg)}
+button.ghost{background:transparent;color:var(--fg);border-color:var(--fg)}
+button:disabled{opacity:.5;cursor:default}
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+#result{background:var(--surface);border:2px solid var(--fg);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:14px}
+#result .big{font-size:1.6rem}
+.info{color:var(--muted)}
+</style></head><body class=""><a href="../../index.html" style="display:block;padding:8px 16px;background:#1b2033;color:#fff;font:600 15px/1.3 system-ui,'Segoe UI',sans-serif;text-decoration:none;position:relative;z-index:60">← Índice principal</a><div class="wrap"><nav class="top"><a href="index.html">← Índice</a><div class="r"><a href="final-01.html">← Examen final 01</a><a href="final-03.html">Examen final 03 →</a></div></nav><header><span class="k">Examen final de formulación</span><h1>Examen final 02</h1><p class="lead">70 casos mezclados: 35 piden el nombre (vale cualquiera de las nomenclaturas de la familia) y 35 piden la fórmula. Escribe cada respuesta y pulsa <b>Corregir examen</b> al final. Las tildes cuentan. Las mayúsculas no importan en los nombres, pero en las fórmulas sí (Co no es CO). El «mono» es opcional. Los subíndices se pueden escribir con números (H2SO4).</p></header><div class="toolbar" role="group" aria-label="Símbolos"><button class="sym" type="button" data-c="₂">₂</button><button class="sym" type="button" data-c="₃">₃</button><button class="sym" type="button" data-c="₄">₄</button><button class="sym" type="button" data-c="₅">₅</button><button class="sym" type="button" data-c="₆">₆</button><button class="sym" type="button" data-c="₇">₇</button><button class="sym" type="button" data-c="(">(</button><button class="sym" type="button" data-c=")">)</button><button class="sym" type="button" data-c="−">−</button><button class="sym" type="button" data-c="+">+</button><button class="sym" type="button" data-c="[">[</button><button class="sym" type="button" data-c="]">]</button></div><ol id="qs"></ol><div class="actions"><button class="main" id="check" type="button">Corregir examen</button><button class="ghost" id="reset" type="button">Borrar y empezar de nuevo</button></div><section id="result" hidden></section><nav class="top"><a href="index.html">← Índice</a><div class="r"><a href="final-01.html">← Examen final 01</a><a href="final-03.html">Examen final 03 →</a></div></nav></div><script>
+const FAM = {"oxi": ["Óxido", "oxi"], "per": ["Peróxido", "oxi"], "hm": ["Hidruro metálico", "hid"], "hn": ["Hidruro no metálico", "hid"], "hox": ["Hidróxido", "hox"], "aci": ["Ácido oxácido", "aci"], "sn": ["Sal neutra de hidrácido", "sal"], "sv": ["Sal volátil", "sal"], "so": ["Sal neutra de oxácido", "sal"], "sa": ["Sal ácida de hidrácido", "sal"], "sao": ["Sal ácida de oxácido", "sal"]};
+const NOMBRES = {"sp": "Sistemática (prefijos)", "st": "Stock", "ca": "De carga", "tr": "Tradicional", "hi": "De hidrógeno", "sx": "Sistemática (oxo + romano)", "es": "Estequiométrica", "ad": "De adición", "trh": "Tradicional de hidruro", "sis": "Sistemática de sal", "hs": "De hidrógeno de sal", "trs": "Tradicional de sal", "sts": "Stock de sal"};
+const QS = [{"dir": "f", "fam": "oxi", "nom": "st", "p": "Escribe la fórmula de <b>óxido de antimonio(V)<\/b>", "a": ["Sb2O5"]}, {"dir": "f", "fam": "aci", "nom": "hi", "p": "Escribe la fórmula de <b>hidrógeno(trióxidofosfato)<\/b>", "a": ["HPO3"]}, {"dir": "f", "fam": "oxi", "nom": "sp", "p": "Escribe la fórmula de <b>trióxido de dicobalto<\/b>", "a": ["Co2O3"]}, {"dir": "f", "fam": "aci", "nom": "hi", "p": "Escribe la fórmula de <b>hidrógeno(trióxidoclorato)<\/b>", "a": ["HClO3"]}, {"dir": "n", "fam": "oxi", "nom": null, "p": "Nombra: <span class=\"f\">Cr<sub>2<\/sub>O<sub>3<\/sub><\/span>", "a": ["trióxido de dicromo", "óxido de cromo(III)", "óxido de cromo(3+)"]}, {"dir": "f", "fam": "aci", "nom": "tr", "p": "Escribe la fórmula de <b>ácido trisulfúrico<\/b>", "a": ["H2S3O10"]}, {"dir": "f", "fam": "sao", "nom": "tr", "p": "Escribe la fórmula de <b>hidrogenocarbonato de hierro(III)<\/b>", "a": ["Fe(HCO3)3"]}, {"dir": "n", "fam": "so", "nom": null, "p": "Nombra: <span class=\"f\">Fe<sub>3<\/sub>(PO<sub>3<\/sub>)<sub>2<\/sub><\/span>", "a": ["fosfito de hierro(II)", "trioxofosfato(III) de hierro(II)", "bis(fosfito) de trihierro", "bis[trióxidofosfato(3−)] de trihierro"]}, {"dir": "n", "fam": "oxi", "nom": null, "p": "Nombra: <span class=\"f\">CaO<\/span>", "a": ["óxido de calcio"]}, {"dir": "n", "fam": "hox", "nom": null, "p": "Nombra: <span class=\"f\">Be(OH)<sub>2<\/sub><\/span>", "a": ["dihidróxido de berilio", "hidróxido de berilio"]}, {"dir": "f", "fam": "so", "nom": "ad", "p": "Escribe la fórmula de <b>tetraóxidoyodato(1−) de plata<\/b>", "a": ["AgIO4"]}, {"dir": "f", "fam": "hm", "nom": "sp", "p": "Escribe la fórmula de <b>dihidruro de cadmio<\/b>", "a": ["CdH2"]}, {"dir": "f", "fam": "sa", "nom": "hi", "p": "Escribe la fórmula de <b>bis[hidrógeno(sulfuro)] de magnesio<\/b>", "a": ["Mg(HS)2"]}, {"dir": "n", "fam": "sao", "nom": null, "p": "Nombra: <span class=\"f\">Mg(HSeO<sub>4<\/sub>)<sub>2<\/sub><\/span>", "a": ["hidrogenoselenato de magnesio", "hidrogenotetraoxoselenato(VI) de magnesio", "bis(hidrogenoselenato) de magnesio"]}, {"dir": "n", "fam": "sn", "nom": null, "p": "Nombra: <span class=\"f\">Sr<sub>3<\/sub>P<sub>2<\/sub><\/span>", "a": ["difosfuro de triestroncio", "fosfuro de estroncio"]}, {"dir": "n", "fam": "hox", "nom": null, "p": "Nombra: <span class=\"f\">Zn(OH)<sub>2<\/sub><\/span>", "a": ["dihidróxido de cinc", "hidróxido de cinc"]}, {"dir": "n", "fam": "oxi", "nom": null, "p": "Nombra: <span class=\"f\">I<sub>2<\/sub>O<sub>7<\/sub><\/span>", "a": ["heptaóxido de diyodo", "óxido de yodo(VII)", "óxido de yodo(7+)"]}, {"dir": "n", "fam": "aci", "nom": null, "p": "Nombra: <span class=\"f\">HNO<sub>3<\/sub><\/span>", "a": ["ácido nítrico", "hidrógeno(trióxidonitrato)", "trioxonitrato(V) de hidrógeno"]}, {"dir": "n", "fam": "sao", "nom": null, "p": "Nombra: <span class=\"f\">AgHSO<sub>3<\/sub><\/span>", "a": ["hidrogenosulfito de plata", "hidrogenotrioxosulfato(IV) de plata"]}, {"dir": "n", "fam": "so", "nom": null, "p": "Nombra: <span class=\"f\">Pb(SeO<sub>3<\/sub>)<sub>2<\/sub><\/span>", "a": ["selenito de plomo(IV)", "trioxoselenato(IV) de plomo(IV)", "bis(selenito) de plomo", "bis[trióxidoselenato(2−)] de plomo"]}, {"dir": "f", "fam": "oxi", "nom": "st", "p": "Escribe la fórmula de <b>óxido de teluro(VI)<\/b>", "a": ["TeO3"]}, {"dir": "f", "fam": "aci", "nom": "sx", "p": "Escribe la fórmula de <b>tetraoxomanganato(VII) de hidrógeno<\/b>", "a": ["HMnO4"]}, {"dir": "f", "fam": "oxi", "nom": "sp", "p": "Escribe la fórmula de <b>óxido de cinc<\/b>", "a": ["ZnO"]}, {"dir": "n", "fam": "so", "nom": null, "p": "Nombra: <span class=\"f\">Pb(ClO<sub>4<\/sub>)<sub>2<\/sub><\/span>", "a": ["perclorato de plomo(II)", "tetraoxoclorato(VII) de plomo(II)", "bis(perclorato) de plomo", "bis[tetraóxidoclorato(1−)] de plomo"]}, {"dir": "n", "fam": "so", "nom": null, "p": "Nombra: <span class=\"f\">Ni<sub>2<\/sub>(CrO<sub>4<\/sub>)<sub>3<\/sub><\/span>", "a": ["cromato de níquel(III)", "tetraoxocromato(VI) de níquel(III)", "tris(cromato) de diníquel", "tris[tetraóxidocromato(2−)] de diníquel"]}, {"dir": "f", "fam": "so", "nom": "es", "p": "Escribe la fórmula de <b>sulfato de cromo<\/b>", "a": ["CrSO4"]}, {"dir": "n", "fam": "oxi", "nom": null, "p": "Nombra: <span class=\"f\">TeO<sub>2<\/sub><\/span>", "a": ["dióxido de teluro", "óxido de teluro(IV)", "óxido de teluro(4+)"]}, {"dir": "f", "fam": "sn", "nom": "ca", "p": "Escribe la fórmula de <b>fluoruro de plomo(2+)<\/b>", "a": ["PbF2"]}, {"dir": "n", "fam": "hox", "nom": null, "p": "Nombra: <span class=\"f\">Pb(OH)<sub>2<\/sub><\/span>", "a": ["dihidróxido de plomo", "hidróxido de plomo(II)", "hidróxido de plomo(2+)"]}, {"dir": "f", "fam": "oxi", "nom": "ca", "p": "Escribe la fórmula de <b>óxido de plomo(2+)<\/b>", "a": ["PbO"]}, {"dir": "n", "fam": "hox", "nom": null, "p": "Nombra: <span class=\"f\">Sn(OH)<sub>4<\/sub><\/span>", "a": ["tetrahidróxido de estaño", "hidróxido de estaño(IV)", "hidróxido de estaño(4+)"]}, {"dir": "n", "fam": "sao", "nom": null, "p": "Nombra: <span class=\"f\">Mg(HCO<sub>3<\/sub>)<sub>2<\/sub><\/span>", "a": ["hidrogenocarbonato de magnesio", "hidrogenotrioxocarbonato(IV) de magnesio", "bis(hidrogenocarbonato) de magnesio"]}, {"dir": "f", "fam": "sv", "nom": "st", "p": "Escribe la fórmula de <b>fluoruro de azufre(VI)<\/b>", "a": ["SF6"]}, {"dir": "n", "fam": "so", "nom": null, "p": "Nombra: <span class=\"f\">Ni<sub>2<\/sub>(SiO<sub>3<\/sub>)<sub>3<\/sub><\/span>", "a": ["metasilicato de níquel(III)", "trioxosilicato(IV) de níquel(III)", "tris(metasilicato) de diníquel", "tris[trióxidosilicato(2−)] de diníquel"]}, {"dir": "f", "fam": "so", "nom": "sx", "p": "Escribe la fórmula de <b>trioxoselenato(IV) de estroncio<\/b>", "a": ["SrSeO3"]}, {"dir": "f", "fam": "oxi", "nom": "ca", "p": "Escribe la fórmula de <b>óxido de cobre(2+)<\/b>", "a": ["CuO"]}, {"dir": "f", "fam": "sa", "nom": "tr", "p": "Escribe la fórmula de <b>dihidrogenofosfuro de magnesio<\/b>", "a": ["Mg(H2P)2"]}, {"dir": "n", "fam": "aci", "nom": null, "p": "Nombra: <span class=\"f\">H<sub>2<\/sub>CO<sub>3<\/sub><\/span>", "a": ["ácido carbónico", "dihidrógeno(trióxidocarbonato)", "trioxocarbonato(IV) de hidrógeno"]}, {"dir": "n", "fam": "aci", "nom": null, "p": "Nombra: <span class=\"f\">HBrO<sub>3<\/sub><\/span>", "a": ["ácido brómico", "hidrógeno(trióxidobromato)", "trioxobromato(V) de hidrógeno"]}, {"dir": "n", "fam": "so", "nom": null, "p": "Nombra: <span class=\"f\">Cr<sub>2<\/sub>(SiO<sub>3<\/sub>)<sub>3<\/sub><\/span>", "a": ["metasilicato de cromo(III)", "trioxosilicato(IV) de cromo(III)", "tris(metasilicato) de dicromo", "tris[trióxidosilicato(2−)] de dicromo"]}, {"dir": "f", "fam": "sn", "nom": "sp", "p": "Escribe la fórmula de <b>fosfuro de aluminio<\/b>", "a": ["AlP"]}, {"dir": "n", "fam": "per", "nom": null, "p": "Nombra: <span class=\"f\">BaO<sub>2<\/sub><\/span>", "a": ["dióxido de bario", "peróxido de bario"]}, {"dir": "f", "fam": "oxi", "nom": "st", "p": "Escribe la fórmula de <b>óxido de bromo(V)<\/b>", "a": ["Br2O5"]}, {"dir": "n", "fam": "aci", "nom": null, "p": "Nombra: <span class=\"f\">HBrO<sub>2<\/sub><\/span>", "a": ["ácido bromoso", "hidrógeno(dióxidobromato)", "dioxobromato(III) de hidrógeno"]}, {"dir": "n", "fam": "hn", "nom": null, "p": "Nombra: <span class=\"f\">AsH<sub>3<\/sub><\/span>", "a": ["arsina", "arsano", "trihidruro de arsénico"]}, {"dir": "n", "fam": "so", "nom": null, "p": "Nombra: <span class=\"f\">Co<sub>2<\/sub>(SiO<sub>3<\/sub>)<sub>3<\/sub><\/span>", "a": ["metasilicato de cobalto(III)", "trioxosilicato(IV) de cobalto(III)", "tris(metasilicato) de dicobalto", "tris[trióxidosilicato(2−)] de dicobalto"]}, {"dir": "n", "fam": "sn", "nom": null, "p": "Nombra: <span class=\"f\">Na<sub>3<\/sub>P<\/span>", "a": ["fosfuro de trisodio", "fosfuro de sodio"]}, {"dir": "f", "fam": "hox", "nom": "st", "p": "Escribe la fórmula de <b>hidróxido de cromo(II)<\/b>", "a": ["Cr(OH)2"]}, {"dir": "f", "fam": "sa", "nom": "ad", "p": "Escribe la fórmula de <b>hidrogenosulfuro(1−) de hierro(2+)<\/b>", "a": ["Fe(HS)2"]}, {"dir": "n", "fam": "sa", "nom": null, "p": "Nombra: <span class=\"f\">KHSe<\/span>", "a": ["hidrogenoseleniuro de potasio", "hidrógeno(seleniuro) de potasio", "hidrogenoseleniuro(1−) de potasio"]}, {"dir": "f", "fam": "sa", "nom": "ad", "p": "Escribe la fórmula de <b>hidrogenosulfuro(1−) de plomo(4+)<\/b>", "a": ["Pb(HS)4"]}, {"dir": "n", "fam": "so", "nom": null, "p": "Nombra: <span class=\"f\">AlPO<sub>3<\/sub><\/span>", "a": ["fosfito de aluminio", "trioxofosfato(III) de aluminio", "trióxidofosfato(3−) de aluminio"]}, {"dir": "f", "fam": "hox", "nom": "ca", "p": "Escribe la fórmula de <b>hidróxido de plomo(4+)<\/b>", "a": ["Pb(OH)4"]}, {"dir": "n", "fam": "aci", "nom": null, "p": "Nombra: <span class=\"f\">H<sub>3<\/sub>AsO<sub>4<\/sub><\/span>", "a": ["ácido arsénico", "trihidrógeno(tetraóxidoarseniato)", "tetraoxoarseniato(V) de hidrógeno"]}, {"dir": "n", "fam": "sv", "nom": null, "p": "Nombra: <span class=\"f\">NCl<sub>3<\/sub><\/span>", "a": ["tricloruro de nitrógeno", "cloruro de nitrógeno(III)", "cloruro de nitrógeno(3+)"]}, {"dir": "n", "fam": "sv", "nom": null, "p": "Nombra: <span class=\"f\">AsF<sub>3<\/sub><\/span>", "a": ["trifluoruro de arsénico", "fluoruro de arsénico(III)", "fluoruro de arsénico(3+)"]}, {"dir": "n", "fam": "sao", "nom": null, "p": "Nombra: <span class=\"f\">Zn(HSO<sub>4<\/sub>)<sub>2<\/sub><\/span>", "a": ["hidrogenosulfato de cinc", "hidrogenotetraoxosulfato(VI) de cinc", "bis(hidrogenosulfato) de cinc"]}, {"dir": "n", "fam": "so", "nom": null, "p": "Nombra: <span class=\"f\">Sr(BO<sub>2<\/sub>)<sub>2<\/sub><\/span>", "a": ["metaborato de estroncio", "dioxoborato(III) de estroncio", "bis(metaborato) de estroncio", "bis[dióxidoborato(1−)] de estroncio"]}, {"dir": "n", "fam": "aci", "nom": null, "p": "Nombra: <span class=\"f\">H<sub>2<\/sub>Cr<sub>4<\/sub>O<sub>13<\/sub><\/span>", "a": ["ácido tetracrómico", "dihidrógeno(tridecaóxidotetracromato)", "tridecaoxotetracromato(VI) de hidrógeno"]}, {"dir": "f", "fam": "oxi", "nom": "sp", "p": "Escribe la fórmula de <b>trióxido de dihierro<\/b>", "a": ["Fe2O3"]}, {"dir": "f", "fam": "sn", "nom": "st", "p": "Escribe la fórmula de <b>bromuro de mercurio(I)<\/b>", "a": ["HgBr"]}, {"dir": "n", "fam": "sao", "nom": null, "p": "Nombra: <span class=\"f\">PbHPO<sub>4<\/sub><\/span>", "a": ["hidrogenofosfato de plomo(II)", "hidrogenotetraoxofosfato(V) de plomo(II)", "hidrogenofosfato de plomo"]}, {"dir": "f", "fam": "sv", "nom": "sp", "p": "Escribe la fórmula de <b>tricloruro de fósforo<\/b>", "a": ["PCl3"]}, {"dir": "f", "fam": "hm", "nom": "sp", "p": "Escribe la fórmula de <b>dihidruro de calcio<\/b>", "a": ["CaH2"]}, {"dir": "f", "fam": "so", "nom": "tr", "p": "Escribe la fórmula de <b>selenato de cobalto(II)<\/b>", "a": ["CoSeO4"]}, {"dir": "f", "fam": "hn", "nom": "sts", "p": "Escribe la fórmula de <b>telururo de hidrógeno<\/b>", "a": ["H2Te"]}, {"dir": "f", "fam": "hm", "nom": "st", "p": "Escribe la fórmula de <b>hidruro de hierro(III)<\/b>", "a": ["FeH3"]}, {"dir": "f", "fam": "so", "nom": "sx", "p": "Escribe la fórmula de <b>trioxosilicato(IV) de plata<\/b>", "a": ["Ag2SiO3"]}, {"dir": "f", "fam": "sao", "nom": "sx", "p": "Escribe la fórmula de <b>dihidrogenotrioxofosfato(III) de plomo(IV)<\/b>", "a": ["Pb(H2PO3)4"]}, {"dir": "f", "fam": "hn", "nom": "trh", "p": "Escribe la fórmula de <b>ácido bromhídrico<\/b>", "a": ["HBr"]}];
+const N = QS.length;
+const SUBS = {'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4','₅':'5','₆':'6','₇':'7','₈':'8','₉':'9'};
+function fixChars(s){
+  s = s.normalize('NFC');
+  s = s.replace(/[₀-₉]/g, function(c){return SUBS[c]});
+  s = s.replace(/[−–—‐‑]/g, '-');
+  return s;
+}
+function normFormula(s){ return fixChars(s).replace(/[\[{]/g, '(').replace(/[\]}]/g, ')').replace(/\s+/g,''); }
+/* Corrección: las tildes cuentan; se ignoran las mayúsculas, los espacios sobrantes y el «mono». */
+function normName(s){
+  s = fixChars(s).toLowerCase();
+  s = s.replace(/\s+/g,' ').trim();
+  s = s.replace(/\s+([\(\[])/g,'$1').replace(/([\(\[])\s+/g,'$1').replace(/\s+([\)\]])/g,'$1');
+  /* «mono» es opcional: se ignora al comparar */
+  s = s.replace(/(^|[\s(\[])monóxido/g,'$1óxido').replace(/(^|[\s(\[])mono(?=[a-zñáéíóú])/g,'$1');
+  return s;
+}
+function isRight(q, given){
+  if(!given.trim()) return false;
+  if(q.dir==='f'){ const g = normFormula(given); return q.a.some(function(a){return normFormula(a)===g}); }
+  const g = normName(given); return q.a.some(function(a){return normName(a)===g});
+}
+let lastInput = null;
+const list = document.getElementById('qs');
+QS.forEach(function(q,i){
+  const li = document.createElement('li'); li.className='qcard'; li.id='q'+(i+1);
+  li.innerHTML = '<div class="qn">'+(i+1)+'<\/div><div class="qb"><div class="qp">'+q.p+'<\/div>'+
+    '<input type="text" id="r'+(i+1)+'" class="ans-in" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Respuesta '+(i+1)+'" placeholder="'+(q.dir==='f'?'Escribe la fórmula':'Escribe el nombre')+'">'+
+    '<div class="qf" id="f'+(i+1)+'"><\/div><\/div>';
+  list.appendChild(li);
+  li.querySelector('input').addEventListener('focus', function(e){lastInput=e.target});
+});
+document.querySelectorAll('button.sym').forEach(function(b){
+  b.addEventListener('mousedown', function(e){e.preventDefault()});
+  b.addEventListener('click', function(){
+    const inp = lastInput || document.getElementById('r1'); if(inp.readOnly) return;
+    const s = inp.selectionStart==null? inp.value.length : inp.selectionStart, e2 = inp.selectionEnd==null? s : inp.selectionEnd;
+    inp.value = inp.value.slice(0,s) + b.dataset.c + inp.value.slice(e2);
+    inp.focus(); const p = s + b.dataset.c.length; inp.setSelectionRange(p,p);
+  });
+});
+let corrected = false;
+function esc(t){return t.replace(/&/g,'&amp;').replace(new RegExp(String.fromCharCode(60),'g'),'&lt;')}
+document.getElementById('check').addEventListener('click', function(){
+  if(corrected) return; corrected = true;
+  let ok = 0; const fails = []; const goods = [];
+  QS.forEach(function(q,i){
+    const inp = document.getElementById('r'+(i+1)); const card = document.getElementById('q'+(i+1)); const fb = document.getElementById('f'+(i+1));
+    inp.readOnly = true;
+    const good = isRight(q, inp.value);
+    const fam = FAM[q.fam];
+    const tags = '<span class="chip '+fam[1]+'">'+fam[0]+'<\/span>'+(q.nom?' <span class="nom">'+NOMBRES[q.nom]+'<\/span>':'');
+    card.classList.add(good?'ok':'no');
+    if(good){ ok++; goods.push(i+1); fb.innerHTML = '<div class="fbok"><b>Correcto.<\/b> '+tags+'<\/div>'; }
+    else {
+      fails.push({i:i+1, q:q, given:inp.value});
+      const alts = q.a.slice(1,7).map(esc).join(' · ');
+      fb.innerHTML = '<div class="fbno"><b>Fallo.<\/b> Tu respuesta: <span class="f">'+(inp.value.trim()?esc(inp.value):'(vacía)')+'<\/span><br>'+
+        'Respuesta correcta: <span class="f good">'+esc(q.a[0])+'<\/span>'+(alts?'<br><span class="alt">También válido: '+alts+'<\/span>':'')+'<br>'+tags+'<\/div>';
+    }
+  });
+  const pct = Math.round(100*ok/N);
+  const res = document.getElementById('result');
+  let h = '<h2>Resultado<\/h2><p class="big"><b>'+ok+'<\/b> de '+N+' ('+pct+' %)<\/p>';
+  h += '<div class="two"><div class="card"><span class="k">Aciertos ('+goods.length+')<\/span><p>'+(goods.length?goods.join(', '):'Ninguno')+'<\/p><\/div>';
+  h += '<div class="card"><span class="k">Fallos ('+fails.length+')<\/span><p>'+(fails.length?fails.map(function(f){return f.i}).join(', '):'Ninguno: examen perfecto.')+'<\/p><\/div><\/div>';
+  if(fails.length){
+    h += '<h3>Repasa estos casos<\/h3><div class="tw"><table><tr><th>Nº<\/th><th>Enunciado<\/th><th>Tu respuesta<\/th><th>Respuesta correcta<\/th><\/tr>';
+    fails.forEach(function(f){
+      h += '<tr><td>'+f.i+'<\/td><td>'+f.q.p+'<\/td><td class="f">'+(f.given.trim()?esc(f.given):'(vacía)')+'<\/td><td class="f good">'+esc(f.q.a[0])+(f.q.a.length>1?'<br><small>'+f.q.a.slice(1,7).map(esc).join(' · ')+'<\/small>':'')+'<\/td><\/tr>';
+    });
+    h += '<\/table><\/div>';
+  }
+  res.innerHTML = h; res.hidden = false;
+  document.getElementById('check').disabled = true;
+  res.scrollIntoView({behavior:'smooth', block:'start'});
+});
+document.getElementById('reset').addEventListener('click', function(){
+  corrected = false;
+  QS.forEach(function(q,i){
+    const inp = document.getElementById('r'+(i+1)); inp.readOnly=false; inp.value='';
+    document.getElementById('f'+(i+1)).innerHTML=''; const c=document.getElementById('q'+(i+1)); c.classList.remove('ok','no');
+  });
+  document.getElementById('result').hidden = true; document.getElementById('check').disabled = false;
+  window.scrollTo({top:0, behavior:'smooth'});
+});
+</script></body></html>

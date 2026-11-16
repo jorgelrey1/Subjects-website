@@ -1,0 +1,382 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Clasificar por el nombre</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: misma página de estudio y mismos colores por familia que "Clasificar compuestos". Dos preguntas en orden: qué familia es y qué nomenclatura usa el nombre. */
+:root{
+  --bg:#f6f7fb; --surface:#ffffff; --fg:#1d2233; --muted:#5b6379; --line:#dde1ec;
+  --oxi:#1f5fbf; --oxi-bg:#e4edfb;
+  --hid:#17805a; --hid-bg:#dff3ea;
+  --hox:#c0284f; --hox-bg:#fbe3ea;
+  --aci:#c2570c; --aci-bg:#fdebd9;
+  --sal:#8a3fb0; --sal-bg:#f1e5f8;
+  --bad:#b3261e; --bad-bg:#fbe4e2; --good:#17805a; --good-bg:#dff3ea;
+  --display:"Bricolage Grotesque","Trebuchet MS",sans-serif;
+  --body:"Source Sans 3","Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12151f; --surface:#1b2030; --fg:#e9ecf6; --muted:#a2a9bf; --line:#2f3650;
+  --oxi:#7fb0ff; --oxi-bg:#1b2b4a;
+  --hid:#5fd0a2; --hid-bg:#173a2e;
+  --hox:#ff8fa8; --hox-bg:#4a1f2d;
+  --aci:#ffa45c; --aci-bg:#4a2b12;
+  --sal:#d29bf0; --sal-bg:#3a2248;
+  --bad:#ff8d85; --bad-bg:#4a1f1c; --good:#5fd0a2; --good-bg:#173a2e;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12151f; --surface:#1b2030; --fg:#e9ecf6; --muted:#a2a9bf; --line:#2f3650;
+  --oxi:#7fb0ff; --oxi-bg:#1b2b4a;
+  --hid:#5fd0a2; --hid-bg:#173a2e;
+  --hox:#ff8fa8; --hox-bg:#4a1f2d;
+  --aci:#ffa45c; --aci-bg:#4a2b12;
+  --sal:#d29bf0; --sal-bg:#3a2248;
+  --bad:#ff8d85; --bad-bg:#4a1f1c; --good:#5fd0a2; --good-bg:#173a2e;
+  color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.55}
+.wrap{max-width:62rem;margin-inline:auto;padding-inline:16px;padding-block:28px 56px;display:flex;flex-direction:column;gap:44px}
+h1,h2,h3{font-family:var(--display);line-height:1.1;text-wrap:balance;margin:0}
+h1{font-size:clamp(2rem,6vw,3.2rem);font-weight:800}
+h2{font-size:1.6rem;font-weight:800}
+h3{font-size:1.15rem;font-weight:600}
+p{margin:0}
+a{color:var(--fg);font-weight:700}
+.lead{color:var(--muted);max-width:44rem;margin-top:10px}
+sub{font-size:.75em}
+.f{font-family:var(--mono);font-weight:700}
+.k{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:99px;font-weight:700;font-size:.9rem}
+.oxi{background:var(--oxi-bg);color:var(--oxi)}
+.hid{background:var(--hid-bg);color:var(--hid)}
+.hox{background:var(--hox-bg);color:var(--hox)}
+.aci{background:var(--aci-bg);color:var(--aci)}
+.sal{background:var(--sal-bg);color:var(--sal)}
+.oxi-t{color:var(--oxi)}.hid-t{color:var(--hid)}.hox-t{color:var(--hox)}.aci-t{color:var(--aci)}.sal-t{color:var(--sal)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,19rem),1fr));gap:16px}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:38rem}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+tr:last-child td{border-bottom:0}
+.tag{display:inline-block;padding:2px 10px;border-radius:6px;font-weight:700;font-size:.88rem}
+.sec{display:flex;flex-direction:column;gap:16px}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+.q b{font-family:var(--display);font-size:1.15rem}
+.q.warn{border-color:var(--aci);}
+/* Nomenclaturas: pastillas neutras, para que el color siga siendo de la familia */
+.nom{display:inline-block;padding:3px 10px;border:1.5px solid var(--fg);border-radius:6px;font-weight:700;font-size:.88rem;background:var(--surface);color:var(--fg)}
+.pend{border-style:dashed;border-color:var(--muted);color:var(--muted);font-weight:600}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.big{display:flex;align-items:center;gap:12px}
+.big .n{font-family:var(--display);font-weight:800;font-size:2.4rem;line-height:1;min-width:2.2rem}
+.big .t{font-weight:700}
+.steps{display:flex;flex-direction:column;gap:12px;counter-reset:s;padding:0;margin:0;list-style:none}
+.steps li{counter-increment:s;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px 14px 56px;position:relative}
+.steps li::before{content:counter(s);position:absolute;left:14px;top:12px;width:30px;height:30px;border-radius:50%;background:var(--fg);color:var(--bg);font-family:var(--display);font-weight:800;display:grid;place-items:center}
+.part{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.part .k{border:1.5px solid var(--fg);color:var(--fg);border-radius:6px;padding:2px 10px}
+.trap{display:grid;grid-template-columns:auto 1fr;gap:10px 14px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:0}
+.trap dt{font-family:var(--mono);font-weight:700}
+.trap dd{margin:0}
+.cell{white-space:nowrap}
+.quiz{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:16px}
+.qf{font-family:var(--mono);font-weight:700;font-size:clamp(1.2rem,4.6vw,1.9rem);text-align:center;padding:16px;background:var(--bg);border-radius:8px;overflow-wrap:anywhere}
+.ask{font-weight:700}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr));gap:8px}
+button{font:inherit;font-weight:700;border:2px solid transparent;border-radius:8px;padding:10px 12px;cursor:pointer;text-align:left}
+button.oxi{background:var(--oxi-bg);color:var(--oxi)}button.hid{background:var(--hid-bg);color:var(--hid)}
+button.hox{background:var(--hox-bg);color:var(--hox)}button.aci{background:var(--aci-bg);color:var(--aci)}
+button.sal{background:var(--sal-bg);color:var(--sal)}
+button.neu{background:var(--bg);color:var(--fg);border-color:var(--line)}
+button:hover{border-color:currentColor}
+button:focus-visible{outline:3px solid var(--fg);outline-offset:2px}
+button:disabled{cursor:default;opacity:.55}
+button.next{background:var(--fg);color:var(--bg);align-self:flex-start}
+.fb{padding:12px 14px;border-radius:8px;font-weight:600;margin-top:8px}
+.fb.ok{background:var(--good-bg);color:var(--good)}.fb.no{background:var(--bad-bg);color:var(--bad)}
+.score{color:var(--muted);font-weight:600}
+</style>
+
+<style>body{margin:0}</style></head><body><a href="../../index.html" style="display:block;padding:8px 16px;background:#1b2033;color:#fff;font:600 15px/1.3 system-ui,'Segoe UI',sans-serif;text-decoration:none;position:relative;z-index:60">← Índice principal</a><div style="max-width:62rem;margin-inline:auto;padding:16px 16px 0;display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:space-between;font-size:.95rem"><a href="index.html" style="color:var(--fg);font-weight:700">← Índice</a><span style="display:flex;gap:8px 18px;flex-wrap:wrap"><a href="guia-formula.html" style="color:var(--fg);font-weight:700">Guía por fórmula</a></span></div><main class="wrap">
+
+<header>
+  <span class="k">Formulación inorgánica · Guía hermana</span>
+  <h1>Clasificar compuestos mirando el nombre</h1>
+  <p class="lead">Con el nombre delante hay que resolver dos cosas, en este orden: <b>qué compuesto es</b> (la familia) y <b>con qué nomenclatura está escrito</b>. Cada familia usa entre 2 y 4 nomenclaturas, no todas. Saber cuáles le tocan a cada una reduce mucho las dudas. La otra guía, <a href="guia-formula.html">clasificar mirando la fórmula</a>, usa los mismos colores.</p>
+  <div class="legend">
+    <span class="chip oxi">Óxidos</span>
+    <span class="chip hid">Hidruros</span>
+    <span class="chip hox">Hidróxidos</span>
+    <span class="chip aci">Ácidos oxácidos</span>
+    <span class="chip sal">Sales</span>
+  </div>
+</header>
+
+<!-- ============ PASO 1 ============ -->
+<section class="sec" aria-labelledby="p1">
+  <div class="part"><span class="k">Paso 1</span><h2 id="p1">¿Qué familia es?</h2></div>
+  <ol class="steps">
+    <li><b>¿Empieza por "ácido"?</b> Es un <span class="tag aci">oxácido</span>, salvo que acabe en <b>-hídrico</b> (ácido clorhídrico), que es un <span class="tag hid">hidruro de G16/17</span> disuelto en agua.</li>
+    <li><b>¿La primera palabra es "óxido", "peróxido", "hidruro" o "hidróxido"?</b> Da la familia directamente, con o sin prefijos (trióxido, trihidruro, trihidróxido). Un nombre propio como metano, amoníaco o agua es un <span class="tag hid">hidruro</span>.</li>
+    <li><b>¿La primera palabra acaba en -uro, -ato o -ito?</b> Mira lo que va <b>después del "de"</b>. Si es <b>hidrógeno</b>, es un hidruro (-uro) o un oxácido (-ato). Si es un metal o un no metal, es una <span class="tag sal">sal</span>.</li>
+    <li><b>¿Lleva "hidrogeno" (sin tilde) pegado delante del anión, como hidrogenosulfato o dihidrogenofosfito, o "hidrógeno(...)" con el anión entre paréntesis y un metal detrás del "de"?</b> Es una <span class="tag sal">sal ácida</span>.</li>
+  </ol>
+  <div class="tw"><table>
+    <tr><th>Familia</th><th>Pista en el nombre</th><th>Ejemplos</th></tr>
+    <tr><td><span class="tag oxi">Óxido básico</span></td><td>"Óxido" + <b>metal</b>.</td><td>trióxido de dihierro · óxido de hierro(III) · óxido de sodio</td></tr>
+    <tr><td><span class="tag oxi">Peróxido</span></td><td>La palabra <b>peróxido</b>. Con prefijos, "dióxido" + metal con "di-".</td><td>peróxido de sodio · dióxido de disodio · peróxido de hidrógeno (H<sub>2</sub>O<sub>2</sub>)</td></tr>
+    <tr><td><span class="tag oxi">Óxido ácido</span></td><td>"Óxido" + <b>no metal</b>.</td><td>dióxido de carbono · óxido de azufre(VI)</td></tr>
+    <tr><td><span class="tag oxi">Óxido de halógeno</span></td><td>"Óxido" + cloro, bromo o yodo.</td><td>monóxido de dicloro · óxido de cloro(I)</td></tr>
+    <tr><td><span class="tag oxi">Oxígeno con flúor</span></td><td>"Difluoruro de oxígeno": combinación con oxígeno.</td><td>difluoruro de oxígeno</td></tr>
+    <tr><td><span class="tag hid">Hidruro metálico</span></td><td>"Hidruro" + <b>metal</b>.</td><td>hidruro de sodio · trihidruro de hierro · hidruro de hierro(III)</td></tr>
+    <tr><td><span class="tag hid">Hidruro progenitor</span></td><td>Nombre propio, o "tri/tetrahidruro de" + elemento. El agua también va aquí.</td><td>metano · amoníaco · fosfano · trihidruro de boro · agua</td></tr>
+    <tr><td><span class="tag hid">Hidruro de G16 y G17</span></td><td>"-uro de hidrógeno", "hidrógeno(-uro)" o "ácido -hídrico" si va disuelto.</td><td>cloruro de hidrógeno · dihidrógeno(sulfuro) · ácido clorhídrico</td></tr>
+    <tr><td><span class="tag hox">Hidróxido</span></td><td>"Hidróxido" + <b>metal</b>.</td><td>hidróxido de hierro(III) · trihidróxido de hierro · hidróxido de calcio</td></tr>
+    <tr><td><span class="tag aci">Oxácido</span></td><td>"Ácido ...", o "hidrógeno(...ato)" o "oxo...(n) de hidrógeno".</td><td>ácido fosfórico · trihidrógeno(tetraóxidofosfato) · tetraoxofosfato(V) de hidrógeno</td></tr>
+    <tr><td><span class="tag sal">Sal neutra de hidrácido</span></td><td>"-uro" + <b>metal</b>.</td><td>cloruro de sodio · tricloruro de hierro</td></tr>
+    <tr><td><span class="tag sal">Sal volátil</span></td><td>"-uro" + <b>no metal</b>.</td><td>tetracloruro de carbono · tricloruro de fósforo</td></tr>
+    <tr><td><span class="tag sal">Sal neutra de oxácido</span></td><td>"-ato" o "-ito" + <b>metal</b>.</td><td>sulfato de sodio · tetraoxosulfato(VI) de sodio</td></tr>
+    <tr><td><span class="tag sal">Sal ácida de hidrácido</span></td><td>"hidrogeno...-uro", "hidrógeno(...-uro)" o "hidrogeno...-uro(1−)" o "(2−)" según el no metal + metal.</td><td>hidrogenosulfuro de sodio · hidrógeno(sulfuro) de sodio · hidrogenosulfuro(1−) de sodio · hidrogenonitruro(2−) de calcio</td></tr>
+    <tr><td><span class="tag sal">Sal ácida de oxácido</span></td><td>"hidrogeno...-ato" (o "dihidrogeno...") + metal.</td><td>hidrogenosulfato de sodio · dihidrogenofosfito de hierro(III)</td></tr>
+  </table></div>
+  <div class="q">
+    <b>Excepción: oxígeno con flúor.</b>
+    <p>El OF<sub>2</sub> se llama <b>difluoruro de oxígeno</b>, no "óxido de flúor". Aunque acaba en -uro, la profesora habla de combinaciones con oxígeno y no solo de óxidos, así que se clasifica con los <b class="oxi-t">óxidos</b> y usa todas sus nomenclaturas: difluoruro de oxígeno (sistemática), fluoruro de oxígeno(II) (Stock) y fluoruro de oxígeno(2+) (de carga).</p>
+  </div>
+</section>
+
+<!-- ============ PASO 2 ============ -->
+<section class="sec" aria-labelledby="p2">
+  <div class="part"><span class="k">Paso 2</span><h2 id="p2">¿Qué nomenclatura usa?</h2></div>
+
+  <div class="q warn">
+    <b>Cuidado: "sistemática" significa dos cosas.</b>
+    <p>En óxidos, hidruros, hidróxidos y sales de hidrácido, <b>sistemática = prefijos</b> (trióxido de dihierro). En oxácidos y en sus sales, <b>sistemática = "oxo" + número romano</b> (tetraoxosulfato(VI) de hidrógeno). Es el mismo nombre para dos formas distintas de escribir.</p>
+  </div>
+
+  <h3>Mapa: qué nomenclaturas le tocan a cada familia</h3>
+  <div class="grid">
+    <div class="card">
+      <div class="big"><span class="n">3</span><span class="t">nomenclaturas</span></div>
+      <div class="pills"><span class="chip oxi">Óxidos</span><span class="chip hid">Hidruros metálicos</span><span class="chip hox">Hidróxidos</span><span class="chip sal">Sales neutras de hidrácido</span><span class="chip sal">Sales volátiles</span></div>
+      <div class="pills"><span class="nom">Sistemática (prefijos)</span><span class="nom">Stock</span><span class="nom">De carga</span></div>
+    </div>
+    <div class="card">
+      <div class="big"><span class="n">3</span><span class="t">nomenclaturas</span></div>
+      <div class="pills"><span class="chip aci">Ácidos oxácidos</span></div>
+      <div class="pills"><span class="nom">Tradicional</span><span class="nom">Sistemática (oxo + romano)</span><span class="nom">De hidrógeno</span></div>
+    </div>
+    <div class="card">
+      <div class="big"><span class="n">2</span><span class="t">nomenclaturas</span></div>
+      <div class="pills"><span class="chip hid">Hidruros progenitores (G13, 14, 15)</span></div>
+      <div class="pills"><span class="nom">Tradicional de hidruro (nombre propio)</span><span class="nom">Sistemática de sal</span></div>
+    </div>
+    <div class="card">
+      <div class="big"><span class="n">4</span><span class="t">nomenclaturas</span></div>
+      <div class="pills"><span class="chip hid">Hidruros de G16 y G17</span></div>
+      <div class="pills"><span class="nom">Tradicional de hidruro</span><span class="nom">Stock de sal</span><span class="nom">De hidrógeno de sal</span><span class="nom">Tradicional de sal</span></div>
+      <p class="k">No usan la sistemática</p>
+    </div>
+    <div class="card">
+      <div class="big"><span class="n">2</span><span class="t">nomenclaturas</span></div>
+      <div class="pills"><span class="chip hid">Agua</span></div>
+      <div class="pills"><span class="nom">Tradicional de hidruro</span><span class="nom">Tradicional de sal</span></div>
+    </div>
+    <div class="card">
+      <div class="big"><span class="n">4</span><span class="t">nomenclaturas</span></div>
+      <div class="pills"><span class="chip sal">Sales neutras de oxácido</span></div>
+      <div class="pills"><span class="nom">Tradicional</span><span class="nom">Sistemática (oxo + romano)</span><span class="nom">Estequiométrica</span><span class="nom">De adición</span></div>
+    </div>
+    <div class="card">
+      <div class="big"><span class="n">3</span><span class="t">nomenclaturas</span></div>
+      <div class="pills"><span class="chip sal">Sales ácidas de hidrácido</span></div>
+      <div class="pills"><span class="nom">Tradicional</span><span class="nom">De hidrógeno</span><span class="nom">De adición</span></div>
+    </div>
+    <div class="card">
+      <div class="big"><span class="n">3</span><span class="t">nomenclaturas</span></div>
+      <div class="pills"><span class="chip sal">Sales ácidas de oxácido</span></div>
+      <div class="pills"><span class="nom">Tradicional</span><span class="nom">Sistemática (oxo + romano)</span><span class="nom">Estequiométrica</span></div>
+    </div>
+  </div>
+  <p class="lead" style="margin-top:0">Los peróxidos van con los óxidos, y el OF<sub>2</sub> también. "Hidruros metálicos" son los básicos del cuadro. En Stock y de carga, el número solo se escribe si el elemento tiene más de una carga positiva posible (también en los no metales).</p>
+
+  <h3>Cómo se reconoce cada nomenclatura en el nombre</h3>
+  <div class="tw"><table>
+    <tr><th>Nomenclatura</th><th>La pista</th><th>Ejemplo</th></tr>
+    <tr><td><span class="nom">Sistemática (prefijos)</span></td><td>Prefijos <b>mono-, di-, tri-, tetra-</b> delante del anión y del elemento. <b>Sin números</b> entre paréntesis.</td><td>trióxido de dihierro<br>tricloruro de hierro</td></tr>
+    <tr><td><span class="nom">Stock</span></td><td>Un <b>número romano</b> entre paréntesis pegado al elemento.</td><td>óxido de hierro(III)</td></tr>
+    <tr><td><span class="nom">De carga</span></td><td>Un número con <b>signo</b> entre paréntesis pegado al elemento: 3+, 2+.</td><td>óxido de hierro(3+)</td></tr>
+    <tr><td><span class="nom">Tradicional</span></td><td>"Ácido" + terminación <b>-ico / -oso</b> (con hipo- o per-). En las sales, -ato / -ito sin prefijos ni números; en las sales ácidas, <b>hidrogeno</b> pegado delante del anión.</td><td>ácido sulfúrico<br>sulfato de sodio<br>hidrogenosulfato de sodio</td></tr>
+    <tr><td><span class="nom">Sistemática (oxo + romano)</span></td><td>La palabra <b>oxo</b> con un <b>número romano</b> en el anión.</td><td>tetraoxosulfato(VI) de hidrógeno</td></tr>
+    <tr><td><span class="nom">De hidrógeno</span></td><td><b>hidrógeno</b> (con tilde) y el anión entre paréntesis, con prefijo sobre el hidrógeno (dihidrógeno). En los oxácidos lleva "óxido" y va sin "de".</td><td>trihidrógeno(tetraóxidofosfato)<br>hidrógeno(sulfuro) de sodio</td></tr>
+    <tr><td><span class="nom">Estequiométrica</span></td><td>Prefijos <b>di-, tri-</b> sobre el <b>metal</b>, sin números ni "oxo". Si el anión se repite, <b>bis, tris, tetrakis, pentakis, hexakis...</b> y el anión entre paréntesis.</td><td>sulfato de disodio<br>bis(hidrogenocarbonato) de calcio</td></tr>
+    <tr><td><span class="nom">De adición</span></td><td>La carga del <b>anión</b> con signo: (2−), (1−). En las sales de oxácido lleva <b>óxido</b>; en las sales ácidas de hidrácido, <b>hidrogeno...-uro(1−)</b>.</td><td>tetraóxidosulfato(2−) de disodio<br>hidrogenosulfuro(1−) de sodio</td></tr>
+  </table></div>
+
+  <h3>Las nomenclaturas de los hidruros no metálicos</h3>
+  <div class="tw"><table>
+    <tr><th>Nomenclatura</th><th>La pista</th><th>Ejemplo</th></tr>
+    <tr><td><span class="nom">Tradicional de hidruro</span></td><td>Un <b>nombre propio</b> (grupos 13–15 y agua) o <b>ácido ...-hídrico</b> (grupos 16 y 17).</td><td>metano · agua · ácido sulfhídrico</td></tr>
+    <tr><td><span class="nom">Sistemática de sal</span></td><td>Solo en los progenitores: prefijo + <b>hidruro</b> + de + elemento.</td><td>trihidruro de nitrógeno</td></tr>
+    <tr><td><span class="nom">Stock de sal</span></td><td>Grupos 16 y 17: <b>-uro de hidrógeno</b>, sin prefijos ni número.</td><td>sulfuro de hidrógeno</td></tr>
+    <tr><td><span class="nom">De hidrógeno de sal</span></td><td>Grupos 16 y 17: <b>hidrógeno(-uro)</b>, con prefijo si hay más de un H.</td><td>dihidrógeno(sulfuro) · hidrógeno(cloruro)</td></tr>
+    <tr><td><span class="nom">Tradicional de sal</span></td><td>Grupos 16 y 17 y agua: <b>-uro de hidrógeno</b>. El agua es «óxido de hidrógeno».</td><td>cloruro de hidrógeno · óxido de hidrógeno</td></tr>
+  </table></div>
+
+  <h3>Si dudas, pregúntate esto en orden</h3>
+  <ol class="steps">
+    <li><b>¿Hay un número entre paréntesis?</b> Romano con <b>oxo</b> en el anión: sistemática (oxo + romano). Romano sin oxo: stock. Con signo (3+, 2−): de carga, o de adición si es la carga del anión (con <b>óxido</b> o <b>hidrogeno...-uro(1−)</b>). Ninguno: sigue.</li>
+    <li><b>¿Lleva prefijos di-, tri-, tetra-?</b> Si es un óxido, hidruro, hidróxido o sal de hidrácido: sistemática (prefijos). Si es una sal de oxácido y el prefijo está en el metal: estequiométrica.</li>
+    <li><b>¿Lleva "hidrógeno(" con tilde y el anión entre paréntesis?</b> De hidrógeno. Ojo: "hidrogeno" sin tilde y pegado al anión (hidrogenosulfato) <b>no</b> es esta nomenclatura.</li>
+    <li><b>¿No pasa nada de lo anterior?</b> Tradicional: empieza por "ácido", o tiene -ato / -ito (con hidrogeno pegado delante si es una sal ácida) sin más adornos.</li>
+  </ol>
+
+  <h3>Un compuesto, todos sus nombres</h3>
+  <div class="tw"><table>
+    <tr><th>Familia</th><th>Fórmula</th><th>Nombres</th></tr>
+    <tr><td><span class="tag oxi">Óxido</span></td><td class="f cell">Fe<sub>2</sub>O<sub>3</sub></td><td>trióxido de dihierro · óxido de hierro(III) · óxido de hierro(3+)</td></tr>
+    <tr><td><span class="tag hid">Hidruro metálico</span></td><td class="f cell">FeH<sub>3</sub></td><td>trihidruro de hierro · hidruro de hierro(III) · hidruro de hierro(3+)</td></tr>
+    <tr><td><span class="tag hox">Hidróxido</span></td><td class="f cell">Fe(OH)<sub>3</sub></td><td>trihidróxido de hierro · hidróxido de hierro(III) · hidróxido de hierro(3+)</td></tr>
+    <tr><td><span class="tag sal">Sal de hidrácido</span></td><td class="f cell">FeCl<sub>3</sub></td><td>tricloruro de hierro · cloruro de hierro(III) · cloruro de hierro(3+)</td></tr>
+    <tr><td><span class="tag sal">Sal volátil</span></td><td class="f cell">PCl<sub>3</sub></td><td>tricloruro de fósforo · cloruro de fósforo(III) · cloruro de fósforo(3+)</td></tr>
+    <tr><td><span class="tag aci">Oxácido</span></td><td class="f cell">H<sub>3</sub>PO<sub>4</sub></td><td>ácido fosfórico · tetraoxofosfato(V) de hidrógeno · trihidrógeno(tetraóxidofosfato)</td></tr>
+    <tr><td><span class="tag sal">Sal de oxácido</span></td><td class="f cell">Na<sub>2</sub>SO<sub>4</sub></td><td>sulfato de sodio · tetraoxosulfato(VI) de sodio · sulfato de disodio · tetraóxidosulfato(2−) de disodio</td></tr>
+    <tr><td><span class="tag sal">Sal ácida de oxácido</span></td><td class="f cell">NaHSO<sub>4</sub></td><td>hidrogenosulfato de sodio · hidrogenotetraoxosulfato(VI) de sodio · (la estequiométrica coincide con la tradicional)</td></tr>
+    <tr><td><span class="tag sal">Sal ácida de hidrácido</span></td><td class="f cell">NaHS</td><td>hidrogenosulfuro de sodio · hidrógeno(sulfuro) de sodio · hidrogenosulfuro(1−) de sodio</td></tr>
+    <tr><td><span class="tag hid">Hidruro no metálico</span></td><td class="f cell">NH<sub>3</sub></td><td>amoníaco · trihidruro de nitrógeno</td></tr>
+    <tr><td><span class="tag hid">Hidruro de G16</span></td><td class="f cell">H<sub>2</sub>S</td><td>ácido sulfhídrico · sulfuro de hidrógeno · dihidrógeno(sulfuro) · sulfuro de hidrógeno</td></tr>
+    <tr><td><span class="tag hid">Agua</span></td><td class="f cell">H<sub>2</sub>O</td><td>agua · óxido de hidrógeno</td></tr>
+  </table></div>
+
+</section>
+
+<section class="sec">
+  <h2>Siete trampas</h2>
+  <dl class="trap">
+    <dt>1</dt><dd><b>"Sistemática" cambia de significado.</b> Con prefijos en óxidos, hidruros, hidróxidos y sales de hidrácido. Con oxo y romano en oxácidos y sus sales.</dd>
+    <dt>2</dt><dd><b>El paréntesis dice mucho.</b> <span class="f">(III)</span> es stock, o sistemática si el anión lleva "oxo". <span class="f">(3+)</span> es de carga. <span class="f">(2−)</span> con "óxido", o <span class="f">(1−)</span> con "hidrogeno...-uro", es de adición.</dd>
+    <dt>3</dt><dd><b>Sulfato de sodio o de disodio.</b> Sin prefijo en el metal es la tradicional. Con <span class="f">di-</span> en el metal es la estequiométrica.</dd>
+    <dt>4</dt><dd><b>"Hidrógeno" con tilde o "hidrogeno" sin ella.</b> <span class="f aci-t">trihidrógeno(tetraóxidofosfato)</span> va con paréntesis y sin "de": es un oxácido. <span class="f sal-t">hidrogenosulfato de sodio</span> lleva el hidrogeno pegado al anión y un metal detrás del "de": es una sal ácida (tradicional). <span class="f sal-t">hidrógeno(sulfuro) de sodio</span> es una sal ácida de hidrácido en la de hidrógeno.</dd>
+    <dt>5</dt><dd><b>Lo que va detrás del "de" decide.</b> "-uro de hidrógeno" es un hidruro y "-ato de hidrógeno" es un oxácido. Solo son sales cuando detrás va un metal o un no metal.</dd>
+    <dt>6</dt><dd><b>"Dióxido de..." engaña.</b> <span class="f oxi-t">dióxido de carbono</span> es un óxido ácido y <span class="f oxi-t">dióxido de disodio</span> es un peróxido. Si pone <b>peróxido</b>, no hay duda. Si no, mira si el elemento es metal y comprueba con la fórmula.</dd>
+    <dt>7</dt><dd><b>Hidruro o hidróxido.</b> Se parecen al leerlos. <span class="f hid-t">hidruro de sodio</span> es NaH y <span class="f hox-t">hidróxido de sodio</span> es NaOH. El hidróxido lleva "óxido" dentro.</dd>
+  </dl>
+</section>
+
+<section class="sec" aria-labelledby="qz">
+  <h2 id="qz">Ponte a prueba</h2>
+  <p class="lead" style="margin-top:0">Cada nombre se responde en dos pasos: primero la familia y después la nomenclatura. En los nombres de una sola nomenclatura clara, solo se pregunta la familia.</p>
+  <div class="quiz">
+    <div class="score" id="score" aria-live="polite"></div>
+    <div class="qf" id="qf" aria-live="polite"></div>
+    <div class="ask" id="ask"></div>
+    <div class="opts" id="opts"></div>
+    <div id="fb" aria-live="polite"></div>
+    <button class="next" id="next" hidden>Siguiente</button>
+  </div>
+</section>
+
+</main>
+
+<script>
+(function(){
+  var F={
+    oxb:["Óxido básico","oxi"],per:["Peróxido","oxi"],oxa:["Óxido ácido","oxi"],
+    hm:["Hidruro metálico","hid"],hp:["Hidruro progenitor","hid"],hg:["Hidruro G16/17","hid"],
+    hox:["Hidróxido","hox"],ac:["Ácido oxácido","aci"],
+    sn:["Sal neutra de hidrácido","sal"],sv:["Sal volátil","sal"],so:["Sal neutra de oxácido","sal"],
+    sa:["Sal ácida de hidrácido","sal"],sao:["Sal ácida de oxácido","sal"]
+  };
+  var N={
+    sp:"Sistemática (prefijos)",st:"Stock (romano)",ca:"De carga (3+, 2−)",tr:"Tradicional",
+    hi:"De hidrógeno",sx:"Sistemática (oxo + romano)",es:"Estequiométrica",ad:"De adición",
+    trh:"Tradicional de hidruro",sis:"Sistemática de sal",hs:"De hidrógeno de sal",trs:"Tradicional de sal"
+  };
+  var Q=[
+    ["trióxido de dihierro","oxb","sp","Prefijos tri- y di-, sin números entre paréntesis."],
+    ["óxido de hierro(III)","oxb","st","Número romano pegado al metal."],
+    ["óxido de hierro(3+)","oxb","ca","Número con signo: es la carga."],
+    ["trihidróxido de hierro","hox","sp","Prefijo tri- y sin números entre paréntesis."],
+    ["hidróxido de hierro(III)","hox","st","Número romano pegado al metal."],
+    ["cloruro de hierro(II)","sn","st","-uro de un metal, con número romano."],
+    ["tetracloruro de carbono","sv","sp","-uro de un no metal, con prefijo tetra-."],
+    ["peróxido de sodio","per",null,"Lleva la palabra peróxido."],
+    ["hidruro de sodio","hm",null,"\"Hidruro de\" + un metal."],
+    ["metano","hp",null,"Nombre propio de un hidruro del grupo 14."],
+    ["cloruro de hidrógeno","hg",null,"-uro de hidrógeno: no es una sal, es un hidruro de G17."],
+    ["ácido sulfúrico","ac","tr","Empieza por ácido y no acaba en -hídrico."],
+    ["trihidrógeno(tetraóxidofosfato)","ac","hi","Hidrógeno con tilde y el anión entre paréntesis, sin \"de\"."],
+    ["tetraoxosulfato(VI) de hidrógeno","ac","sx","Oxo + número romano, y detrás del \"de\" está el hidrógeno."],
+    ["sulfato de sodio","so","tr","Sin prefijos ni números: tradicional."],
+    ["sulfato de disodio","so","es","Prefijo di- en el metal."],
+    ["tetraoxosulfato(VI) de sodio","so","sx","Oxo + número romano."],
+    ["tetraóxidosulfato(2−) de disodio","so","ad","Óxido y carga del anión con signo."],
+    ["hidrogenosulfuro de sodio","sa","tr","Hidrogeno pegado delante del anión, sin paréntesis ni carga."],
+    ["hidrógeno(sulfuro) de sodio","sa","hi","Hidrógeno con tilde y el anión entre paréntesis, con \"de\" y un metal."],
+    ["hidrogenosulfuro(1−) de sodio","sa","ad","Carga del anión con signo: (1−)."],
+    ["hidrogenotetraoxosulfato(VI) de sodio","sao","sx","Hidrogeno-, oxo y número romano."],
+    ["bis(hidrogenocarbonato) de calcio","sao","es","Bis y el anión entre paréntesis, sin oxo ni romano."],
+    ["dihidrogenofosfito de hierro(III)","sao","tr","Hidrogeno pegado al anión, sin oxo; el romano es del metal."],
+    ["amoníaco","hp","trh","Nombre propio de un hidruro progenitor."],
+    ["trihidruro de boro","hp","sis","Prefijo tri- + hidruro de + elemento."],
+    ["dihidrógeno(sulfuro)","hg","hs","Hidrógeno con prefijo y el no metal en -uro entre paréntesis."],
+    ["ácido clorhídrico","hg","trh","Ácido + raíz + hídrico."]
+  ];
+  var ROUND=12;
+  var deck=[],i=0,pts=0,tot=0,q=null,famOk=false;
+  var el=function(id){return document.getElementById(id)};
+  var qf=el("qf"),ask=el("ask"),opts=el("opts"),fb=el("fb"),nx=el("next"),sc=el("score");
+  function shuffle(a){a=a.slice();for(var j=a.length-1;j>0;j--){var k=Math.floor(Math.random()*(j+1));var t=a[j];a[j]=a[k];a[k]=t}return a}
+  function score(){sc.textContent="Nombre "+(Math.min(i+1,deck.length))+" de "+deck.length+" · Puntos: "+pts+" de "+tot}
+  function msg(ok,text){var d=document.createElement("div");d.className="fb "+(ok?"ok":"no");d.textContent=text;fb.appendChild(d)}
+  function buttons(map,keyClass,handler){
+    opts.textContent="";
+    Object.keys(map).forEach(function(key){
+      var b=document.createElement("button");b.type="button";
+      b.className=keyClass?map[key][1]:"neu";
+      b.textContent=keyClass?map[key][0]:map[key];
+      b.addEventListener("click",function(){handler(key)});
+      opts.appendChild(b);
+    });
+  }
+  function lock(){Array.prototype.forEach.call(opts.children,function(b){b.disabled=true})}
+  function show(){
+    q=deck[i];qf.textContent=q[0];fb.textContent="";nx.hidden=true;
+    ask.textContent="1. ¿Qué familia es?";
+    buttons(F,true,pickFam);score();
+  }
+  function pickFam(key){
+    lock();tot++;famOk=key===q[1];if(famOk)pts++;
+    msg(famOk,famOk?"Familia correcta.":"La familia es: "+F[q[1]][0].toLowerCase()+".");
+    if(q[2]){
+      ask.textContent="2. ¿Qué nomenclatura usa?";
+      buttons(N,false,pickNom);
+    }else{finish()}
+    score();
+  }
+  function pickNom(key){
+    lock();tot++;var ok=key===q[2];if(ok)pts++;
+    msg(ok,ok?"Nomenclatura correcta.":"La nomenclatura es: "+N[q[2]]+".");
+    finish();score();
+  }
+  function finish(){
+    var d=document.createElement("div");d.className="score";d.textContent="Pista: "+q[3];fb.appendChild(d);
+    ask.textContent="";
+    nx.textContent=i===deck.length-1?"Ver resultado":"Siguiente";nx.hidden=false;nx.focus();
+  }
+  nx.addEventListener("click",function(){
+    if(i>=deck.length){start();return}
+    if(i===deck.length-1){
+      i=deck.length;
+      qf.textContent=pts+" / "+tot;ask.textContent="";opts.textContent="";fb.textContent="";
+      msg(pts/tot>=0.8,pts/tot>=0.8?"Muy bien.":"Repasa el mapa de nomenclaturas y las trampas, y vuelve a intentarlo.");
+      nx.textContent="Empezar de nuevo";sc.textContent="Resultado";return;
+    }
+    i++;show();
+  });
+  function start(){i=0;pts=0;tot=0;deck=shuffle(Q).slice(0,ROUND);show()}
+  start();
+})();
+</script>
+</body></html>
