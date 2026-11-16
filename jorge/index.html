@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Estudios 1º BACH</title>
+<style>
+:root{--bg:#f4f5fb;--surface:#fff;--fg:#1b2033;--muted:#5a6279;--line:#dfe3ef;--shadow:0 1px 2px rgba(20,25,50,.06),0 8px 24px rgba(20,25,50,.07);
+--display:"Trebuchet MS","Segoe UI",sans-serif;--body:"Segoe UI",system-ui,sans-serif}
+@media (prefers-color-scheme:dark){:root{--bg:#10131d;--surface:#1a1f2f;--fg:#eceffa;--muted:#a3abc2;--line:#2d3550;--shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35)}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.5}
+.wrap{max-width:64rem;margin:auto;padding:clamp(24px,6vw,56px) 20px 56px}
+.eyebrow{font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:.78rem;color:var(--muted)}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(2.2rem,7vw,3.6rem);line-height:1.05;margin:.2em 0 .5em;letter-spacing:-.02em}
+.jump{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:8px;padding:12px 0;margin-bottom:8px;background:var(--bg)}
+.jump a{--h:215;text-decoration:none;font-weight:700;font-size:.95rem;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-left:5px solid hsl(var(--h) 75% 52%);border-radius:10px;padding:7px 14px}
+.jump a:hover,.jump a:focus-visible{border-color:hsl(var(--h) 75% 52%);outline:none}
+section{--h:215;padding-top:26px;scroll-margin-top:64px}
+section>h2{font-family:var(--display);font-weight:800;font-size:1.7rem;margin:0 0 14px;display:flex;align-items:center;gap:12px}
+section>h2::before{content:"";width:14px;height:14px;border-radius:50%;background:hsl(var(--h) 75% 52%)}
+.cards{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(270px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-top:6px solid hsl(var(--h) 75% 52%);border-radius:16px;padding:18px 20px 16px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:8px}
+.card h3{font-family:var(--display);font-size:1.3rem;line-height:1.15;margin:0}
+.card h3 a{color:inherit;text-decoration:none}
+.card h3 a:hover{text-decoration:underline}
+.card p{margin:0;color:var(--muted);font-size:.97rem;flex:1}
+.links{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.links a{text-decoration:none;font-size:.9rem;font-weight:600;color:hsl(var(--h) 70% 38%);background:hsl(var(--h) 80% 55%/.1);border-radius:8px;padding:4px 10px}
+.links a.main{background:hsl(var(--h) 75% 45%);color:#fff}
+.term{font-family:var(--display);font-size:1.05rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+.card.big{grid-column:1/-1;padding:26px 28px 24px;border-top-width:10px;background:linear-gradient(135deg,hsl(var(--h) 80% 55%/.14),var(--surface) 60%)}
+.card.big h3{font-size:clamp(1.6rem,4vw,2.2rem)}.card.big p{font-size:1.08rem;max-width:46rem}
+.card.big .links a{font-size:1.02rem;padding:8px 14px}.card.big .links a.main{font-size:1.2rem;padding:12px 26px;border-radius:12px}
+.links a:hover,.links a:focus-visible{outline:2px solid hsl(var(--h) 75% 52%);outline-offset:1px}
+@media (prefers-color-scheme:dark){.links a{color:hsl(var(--h) 85% 76%)}.links a.main{color:#fff}}
+</style></head>
+<body><main class="wrap">
+<div class="eyebrow">Estudios 1ºC BACH</div>
+<h1>Materiales de estudio</h1>
+
+<nav class="jump" aria-label="Asignaturas">
+ <a style="--h:215" href="index.html#quimica">Química</a>
+ <a style="--h:340" href="index.html#lengua">Lengua</a>
+ <a style="--h:150" href="index.html#ingles">Inglés</a>
+ <a style="--h:28" href="index.html#tecnologia">Tecnología</a>
+ <a style="--h:275" href="index.html#ef">Educación Física</a>
+</nav>
+
+<section id="quimica" style="--h:215">
+<h2>Química</h2>
+<h3 class="term">Trimestre 1</h3>
+<div class="cards">
+ <div class="card"><h3><a href="quimica/formulacion/index.html">Formulación inorgánica</a></h3>
+  <p>Las familias de compuestos, valencias, 20 exámenes y 8 finales.</p>
+  <div class="links"><a class="main" href="quimica/formulacion/index.html">Entrar</a><a href="quimica/formulacion/valencias.html">Valencias</a><a href="quimica/formulacion/guia-formula.html">Clasificar por la fórmula</a><a href="quimica/formulacion/guia-nombre.html">Clasificar por el nombre</a></div></div>
+ <div class="card"><h3><a href="quimica/materia/index.html">Tema 2 · Naturaleza de la materia</a></h3>
+  <p>Modelos atómicos, tabla periódica, propiedades periódicas, enlace y 10 exámenes.</p>
+  <div class="links"><a class="main" href="quimica/materia/index.html">Entrar</a><a href="quimica/materia/resumen.html">Resumen</a><a href="quimica/materia/banco-teoria.html">Banco de teoría</a><a href="quimica/materia/aprender-tabla.html">Aprender la tabla</a></div></div>
+ <div class="card"><h3><a href="quimica/cuantitativos/index.html">Tema 3 · Aspectos cuantitativos</a></h3>
+  <p>Leyes, gases, disoluciones, ejercicios del libro, 10 exámenes de práctica y 5 reales.</p>
+  <div class="links"><a class="main" href="quimica/cuantitativos/index.html">Entrar</a><a href="quimica/cuantitativos/resumen.html">Resumen</a><a href="quimica/cuantitativos/banco-teoria.html">Banco de teoría</a><a href="quimica/cuantitativos/ejercicios.html">Ejercicios del libro</a><a href="quimica/cuantitativos/pdfs.html">Apuntes en PDF</a></div></div>
+ <div class="card big"><h3><a href="quimica/global/index.html">Global del trimestre · Temas 1, 2 y 3</a></h3>
+  <p>Formulación, naturaleza de la materia y aspectos cuantitativos juntos: 24 exámenes de 5 ejercicios como los de verdad, con los compuestos por su nombre, y el gran resumen.</p>
+  <div class="links"><a class="main" href="quimica/global/index.html">Entrar al global</a><a href="quimica/global/gran-resumen.html">Gran resumen</a><a href="quimica/global/index.html#examenes">24 exámenes</a></div></div>
+</div>
+</section>
+
+<section id="lengua" style="--h:340">
+<h2>Lengua</h2>
+<div class="cards">
+ <div class="card"><h3><a href="lengua/palabras/index.html">Formación de palabras</a></h3>
+  <p>Guía, árbol de decisión, errores comunes y práctica con 194 palabras.</p>
+  <div class="links"><a class="main" href="lengua/palabras/index.html">Entrar</a><a href="lengua/palabras/guia.html">Guía</a><a href="lengua/palabras/arbol.html">Árbol de decisión</a><a href="lengua/palabras/errores.html">Errores comunes</a><a href="lengua/palabras/practica.html">Práctica</a></div></div>
+</div>
+</section>
+
+<section id="ingles" style="--h:150">
+<h2>Inglés</h2>
+<div class="cards">
+ <div class="card"><h3><a href="ingles/fonetica/index.html">Fonética</a></h3>
+  <p>Sonidos, símbolos fonéticos y práctica de pronunciación.</p>
+  <div class="links"><a class="main" href="ingles/fonetica/index.html">Entrar</a><a href="ingles/fonetica/teoria.html">Teoría</a><a href="ingles/fonetica/practica.html">Práctica de clase</a><a href="ingles/fonetica/evau.html">Exámenes PAU</a></div></div>
+ <div class="card"><h3><a href="ingles/gramatica/index.html">Gramática</a></h3>
+  <p>14 temas del cuaderno con teoría y ejercicios corregidos.</p>
+  <div class="links"><a class="main" href="ingles/gramatica/index.html">Entrar</a></div></div>
+ <div class="card"><h3><a href="ingles/examenes/index.html">Exámenes PAU</a></h3>
+  <p>Exámenes completos de junio y julio de 2026.</p>
+  <div class="links"><a class="main" href="ingles/examenes/index.html">Entrar</a><a href="ingles/examenes/junio-2026.html">Junio 2026</a><a href="ingles/examenes/julio-2026.html">Julio 2026</a></div></div>
+</div>
+</section>
+
+<section id="tecnologia" style="--h:28">
+<h2>Tecnología</h2>
+<div class="cards">
+ <div class="card"><h3><a href="tecnologia/index.html">Test · Materiales y fabricación</a></h3>
+  <p>Preguntas del banco de clase y de la profesora, con modo práctica y modo examen.</p>
+  <div class="links"><a class="main" href="tecnologia/index.html">Entrar</a></div></div>
+</div>
+</section>
+
+<section id="ef" style="--h:275">
+<h2>Educación Física</h2>
+<div class="cards">
+ <div class="card"><h3><a href="ef/index.html">Test · Temas 1 y 2</a></h3>
+  <p>Cualidades perceptivo-motrices y condición física: preguntas del profesor y de los apuntes.</p>
+  <div class="links"><a class="main" href="ef/index.html">Entrar</a></div></div>
+</div>
+</section>
+</main></body></html>

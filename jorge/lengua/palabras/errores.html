@@ -1,0 +1,175 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Errores comunes · Formación de palabras</title><meta name="description" content="Errores comunes al analizar la formación de palabras"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@700&display=swap"><style>
+:root{
+  --bg:#f7f6f2; --surface:#ffffff; --fg:#1c2230; --muted:#5a6275; --line:#dcdfe8;
+  --accent:#2a55c7; --accent-bg:#e6edfb;
+  --raiz:#1f5fbf; --raiz-bg:#e4edfb;
+  --pref:#17805a; --pref-bg:#dff3ea;
+  --suf:#b8520a;  --suf-bg:#fdebd9;
+  --inter:#8a3fb0; --inter-bg:#f1e5f8;
+  --flex:#566078; --flex-bg:#e6e9f2;
+  --culta:#c0284f; --culta-bg:#fbe3ea;
+  --verb:#0b7285; --verb-bg:#dcf3f7;
+  --good:#17805a; --good-bg:#dff3ea; --bad:#b3261e; --bad-bg:#fbe4e2;
+  --warn:#7a5200; --warn-bg:#fff1cf; --red:#c4271f;
+  --display:"Bricolage Grotesque","Trebuchet MS",sans-serif;
+  --body:"Source Sans 3","Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12151f; --surface:#1b2030; --fg:#e9ecf6; --muted:#a2a9bf; --line:#2f3650;
+  --accent:#8fb0ff; --accent-bg:#1e2a4d;
+  --raiz:#7fb0ff; --raiz-bg:#1b2b4a; --pref:#5fd0a2; --pref-bg:#173a2e;
+  --suf:#ffa45c; --suf-bg:#4a2b12; --inter:#d29bf0; --inter-bg:#3a2248;
+  --flex:#b4bbd2; --flex-bg:#2a3047; --culta:#ff8fa8; --culta-bg:#4a1f2d; --verb:#6fd6e6; --verb-bg:#12363d;
+  --good:#5fd0a2; --good-bg:#173a2e; --bad:#ff8d85; --bad-bg:#4a1f1c;
+  --warn:#ffd88a; --warn-bg:#40320f; --red:#ff8d85; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12151f; --surface:#1b2030; --fg:#e9ecf6; --muted:#a2a9bf; --line:#2f3650;
+  --accent:#8fb0ff; --accent-bg:#1e2a4d;
+  --raiz:#7fb0ff; --raiz-bg:#1b2b4a; --pref:#5fd0a2; --pref-bg:#173a2e;
+  --suf:#ffa45c; --suf-bg:#4a2b12; --inter:#d29bf0; --inter-bg:#3a2248;
+  --flex:#b4bbd2; --flex-bg:#2a3047; --culta:#ff8fa8; --culta-bg:#4a1f2d; --verb:#6fd6e6; --verb-bg:#12363d;
+  --good:#5fd0a2; --good-bg:#173a2e; --bad:#ff8d85; --bad-bg:#4a1f1c;
+  --warn:#ffd88a; --warn-bg:#40320f; --red:#ff8d85; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+.btn:disabled.ok,.btn:disabled.no{opacity:1}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.6}
+.wrap{max-width:60rem;margin-inline:auto;padding:18px 16px 64px;display:flex;flex-direction:column;gap:36px}
+h1,h2,h3,h4{font-family:var(--display);line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:clamp(2rem,6vw,3rem);font-weight:800}
+h2{font-size:1.55rem;font-weight:800}
+h3{font-size:1.2rem;font-weight:600}
+p{margin:0}
+a{color:var(--accent);font-weight:700}
+a:focus-visible,button:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--fg);outline-offset:2px}
+.lead{color:var(--muted);max-width:44rem;font-size:1.05rem}
+.k{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.mono{font-family:var(--mono);font-weight:700}
+nav.top{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:.95rem}
+nav.top a{padding:7px 14px;border-radius:99px;text-decoration:none;color:var(--fg);background:var(--surface);border:1px solid var(--line)}
+nav.top a[aria-current="page"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+nav.top .sp{flex:1}
+.hero{background:var(--accent-bg);border-radius:16px;padding:26px 22px;display:flex;flex-direction:column;gap:14px}
+.hero h1{color:var(--accent)}
+.hero p{max-width:42rem}
+.sec{display:flex;flex-direction:column;gap:16px}
+.sh{display:flex;align-items:center;gap:12px}
+.sh::before{content:"";width:12px;height:30px;border-radius:3px;background:var(--accent);flex:none}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr));gap:16px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,24rem),1fr));gap:16px}
+.card.link{text-decoration:none;color:var(--fg);transition:transform .12s,border-color .12s}
+.card.link:hover{transform:translateY(-2px);border-color:var(--accent)}
+.card .num{font-family:var(--display);font-weight:800;font-size:2rem;color:var(--accent);line-height:1}
+.callout{border-radius:10px;padding:14px 16px;border-left:5px solid var(--accent);background:var(--accent-bg);display:flex;flex-direction:column;gap:6px}
+.callout.warn{border-color:var(--suf);background:var(--warn-bg);color:var(--warn)}
+.callout.warn b,.callout.warn strong{color:var(--warn)}
+.callout.good{border-color:var(--good);background:var(--good-bg)}
+.callout.bad{border-color:var(--bad);background:var(--bad-bg)}
+.q{border-left:4px solid var(--fg);padding:6px 16px;font-style:italic;color:var(--fg);background:var(--surface);border-radius:0 10px 10px 0}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:34rem}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--display);font-size:.92rem;background:var(--bg)}
+tr:last-child td{border-bottom:0}
+ol.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;counter-reset:s}
+ol.steps li{counter-increment:s;display:grid;grid-template-columns:2.6rem 1fr;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;align-items:start}
+ol.steps li::before{content:counter(s);font-family:var(--display);font-weight:800;font-size:1.5rem;color:var(--accent);background:var(--accent-bg);width:2.6rem;height:2.6rem;border-radius:50%;display:grid;place-items:center}
+ol.steps b{font-family:var(--display)}
+/* piezas de palabra */
+.anat{display:inline-flex;flex-wrap:wrap;gap:3px;vertical-align:middle}
+.pc{--c:var(--flex);--cb:var(--flex-bg);display:inline-flex;flex-direction:column;align-items:center;gap:1px;padding:4px 10px 5px;border-radius:8px;background:var(--cb);color:var(--c);border-bottom:3px solid var(--c);font-family:var(--mono);font-weight:700;font-size:1rem;line-height:1.25}
+.pc small{font-family:var(--body);font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700}
+.anat.big .pc{font-size:1.7rem;padding:6px 14px 7px}
+.anat.big .pc small{font-size:.68rem}
+.k-raiz{--c:var(--raiz);--cb:var(--raiz-bg)}
+.k-pref{--c:var(--pref);--cb:var(--pref-bg)}
+.k-suf{--c:var(--suf);--cb:var(--suf-bg)}
+.k-inter{--c:var(--inter);--cb:var(--inter-bg)}
+.k-flex{--c:var(--flex);--cb:var(--flex-bg)}
+.k-culta{--c:var(--culta);--cb:var(--culta-bg)}
+.k-verb{--c:var(--verb);--cb:var(--verb-bg)}
+.legend{display:flex;flex-wrap:wrap;gap:8px}
+.tag{display:inline-block;padding:2px 10px;border-radius:6px;font-weight:700;font-size:.85rem;background:var(--accent-bg);color:var(--accent)}
+.ex{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center}
+.formula{font-family:var(--mono);font-weight:700;font-size:.95rem;background:var(--bg);border:1px dashed var(--line);border-radius:8px;padding:8px 12px}
+.fields{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin:0}
+.fields dt{font-weight:700;color:var(--muted)}
+.fields dd{margin:0}
+.tpl{font-family:var(--mono);font-size:.95rem;border:2px solid var(--red);border-radius:10px;padding:14px 16px;background:var(--surface);display:grid;grid-template-columns:1fr 1fr;gap:6px 18px;color:var(--red)}
+.tpl .full{grid-column:1/-1}
+.red{color:var(--red);font-weight:700}
+.btn{font:inherit;font-weight:700;padding:9px 18px;border-radius:10px;border:2px solid var(--fg);background:var(--surface);color:var(--fg);cursor:pointer;min-height:44px}
+.btn:hover{background:var(--accent-bg)}
+.btn.primary{background:var(--fg);color:var(--bg)}
+.btn.primary:hover{opacity:.88}
+.btn:disabled{opacity:.55;cursor:default}
+details{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:0}
+details>summary{cursor:pointer;padding:12px 16px;font-weight:700;list-style-position:inside}
+details>.in{padding:2px 16px 16px;display:flex;flex-direction:column;gap:10px}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;border-bottom:2px solid var(--line);padding-bottom:10px}
+.tabs button{font:inherit;font-weight:700;padding:9px 16px;border-radius:99px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer;min-height:44px}
+.tabs button[aria-selected="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.bigword{font-family:var(--display);font-weight:800;font-size:clamp(2.2rem,9vw,3.6rem);text-align:center;padding:12px 0 6px;overflow-wrap:anywhere}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(9.5rem,1fr));gap:10px}
+.opt.ok{background:var(--good-bg);border-color:var(--good);color:var(--good)}
+.opt.no{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.prog{display:flex;justify-content:space-between;font-weight:700;color:var(--muted);font-size:.95rem}
+.bar{height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--accent);transition:width .25s}
+.fb{border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.fb.ok{background:var(--good-bg);border-left:5px solid var(--good)}
+.fb.no{background:var(--bad-bg);border-left:5px solid var(--bad)}
+.segs{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;padding:6px 0}
+.seg{display:flex;flex-direction:column;gap:6px;align-items:stretch;min-width:9rem}
+.seg .pc{align-items:center}
+.seg .pc small{display:none}
+select,textarea{font:inherit;padding:8px 10px;border-radius:8px;border:2px solid var(--line);background:var(--surface);color:var(--fg);min-height:44px;max-width:100%}
+select.ok{border-color:var(--good);background:var(--good-bg)}
+select.no{border-color:var(--bad);background:var(--bad-bg)}
+textarea{width:100%;min-height:110px;resize:vertical}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:end}
+.row label{display:flex;flex-direction:column;gap:4px;font-weight:700;font-size:.9rem;color:var(--muted)}
+.chk{display:flex;flex-direction:column;gap:6px}
+.chk label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.chk input{width:20px;height:20px;margin-top:3px;flex:none}
+mark{background:var(--warn-bg);color:var(--fg);padding:0 4px;border-radius:4px;font-weight:700}
+.big-score{font-family:var(--display);font-weight:800;font-size:3rem;color:var(--accent);text-align:center}
+.mini{font-size:.9rem;color:var(--muted)}
+footer{color:var(--muted);font-size:.9rem;border-top:1px solid var(--line);padding-top:16px}
+
+.chip{display:inline-flex;align-items:center;gap:6px;padding:3px 11px;border-radius:99px;font-weight:700;font-size:.82rem;border:1.5px solid currentColor;white-space:nowrap}
+.chip.ok{color:var(--good);background:var(--good-bg)}
+.chip.mid{color:var(--warn);background:var(--warn-bg)}
+.chip.low{color:var(--bad);background:var(--bad-bg)}
+.chip.quest{color:var(--inter);background:var(--inter-bg)}
+.sources li{margin:4px 0}
+.flow{display:flex;flex-direction:column;gap:10px;align-items:stretch}
+.stage{border:2px solid var(--line);border-radius:14px;padding:14px 16px;background:var(--surface);display:flex;flex-direction:column;gap:10px}
+.stage>h3{display:flex;gap:10px;align-items:center}
+.stage>h3 .n{background:var(--accent);color:var(--bg);width:2rem;height:2rem;border-radius:50%;display:inline-grid;place-items:center;font-size:1rem;flex:none}
+.branch{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:10px}
+.leaf{border-radius:10px;padding:10px 12px;border-left:6px solid var(--c);background:var(--cb);display:flex;flex-direction:column;gap:3px}
+.leaf b{color:var(--c)}
+.arrow{text-align:center;font-size:1.4rem;color:var(--muted);line-height:1}
+.wiz{display:flex;flex-direction:column;gap:14px}
+.wiz .qtext{font-family:var(--display);font-weight:800;font-size:1.4rem;line-height:1.2}
+.wiz .ans{display:flex;flex-wrap:wrap;gap:10px}
+.trail{display:flex;flex-wrap:wrap;gap:6px;font-size:.85rem}
+.trail span{background:var(--bg);border:1px solid var(--line);border-radius:99px;padding:2px 10px}
+.duda{display:flex;flex-direction:column;gap:12px}
+.duda .cmp{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:10px}
+.duda .cmp>div{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--bg);display:flex;flex-direction:column;gap:4px}
+.duda .ask{border-left:5px solid var(--inter);background:var(--inter-bg);border-radius:0 10px 10px 0;padding:10px 14px}
+.radios{display:flex;flex-wrap:wrap;gap:8px 18px}
+.radios label{display:flex;gap:6px;align-items:center;cursor:pointer;font-weight:600}
+.radios input{width:18px;height:18px}
+@media print{
+  nav.top,.noprint,.btn{display:none!important}
+  body{background:#fff;font-size:11.5pt}
+  .wrap{gap:14px;padding:0}
+  .card,details,.tw{break-inside:avoid}
+}
+@media (max-width:520px){.tpl{grid-template-columns:1fr}.fields{grid-template-columns:1fr}.fields dt{margin-top:6px}}
+</style></head><body><a href="../../index.html" style="display:block;padding:8px 16px;background:#1b2033;color:#fff;font:600 15px/1.3 system-ui,'Segoe UI',sans-serif;text-decoration:none;position:relative;z-index:60">← Índice principal</a><div class="wrap"><nav class="top" aria-label="Secciones"><a href="index.html">Inicio</a><a href="guia.html">Guía</a><a href="arbol.html">Árbol de decisión</a><a href="errores.html" aria-current="page">Errores comunes</a><a href="dudas.html">Dudas</a><a href="practica.html">Práctica</a></nav><header class="hero"><div class="k">Lengua · Bloque 2 · 2.1</div><h1>Errores comunes al analizar palabras</h1><p>Los doce fallos que más se repiten al separar una palabra en sus partes y decidir si es simple, derivada, compuesta o parasintética. Cada uno trae un ejemplo mal hecho, el análisis correcto según el <b>criterio de clase</b> y un truco para no caer.</p></header><div class="callout"><b>Cómo usar esta página</b><span>Lee el error, piensa cómo lo harías tú y después abre la solución. Las etiquetas indican cuánto se repite cada fallo: <span class="chip low">Muy frecuente</span> <span class="chip mid">Frecuente</span> <span class="chip quest">Despiste</span></span></div><section class="sec"><div class="sh"><h2>Antes de entregar: cinco comprobaciones</h2></div><div class="grid"><div class="card"><div class="num">1</div><b>¿He troceado toda la palabra?</b><span>Uniendo las piezas tiene que salir la palabra entera, sin letras sueltas.</span></div><div class="card"><div class="num">2</div><b>¿Cada trozo existe solo?</b><span>Si existe como palabra, es raíz; si no, es prefijo, sufijo o interfijo.</span></div><div class="card"><div class="num">3</div><b>¿El trozo significa algo?</b><span>Si no aporta significado, es interfijo; si lo aporta, es sufijo.</span></div><div class="card"><div class="num">4</div><b>¿Es infinitivo o está conjugado?</b><span>Infinitivo: sufijo verbal y derivada. Conjugado: flexivos y simple.</span></div><div class="card"><div class="num">5</div><b>¿He puesto categoría y estructura?</b><span>Son los dos apartados que más se olvidan.</span></div></div></section><section class="sec"><div class="sh"><h2>Los doce errores</h2></div><div class="grid2"><article class="card"><div class="ex"><h3>1 · Llamar «simple» a una palabra que tiene sufijo</h3><span class="chip low">Muy frecuente</span></div><div><div class="k red">El error</div><p><i>merecedoras</i> → «simple»</p></div><details><summary>¿Cómo sería correcto? Pulsa para verlo</summary><div class="in"><div><div class="k">Análisis correcto (criterio de clase)</div><div class="ex"><span class="anat"><span class="pc k-raiz">merec<small>Raíz</small></span><span class="pc k-suf">edor<small>Sufijo</small></span><span class="pc k-flex">a<small>Flexivo</small></span><span class="pc k-flex">s<small>Flexivo</small></span></span></div></div><p>Simple es solo <b>raíz + flexivos</b> (género, número, persona). Si hay un trozo que cambia el significado o la categoría (-edor, -ación, -ero, -oso), ya es <b>derivada</b>. <i>Lamentaciones</i>: lament-ación-es → derivada.</p><p><b>Cómo evitarlo:</b> Quita el plural y el género. ¿Lo que queda es solo la raíz? Simple. ¿Queda algo más pegado? Derivada.</p></div></details></article><article class="card"><div class="ex"><h3>2 · Confundir flexivos con sufijos</h3><span class="chip low">Muy frecuente</span></div><div><div class="k red">El error</div><p><i>niñas</i> → «derivada»</p></div><details><summary>¿Cómo sería correcto? Pulsa para verlo</summary><div class="in"><div><div class="k">Análisis correcto (criterio de clase)</div><div class="ex"><span class="anat"><span class="pc k-raiz">niñ<small>Raíz</small></span><span class="pc k-flex">a<small>Flexivo</small></span><span class="pc k-flex">s<small>Flexivo</small></span></span></div></div><p>Los flexivos solo indican género, número o, en los verbos, persona y tiempo. No crean una palabra nueva. <i>Niñas</i> sigue siendo «niño»: es <b>simple</b>. En cambio <i>niñería</i> (niñ-ería) sí es otra palabra: derivada.</p><p><b>Cómo evitarlo:</b> Pregúntate: ¿es otra palabra del diccionario o la misma en femenino o plural? Si es la misma, es flexivo.</p></div></details></article><article class="card"><div class="ex"><h3>3 · Tratar igual el infinitivo y el verbo conjugado</h3><span class="chip mid">Criterio de clase</span></div><div><div class="k red">El error</div><p><i>cantamos</i> → «derivada»   ·   <i>cantar</i> → «simple»</p></div><details><summary>¿Cómo sería correcto? Pulsa para verlo</summary><div class="in"><div><div class="k">Análisis correcto (criterio de clase)</div><div class="ex"><span class="anat"><span class="pc k-raiz">cant<small>Raíz</small></span><span class="pc k-verb">ar<small>Suf. verbal</small></span></span> <span class="anat"><span class="pc k-raiz">cant<small>Raíz</small></span><span class="pc k-flex">a<small>Flexivo</small></span><span class="pc k-flex">mos<small>Flexivo</small></span></span></div></div><p>En clase el <b>infinitivo</b> lleva <b>sufijo verbal</b> (-ar, -er, -ir) y es <b>derivada</b>. La <b>forma personal</b> (cantamos, deberíamos, amábamos) solo tiene raíz y flexivos: es <b>simple</b>.</p><p><b>Cómo evitarlo:</b> Infinitivo → sufijo verbal → derivada. Forma conjugada → flexivos → simple.</p></div></details></article><article class="card"><div class="ex"><h3>4 · Dejarse un afijo sin contar</h3><span class="chip mid">Frecuente</span></div><div><div class="k red">El error</div><p><i>desintoxicar</i> → prefijo des- + toxic + -ar</p></div><details><summary>¿Cómo sería correcto? Pulsa para verlo</summary><div class="in"><div><div class="k">Análisis correcto (criterio de clase)</div><div class="ex"><span class="anat"><span class="pc k-pref">des<small>Prefijo</small></span><span class="pc k-pref">in<small>Prefijo</small></span><span class="pc k-raiz">toxic<small>Raíz</small></span><span class="pc k-verb">ar<small>Suf. verbal</small></span></span></div></div><p>Las palabras largas suelen llevar <b>más de un prefijo o más de un sufijo</b>. Hay que trocear la palabra entera, sin saltarse nada.</p><p><b>Cómo evitarlo:</b> Lee de izquierda a derecha y apunta una pieza cada vez. Comprueba al final que, uniendo todas las piezas, sale la palabra completa.</p></div></details></article><article class="card"><div class="ex"><h3>5 · Llamar prefijo o sufijo a una segunda raíz</h3><span class="chip low">Muy frecuente</span></div><div><div class="k red">El error</div><p><i>hierbabuena</i> → raíz hierba + sufijo «buena» → «derivada»</p></div><details><summary>¿Cómo sería correcto? Pulsa para verlo</summary><div class="in"><div><div class="k">Análisis correcto (criterio de clase)</div><div class="ex"><span class="anat"><span class="pc k-raiz">hierb<small>Raíz</small></span><span class="pc k-flex">a<small>Flexivo</small></span><span class="pc k-raiz">buen<small>Raíz</small></span><span class="pc k-flex">a<small>Flexivo</small></span></span></div></div><p>Si las dos partes tienen significado propio y existen como palabras, son <b>dos raíces</b> y la palabra es <b>compuesta</b>. Pasa lo mismo con «bien» en <i>bienhablado</i> o <i>bienvenido</i>: en clase es raíz.</p><p><b>Cómo evitarlo:</b> Prueba de la palabra suelta: ¿ese trozo existe solo? Los prefijos (des-, in-, re-) y los sufijos (-ero, -oso) nunca existen solos.</p></div></details></article><article class="card"><div class="ex"><h3>6 · Confundir interfijo con sufijo</h3><span class="chip mid">Frecuente</span></div><div><div class="k red">El error</div><p><i>corretear</i> → raíz corr + sufijo -ete + sufijo -ar</p></div><details><summary>¿Cómo sería correcto? Pulsa para verlo</summary><div class="in"><div><div class="k">Análisis correcto (criterio de clase)</div><div class="ex"><span class="anat"><span class="pc k-raiz">corr<small>Raíz</small></span><span class="pc k-inter">ete<small>Interfijo</small></span><span class="pc k-verb">ar<small>Suf. verbal</small></span></span></div></div><p>El <b>interfijo</b> no significa nada: solo une la raíz con el sufijo (pan-<b>ec</b>-illo, caf-<b>et</b>-era, polv-<b>ar</b>-eda). El <b>sufijo</b> sí aporta significado (-edor «el que hace», -ación «acción de»).</p><p><b>Cómo evitarlo:</b> Si el trozo del medio no añade ningún significado y sin él la palabra no se podría pronunciar bien o no existiría, es interfijo.</p></div></details></article><article class="card"><div class="ex"><h3>7 · Poner «parasintética» a cualquier palabra con prefijo y sufijo</h3><span class="chip low">Muy frecuente</span></div><div><div class="k red">El error</div><p><i>desintoxicar</i> → «parasintética»</p></div><details><summary>¿Cómo sería correcto? Pulsa para verlo</summary><div class="in"><div><div class="k">Análisis correcto (criterio de clase)</div><div class="ex"><span class="anat"><span class="pc k-pref">a<small>Prefijo</small></span><span class="pc k-raiz">lej<small>Raíz</small></span><span class="pc k-verb">ar<small>Suf. verbal</small></span></span></div></div><p>Es parasintética solo si el prefijo y el sufijo entran <b>a la vez</b>: no existe ni *<i>lejar</i> ni *<i>alejo</i> como palabra previa → <i>alejar</i> es parasintética (igual que <i>avasallar</i>). En <i>desintoxicar</i> existe <i>intoxicar</i>, así que es <b>derivada</b>.</p><p><b>Cómo evitarlo:</b> Quita el prefijo: ¿existe lo que queda? Quita el sufijo: ¿existe? Si alguna de las dos existe, es derivada. Si ninguna existe, parasintética.</p></div></details></article><article class="card"><div class="ex"><h3>8 · No reconocer una compuesta culta</h3><span class="chip mid">Frecuente</span></div><div><div class="k red">El error</div><p><i>carnívoro</i> → raíz carn + sufijo -voro → «derivada»</p></div><details><summary>¿Cómo sería correcto? Pulsa para verlo</summary><div class="in"><div><div class="k">Análisis correcto (criterio de clase)</div><div class="ex"><span class="anat"><span class="pc k-culta">carní<small>Raíz culta</small></span><span class="pc k-culta">vor<small>Raíz culta</small></span><span class="pc k-flex">o<small>Flexivo</small></span></span></div></div><p>Cuando las dos partes son raíces <b>griegas o latinas</b> que no se usan solas (geo-, -logía, -fobia, -voro, bio-, tele-), la palabra es <b>compuesta culta</b>. La vocal o sílaba que las une se anota como <b>interfijo</b>: trauma-<b>to</b>-logía.</p><p><b>Cómo evitarlo:</b> Si puedes traducir cada parte («carne» + «que devora»; «tierra» + «estudio»), son dos raíces cultas.</p></div></details></article><article class="card"><div class="ex"><h3>9 · Cortar mal la raíz</h3><span class="chip mid">Frecuente</span></div><div><div class="k red">El error</div><p><i>deberíamos</i> → raíz «debe» o «deber»</p></div><details><summary>¿Cómo sería correcto? Pulsa para verlo</summary><div class="in"><div><div class="k">Análisis correcto (criterio de clase)</div><div class="ex"><span class="anat"><span class="pc k-raiz">deb<small>Raíz</small></span><span class="pc k-flex">ería<small>Flexivo</small></span><span class="pc k-flex">mos<small>Flexivo</small></span></span></div></div><p>La raíz es lo que <b>se repite en toda la familia</b> de palabras (deb-er, deb-o, deb-ía, deb-ido). La vocal que sigue no es raíz: si la quieres marcar, va entre paréntesis, <b>deb(e)-</b>.</p><p><b>Cómo evitarlo:</b> Escribe tres palabras de la misma familia y subraya lo que comparten. Eso es la raíz.</p></div></details></article><article class="card"><div class="ex"><h3>10 · Dar la categoría de la raíz y no la de la palabra</h3><span class="chip mid">Frecuente</span></div><div><div class="k red">El error</div><p><i>lamentaciones</i> → «verbo» (porque viene de lamentar)</p></div><details><summary>¿Cómo sería correcto? Pulsa para verlo</summary><div class="in"><div><div class="k">Análisis correcto (criterio de clase)</div><div class="ex"><span class="anat"><span class="pc k-raiz">lament<small>Raíz</small></span><span class="pc k-suf">ación<small>Sufijo</small></span><span class="pc k-flex">es<small>Flexivo</small></span></span></div></div><p>La categoría es la de la <b>palabra entera</b>, y muchas veces la decide el último sufijo: -ación, -miento y -dor hacen <b>sustantivos</b>; -oso, -able e -ible hacen <b>adjetivos</b>; -ar, -er, -ir, -ear e -izar hacen <b>verbos</b>.</p><p><b>Cómo evitarlo:</b> Mete la palabra en una frase: «las ___», «es muy ___», «voy a ___». La que encaje te dice la categoría.</p></div></details></article><article class="card"><div class="ex"><h3>11 · Olvidar los flexivos del final</h3><span class="chip quest">Despiste</span></div><div><div class="k red">El error</div><p><i>merecedoras</i> → merec + edor (y nada más)</p></div><details><summary>¿Cómo sería correcto? Pulsa para verlo</summary><div class="in"><div><div class="k">Análisis correcto (criterio de clase)</div><div class="ex"><span class="anat"><span class="pc k-raiz">merec<small>Raíz</small></span><span class="pc k-suf">edor<small>Sufijo</small></span><span class="pc k-flex">a<small>Flexivo</small></span><span class="pc k-flex">s<small>Flexivo</small></span></span></div></div><p>Aunque no cambien la estructura, los flexivos <b>se anotan siempre</b>: -a de femenino, -s o -es de plural, y las terminaciones de persona y tiempo en los verbos.</p><p><b>Cómo evitarlo:</b> Antes de dar la palabra por terminada, mira la última letra: ¿es una marca de género o de número?</p></div></details></article><article class="card"><div class="ex"><h3>12 · Escribir el análisis incompleto</h3><span class="chip quest">Despiste</span></div><div><div class="k red">El error</div><p>Solo «raíz: recib-; derivada»</p></div><details><summary>¿Cómo sería correcto? Pulsa para verlo</summary><div class="in"><div><div class="k">Análisis correcto (criterio de clase)</div><div class="ex"><span class="anat"><span class="pc k-raiz">recib<small>Raíz</small></span><span class="pc k-verb">ir<small>Suf. verbal</small></span></span></div></div><p>En el examen se analiza como en el cuaderno, con <b>todos los apartados</b>: raíz, prefijos, sufijos o interfijos, flexivos, categoría y estructura. Ejemplo: «recibir: raíz recib-; sufijo verbal (i)r; verbo; derivada».</p><p><b>Cómo evitarlo:</b> Usa siempre el mismo orden y no cierres una palabra sin la categoría y la estructura.</p></div></details></article></div></section><div class="callout good"><b>Siguiente paso</b><span>Ve al <a href="arbol.html">árbol de decisión</a> o a <a href="practica.html#clasifica">Práctica</a> y haz «Clasifica» hasta sacar 10 de 12 sin mirar la guía.</span></div><footer>Material hecho a partir de los apuntes escaneados de Jorge (Lengua, Bloque 2 · 2.1 Formación de palabras). Los criterios se han contrastado con el Glosario de términos gramaticales de la RAE; donde los apuntes y la RAE no coinciden, está marcado en la página de Dudas.</footer></div></body></html>

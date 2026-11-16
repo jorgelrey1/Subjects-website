@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Test · Educación Física</title>
+<style>
+:root{
+  --bg:#f4f6fa; --card:#ffffff; --ink:#1b2430; --muted:#5f6b7a; --line:#dde3ea;
+  --accent:#1f6feb; --accent-ink:#ffffff; --ok:#1a7f4b; --ok-bg:#e3f5ea; --bad:#c62828; --bad-bg:#fdecec;
+  --warn:#9a6700; --warn-bg:#fff4d6; --blank:#6b7280; --blank-bg:#eceff3; --chip:#eaf1fb; --fs:16px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f141a; --card:#171e27; --ink:#e6ebf1; --muted:#9aa7b5; --line:#2a3441;
+    --accent:#5aa0ff; --accent-ink:#0b1220; --ok:#5ad08a; --ok-bg:#133022; --bad:#ff7b7b; --bad-bg:#3a1a1a;
+    --warn:#f2c14e; --warn-bg:#3a2e10; --blank:#aab2bd; --blank-bg:#242c36; --chip:#1f2a3a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f141a; --card:#171e27; --ink:#e6ebf1; --muted:#9aa7b5; --line:#2a3441;
+  --accent:#5aa0ff; --accent-ink:#0b1220; --ok:#5ad08a; --ok-bg:#133022; --bad:#ff7b7b; --bad-bg:#3a1a1a;
+  --warn:#f2c14e; --warn-bg:#3a2e10; --blank:#aab2bd; --blank-bg:#242c36; --chip:#1f2a3a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:var(--fs);line-height:1.5}
+.wrap{max-width:860px;margin:0 auto;padding:16px}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+h1{font-size:1.35rem;margin:0}
+h2{font-size:1.15rem;margin:0 0 10px}
+h3{font-size:1rem;margin:16px 0 6px}
+.sub{color:var(--muted);font-size:.9rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:14px}
+button{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:9px 14px;border-radius:10px;cursor:pointer}
+button:hover{border-color:var(--accent)}
+button.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:600}
+button.small{padding:5px 10px;font-size:.85rem}
+button:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.grow{flex:1}
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.mode{border:2px solid var(--line);border-radius:12px;padding:12px;cursor:pointer}
+.mode.sel{border-color:var(--accent);background:var(--chip)}
+.mode b{display:block;font-size:1.05rem}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px dashed var(--line)}
+.opt:last-child{border-bottom:0}
+.opt label:not(.switch){flex:1;cursor:pointer}
+.opt .d{display:block;color:var(--muted);font-size:.85rem}
+.switch{position:relative;width:44px;min-width:44px;max-width:44px;height:24px;flex:0 0 44px;margin-top:2px;display:inline-block}
+.switch input{opacity:0;width:0;height:0}
+.switch span{position:absolute;inset:0;background:var(--line);border-radius:24px;transition:.2s;cursor:pointer}
+.switch span:before{content:"";position:absolute;width:18px;height:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s}
+.switch input:checked+span{background:var(--accent)}
+.switch input:checked+span:before{transform:translateX(20px)}
+.temas{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:6px;margin-top:8px}
+.temas label{display:flex;gap:6px;align-items:center;font-size:.88rem;padding:4px 6px;border-radius:8px;background:var(--chip)}
+.num{width:90px;padding:6px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
+select.num{width:auto}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.seg button{border:0;border-radius:0;padding:7px 12px;font-size:.9rem}
+.seg button.on{background:var(--accent);color:var(--accent-ink)}
+.hidden{display:none!important}
+.chip{display:inline-block;padding:2px 10px;border-radius:999px;background:var(--chip);font-size:.8rem;color:var(--muted)}
+.chip.p{background:var(--warn-bg);color:var(--warn)}
+.prog{height:8px;background:var(--line);border-radius:8px;overflow:hidden;margin:10px 0}
+.prog i{display:block;height:100%;background:var(--accent);width:0;transition:.3s}
+.qtext{font-size:1.1rem;font-weight:600;margin:10px 0 14px}
+.answers{display:flex;flex-direction:column;gap:8px}
+.ans{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:2px solid var(--line);border-radius:12px;cursor:pointer;background:var(--card);text-align:left;width:100%}
+.ans:hover{border-color:var(--accent)}
+.ans .L{flex:none;width:28px;height:28px;border-radius:50%;background:var(--chip);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem}
+.ans.sel{border-color:var(--accent);background:var(--chip)}
+.ans.ok{border-color:var(--ok);background:var(--ok-bg)}
+.ans.bad{border-color:var(--bad);background:var(--bad-bg)}
+.ans.blank{border-style:dashed;color:var(--muted)}
+.ans.blank.sel{border-color:var(--blank);background:var(--blank-bg)}
+.ans.locked{cursor:default}
+.fb{margin-top:12px;padding:12px 14px;border-radius:12px;border-left:5px solid var(--ok);background:var(--ok-bg)}
+.fb.bad{border-left-color:var(--bad);background:var(--bad-bg)}
+.fb.blank{border-left-color:var(--blank);background:var(--blank-bg)}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:16px;flex-wrap:wrap}
+.dots{display:flex;flex-wrap:wrap;gap:5px;margin-top:12px}
+.dot{width:26px;height:26px;border-radius:7px;border:1px solid var(--line);font-size:.75rem;display:flex;align-items:center;justify-content:center;cursor:pointer;background:var(--card)}
+.dot.cur{outline:2px solid var(--accent)}
+.dot.done{background:var(--chip)}
+.dot.b{background:var(--blank-bg)}
+.dot.k{background:var(--ok-bg)} .dot.x{background:var(--bad-bg)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:10px 0}
+.stat{padding:12px;border-radius:12px;background:var(--chip);text-align:center}
+.stat b{display:block;font-size:1.6rem}
+.stat.ok{background:var(--ok-bg)} .stat.bad{background:var(--bad-bg)} .stat.blank{background:var(--blank-bg)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th,td{padding:7px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{color:var(--muted);font-weight:600}
+.bar{height:8px;border-radius:6px;background:var(--line);overflow:hidden;min-width:70px}
+.bar i{display:block;height:100%;background:var(--ok)}
+.bar i.bad{background:var(--bad)}
+.rev{padding:12px;border:1px solid var(--line);border-radius:12px;margin-bottom:8px}
+.rev.ok{border-left:5px solid var(--ok)} .rev.bad{border-left:5px solid var(--bad)} .rev.blank{border-left:5px solid var(--blank)}
+.rev p{margin:4px 0}
+.tag{font-size:.78rem;padding:1px 8px;border-radius:6px;background:var(--chip);color:var(--muted)}
+.warn{border-left:5px solid var(--warn);background:var(--warn-bg);padding:12px 14px;border-radius:12px;margin:8px 0}
+.analisis p{margin:6px 0}
+.analisis ul,.analisis ol{margin:4px 0 10px;padding-left:22px}
+details summary{cursor:pointer;font-weight:600}
+.hist{font-size:.88rem;color:var(--muted)}
+.timer{font-variant-numeric:tabular-nums;font-weight:600}
+.timer.low{color:var(--bad)}
+kbd{font:.8em monospace;padding:1px 5px;border:1px solid var(--line);border-radius:4px;background:var(--bg)}
+footer{color:var(--muted);font-size:.8rem;text-align:center;padding:20px 0}
+@media (max-width:560px){.modes{grid-template-columns:1fr}.wrap{padding:12px}}
+.qhint{font-size:.88rem;color:var(--warn);background:var(--warn-bg);border-radius:8px;padding:5px 10px;margin:-6px 0 12px;display:inline-block}
+.ans.multi .L{border-radius:7px}
+.ans.missed{border-style:dashed}
+.seg{flex-wrap:wrap}
+</style>
+</head>
+<body><a href="../index.html" style="display:block;padding:8px 16px;background:#1b2033;color:#fff;font:600 15px/1.3 system-ui,'Segoe UI',sans-serif;text-decoration:none;position:relative;z-index:60">← Índice principal</a>
+<div class="wrap">
+<header>
+  <div>
+    <h1>Test · Educación Física</h1>
+    <div class="sub" id="subTitle"></div>
+  </div>
+  <div class="row">
+    <button class="small" id="btnTheme" title="Cambiar tema claro/oscuro">🌗</button>
+    <button class="small" id="btnHome">Inicio</button>
+  </div>
+</header>
+
+<!-- ============ CONFIGURACIÓN ============ -->
+<section id="config">
+  <div class="card">
+    <h2>Modo</h2>
+    <div class="modes">
+      <div class="mode sel" data-mode="practica"><b>🧪 Práctica</b><span class="sub">Tú eliges fuente, temas, número de preguntas y opciones. Corrección al momento si quieres.</span></div>
+      <div class="mode" data-mode="examen"><b>📝 Examen</b><span class="sub">Preguntas del profesor y de Claude mezcladas, de los temas que elijas. Las de Claude cuentan la mitad. Sin pistas ni corrección hasta entregar.</span></div>
+    </div>
+
+    <h3>Temas</h3>
+    <div class="row"><div class="seg" id="temaSeg"></div></div>
+    <div class="temas" id="temasBox"></div>
+
+    <div id="cfgPractica">
+      <h3>Fuente de las preguntas</h3>
+      <div class="row">
+        <div class="seg" id="srcSeg">
+          <button data-v="mix">Ambas, al azar</button>
+          <button data-v="profe">Solo profesor</button>
+          <button data-v="claude">Solo Claude</button>
+          <button data-v="custom">Nº fijo de cada una</button>
+        </div>
+      </div>
+      <div class="row" id="rowNumQ" style="margin-top:8px">
+        <label>Número de preguntas:
+          <select id="numQ" class="num">
+            <option value="all">Todas</option>
+            <option value="5">5</option><option value="10">10</option><option value="15">15</option>
+            <option value="20">20</option><option value="30">30</option><option value="40">40</option><option value="custom">Otro…</option>
+          </select>
+        </label>
+        <input type="number" id="numQcustom" class="num hidden" min="1" value="12">
+        <span class="sub" id="numQinfo"></span>
+      </div>
+      <div class="row hidden" id="rowCustom" style="margin-top:8px">
+        <label>Del profesor: <input type="number" id="nP" class="num" min="0" value="10"></label>
+        <label>De Claude: <input type="number" id="nC" class="num" min="0" value="10"></label>
+        <span class="sub" id="customInfo"></span>
+      </div>
+    </div>
+
+    <div id="cfgPractica2">
+      <h3>Opciones</h3>
+      <div class="opt"><label class="switch"><input type="checkbox" id="optShuffleQ" checked><span></span></label><label for="optShuffleQ">Preguntas en orden aleatorio<span class="d">Desactívalo para verlas ordenadas por tema (primero las del profesor y luego las de Claude).</span></label></div>
+      <div class="opt"><label class="switch"><input type="checkbox" id="optShuffleA" checked><span></span></label><label for="optShuffleA">Respuestas en orden aleatorio<span class="d">Las letras A/B/C/D cambian de sitio. Las de Verdadero/Falso y las que tienen un orden lógico no se barajan.</span></label></div>
+      <div class="opt"><label class="switch"><input type="checkbox" id="optTema" checked><span></span></label><label for="optTema">Mostrar de qué tema es cada pregunta</label></div>
+      <div class="opt"><label class="switch"><input type="checkbox" id="optSrc" checked><span></span></label><label for="optSrc">Mostrar de qué fuente es cada pregunta<span class="d">Etiqueta «Profesor» o «Claude» en cada pregunta.</span></label></div>
+      <div class="opt"><label class="switch"><input type="checkbox" id="optFeedback" checked><span></span></label><label for="optFeedback">Corrección inmediata<span class="d">Al responder ves si has acertado y la justificación. Si lo desactivas, se corrige todo al final (como en el examen).</span></label></div>
+      <div class="opt"><label class="switch"><input type="checkbox" id="optJustOk" checked><span></span></label><label for="optJustOk">Mostrar la justificación también cuando aciertas<span class="d">Si lo desactivas, solo se explica cuando fallas.</span></label></div>
+      <div class="opt"><label class="switch"><input type="checkbox" id="optBack" checked><span></span></label><label for="optBack">Permitir volver a preguntas anteriores<span class="d">Con corrección inmediata solo puedes repasarlas; sin corrección inmediata puedes cambiar la respuesta.</span></label></div>
+      <div class="opt"><label class="switch"><input type="checkbox" id="optPrio"><span></span></label><label for="optPrio">Priorizar las preguntas que has fallado otras veces<span class="d">Usa el historial de este navegador: las que más has fallado salen primero (si hay menos preguntas que el total).</span></label></div>
+      <div class="opt"><label class="switch"><input type="checkbox" id="optTimer"><span></span></label><label for="optTimer">Tiempo límite<span class="d">Minutos: <input type="number" id="timerMin" class="num" min="1" value="20" style="width:70px"> · al acabarse se entrega automáticamente.</span></label></div>
+    </div>
+
+    <div id="cfgExamen" class="hidden">
+      <div class="warn">
+        <b>Cómo funciona el examen</b>
+        <ul style="margin:6px 0 0;padding-left:20px">
+          <li>Preguntas al azar de las dos fuentes (profesor y Claude), solo de los temas marcados arriba, mezcladas y con las respuestas barajadas.</li>
+          <li>No se muestra el tema ni la fuente de la pregunta, ni si has acertado, hasta entregar. Puedes volver atrás y cambiar cualquier respuesta.</li>
+          <li>Las preguntas de varias respuestas solo puntúan si marcas todas las correctas y ninguna de más (como en el formulario del profesor).</li>
+          <li><b>Puntuación:</b> cada pregunta del profesor vale 1 punto y cada pregunta de Claude vale la mitad (0,5). Los fallos no restan.</li>
+        </ul>
+      </div>
+      <div class="row" style="margin:10px 0"><label>Número de preguntas: <input type="number" id="exN" class="num" min="1" value="20"></label><span class="sub" id="exInfo"></span></div>
+      <div class="opt"><label class="switch"><input type="checkbox" id="optTimerEx"><span></span></label><label for="optTimerEx">Tiempo límite<span class="d">Minutos: <input type="number" id="timerMinEx" class="num" min="1" value="30" style="width:70px"> · al acabarse se entrega automáticamente.</span></label></div>
+    </div>
+
+    <h3>Pantalla</h3>
+    <div class="row">
+      <span class="sub">Tamaño de letra:</span>
+      <div class="seg" id="fontSeg"><button data-v="15px">Pequeña</button><button data-v="16px">Normal</button><button data-v="19px">Grande</button></div>
+      <span class="sub">Teclado: <kbd>1</kbd>–<kbd>4</kbd> o <kbd>A</kbd>–<kbd>D</kbd> responder · <kbd>→</kbd>/<kbd>Enter</kbd> comprobar o siguiente · <kbd>←</kbd> anterior</span>
+    </div>
+
+    <div class="row" style="margin-top:16px">
+      <button class="primary" id="btnStart">Empezar</button>
+      <span class="sub" id="startInfo"></span>
+    </div>
+  </div>
+
+  <div class="card" id="histCard">
+    <h2>Últimos intentos</h2>
+    <div class="hist" id="histBox"></div>
+    <div class="row" style="margin-top:8px"><button class="small" id="btnClearHist">Borrar historial</button><button class="small" id="btnClearFails">Borrar memoria de fallos</button><span class="sub" id="failsInfo"></span></div>
+  </div>
+</section>
+
+<!-- ============ TEST ============ -->
+<section id="quiz" class="hidden">
+  <div class="card">
+    <div class="row">
+      <span class="chip" id="qMode"></span>
+      <span class="chip" id="qTema"></span>
+      <span class="chip" id="qSrc"></span>
+      <span class="grow"></span>
+      <span class="timer hidden" id="qTimer"></span>
+      <span class="sub" id="qCount"></span>
+    </div>
+    <div class="prog"><i id="qProg"></i></div>
+    <div class="qtext" id="qText"></div>
+    <div class="qhint hidden" id="qHint"></div>
+    <div class="answers" id="qAns"></div>
+    <div id="qFb"></div>
+    <div class="nav">
+      <button id="btnPrev">← Anterior</button>
+      <div class="row">
+        <button id="btnAbort" class="small">Abandonar</button>
+        <button id="btnNext" class="primary">Siguiente →</button>
+      </div>
+    </div>
+    <div class="dots" id="qDots"></div>
+  </div>
+</section>
+
+<!-- ============ RESULTADOS ============ -->
+<section id="results" class="hidden">
+  <div class="card">
+    <h2 id="rTitle">Resultados</h2>
+    <div class="stats" id="rStats"></div>
+    <div id="rNota"></div>
+    <div class="row" style="margin-top:12px">
+      <button class="primary" id="btnAgain">Repetir con la misma configuración</button>
+      <button id="btnRedo">Repetir solo las falladas</button>
+      <button id="btnWeak">Practicar solo los temas fallados</button>
+      <button id="btnHome2">Volver al inicio</button>
+    </div>
+  </div>
+  <div class="card analisis">
+    <h2>Análisis detallado</h2>
+    <div id="rAnalisis"></div>
+  </div>
+  <div class="card">
+    <h2>Por temas</h2>
+    <div style="overflow:auto"><table id="rTable"></table></div>
+    <h3>Por fuente</h3>
+    <div style="overflow:auto"><table id="rSrcTable"></table></div>
+  </div>
+  <div class="card">
+    <details open><summary>Revisión pregunta a pregunta</summary>
+      <div class="row" style="margin:8px 0"><button class="small" id="revAll">Todas</button><button class="small" id="revBad">Solo fallos</button></div>
+      <div id="rReview"></div>
+    </details>
+  </div>
+</section>
+
+<footer>Educación Física · preguntas tipo test del profesor + preguntas de Claude basadas en los apuntes</footer>
+</div>
+
+<script>
+// =====================================================================
+//  DATOS  ·  AQUÍ SE AÑADEN LOS TEMAS NUEVOS
+// =====================================================================
+//  Para añadir un tema: copia un bloque { id:…, n:…, tip:…, profe:[…], mias:[…] }
+//  al final de TEMARIO (antes del "];") y cambia el id. No hay que tocar nada más:
+//  el selector de temas, los contadores, el examen y los resultados se adaptan solos.
+//
+//  Cada pregunta:  {q:"enunciado", o:["opción A","opción B",…], c:0, j:"justificación"}
+//    c  = posición de la correcta empezando en 0  (c:2 → la tercera)
+//    c  = [0,2] si hay VARIAS correctas (casillas, hay que marcarlas todas)
+//    fixed:true  → no barajar las opciones (Verdadero/Falso, etc.)
+//  profe = preguntas del profesor · mias = preguntas de Claude sacadas de los apuntes.
+//  En el modo examen las de Claude valen 0,5 puntos y las del profesor 1. Los fallos no restan.
+//  Añade las preguntas nuevas SIEMPRE AL FINAL de cada lista (así no se pierde la memoria de fallos).
+// =====================================================================
+const VF=["Verdadero","Falso"];
+const INS=["Se acercan","Se alejan","Se alejan y se acercan en un corto espacio de tiempo"];
+
+const TEMARIO = [
+// ------------------------------------------------------------------ TEMA 1
+{id:1, n:"Cualidades perceptivo-motrices",
+ tip:"<b>Aparato locomotor</b> = huesos y músculos; si no se ejercitan se atrofian (atrofia → peor función muscular y metabolismo, menos sensibilidad a la insulina, más grasa; lo más grave: desviaciones de columna, deformaciones en pies, ablandamiento del tejido muscular, artrosis y artritis). <b>Sistema nervioso</b>: percepción (recibe estímulos) → decisión (selecciona lo relevante y usa la experiencia) → ejecución (contrae la musculatura), con feed-back (conocimiento de la ejecución y de los resultados). <b>Contracciones</b>: isométrica (SIN desplazamiento de las inserciones), anisométrica o isotónica (CON desplazamiento: concéntrica = se acercan, excéntrica = se alejan y frenan la gravedad, pliométrica = se alejan y se acercan en poco tiempo) y auxotónica (mixta, la más común en el deporte). <b>Cuantitativo</b> = condición física (cualidades físicas: flexibilidad, fuerza, resistencia, velocidad); <b>cualitativo</b> = coordinación neuromuscular (cualidades motrices: coordinación y equilibrio → agilidad). <b>Músculos</b>: agonistas (producen el movimiento), antagonistas (el contrario), sinergistas (colaboran). <b>Coordinación</b>: dinámica general (todo el cuerpo), óculo-segmentaria (vista + mano u otra parte), dinámica manual (las dos manos). <b>Equilibrio</b>: estático y dinámico; sentidos: oído, vista, tacto y órganos propioceptivos kinestésicos; principios: fuerza de gravedad, centro de gravedad (punto), línea de gravedad (une el centro de gravedad con el centro de la Tierra) y base de sustentación (donde se apoya; cuanto mayor, mejor).",
+ profe:[
+  {q:"Las consecuencias más graves de la atrofia muscular causada por la falta de actividad pueden producir.",o:["Desviaciones de columna","Regeneración muscular","Artrosis, artritis."],c:[0,2],j:"Los apuntes citan como consecuencias más graves: desviaciones de columna, deformaciones en pies, ablandamiento del tejido muscular y artrosis, artritis. La atrofia no regenera el músculo, lo deteriora. (Apuntes, pág. 2)"},
+  {q:"Una consecuencia directa del sedentarismo es:",o:["Mejor circulación","Mayor flexibilidad","Incremento de la coordinación","Disminución de la sensibilidad a la insulina"],c:3,j:"La inactividad atrofia el músculo esquelético, y eso provoca deterioro de la función muscular y el metabolismo, disminución de la sensibilidad a la insulina y mayor acumulación de grasa. Las otras tres son beneficios del ejercicio. (Apuntes, pág. 2)"},
+  {q:"La <b>atrofia muscular</b> se produce principalmente por:",o:["Exceso de entrenamiento","Falta de ejercicio físico","Mala alimentación"],c:1,j:"Huesos y músculos deben ser ejercitados; si no es así, se atrofian y degeneran. La atrofia es una de las consecuencias principales de la inactividad. (Apuntes, pág. 2)"},
+  {q:"Verdadero o falso: El movimiento y el sistema nervioso. (Elige la afirmación verdadera)",o:["Mecanismo de decisión; controla la actividad corporal a través de la contracción muscular","La fase sensitiva se centra en la recepción de estímulos","Mecanismo de ejecución trata la información que hemos recibido seleccionando lo relevante y de experiencias previas para dar respuestas acordes con cada situación"],c:1,j:"<b>En el test entregado esta estaba mal</b> (se marcó la primera). Las otras dos tienen las definiciones cruzadas: controlar la actividad corporal con la contracción muscular es el mecanismo de <b>ejecución</b>, y tratar la información seleccionando lo relevante es el de <b>decisión</b>. La única verdadera es que la fase sensitiva (percepción) se centra en la recepción de estímulos. (Apuntes, pág. 4)"},
+  {q:"Verdadero o falso: La contracción isométrica es una modificación de la tensión muscular con desplazamiento de las inserciones.",o:VF,c:1,fixed:true,j:"<b>En el test entregado esta estaba mal</b> (se marcó Verdadero). Es falso: la isométrica es una modificación de la tensión muscular <b>SIN</b> desplazamiento de las inserciones. La que es <b>con</b> desplazamiento es la anisométrica o isotónica. (Apuntes, págs. 5 y 6)"},
+  {q:"Verdadero o falso: La contracción anisométrica o isotónica es una modificación de la tensión muscular con desplazamiento de las inserciones.",o:VF,c:0,fixed:true,j:"Verdadero: es la definición literal de los apuntes («con» va en negrita). (Apuntes, pág. 6)"},
+  {q:"En la contracción isotónica, las inserciones musculares van variando. En la <b>pliométrica</b>, las inserciones:",o:INS,c:2,fixed:true,j:"En la pliométrica las inserciones se alejan y se acercan en un corto espacio de tiempo (por ejemplo, un salto). (Apuntes, pág. 7)"},
+  {q:"En la contracción isotónica, las inserciones musculares van variando. En la <b>concéntrica</b>, las inserciones:",o:INS,c:0,fixed:true,j:"En la concéntrica las inserciones musculares se acercan y el músculo tiende a contraerse (subir la mancuerna). (Apuntes, pág. 6)"},
+  {q:"En la contracción isotónica, las inserciones musculares van variando. En la <b>excéntrica</b>, las inserciones:",o:INS,c:1,fixed:true,j:"En la excéntrica las inserciones se alejan y frenan la fuerza de la gravedad (bajar la mancuerna despacio). (Apuntes, pág. 6)"},
+  {q:"La contracción auxotónica, tiene carácter mixto y se realiza en la mayoría de los movimientos deportivos. Elige verdadero o falso:",o:VF,c:0,fixed:true,j:"Verdadero: la auxotónica tiene carácter mixto y se realiza en la mayoría de los movimientos deportivos, modificando la tensión y la longitud muscular. (Apuntes, pág. 7)"},
+  {q:"Los aspectos cuantitativos de la ejecución del movimiento:",o:["Definen el nivel de coordinación neuromuscular requerido.","Definen el nivel de condición física requerido.","Definen el nivel de coordinación neuromuscular requerido y el nivel de condición física requerido."],c:1,j:"Cuantitativo = condición física. El nivel de coordinación neuromuscular lo definen los aspectos <b>cualitativos</b>. (Apuntes, pág. 8)"},
+  {q:"Verdadero o falso: Los músculos agonistas, producen directamente un movimiento determinado, son los principales que actúan en el movimiento.",o:VF,c:0,fixed:true,j:"Verdadero: los agonistas son aquellos cuya acción produce directamente un determinado movimiento (ejemplo: el bíceps braquial en la flexión del brazo). (Apuntes, pág. 10)"},
+  {q:"La coordinación puede ser de los siguientes tipos:",o:["Coordinación grácil y coordinación ágil.","Estática y dinámica","La coordinación dinámica general, óculo-segmentaria y dinámica manual."],c:2,j:"Las tres clases de coordinación son dinámica general, óculo-segmentaria y dinámica manual. «Estática y dinámica» son los tipos de <b>equilibrio</b>. (Apuntes, págs. 9 y 10)"},
+  {q:"La <b>coordinación dinámica general</b> implica:",o:["Todo el cuerpo","Solo el tronco","Los ojos y las manos","Solo los brazos"],c:0,j:"Agrupa movimientos que requieren una acción conjunta de todas las partes del cuerpo (andar, correr, saltar, trepar…). (Apuntes, pág. 10)"},
+  {q:"Un ejemplo de coordinación óculo-segmentaria es:",o:["Correr","Escribir a máquina","Saltar a la comba"],c:1,j:"El profesor da por buena «Escribir a máquina»: une el campo visual con la motricidad fina de la mano. Correr y saltar a la comba son dinámica general. Ojo: en los apuntes (pág. 10) «escribir a máquina» aparece como ejemplo de coordinación dinámica <b>manual</b>; si en el examen salen las dos como opción, pregúntale al profesor."},
+  {q:"Señala que factores sensoriales intervienen en el equilibrio",o:["Vista","Órganos propioceptivos kinestésicos.","Mitocondrias","Olfato"],c:[0,1],j:"<b>En el test entregado esta estaba mal</b> (se marcó también Olfato). Los factores sensoriales son la vista, el oído, el tacto y los órganos propioceptivos kinestésicos. El olfato no interviene y las mitocondrias no son un sentido. (Apuntes, pág. 12)"},
+  {q:"Señala la definición correcta de la base de sustentación.",o:["Es la fuerza que la Tierra ejerce sobre los cuerpos atrayéndolos y a la que todos estamos sujetos.","Es el lugar donde se apoya el sujeto en el movimiento.","Es el punto por donde pasan todas las fuerzas que actúan sobre el cuerpo."],c:1,j:"La base de sustentación es el lugar donde se apoya el sujeto en el movimiento. La primera opción es la fuerza de gravedad y la tercera, el centro de gravedad. (Apuntes, pág. 13)"}
+ ],
+ mias:[
+  {q:"El aparato locomotor está formado por:",o:["Huesos y músculos","Corazón y pulmones","Cerebro y nervios","Piel y tejido graso"],c:0,j:"«El aparato locomotor, es decir, huesos y músculos», está diseñado para cumplir una misión de sostén y movimiento. (Apuntes, pág. 2)"},
+  {q:"Si los huesos y los músculos no se ejercitan:",o:["Se fortalecen con el descanso","Se atrofian y degeneran","Se mantienen igual toda la vida","Aumentan de tamaño"],c:1,j:"Deben ser ejercitados para cumplir su misión eficazmente; si no es así, se atrofian y degeneran. (Apuntes, pág. 2)"},
+  {q:"La atrofia del músculo esquelético va a provocar:",o:["Deterioro de la función muscular y el metabolismo","Disminución de la sensibilidad a la insulina","Mayor acumulación de grasa","Aumento de la masa muscular"],c:[0,1,2],j:"Las tres primeras son las consecuencias que citan los apuntes. La atrofia hace perder músculo, no ganarlo. (Apuntes, pág. 2)"},
+  {q:"El ablandamiento del tejido muscular por la atrofia permite:",o:["A la grasa establecerse entre sus fibras","Que el músculo sea más elástico","Una mejor circulación de la sangre","Que el músculo se regenere antes"],c:0,j:"Ablandamiento del tejido muscular, «permitiendo a la grasa establecerse entre sus fibras». (Apuntes, pág. 2)"},
+  {q:"Según los apuntes, las deformaciones por falta de estímulo mecánico aparecen en:",o:["Las manos","Los pies","El cráneo","Las costillas"],c:1,j:"«Deformaciones en pies: cambios estructurales por falta de estímulo mecánico». (Apuntes, pág. 2)"},
+  {q:"Verdadero o falso: Las enfermedades degenerativas propias de la vejez están cada vez más presentes en personas jóvenes.",o:VF,c:0,fixed:true,j:"Verdadero: «toda una serie de enfermedades degenerativas propias de la vejez, aunque cada vez más presentes en personas jóvenes». (Apuntes, pág. 2)"},
+  {q:"En nuestro país, el sedentarismo es el segundo factor de riesgo de una mala salud, después de:",o:["La obesidad","El tabaquismo","El alcohol","El estrés"],c:1,j:"Es una de las diez causas de mortalidad, morbilidad y discapacidad, y el segundo factor de riesgo de una mala salud después del tabaquismo. (Apuntes, pág. 3)"},
+  {q:"El sedentarismo duplica el peligro de sufrir:",o:["Enfermedad cardiovascular","Diabetes tipo II","Obesidad","Miopía"],c:[0,1,2],j:"Duplica el peligro de sufrir enfermedad cardiovascular, diabetes tipo II y obesidad, entre otras enfermedades. La miopía no se menciona. (Apuntes, pág. 3)"},
+  {q:"Los beneficios del ejercicio regular podrían resumirse en uno:",o:["Aumentar la capacidad de movimiento y de hacer actividades con mayor facilidad","Aumentar el peso corporal","Reducir las horas de sueño necesarias","Evitar por completo las enfermedades"],c:0,j:"Aparece en mayúsculas en los apuntes: aumentar la capacidad de movimiento y de hacer actividades con mayor facilidad. (Apuntes, pág. 3)"},
+  {q:"Cuando realizamos un acto motor, el sistema nervioso actúa a través de tres mecanismos que se suceden en este orden:",o:["Percepción → decisión → ejecución","Decisión → percepción → ejecución","Ejecución → percepción → decisión","Percepción → ejecución → decisión"],c:0,fixed:true,j:"Los tres mecanismos actúan secuencialmente: primero se percibe, luego se decide y por último se ejecuta. (Apuntes, pág. 4)"},
+  {q:"El mecanismo de decisión consiste en:",o:["Recibir los estímulos del entorno y del propio cuerpo","Tratar la información recibida, seleccionando lo relevante y utilizando experiencias previas","Controlar la actividad corporal a través de la contracción de la musculatura","Corregir el movimiento cuando ya ha terminado"],c:1,j:"Decisión = tratamiento de la información que hemos recibido, seleccionando lo relevante y utilizando experiencias previas para dar respuestas acordes con cada situación. (Apuntes, pág. 4)"},
+  {q:"El mecanismo de ejecución consiste en:",o:["La recepción de estímulos","La selección de la información relevante","El control de la actividad corporal a través de la contracción de la musculatura","El conocimiento de los resultados"],c:2,j:"Ejecución = control de la actividad corporal a través de la contracción de la musculatura para producir el movimiento deseado. (Apuntes, pág. 4)"},
+  {q:"Los mecanismos de «feed-back» (retroalimentación) son:",o:["Conocimiento de la ejecución y conocimiento de los resultados","Percepción y decisión","Fuerza y velocidad","Equilibrio estático y dinámico"],c:0,j:"El feed-back es el conocimiento de la ejecución y el conocimiento de los resultados; sirve para ajustar y corregir el movimiento. (Apuntes, pág. 4)"},
+  {q:"¿Qué es una inserción muscular?",o:["La unión del extremo del músculo al hueso más móvil de los dos que une dicho músculo","La parte central y más gruesa del músculo","El punto donde el nervio llega al músculo","La unión de dos huesos entre sí"],c:0,j:"La inserción es la unión del extremo del músculo al hueso más móvil de los dos que une dicho músculo. (Apuntes, pág. 5)"},
+  {q:"Los tipos de contracción muscular son:",o:["Isométrica, anisométrica y auxotónica","Estática, dinámica y manual","Agonista, antagonista y sinergista","Fuerza, velocidad y resistencia"],c:0,j:"Tipos de contracción: isométrica, anisométrica (o isotónica) y auxotónica. (Apuntes, pág. 5)"},
+  {q:"Empujar una pared con fuerza sin que se mueva es un ejemplo de contracción:",o:["Isométrica","Concéntrica","Excéntrica","Pliométrica"],c:0,j:"Hay tensión muscular pero las inserciones no se desplazan: es isométrica (la foto de los apuntes es justo un hombre empujando un muro). (Apuntes, pág. 5)"},
+  {q:"Al subir una mancuerna doblando el codo, el bíceps hace una contracción:",o:["Isométrica","Concéntrica","Excéntrica","Auxotónica"],c:1,j:"Las inserciones se acercan y el músculo tiende a contraerse: concéntrica. Al bajarla despacio sería excéntrica. (Apuntes, pág. 6)"},
+  {q:"Verdadero o falso: En la contracción excéntrica las inserciones se alejan y frenan la fuerza de la gravedad.",o:VF,c:0,fixed:true,j:"Verdadero: es la definición de los apuntes. (Apuntes, pág. 6)"},
+  {q:"Verdadero o falso: En la contracción concéntrica las inserciones musculares se alejan.",o:VF,c:1,fixed:true,j:"Falso: en la concéntrica se <b>acercan</b>. Se alejan en la excéntrica. (Apuntes, pág. 6)"},
+  {q:"En la contracción auxotónica:",o:["Se modifica la tensión y la longitud muscular en movimientos dinámicos o estáticos","No cambia ni la tensión ni la longitud del músculo","Las inserciones nunca se desplazan","Solo trabajan los músculos antagonistas"],c:0,j:"Tiene carácter mixto: se modifica la tensión y la longitud muscular en movimientos dinámicos o estáticos. Es la más común en actividades deportivas. (Apuntes, pág. 7)"},
+  {q:"Los aspectos cualitativos de la ejecución del movimiento:",o:["Definen el nivel de condición física requerido.","Definen el nivel de coordinación neuromuscular requerido.","Definen el peso que se puede levantar.","No influyen en el movimiento."],c:1,j:"Cualitativo = coordinación neuromuscular (cualidades motrices). Cuantitativo = condición física. (Apuntes, pág. 8)"},
+  {q:"Las capacidades o cualidades físicas se definen como aquellas capacidades:",o:["Sin un proceso de elaboración sensorial muy complejo que configuran la condición física del sujeto","Que dependen sobre todo de la coordinación neuromuscular","Que solo tienen los deportistas profesionales","Que no se pueden mejorar con el entrenamiento"],c:0,j:"Capacidades sin un proceso de elaboración sensorial muy complejo que configuran la condición física del sujeto (aspecto cuantitativo). (Apuntes, pág. 8)"},
+  {q:"Si chuto fuerte una pelota muy cerca de la portería, esa acción requiere fundamentalmente:",o:["Fuerza: están más comprometidos los aspectos físicos o cuantitativos","Una conjunción de diferentes habilidades: aspectos cualitativos","Equilibrio estático","Coordinación dinámica manual"],c:0,j:"Es el ejemplo de cualidades físicas de los apuntes: requiere fundamentalmente fuerza, es un trabajo muscular (aspecto cuantitativo). (Apuntes, pág. 8)"},
+  {q:"Estoy en el centro del campo, hago varios quiebros y fintas, elevo el balón y lo golpeo. El éxito dependerá de:",o:["Solo de la fuerza","Una conjunción de diferentes habilidades: facultades motrices o cualitativas","Solo de la resistencia","La base de sustentación"],c:1,j:"Es el ejemplo de cualidades motrices: el éxito depende de una conjunción de diferentes habilidades (aspecto cualitativo). (Apuntes, pág. 8)"},
+  {q:"Las cualidades físicas básicas son:",o:["Flexibilidad, fuerza, resistencia y velocidad","Coordinación, equilibrio y agilidad","Percepción, decisión y ejecución","Agonistas, antagonistas y sinergistas"],c:0,j:"Cualidades físicas básicas: flexibilidad, fuerza, resistencia y velocidad. (Apuntes, pág. 9)"},
+  {q:"En la clasificación de los apuntes, las cualidades motrices (físicas compuestas) se agrupan bajo la AGILIDAD e incluyen:",o:["La coordinación y el equilibrio","La fuerza y la velocidad","La resistencia y la flexibilidad","La percepción y la decisión"],c:0,j:"Cualidades motrices – cualidades físicas compuestas: AGILIDAD, con la coordinación (dinámica general, óculo-segmentaria y dinámica manual) y el equilibrio (estático y dinámico). (Apuntes, pág. 9)"},
+  {q:"En la flexión del brazo, el músculo agonista es:",o:["El tríceps","El bíceps braquial","El coracobraquial","El cuádriceps"],c:1,j:"El ejemplo de los apuntes: el bíceps braquial durante la flexión del brazo. El tríceps sería el antagonista. (Apuntes, pág. 10)"},
+  {q:"Los músculos antagonistas son aquellos que:",o:["Producen directamente el movimiento","Realizan el movimiento contrario al de los músculos agonistas","Colaboran con los agonistas","No intervienen en el movimiento"],c:1,j:"Los antagonistas realizan el movimiento contrario de los agonistas (el tríceps en la flexión del brazo). (Apuntes, pág. 10)"},
+  {q:"En la flexión del brazo, el braquial anterior y el coracobraquial actúan como músculos:",o:["Agonistas","Antagonistas","Sinergistas","Excéntricos"],c:2,j:"Los sinergistas colaboran con los agonistas al hacer un movimiento; los apuntes ponen de ejemplo el braquial anterior y el coracobraquial. (Apuntes, pág. 10)"},
+  {q:"La coordinación neuromuscular se define como:",o:["El control nervioso de las contracciones musculares en la realización de los actos motores","La capacidad de levantar grandes pesos","La capacidad de mantener una postura contra la gravedad","La unión del músculo con el hueso"],c:0,j:"Es el control nervioso de las contracciones musculares en la realización de los actos motores. (Apuntes, pág. 10)"},
+  {q:"Andar, correr, saltar, cuadrupedia, trepar y girar son actividades de coordinación:",o:["Dinámica general","Óculo-segmentaria","Dinámica manual","Estática"],c:0,j:"Son las actividades que los apuntes ponen para la coordinación dinámica general: intervienen gran cantidad de segmentos corporales y sus músculos. (Apuntes, pág. 10)"},
+  {q:"La coordinación dinámica manual corresponde:",o:["Al movimiento bimanual (ambas manos a la vez)","A los movimientos de todo el cuerpo","Al lazo entre la vista y el pie","Al equilibrio sobre una pierna"],c:0,j:"Corresponde al movimiento bimanual, lo cual permite la armonía de la ejecución. Ejemplos de los apuntes: tocar la batería, escribir a máquina y los ejercicios de manejo de balones. (Apuntes, pág. 10)"},
+  {q:"La coordinación óculo-segmentaria es:",o:["El lazo entre el campo visual y la motricidad fina de la mano o de cualquier otra parte del cuerpo","El movimiento de las dos manos a la vez","La acción conjunta de todas las partes del cuerpo","El control de la postura sin desplazarse"],c:0,j:"Es el lazo entre el campo visual y la motricidad fina de la mano o de cualquier otra parte del cuerpo. (Apuntes, pág. 10)"},
+  {q:"El equilibrio se define (Muska Mosston) como:",o:["La capacidad de asumir y sostener cualquier posición del cuerpo contra la ley de gravedad","La capacidad de recorrer una distancia en poco tiempo","El control nervioso de las contracciones musculares","El lugar donde se apoya el sujeto"],c:0,j:"Concepto de equilibrio: capacidad de asumir y sostener cualquier posición del cuerpo contra la ley de gravedad (Muska Mosston). (Apuntes, pág. 11)"},
+  {q:"El equilibrio dinámico es:",o:["La capacidad de mantener la posición correcta que exige la actividad a realizar, generalmente con desplazamiento","La facultad de mantener el cuerpo en posición erguida sin moverse del sitio","La fuerza que la Tierra ejerce sobre los cuerpos","El movimiento de ambas manos a la vez"],c:0,j:"Dinámico = mantener la posición correcta que exige la actividad, generalmente con desplazamiento. El estático es mantener el cuerpo en posición erguida. (Apuntes, pág. 11)"},
+  {q:"Los tipos de equilibrio son:",o:["Estático y dinámico","General y manual","Concéntrico y excéntrico","Cuantitativo y cualitativo"],c:0,j:"Equilibrio estático y equilibrio dinámico. (Apuntes, págs. 9 y 11)"},
+  {q:"Verdadero o falso: Cuando las fuerzas opuestas que actúan en una actividad física se contrarrestan, el equilibrio se mantiene.",o:VF,c:0,fixed:true,j:"Verdadero: cuando dichas fuerzas se contrarrestan el equilibrio se mantiene; cuando no son iguales, se pierde hasta que se dispone de otra fuerza adicional. (Apuntes, pág. 11)"},
+  {q:"El oído interviene en el equilibrio a través de:",o:["Los canales semicirculares y el aparato vestibular","Las presiones y distensiones","Las distancias de los objetos","Los músculos y tendones"],c:0,j:"El oído interviene a través de los canales semicirculares y el aparato vestibular situado dentro de él; nos informa constantemente de nuestra posición. (Apuntes, pág. 12)"},
+  {q:"El tacto interviene en el equilibrio informando de las diferentes posiciones a través de:",o:["Las presiones, distensiones, etc.","Las distancias y los contrastes","Los canales semicirculares","El centro de gravedad"],c:0,j:"El tacto informa de las diferentes posiciones que experimentamos a través de las presiones, distensiones, etc. (Apuntes, pág. 12)"},
+  {q:"Los órganos propioceptivos kinestésicos:",o:["Están en músculos y tendones y nos informan de qué músculo debe flexionarse o extenderse en cada movimiento","Están dentro del oído y nos informan de nuestra posición","Están en el ojo y permiten ver las distancias","Están en la piel y notan las presiones"],c:0,j:"Están situados en músculos y tendones y nos informan constantemente sobre qué músculo debe flexionarse o extenderse en cada movimiento. (Apuntes, pág. 12)"},
+  {q:"Señala qué factores sensoriales intervienen en el equilibrio:",o:["Oído","Tacto","Gusto","Vista"],c:[0,1,3],j:"Vista, oído, tacto y órganos propioceptivos kinestésicos. El gusto y el olfato no intervienen. (Apuntes, pág. 12)"},
+  {q:"El centro de gravedad es:",o:["El punto por donde pasan todas las fuerzas que actúan sobre el cuerpo","El lugar donde se apoya el sujeto","La línea que llega hasta el centro de la Tierra","La fuerza que nos atrae hacia el suelo"],c:0,j:"Centro de gravedad: el punto por donde pasan todas las fuerzas que actúan sobre el cuerpo. Además, cada parte del cuerpo tiene su propio centro de gravedad. (Apuntes, pág. 13)"},
+  {q:"La línea de gravedad es la línea que une:",o:["El centro de gravedad de un cuerpo con el centro de la Tierra","Los dos pies del sujeto","La cabeza con los pies","El oído con el ojo"],c:0,j:"Línea de gravedad: la que une el centro de gravedad de un determinado cuerpo con el centro de la Tierra. (Apuntes, pág. 13)"},
+  {q:"Verdadero o falso: Cuanto mayor sea la base de sustentación, mayor y mejor será el equilibrio.",o:VF,c:0,fixed:true,j:"Verdadero: es literal de los apuntes. Por eso separar los pies da más estabilidad. (Apuntes, pág. 13)"},
+  {q:"Para que un cuerpo esté en equilibrio es necesario que:",o:["La línea de gravedad entre en la base de sustentación","El centro de gravedad esté lo más alto posible","La base de sustentación sea lo más pequeña posible","No actúe la fuerza de gravedad"],c:0,j:"Es necesario que la línea de gravedad entre en la base de sustentación; según se aleje o se acerque a ella, el equilibrio será más o menos estable. (Apuntes, pág. 13)"},
+  {q:"La fuerza de gravedad es:",o:["La fuerza que la Tierra ejerce sobre los cuerpos atrayéndolos y a la que todos estamos sometidos","El punto por donde pasan todas las fuerzas","El lugar donde se apoya el sujeto","La fuerza que hacen los músculos agonistas"],c:0,j:"Es la fuerza que la Tierra ejerce sobre los cuerpos atrayéndolos. Para mantenernos equilibrados le oponemos otra de igual magnitud y sentido contrario. (Apuntes, pág. 13)"}
+ ]
+},
+// ------------------------------------------------------------------ TEMA 2
+{id:2, n:"Mejoramos nuestra condición física",
+ tip:"<b>Condición física</b> = conjunto de características que tiene nuestro cuerpo para responder ante el ejercicio. Si entrenamos regularmente nos adaptamos al cansancio y las sensaciones positivas se multiplican. <b>Ventajas</b>: mejora los reflejos y la coordinación, mejora la imagen corporal y tonifica el cuerpo, menos lesiones y enfermedades, más facilidad para relajarse y eliminar la tensión y el estrés, previene el insomnio y regula el sueño. <b>Depende de</b>: genética, edad (mejora hasta los 25-30, se mantiene hasta los 35 y luego se pierden facultades), sexo (hormonas: ellas más flexibles, ellos más fuertes), entrenamiento y hábitos de salud. <b>Hábitos</b>: dieta equilibrada, calentamiento, descanso, evitar sustancias nocivas (alcohol, tabaco), vestimenta adecuada (calzado), higiene corporal (evitar infecciones) y posturas correctas. <b>Entrenamiento</b> = conjunto de ejercicios realizados de forma ordenada y adaptada para mejorar. <b>Capacidades físicas</b>: fuerza (levantar o mover grandes pesos), velocidad (recorrer una distancia en muy poco tiempo), resistencia (ejercicio durante un largo período) y flexibilidad (mover con amplitud; depende de la movilidad de las articulaciones y la elasticidad de los músculos). <b>Beneficios</b> — resistencia: corazón, capacidad pulmonar, sangre y oxígeno a los músculos; fuerza: grosor de la musculatura, tejidos más fuertes, rendimiento, evita dolores de espalda; flexibilidad: menos tensión, más amplitud articular, circulación, menos agujetas, previene lesiones; velocidad: coordinación, fuerza muscular, eficacia deportiva.",
+ profe:[
+  {q:"Elige las dos verdaderas:",o:["El cansancio no depende de la condición física, cuando corremos 30 minutos se cansa igual cualquier persona, independientemente de su nivel de condición física.","Si entrenamos regularmente durante un tiempo suficiente, llegamos a adaptarnos a este cansancio.","Al realizar asiduamente actividad física, las sensaciones positivas se cronifican, y todo ello es consecuencia de lo que está ocurriendo a nivel orgánico en nuestros tejidos y células.","Realizar actividad física cronifica tus enfermedades y debilidades."],c:[1,2],j:"Si nos entrenamos regularmente llegamos a adaptarnos al cansancio y las sensaciones positivas aumentan (los apuntes dicen «se multiplican», el profesor «se cronifican»), como consecuencia de lo que ocurre en nuestros tejidos y células. El cansancio sí depende de la condición física y el ejercicio no cronifica enfermedades. (Apuntes, pág. 15)"},
+  {q:"¿Qué es la condición física?, elige la respuesta (sólo una) correcta.",o:["Conjunto de características que tiene nuestro cuerpo para reaccionar ante el ejercicio","Capacidad de dominar movimientos concretos, haciéndolos muchas veces para asentarlos y así, resolver problemas con eficacia, economía de esfuerzo y rapidez.","Es la fuerza que tenemos para mover los objetos (o las personas)"],c:0,j:"<b>En el test entregado esta estaba mal</b> (se marcó la segunda). Los apuntes: «Al conjunto de características que tiene nuestro cuerpo para responder ante el ejercicio lo llamamos condición física». La segunda opción describe una habilidad o destreza y la tercera se parece a la fuerza. (Apuntes, pág. 15)"},
+  {q:"Factores de los que depende tener una buena condición física. Elige la más correcta",o:["Cantidad de veces que puedes correr en dos días.","Madurez inicial, velocidad y efecto de la gravedad sobre el organismo.","Progresión de un punto a otro del espacio utilizando como medio el movimiento de los pies.","Genética, edad, sexo, nivel de entrenamiento y hábitos de salud."],c:3,j:"El nivel de tu condición física depende de: nuestra genética, la edad, el sexo, el entrenamiento y los hábitos de salud. (Apuntes, pág. 16)"},
+  {q:"Señala que hábitos de salud ayudan a mejorar tu condición física.",o:["Realizar un buen calentamiento antes del ejercicio físico.","Dormir las horas necesarias y descansar siempre que lo necesites.","Abusar de sustancias que puedan dañar al organismo"],c:[0,1],j:"Calentamiento y descanso son dos de los hábitos de los apuntes. Las sustancias nocivas (alcohol, tabaco) hay que <b>evitarlas</b>, no abusar de ellas. (Apuntes, pág. 17)"},
+  {q:"El <b>entrenamiento</b> se define como:",o:["Actividad espontánea y sin control","Ejercicio físico sin objetivos","Conjunto de ejercicios ordenados y adaptados","Actividad mental únicamente"],c:2,j:"El entrenamiento es el conjunto de ejercicios que realizamos de forma ordenada y adaptada a nuestras características con el fin de mejorar alguna de nuestras facetas personales. (Apuntes, pág. 17)"},
+  {q:"Señala las que sean verdaderas",o:["La flexibilidad depende de dos factores: movilidad de las articulaciones y la elasticidad de los músculos.","La fuerza es la capacidad de levantar o mover grandes pesos. Las personas fuertes poseen una musculatura muy desarrollada.","La velocidad es la capacidad de recorrer una distancia en mucho tiempo."],c:[0,1],j:"Las dos primeras son literales de los apuntes. La tercera es falsa: la velocidad es recorrer una distancia en <b>muy poco</b> tiempo. (Apuntes, pág. 18)"},
+  {q:"Indica cuál es un beneficio de la fuerza",o:["Aumentas el peso graso","Mejora la amplitud de movimiento de las articulaciones.","Si los ejercicios se realizan correctamente, ayuda a evitar dolores de espalda y malas actitudes posturales","Aumenta el grosor de la musculatura."],c:[2,3],j:"<b>En el test entregado esta estaba incompleta</b> (0/2: solo se marcó la de los dolores de espalda). Son dos: ayuda a evitar dolores de espalda y malas actitudes posturales, y aumenta el grosor de la musculatura. Mejorar la amplitud de movimiento de las articulaciones es un beneficio de la <b>flexibilidad</b>. (Apuntes, pág. 19)"},
+  {q:"Indica cuál es un beneficio de la flexibilidad",o:["Aumenta el aislamiento térmico","Fortalece los tejidos.","Reduce la tensión de los músculos y aumenta su elasticidad."],c:2,j:"Reduce la tensión de los músculos y aumenta su elasticidad. «Fortalece los tejidos» es un beneficio de la fuerza. (Apuntes, pág. 19)"},
+  {q:"Tener una buena condición física me hace disfrutar de las siguientes ventajas (señalas las correctas)",o:["Tendrá más facilidad para relajarse y eliminar la tensión y el estrés.","Mejora la imagen corporal y tonifica el cuerpo.","Previene la capacidad de producir energía."],c:[0,1],j:"Son dos de las cinco ventajas de los apuntes (las otras: mejora los reflejos y la coordinación; menos lesiones y enfermedades; previene el insomnio y regula el sueño). La tercera no tiene sentido: lo que previene es el insomnio. (Apuntes, pág. 15)"}
+ ],
+ mias:[
+  {q:"¿Cuál de estos NO es uno de los factores de los que depende el nivel de tu condición física?",o:["La genética","La edad","El lugar de nacimiento","Los hábitos de salud"],c:2,j:"Los factores son genética, edad, sexo, entrenamiento y hábitos de salud. El lugar de nacimiento no aparece. (Apuntes, págs. 14 y 16)"},
+  {q:"El estado del organismo mejora de forma natural hasta los:",o:["15-20 años","25-30 años","40-45 años","50 años"],c:1,fixed:true,j:"Mejora de forma natural hasta los 25-30 años; después se mantiene hasta los 35 aproximadamente y, a partir de entonces, se empiezan a perder facultades paulatinamente. (Apuntes, pág. 16)"},
+  {q:"Según los apuntes, a partir de los 35 años aproximadamente:",o:["El organismo sigue mejorando de forma natural","Se empiezan a perder facultades paulatinamente","Ya no sirve de nada entrenar","Se gana flexibilidad"],c:1,j:"Hasta los 25-30 mejora, se mantiene hasta los 35 aproximadamente y, a partir de entonces, se empiezan a perder facultades paulatinamente. (Apuntes, pág. 16)"},
+  {q:"Generalmente, una chica es más ______ que un chico, y este a su vez es más ______.",o:["flexible / fuerte","fuerte / flexible","veloz / resistente","resistente / flexible"],c:0,j:"«Generalmente, una chica es más flexible que un chico, y este a su vez es más fuerte». (Apuntes, pág. 16)"},
+  {q:"Las diferencias de condición física entre hombres y mujeres se deben principalmente a:",o:["Las hormonas propias de cada sexo","La alimentación","El tipo de calzado","Las horas de sueño"],c:0,j:"«Esto se debe principalmente a las hormonas propias de cada sexo». (Apuntes, pág. 16)"},
+  {q:"Verdadero o falso: Dos personas que realizan las mismas actividades tendrán siempre la misma condición física.",o:VF,c:1,fixed:true,j:"Falso: cada uno posee unas características heredadas a través de los genes; por eso hay personas con mejor condición física que otras aunque realicen las mismas actividades. (Apuntes, pág. 16)"},
+  {q:"Nuestra genética son:",o:["Las características heredadas de nuestros padres a través de los genes","Los ejercicios que hacemos cada semana","Los hábitos de alimentación","Las hormonas de cada sexo"],c:0,j:"Cada uno posee unas características heredadas de sus padres a través de los genes. (Apuntes, pág. 16)"},
+  {q:"Como factor de la condición física, el entrenamiento permite mejorar las capacidades físicas por medio de:",o:["La práctica sistemática de ejercicios","El descanso prolongado","La herencia de los padres","Una dieta sin grasas"],c:0,j:"«Por medio de la práctica sistemática de ejercicios se pueden mejorar las capacidades físicas». (Apuntes, pág. 16)"},
+  {q:"Señala qué hábitos de salud ayudan a mejorar tu condición física.",o:["Tener una correcta higiene corporal","Utilizar la vestimenta adecuada para realizar ejercicio","Mantener posturas correctas al sentarse, al caminar y al realizar ejercicios","Empezar el ejercicio sin calentar para no cansarse antes"],c:[0,1,2],j:"Higiene corporal, vestimenta adecuada y posturas correctas son tres de los siete hábitos. El calentamiento hay que hacerlo siempre antes del ejercicio. (Apuntes, pág. 17)"},
+  {q:"Al hablar de vestimenta adecuada para hacer ejercicio, los apuntes destacan especialmente:",o:["El calzado","Los guantes","La gorra","El color de la ropa"],c:0,j:"«Utilizar la vestimenta adecuada (especialmente calzado) para realizar ejercicio». (Apuntes, pág. 17)"},
+  {q:"Tener una correcta higiene corporal sirve para:",o:["Evitar infecciones","Aumentar la fuerza","Mejorar la velocidad","Dormir menos horas"],c:0,j:"«Tener una correcta higiene corporal para evitar infecciones». (Apuntes, pág. 17)"},
+  {q:"¿Qué sustancias que pueden dañar al organismo citan los apuntes como ejemplo?",o:["Alcohol y tabaco","Agua y sal","Fruta y verdura","Hidratos de carbono"],c:0,j:"Evitar sustancias que puedan dañar al organismo: alcohol, tabaco, etc. (Apuntes, pág. 17)"},
+  {q:"Una alimentación variada y balanceada (dieta equilibrada):",o:["Proporciona los nutrientes necesarios para el óptimo funcionamiento del organismo","Sustituye al entrenamiento","Solo es necesaria para los deportistas","Evita tener que calentar"],c:0,j:"Proporciona los nutrientes necesarios para el óptimo funcionamiento del organismo. (Apuntes, pág. 17)"},
+  {q:"Verdadero o falso: Los buenos hábitos de vida saludable cuestan dinero y solo están al alcance de algunos.",o:VF,c:1,fixed:true,j:"Falso: «están al alcance de todos, no cuestan dinero y proporcionan beneficios que no se pueden cuantificar». (Apuntes, pág. 17)"},
+  {q:"Verdadero o falso: Un estilo de vida saludable repercute positivamente en tu condición física, pero tan solo a través del entrenamiento podemos conseguir que esta mejore.",o:VF,c:0,fixed:true,j:"Verdadero: es literal de los apuntes. (Apuntes, pág. 17)"},
+  {q:"El entrenamiento se realiza con el fin de:",o:["Mejorar alguna de nuestras facetas personales","Cansarnos lo máximo posible","Perder facultades paulatinamente","Sustituir a los hábitos de salud"],c:0,j:"Conjunto de ejercicios realizados de forma ordenada y adaptada a nuestras características con el fin de mejorar alguna de nuestras facetas personales. (Apuntes, pág. 17)"},
+  {q:"A los cuatro factores que componen la condición física los llamamos capacidades físicas. Son:",o:["Fuerza, velocidad, resistencia y flexibilidad","Coordinación, equilibrio, agilidad y fuerza","Genética, edad, sexo y entrenamiento","Dieta, descanso, higiene y calentamiento"],c:0,j:"Las capacidades físicas son la fuerza, la velocidad, la resistencia y la flexibilidad. (Apuntes, págs. 17 y 18)"},
+  {q:"La velocidad es la capacidad de:",o:["Recorrer una distancia en muy poco tiempo","Realizar ejercicio durante un largo período de tiempo","Levantar o mover grandes pesos","Mover con amplitud músculos y articulaciones"],c:0,j:"Velocidad: recorrer una distancia en muy poco tiempo. Los corredores de 100 metros son muy veloces. (Apuntes, pág. 18)"},
+  {q:"Para mejorar tu velocidad es necesario que adquieras cada vez más:",o:["Fuerza y coordinación","Flexibilidad y equilibrio","Resistencia y peso","Descanso y alimentación"],c:0,j:"«Para mejorar tu velocidad, es necesario que adquieras cada vez más fuerza y coordinación». (Apuntes, pág. 18)"},
+  {q:"La resistencia es la capacidad de:",o:["Realizar ejercicio durante un largo período de tiempo","Recorrer una distancia en muy poco tiempo","Levantar o mover grandes pesos","Mantener el cuerpo en posición erguida"],c:0,j:"Resistencia: realizar ejercicio durante un largo período de tiempo. (Apuntes, pág. 18)"},
+  {q:"Los corredores de largas distancias (5.000 metros, 10.000 metros, maratón), los ciclistas y los esquiadores de fondo destacan por su:",o:["Fuerza","Velocidad","Resistencia","Flexibilidad"],c:2,fixed:true,j:"Son los ejemplos de personas resistentes de los apuntes, junto con quienes juegan a deportes de equipo como fútbol, baloncesto o balonmano. (Apuntes, pág. 18)"},
+  {q:"Los bailarines y los gimnastas son personas muy:",o:["Fuertes","Veloces","Resistentes","Flexibles"],c:3,fixed:true,j:"«Los bailarines y los gimnastas son personas muy flexibles». (Apuntes, pág. 18)"},
+  {q:"La flexibilidad es la capacidad de:",o:["Mover con amplitud nuestros músculos y articulaciones","Levantar o mover grandes pesos","Recorrer una distancia en muy poco tiempo","Aguantar mucho tiempo haciendo ejercicio"],c:0,j:"Flexibilidad: mover con amplitud nuestros músculos y articulaciones. Depende de la movilidad de las articulaciones y de la elasticidad de los músculos. (Apuntes, pág. 18)"},
+  {q:"¿Qué me aporta el entrenamiento de la resistencia? Señala las correctas.",o:["Aumenta el tamaño y las paredes del corazón.","Mejora la capacidad pulmonar.","Facilita la llegada de sangre y oxígeno a nuestros músculos.","Aumenta el grosor de la musculatura."],c:[0,1,2],j:"Las tres primeras son de la resistencia (además: nos hace capaces de aguantar cada vez más tiempo haciendo ejercicio). Aumentar el grosor de la musculatura es de la <b>fuerza</b>. (Apuntes, pág. 19)"},
+  {q:"«Fortalece los tejidos, por lo que es más difícil que nos lesionemos» es un beneficio del entrenamiento de la:",o:["Resistencia","Fuerza","Flexibilidad","Velocidad"],c:1,fixed:true,j:"Es uno de los beneficios de la fuerza, junto con aumentar el grosor de la musculatura, mejorar la capacidad de rendimiento y ayudar a evitar dolores de espalda. (Apuntes, pág. 19)"},
+  {q:"«Reduce el cansancio muscular y la aparición de agujetas» es un beneficio del entrenamiento de la:",o:["Resistencia","Fuerza","Flexibilidad","Velocidad"],c:2,fixed:true,j:"Es de la flexibilidad, que además reduce la tensión de los músculos, mejora la amplitud de movimiento de las articulaciones, favorece la circulación sanguínea y ayuda a prevenir lesiones. (Apuntes, pág. 19)"},
+  {q:"Indica cuál es un beneficio de la velocidad",o:["Mejora la coordinación de nuestros movimientos.","Aumenta el tamaño y las paredes del corazón.","Favorece la circulación sanguínea.","Mejora la capacidad pulmonar."],c:0,j:"Velocidad: mejora la coordinación de nuestros movimientos, potencia la fuerza muscular y nos permite practicar deportes con mayor eficacia. Corazón y pulmones son de la resistencia; la circulación, de la flexibilidad. (Apuntes, pág. 19)"},
+  {q:"«Mejora nuestra capacidad de rendimiento en la práctica deportiva» es un beneficio del entrenamiento de la:",o:["Resistencia","Fuerza","Flexibilidad","Velocidad"],c:1,fixed:true,j:"Aparece en la lista de la fuerza. No lo confundas con «nos permite practicar deportes con mayor eficacia», que es de la velocidad. (Apuntes, pág. 19)"},
+  {q:"Indica cuáles son beneficios de la flexibilidad",o:["Favorece la circulación sanguínea.","Ayuda a prevenir lesiones.","Mejora la amplitud de movimiento de las articulaciones.","Potencia la fuerza muscular."],c:[0,1,2],j:"Las tres primeras son de la flexibilidad. «Potencia la fuerza muscular» es un beneficio de la <b>velocidad</b>. (Apuntes, pág. 19)"},
+  {q:"Alguien con una buena condición física tiene las siguientes ventajas (señala las correctas):",o:["Mejora los reflejos y la coordinación.","Previene el insomnio y regula el sueño.","Tendrá menos lesiones, menos enfermedades.","Tendrá más tensión y estrés."],c:[0,1,2],j:"Las tres primeras son ventajas de los apuntes. La cuarta es al revés: tendrá más facilidad para relajarse y <b>eliminar</b> la tensión y el estrés. (Apuntes, pág. 15)"},
+  {q:"Una buena condición física previene:",o:["El insomnio","El crecimiento","El descanso","La flexibilidad"],c:0,j:"«Previene el insomnio y regula el sueño». (Apuntes, pág. 15)"},
+  {q:"Verdadero o falso: Cuando hacemos ejercicio físico nos cansamos, pero también nos sentimos más ágiles y mejor en general.",o:VF,c:0,fixed:true,j:"Verdadero: así empieza el apartado «La buena condición física significa buena salud». (Apuntes, pág. 15)"},
+  {q:"Por regla general, posee una condición física bastante mejor una persona que:",o:["No fuma, descansa adecuadamente, lleva una alimentación equilibrada y realiza ejercicio con un calentamiento previo","Entrena todos los días sin descansar","Come poco para pesar menos","Solo hace ejercicio en verano"],c:0,j:"Es la descripción de los hábitos de salud como factor de la condición física. (Apuntes, pág. 16)"},
+  {q:"Verdadero o falso: La flexibilidad será mayor cuanta más movilidad tengan tus articulaciones y más elásticos sean tus músculos.",o:VF,c:0,fixed:true,j:"Verdadero: «Cuanta más movilidad tengan tus articulaciones y más elásticos sean tus músculos, mayor será tu flexibilidad». (Apuntes, pág. 18)"}
+ ]
+}
+// ------------------------------------------------------------------ (añade aquí el TEMA 3, con una coma delante)
+];
+
+// =====================================================================
+//  MOTOR DEL TEST (no hace falta tocarlo para añadir temas)
+// =====================================================================
+const SRC={P:"Profesor",C:"Claude"};
+const TEMAS={};const TIDS=[];const QP=[];const QC=[];
+TEMARIO.forEach(T=>{
+  TEMAS[T.id]=T;TIDS.push(T.id);
+  (T.profe||[]).forEach((q,i)=>{q.t=T.id;q.f="P";q.key=`P${T.id}-${i+1}`;QP.push(q);});
+  (T.mias||[]).forEach((q,i)=>{q.t=T.id;q.f="C";q.key=`C${T.id}-${i+1}`;
+    // en los datos la correcta suele ir la primera: se recoloca de forma fija para que no sea siempre la A
+    if(!q.fixed){const n=q.o.length,r=(i*7+T.id*3)%n,map=q.o.map((_,k)=>(k+r)%n),o=[];map.forEach((to,from)=>o[to]=q.o[from]);
+      q.o=o;q.c=Array.isArray(q.c)?q.c.map(k=>map[k]).sort():map[q.c];}
+    QC.push(q);});
+});
+const Q=QP.concat(QC);Q.forEach((q,i)=>q.id=i);
+const tIdx=t=>TIDS.indexOf(t);
+
+// ===================== ESTADO =====================
+const $=s=>document.querySelector(s);
+const LETTERS="ABCDEFGH";
+const LS="ef_";
+let cfg={mode:"practica",srcMode:"mix",numQ:"all",numQcustom:12,nP:10,nC:10,temas:TIDS.slice(),known:TIDS.slice(),shuffleQ:true,shuffleA:true,showTema:true,showSrc:true,feedback:true,justOk:true,back:true,prio:false,timer:false,timerMin:20,exN:20,timerEx:false,timerMinEx:30,font:"16px"};
+let S=null; let tick=null;
+
+function lsGet(k,d){try{const v=localStorage.getItem(LS+k);return v?JSON.parse(v):d}catch(e){return d}}
+function lsSet(k,v){try{localStorage.setItem(LS+k,JSON.stringify(v))}catch(e){}}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function fails(){return lsGet("fails",{})}
+const pl=(n,s,p)=>n===1?s:(p||s+"s");
+
+// ----- respuestas (una o varias correctas) -----
+const isMulti=q=>Array.isArray(q.c);
+const corr=q=>isMulti(q)?q.c:[q.c];
+const isC=(q,oi)=>corr(q).includes(oi);
+const selOf=x=>Array.isArray(x.ans)?x.ans:(x.ans===undefined||x.ans===-1?[]:[x.ans]);
+const isSel=(x,oi)=>selOf(x).includes(oi);
+function st(x){const s=selOf(x),c=corr(x.q);if(!s.length)return"bl";return s.length===c.length&&s.every(o=>c.includes(o))?"ok":"bad";}
+const lettersOf=(x,arr)=>arr.map(oi=>LETTERS[x.order.indexOf(oi)]).sort().join(" y ");
+const ansTxt=x=>selOf(x).map(oi=>x.q.o[oi]).join(" + ");
+const corrTxt=x=>corr(x.q).map(oi=>x.q.o[oi]).join(" + ");
+
+// ===================== CONFIG UI =====================
+function buildTemas(){
+  const box=$("#temasBox");box.innerHTML="";
+  TIDS.forEach(k=>{
+    const np=QP.filter(q=>q.t===k).length,nc=QC.filter(q=>q.t===k).length;
+    const l=document.createElement("label");
+    l.innerHTML=`<input type="checkbox" data-t="${k}" ${cfg.temas.includes(k)?"checked":""}> <span>Tema ${k} · ${TEMAS[k].n} <span class="sub">(${np} del profesor + ${nc} de Claude)</span></span>`;
+    box.appendChild(l);
+  });
+  box.querySelectorAll("input").forEach(i=>i.onchange=()=>{cfg.temas=[...box.querySelectorAll("input:checked")].map(x=>+x.dataset.t);saveCfg();updateInfo();});
+  const seg=$("#temaSeg");seg.innerHTML="";
+  const mk=(txt,ids)=>{const b=document.createElement("button");b.textContent=txt;
+    if(ids.length===cfg.temas.length&&ids.every(i=>cfg.temas.includes(i)))b.classList.add("on");
+    b.onclick=()=>{cfg.temas=ids.slice();saveCfg();buildTemas();updateInfo();};seg.appendChild(b);};
+  TIDS.forEach(k=>mk("Solo tema "+k,[k]));
+  mk(TIDS.length===2?"Los dos temas":"Todos los temas",TIDS);
+}
+function loadCfg(){
+  const c=lsGet("cfg",null);if(c)cfg=Object.assign(cfg,c);
+  // temas nuevos añadidos después de guardar la configuración: se activan solos
+  const known=cfg.known||[];TIDS.forEach(t=>{if(!known.includes(t)&&!cfg.temas.includes(t))cfg.temas.push(t);});
+  cfg.temas=cfg.temas.filter(t=>TIDS.includes(t));cfg.known=TIDS.slice();
+}
+function saveCfg(){lsSet("cfg",cfg)}
+const OPTS=[["optShuffleQ","shuffleQ"],["optShuffleA","shuffleA"],["optTema","showTema"],["optSrc","showSrc"],["optFeedback","feedback"],["optJustOk","justOk"],["optBack","back"],["optPrio","prio"],["optTimer","timer"],["optTimerEx","timerEx"]];
+function applyCfgToUI(){
+  document.querySelectorAll(".mode").forEach(m=>m.classList.toggle("sel",m.dataset.mode===cfg.mode));
+  $("#cfgPractica").classList.toggle("hidden",cfg.mode!=="practica");
+  $("#cfgPractica2").classList.toggle("hidden",cfg.mode!=="practica");
+  $("#cfgExamen").classList.toggle("hidden",cfg.mode!=="examen");
+  $("#srcSeg").querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.v===cfg.srcMode));
+  $("#fontSeg").querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.v===cfg.font));
+  document.documentElement.style.setProperty("--fs",cfg.font);
+  $("#rowNumQ").classList.toggle("hidden",cfg.srcMode==="custom");
+  $("#rowCustom").classList.toggle("hidden",cfg.srcMode!=="custom");
+  $("#numQ").value=cfg.numQ;$("#numQcustom").value=cfg.numQcustom;$("#numQcustom").classList.toggle("hidden",cfg.numQ!=="custom");
+  $("#nP").value=cfg.nP;$("#nC").value=cfg.nC;$("#exN").value=cfg.exN;
+  OPTS.forEach(([id,k])=>$("#"+id).checked=cfg[k]);
+  $("#timerMin").value=cfg.timerMin;$("#timerMinEx").value=cfg.timerMinEx;
+  buildTemas();updateInfo();
+}
+function poolP(){return QP.filter(q=>cfg.temas.includes(q.t));}
+function poolC(){return QC.filter(q=>cfg.temas.includes(q.t));}
+function wantedN(total){
+  if(cfg.numQ==="all")return total;
+  if(cfg.numQ==="custom")return Math.max(1,+cfg.numQcustom||1);
+  return +cfg.numQ;
+}
+function updateInfo(){
+  const p=poolP().length,c=poolC().length;
+  $("#numQinfo").textContent=cfg.srcMode==="mix"?`${p+c} disponibles (${p} del profesor + ${c} de Claude)`:cfg.srcMode==="profe"?`${p} disponibles`:`${c} disponibles`;
+  $("#customInfo").textContent=`disponibles: ${p} del profesor y ${c} de Claude con los temas elegidos`;
+  let n;
+  if(cfg.mode==="examen")n=Math.min(Math.max(1,+cfg.exN||1),p+c);
+  else if(cfg.srcMode==="custom")n=Math.min(cfg.nP,p)+Math.min(cfg.nC,c);
+  else{const tot=cfg.srcMode==="mix"?p+c:cfg.srcMode==="profe"?p:c;n=Math.min(wantedN(tot),tot);}
+  if(!cfg.temas.length)n=0;
+  $("#exInfo").textContent=`de ${p+c} disponibles con los temas elegidos`;
+  $("#startInfo").textContent=`${n} ${pl(n,"pregunta")} · ${cfg.temas.length} ${pl(cfg.temas.length,"tema")}`+(cfg.mode==="examen"?" · las de Claude valen la mitad":"");
+  $("#btnStart").disabled=n===0;
+  const f=fails();const nf=Object.keys(f).length;
+  $("#failsInfo").textContent=nf?`${nf} ${pl(nf,"pregunta")} con fallos recordados`:"";
+}
+document.querySelectorAll(".mode").forEach(m=>m.onclick=()=>{cfg.mode=m.dataset.mode;saveCfg();applyCfgToUI();});
+$("#srcSeg").querySelectorAll("button").forEach(b=>b.onclick=()=>{cfg.srcMode=b.dataset.v;saveCfg();applyCfgToUI();});
+$("#fontSeg").querySelectorAll("button").forEach(b=>b.onclick=()=>{cfg.font=b.dataset.v;saveCfg();applyCfgToUI();});
+$("#numQ").onchange=e=>{cfg.numQ=e.target.value;$("#numQcustom").classList.toggle("hidden",cfg.numQ!=="custom");saveCfg();updateInfo();};
+$("#numQcustom").oninput=e=>{cfg.numQcustom=+e.target.value;saveCfg();updateInfo();};
+$("#nP").oninput=e=>{cfg.nP=Math.max(0,+e.target.value||0);saveCfg();updateInfo();};
+$("#nC").oninput=e=>{cfg.nC=Math.max(0,+e.target.value||0);saveCfg();updateInfo();};
+$("#exN").oninput=e=>{cfg.exN=Math.max(1,+e.target.value||1);saveCfg();updateInfo();};
+$("#timerMin").oninput=e=>{cfg.timerMin=Math.max(1,+e.target.value||1);saveCfg();};
+$("#timerMinEx").oninput=e=>{cfg.timerMinEx=Math.max(1,+e.target.value||1);saveCfg();};
+OPTS.forEach(([id,k])=>{$("#"+id).onchange=e=>{cfg[k]=e.target.checked;saveCfg();updateInfo();};});
+$("#btnTheme").onclick=()=>{const r=document.documentElement;const cur=r.dataset.theme||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");r.dataset.theme=cur==="dark"?"light":"dark";lsSet("theme",r.dataset.theme);};
+(()=>{const t=lsGet("theme",null);if(t)document.documentElement.dataset.theme=t;})();
+
+// ===================== HISTORIAL =====================
+function renderHist(){
+  const h=lsGet("hist",[]);const box=$("#histBox");
+  if(!h.length){box.textContent="Todavía no hay intentos guardados en este navegador.";return;}
+  box.innerHTML="<table><tr><th>Fecha</th><th>Modo</th><th>Temas</th><th>Preg.</th><th>✅</th><th>❌</th><th>Nota</th></tr>"+
+   h.slice().reverse().map(a=>`<tr><td>${a.f}</td><td>${a.m==="examen"?"Examen":"Práctica"}</td><td>${a.t||""}</td><td>${a.n}</td><td>${a.ok}</td><td>${a.bad+a.bl}</td><td><b>${a.nota}</b></td></tr>`).join("")+"</table>";
+}
+$("#btnClearHist").onclick=()=>{if(confirm("¿Borrar el historial de intentos?")){lsSet("hist",[]);renderHist();}};
+$("#btnClearFails").onclick=()=>{if(confirm("¿Olvidar qué preguntas has fallado otras veces?")){lsSet("fails",{});updateInfo();}};
+
+// ===================== SESIÓN =====================
+function pick(list,n){
+  if(n<=0)return[];
+  if(cfg.mode==="practica"&&cfg.prio){
+    const f=fails();
+    return shuffle(list).sort((a,b)=>(f[b.key]||0)-(f[a.key]||0)).slice(0,n);
+  }
+  return shuffle(list).slice(0,n);
+}
+function start(opts){
+  const exam=cfg.mode==="examen"&&!(opts&&(opts.items||opts.temas));
+  let sel;
+  if(opts&&opts.items){sel=opts.items;}
+  else if(opts&&opts.temas){sel=Q.filter(q=>opts.temas.includes(q.t));}
+  else if(exam){sel=shuffle(poolP().concat(poolC())).slice(0,Math.max(1,+cfg.exN||1));}
+  else{
+    const p=poolP(),c=poolC();
+    if(cfg.srcMode==="custom")sel=pick(p,cfg.nP).concat(pick(c,cfg.nC));
+    else{const pool=cfg.srcMode==="mix"?p.concat(c):cfg.srcMode==="profe"?p:c;sel=pick(pool,wantedN(pool.length));}
+  }
+  if(!sel.length){alert("No hay preguntas con esa configuración.");return;}
+  const shuffleQ=exam||cfg.shuffleQ;
+  sel=shuffleQ?shuffle(sel):sel.slice().sort((a,b)=>tIdx(a.t)-tIdx(b.t)||(a.f===b.f?0:a.f==="P"?-1:1)||a.id-b.id);
+  const shuffleA=exam||cfg.shuffleA;
+  const mins=exam?(cfg.timerEx?cfg.timerMinEx:0):(cfg.timer?cfg.timerMin:0);
+  S={exam,items:sel.map(q=>{
+      let order=q.o.map((_,i)=>i);
+      if(shuffleA&&!q.fixed)order=shuffle(order);
+      return {q,order,ans:undefined,revealed:false};
+    }),i:0,
+    feedback:!exam&&cfg.feedback, justOk:exam||cfg.justOk, back:exam||cfg.back, showTema:!exam&&cfg.showTema, showSrc:!exam&&cfg.showSrc,
+    started:Date.now(), deadline:mins?Date.now()+mins*60000:0};
+  show("quiz");render();startTimer();
+}
+function startTimer(){
+  clearInterval(tick);const el=$("#qTimer");
+  if(!S.deadline){el.classList.add("hidden");return;}
+  el.classList.remove("hidden");
+  const upd=()=>{const left=Math.max(0,S.deadline-Date.now());const m=Math.floor(left/60000),s=Math.floor(left%60000/1000);
+    el.textContent=`⏱ ${m}:${s<10?"0":""}${s}`;el.classList.toggle("low",left<60000);
+    if(left<=0){clearInterval(tick);finish(true);}};
+  upd();tick=setInterval(upd,500);
+}
+function show(id){["config","quiz","results"].forEach(s=>$("#"+s).classList.toggle("hidden",s!==id));window.scrollTo({top:0});if(id!=="quiz")clearInterval(tick);}
+
+function needsCheck(it){return isMulti(it.q)&&S.feedback&&!it.revealed&&selOf(it).length>0;}
+function render(){
+  const it=S.items[S.i],q=it.q,N=S.items.length,multi=isMulti(q);
+  $("#qMode").textContent=S.exam?"📝 Examen":"🧪 Práctica";
+  $("#qTema").textContent=`Tema ${q.t} · ${TEMAS[q.t].n}`;$("#qTema").classList.toggle("hidden",!S.showTema);
+  $("#qSrc").textContent=SRC[q.f];$("#qSrc").className="chip"+(q.f==="P"?" p":"");$("#qSrc").classList.toggle("hidden",!S.showSrc);
+  $("#qCount").textContent=`Pregunta ${S.i+1} de ${N}`;
+  $("#qProg").style.width=((S.i)/N*100)+"%";
+  $("#qText").innerHTML=q.q;
+  $("#qHint").classList.toggle("hidden",!multi);
+  $("#qHint").textContent="☑ Varias respuestas: marca todas las correctas"+(S.feedback?" y pulsa «Comprobar».":". Solo cuenta si están todas y no sobra ninguna.");
+  const box=$("#qAns");box.innerHTML="";
+  const locked=it.revealed;
+  it.order.forEach((oi,pos)=>{
+    const b=document.createElement("button");b.className="ans"+(multi?" multi":"");
+    b.innerHTML=`<span class="L">${LETTERS[pos]}</span><span>${q.o[oi]}</span>`;
+    if(isSel(it,oi))b.classList.add("sel");
+    if(locked){b.classList.add("locked");if(isC(q,oi))b.classList.add("ok");else if(isSel(it,oi))b.classList.add("bad");
+      if(multi&&isC(q,oi)&&!isSel(it,oi))b.classList.add("missed");}
+    b.onclick=()=>choose(oi);
+    box.appendChild(b);
+  });
+  const fb=$("#qFb");fb.innerHTML="";
+  if(locked){
+    const s=st(it),ok=s==="ok",blank=s==="bl";
+    const d=document.createElement("div");d.className="fb "+(ok?"":blank?"blank":"bad");
+    const cl=lettersOf(it,corr(q));
+    d.innerHTML=`<b>${ok?"✅ Correcto":blank?"⬜ Sin responder":"❌ Incorrecto"}.</b> ${ok?"":(multi?`Las correctas son <b>${cl}</b>.`:`La respuesta correcta es la <b>${cl}</b>.`)}${(!ok||S.justOk)?`<div style="margin-top:6px">${q.j}</div>`:""}`;
+    fb.appendChild(d);
+  }
+  $("#btnPrev").disabled=!S.back||S.i===0;
+  const last=S.i===N-1;
+  $("#btnNext").textContent=needsCheck(it)?"Comprobar":last?(S.exam?"Entregar examen":"Terminar"):"Siguiente →";
+  const dots=$("#qDots");dots.innerHTML="";
+  S.items.forEach((x,k)=>{
+    const d=document.createElement("div");d.className="dot";d.textContent=k+1;
+    if(k===S.i)d.classList.add("cur");
+    if(x.ans!==undefined){ if(x.revealed){const s=st(x);d.classList.add(s==="ok"?"k":s==="bl"?"b":"x");} else d.classList.add(x.ans===-1?"b":"done"); }
+    if(S.back||k===S.i){d.onclick=()=>{S.i=k;render();};}else d.style.cursor="default";
+    dots.appendChild(d);
+  });
+}
+function choose(oi){
+  const it=S.items[S.i];
+  if(it.revealed)return;
+  if(isMulti(it.q)&&oi!==-1){
+    let a=selOf(it).slice();
+    a=a.includes(oi)?a.filter(o=>o!==oi):a.concat(oi);
+    it.ans=a.length?a:undefined;
+    render();return;
+  }
+  it.ans=oi;
+  if(S.feedback){it.revealed=true;}
+  render();
+  if(S.feedback){$("#qFb").scrollIntoView({behavior:"smooth",block:"nearest"});}
+}
+function next(){
+  const it=S.items[S.i];
+  if(needsCheck(it)){it.revealed=true;render();$("#qFb").scrollIntoView({behavior:"smooth",block:"nearest"});return;}
+  if(it.ans===undefined&&S.feedback){ if(!confirm("No has respondido. ¿Pasar a la siguiente? Contará como no respondida."))return; it.ans=-1;it.revealed=true; }
+  if(S.i<S.items.length-1){S.i++;render();}
+  else finish();
+}
+$("#btnNext").onclick=next;
+$("#btnPrev").onclick=()=>{if(S.back&&S.i>0){S.i--;render();}};
+$("#btnAbort").onclick=()=>{if(confirm("¿Abandonar este intento? No se guardará."))show("config");};
+$("#btnHome").onclick=()=>{if(S&&!$("#quiz").classList.contains("hidden")){if(!confirm("¿Volver al inicio? Se perderá el intento actual."))return;}show("config");renderHist();updateInfo();};
+document.addEventListener("keydown",e=>{
+  if($("#quiz").classList.contains("hidden")||e.target.tagName==="INPUT"||e.ctrlKey||e.metaKey||e.altKey)return;
+  const it=S.items[S.i],k=e.key.toLowerCase();
+  const idx="1234".indexOf(k)>=0?"1234".indexOf(k):"abcd".indexOf(k);
+  if(idx>=0&&idx<it.order.length){choose(it.order[idx]);e.preventDefault();}
+  else if(k==="arrowright"||k==="enter"){next();e.preventDefault();}
+  else if(k==="arrowleft"){$("#btnPrev").click();}
+});
+
+// ===================== RESULTADOS =====================
+const com=(x,d)=>x.toFixed(d).replace(".",",");
+function finish(auto){
+  const un=S.items.filter(x=>x.ans===undefined).length;
+  if(!auto&&un&&!confirm(`Tienes ${un} ${pl(un,"pregunta")} sin responder. No ${un>1?"puntuarán":"puntuará"}. ¿Entregar?`))return;
+  clearInterval(tick);
+  S.items.forEach(x=>{if(x.ans===undefined)x.ans=-1;x.revealed=true;x.s=st(x);});
+  const N=S.items.length;
+  let ok=0,bad=0,bl=0;
+  S.items.forEach(x=>{if(x.s==="bl")bl++;else if(x.s==="ok")ok++;else bad++;});
+  // En el examen las preguntas de Claude valen la mitad que las del profesor. Los fallos no restan.
+  const W=q=>S.exam&&q.f==="C"?0.5:1;
+  const G={P:{n:0,ok:0},C:{n:0,ok:0}};S.items.forEach(x=>{G[x.q.f].n++;if(x.s==="ok")G[x.q.f].ok++;});
+  let puntos=0,max=0;S.items.forEach(x=>{max+=W(x.q);if(x.s==="ok")puntos+=W(x.q);});
+  const nota=puntos/max*10;
+  const notaTxt=com(nota,2);
+  const secs=Math.round((Date.now()-S.started)/1000);
+  $("#rTitle").textContent=(S.exam?"Resultado del examen":"Resultado de la práctica")+(auto?" (tiempo agotado)":"");
+  $("#rStats").innerHTML=`<div class="stat ok"><b>${ok}</b>aciertos</div><div class="stat bad"><b>${bad}</b>fallos</div>${bl?`<div class="stat blank"><b>${bl}</b>sin responder</div>`:""}<div class="stat"><b>${notaTxt}</b>nota sobre 10</div>`;
+  let nt="";
+  if(S.exam){nt=`<p><b>Puntuación:</b> profesor ${G.P.ok} de ${G.P.n} × 1 + Claude ${G.C.ok} de ${G.C.n} × 0,5 = <b>${com(puntos,1)}</b> puntos de ${com(max,1)} posibles → nota ${notaTxt} / 10. Los fallos no restan.</p>`;}
+  else{nt=`<p><b>Puntuación:</b> ${ok} de ${N} (${Math.round(ok/N*100)} %). Los fallos no restan.</p>`;}
+  nt+=`<p class="sub">Tiempo: ${Math.floor(secs/60)} min ${secs%60} s (${Math.round(secs/N)} s por pregunta). Las preguntas de varias respuestas solo cuentan como acierto si están todas las correctas y ninguna de más.</p>`;
+  $("#rNota").innerHTML=nt;
+  // por temas
+  const T={};
+  S.items.forEach(x=>{const t=x.q.t;T[t]=T[t]||{n:0,ok:0,bad:0,bl:0,fail:[]};T[t].n++;T[t][x.s]++;if(x.s!=="ok")T[t].fail.push(x);});
+  const rows=Object.keys(T).map(Number).sort((a,b)=>tIdx(a)-tIdx(b));
+  // historial y memoria de fallos
+  const h=lsGet("hist",[]);h.push({f:new Date().toLocaleString("es-ES",{dateStyle:"short",timeStyle:"short"}),m:S.exam?"examen":"practica",t:rows.map(t=>"T"+t).join(" "),n:N,ok,bad,bl,nota:notaTxt});
+  lsSet("hist",h.slice(-15));
+  const f=fails();S.items.forEach(x=>{const k=x.q.key;if(x.s!=="ok")f[k]=(f[k]||0)+1;else if(f[k])f[k]=Math.max(0,f[k]-1);if(f[k]===0)delete f[k];});lsSet("fails",f);
+  const bar=r=>{const p=Math.round(r.ok/r.n*100);return `<td>${r.n}</td><td>${r.ok}</td><td>${r.bad+r.bl}</td><td><div class="bar"><i class="${p<50?"bad":""}" style="width:${p}%"></i></div><span class="sub">${p} %</span></td>`;};
+  const head=a=>`<tr><th>${a}</th><th>Preg.</th><th>✅</th><th>❌</th><th style="min-width:120px">Aciertos</th></tr>`;
+  $("#rTable").innerHTML=head("Tema")+rows.map(t=>`<tr><td>Tema ${t} · ${TEMAS[t].n}</td>${bar(T[t])}</tr>`).join("");
+  // por fuente
+  const F={};S.items.forEach(x=>{const s=x.q.f;F[s]=F[s]||{n:0,ok:0,bad:0,bl:0};F[s].n++;F[s][x.s]++;});
+  $("#rSrcTable").innerHTML=head("Fuente")+Object.keys(F).map(s=>`<tr><td>${SRC[s]}</td>${bar(F[s])}</tr>`).join("");
+  renderAnalisis(T,rows,F,{N,ok,bad,bl});
+  renderReview(false);
+  show("results");
+}
+function renderAnalisis(T,rows,F,s){
+  const weak=rows.map(t=>({t,...T[t],rate:(T[t].bad+T[t].bl)/T[t].n})).filter(x=>x.bad+x.bl>0).sort((a,b)=>b.rate-a.rate||b.bad-a.bad);
+  const strong=rows.filter(t=>T[t].bad+T[t].bl===0&&T[t].n>=2);
+  const failed=S.items.filter(x=>x.s!=="ok");
+  let h="";
+  if(!weak.length){
+    h+=`<p>🎉 <b>Pleno.</b> No has fallado ninguna pregunta${rows.length<TIDS.length?" (solo ha salido "+rows.length+" de los "+TIDS.length+" temas: haz una práctica con el resto)":""}. Para fijarlo, repite dentro de unos días con las respuestas barajadas y sin corrección inmediata.</p>`;
+  } else {
+    const top=weak.slice(0,3);
+    h+=`<p><b>Dónde has fallado más:</b> ${top.map(w=>`<b>Tema ${w.t} (${TEMAS[w.t].n})</b>: ${w.bad} ${pl(w.bad,"fallo")}${w.bl?" y "+w.bl+" sin responder":""} de ${w.n}`).join("; ")}.</p>`;
+    if(F.P&&F.C){const pp=F.P.ok/F.P.n,pc=F.C.ok/F.C.n;
+      if(pp<pc-0.15)h+=`<p>Las preguntas del <b>profesor</b> se te dan peor (${Math.round(pp*100)} % frente a ${Math.round(pc*100)} % de las de Claude). Son las que más se parecen al examen: haz una práctica solo con ellas (son ${QP.length}) hasta acertarlas todas.</p>`;
+      else if(pc<pp-0.15)h+=`<p>Las preguntas de <b>Claude</b> se te dan peor (${Math.round(pc*100)} % frente a ${Math.round(pp*100)} % de las del profesor). Las del profesor ya te las sabes, pero las otras salen de partes de los apuntes que el test del profesor no toca: repasa esas páginas.</p>`;}
+    const mBad=failed.filter(x=>isMulti(x.q)&&x.s==="bad");
+    const mPart=mBad.filter(x=>selOf(x).every(o=>isC(x.q,o)));
+    if(mBad.length>=2)h+=`<p>Has fallado ${mBad.length} preguntas de <b>varias respuestas</b>${mPart.length?` (en ${mPart.length} marcaste solo correctas pero te ${mPart.length>1?"faltaron":"faltó"} alguna)`:""}. En las de casillas, lee cada opción como si fuera un verdadero/falso independiente: en el formulario del profesor, si falta una o sobra una, la pregunta vale 0.</p>`;
+    const vf=failed.filter(x=>x.s==="bad"&&x.q.o===VF);
+    if(vf.length>=2)h+=`<p>Has fallado ${vf.length} de <b>verdadero o falso</b>. Suelen cambiar una sola palabra de la definición («con» por «sin», «se acercan» por «se alejan», «mucho» por «poco»): busca esa palabra antes de contestar.</p>`;
+    if(s.bl>=2)h+=`<p>Has dejado ${s.bl} sin responder. Los fallos no restan, así que contesta siempre aunque dudes: descarta las opciones que seguro que no son y elige entre las que queden.</p>`;
+    const absol=failed.filter(x=>x.s==="bad"&&/siempre|únicamente|solo |sólo |nunca|por completo|cualquier/i.test(selOf(x).filter(o=>!isC(x.q,o)).map(o=>x.q.o[o]).join(" ")));
+    if(absol.length>=2)h+=`<p>En ${absol.length} fallos elegiste una opción con palabras absolutas («siempre», «solo», «nunca», «cualquier»…). En estos tests esas opciones casi siempre son falsas: desconfía de ellas.</p>`;
+    const fm=fails();const rep=failed.filter(x=>(fm[x.q.key]||0)>=2);
+    if(rep.length)h+=`<p>🔁 ${rep.length} de las que has fallado ya las habías fallado antes: ${rep.map(x=>`«${trunc(x.q.q,60)}»`).join(", ")}. Apúntalas en una tarjeta con la respuesta y repásalas antes de cada práctica.</p>`;
+    h+=`<h3>Qué repasar, tema por tema</h3>`;
+    weak.forEach(w=>{
+      h+=`<p><b>Tema ${w.t} · ${TEMAS[w.t].n}</b> — ${w.ok}/${w.n} aciertos.</p><ul>`;
+      w.fail.forEach(x=>{
+        const tu=x.s==="bl"?"sin responder":`elegiste «${trunc(ansTxt(x),90)}»`;
+        h+=`<li><span class="tag">${SRC[x.q.f]}</span> <i>${trunc(x.q.q,110)}</i> — ${tu}; lo correcto era <b>${lettersOf(x,corr(x.q))}</b> («${trunc(corrTxt(x),110)}»). <span class="sub">${x.q.j}</span></li>`;
+      });
+      h+=`</ul><p>📚 <b>Ideas clave del tema:</b> ${TEMAS[w.t].tip}</p>`;
+    });
+    h+=`<h3>Plan sugerido</h3><ol>
+      <li>Lee las justificaciones de las preguntas falladas (arriba) y busca en los apuntes la página que indican. Subraya la frase exacta: muchas preguntas son la frase de los apuntes con una palabra cambiada.</li>
+      <li>Pulsa «Repetir solo las falladas» hasta acertarlas todas dos veces seguidas con las respuestas barajadas.</li>
+      <li>Haz una práctica <b>solo con ${top.length>1?"esos temas":"ese tema"}</b> (botón «Practicar solo los temas fallados»), con corrección inmediata.</li>
+      <li>Al día siguiente, un examen con todos los temas para comprobar que no se te ha olvidado lo que hoy tenías bien.</li></ol>`;
+  }
+  if(strong.length)h+=`<p>💪 <b>${pl(strong.length,"Tema que dominas","Temas que dominas")}</b> (todo correcto): ${strong.map(t=>"Tema "+t).join(", ")}.</p>`;
+  const notSeen=TIDS.filter(t=>!rows.includes(t));
+  if(notSeen.length)h+=`<p class="sub">En este intento no ha salido ninguna pregunta ${pl(notSeen.length,"del tema","de los temas")} ${notSeen.join(", ")}.</p>`;
+  $("#rAnalisis").innerHTML=h;
+  $("#btnWeak").disabled=!weak.length;
+  $("#btnWeak").onclick=()=>{cfg.mode="practica";saveCfg();applyCfgToUI();start({temas:weak.map(w=>w.t)});};
+  $("#btnRedo").disabled=!failed.length;
+  $("#btnRedo").onclick=()=>{cfg.mode="practica";saveCfg();applyCfgToUI();start({items:failed.map(x=>x.q)});};
+}
+function trunc(s,n){s=s.replace(/<[^>]+>/g,"");return s.length>n?s.slice(0,n-1)+"…":s;}
+function renderReview(onlyBad){
+  const box=$("#rReview");box.innerHTML="";
+  S.items.forEach((x,k)=>{
+    const ok=x.s==="ok",bl=x.s==="bl";
+    if(onlyBad&&ok)return;
+    const d=document.createElement("div");d.className="rev "+(ok?"ok":bl?"blank":"bad");
+    d.innerHTML=`<p><span class="tag">${k+1}</span> <span class="tag">Tema ${x.q.t} · ${TEMAS[x.q.t].n}</span> <span class="tag">${SRC[x.q.f]}</span>${isMulti(x.q)?' <span class="tag">Varias respuestas</span>':""}</p><p><b>${x.q.q}</b></p>`+
+      x.order.map((oi,pos)=>`<p style="padding-left:8px">${isC(x.q,oi)?(isMulti(x.q)&&!isSel(x,oi)&&!bl?"☑️":"✅"):isSel(x,oi)?"❌":"&nbsp;&nbsp;&nbsp;&nbsp;"} <b>${LETTERS[pos]})</b> ${x.q.o[oi]}${isSel(x,oi)?' <span class="sub">← tu respuesta</span>':""}</p>`).join("")+
+      `<p class="sub">${ok?"Correcto.":bl?"No la respondiste. Correcta: "+lettersOf(x,corr(x.q))+".":"Tu respuesta: "+lettersOf(x,selOf(x))+". Correcta: "+lettersOf(x,corr(x.q))+"."} ${x.q.j}</p>`;
+    box.appendChild(d);
+  });
+  if(!box.children.length)box.innerHTML="<p class='sub'>No hay fallos. 🎉</p>";
+}
+$("#revAll").onclick=()=>renderReview(false);
+$("#revBad").onclick=()=>renderReview(true);
+$("#btnAgain").onclick=()=>start();
+$("#btnHome2").onclick=()=>{show("config");renderHist();updateInfo();};
+$("#btnStart").onclick=()=>start();
+
+// ===================== INICIO =====================
+$("#subTitle").textContent=`${TIDS.length} ${pl(TIDS.length,"tema")} · ${QP.length} preguntas del profesor + ${QC.length} de Claude (sacadas de los apuntes)`;
+loadCfg();applyCfgToUI();renderHist();
+</script>
+</body>
+</html>

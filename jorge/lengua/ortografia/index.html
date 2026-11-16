@@ -1,0 +1,734 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>[hidden]{display:none!important}</style>
+<title>Caza-errores</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:wght@600;700&display=swap">
+<style>
+/* Concepto: cuaderno de clase con boli rojo de profe. Tipografía de máxima legibilidad (Atkinson Hyperlegible) para el texto del examen; el rojo marca las faltas y el verde la forma correcta. */
+:root {
+  --paper: #f3f5fa;
+  --surface: #ffffff;
+  --surface-2: #eef1f8;
+  --ink: #14203b;
+  --muted: #55627c;
+  --line: #d9dfec;
+  --accent: #1f4fd6;
+  --accent-ink: #ffffff;
+  --accent-soft: #e3eaff;
+  --pen: #c2202f;
+  --pen-soft: #fde7ea;
+  --ok: #17784a;
+  --ok-soft: #dff3e8;
+  --font-body: "Atkinson Hyperlegible", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-display: "Bricolage Grotesque", "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --radius: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0e1426;
+    --surface: #161e36;
+    --surface-2: #1d2744;
+    --ink: #e9eeff;
+    --muted: #9fabc7;
+    --line: #2b3759;
+    --accent: #86a8ff;
+    --accent-ink: #0b1122;
+    --accent-soft: #223062;
+    --pen: #ff8792;
+    --pen-soft: #3b1d28;
+    --ok: #65d79c;
+    --ok-soft: #173a2b;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0e1426;
+  --surface: #161e36;
+  --surface-2: #1d2744;
+  --ink: #e9eeff;
+  --muted: #9fabc7;
+  --line: #2b3759;
+  --accent: #86a8ff;
+  --accent-ink: #0b1122;
+  --accent-soft: #223062;
+  --pen: #ff8792;
+  --pen-soft: #3b1d28;
+  --ok: #65d79c;
+  --ok-soft: #173a2b;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  padding-inline: 16px;
+}
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.15; text-wrap: balance; margin: 0; }
+p { margin: 0; }
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+h1:focus { outline: none; }
+
+.wrap { max-width: 62rem; margin-inline: auto; padding-block: 1.75rem 4rem; }
+
+/* Botones */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  min-height: 2.9rem; padding: .6rem 1.2rem;
+  border-radius: 999px; border: 2px solid var(--accent);
+  background: var(--accent); color: var(--accent-ink);
+  font-weight: 700; text-decoration: none;
+  transition: transform .12s ease, background-color .12s ease;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn.ghost { background: transparent; color: var(--accent); }
+.btn.big { min-height: 3.4rem; padding-inline: 1.7rem; font-size: 1.15rem; }
+.link {
+  background: none; border: 0; padding: .35rem .1rem; color: var(--accent);
+  font-weight: 700; text-decoration: underline; text-underline-offset: 3px;
+}
+
+/* ===== Índice ===== */
+.hero { display: grid; gap: .9rem; margin-bottom: 1.6rem; }
+.hero h1 { font-size: clamp(2.2rem, 7vw, 3.4rem); letter-spacing: -.01em; }
+.hero h1 .pen { text-decoration: underline wavy var(--pen); text-decoration-thickness: .07em; text-underline-offset: .14em; }
+.hero .lede { max-width: 42rem; color: var(--muted); font-size: 1.15rem; }
+
+.steps { list-style: none; margin: 0 0 1.8rem; padding: 0; display: grid; gap: .75rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12.5rem), 1fr)); counter-reset: paso; }
+.steps li {
+  counter-increment: paso; position: relative;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: .9rem 1rem .9rem 3.1rem; min-width: 0;
+}
+.steps li::before {
+  content: counter(paso); position: absolute; left: .85rem; top: .8rem;
+  width: 1.7rem; height: 1.7rem; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--accent-soft); color: var(--accent); font: 700 .95rem var(--font-display);
+}
+
+.summary { display: flex; flex-wrap: wrap; gap: .5rem 1.2rem; align-items: baseline; margin-bottom: 1rem; color: var(--muted); }
+.summary strong { color: var(--ink); font-family: var(--font-display); font-size: 1.15rem; }
+
+.grid { list-style: none; margin: 0; padding: 0; display: grid; gap: .9rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr)); }
+.card {
+  width: 100%; height: 100%; text-align: left; min-width: 0;
+  display: grid; grid-template-columns: auto 1fr; gap: .2rem 1rem; align-content: start;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 1rem 1.1rem 1.05rem;
+  transition: border-color .12s ease, transform .12s ease;
+}
+.card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.card .num { grid-row: 1 / span 3; font: 700 2.6rem/1 var(--font-display); color: var(--accent); min-width: 2ch; }
+.card .titulo { font: 700 1.25rem/1.15 var(--font-display); }
+.card .tema { color: var(--muted); }
+.card .meta { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem .8rem; margin-top: .45rem; font-size: .95rem; }
+.level { display: inline-flex; align-items: center; gap: .35rem; font-weight: 700; }
+.dots { display: inline-flex; gap: 3px; }
+.dots i { width: .6rem; height: .6rem; border-radius: 50%; background: var(--line); }
+.dots i.on { background: var(--accent); }
+.card .last { grid-column: 2; margin-top: .55rem; font-size: .95rem; color: var(--muted); }
+.card .last.done { color: var(--ok); font-weight: 700; }
+.bar-track { display: block; height: .5rem; border-radius: 99px; background: var(--surface-2); overflow: hidden; }
+.bar-fill { height: 100%; background: var(--ok); border-radius: 99px; width: 0; }
+.card .bar-track { margin-top: .3rem; }
+
+/* ===== Cabeceras de examen ===== */
+.topline { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem 1rem; margin-bottom: 1rem; }
+.exam-head { display: grid; gap: .4rem; margin-bottom: 1.1rem; }
+.exam-head .kicker { color: var(--muted); font-weight: 700; letter-spacing: .06em; text-transform: uppercase; font-size: .85rem; }
+.exam-head h1 { font-size: clamp(1.8rem, 5.5vw, 2.6rem); }
+.chip { display: inline-block; padding: .15rem .7rem; border-radius: 99px; background: var(--accent-soft); color: var(--accent); font-weight: 700; font-size: .95rem; }
+
+/* Hoja de examen */
+.sheet {
+  position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 1.5rem 1.4rem 1.4rem 3.2rem;
+}
+.sheet::before { content: ""; position: absolute; top: 0; bottom: 0; left: 2.1rem; width: 2px; background: var(--pen); opacity: .4; }
+.sheet p { font-size: clamp(1.15rem, 2.2vw + .7rem, 1.4rem); line-height: 1.85; max-width: 46rem; overflow-wrap: anywhere; }
+.sheet p + p { margin-top: 1.1em; }
+
+.cta { display: flex; flex-wrap: wrap; align-items: center; gap: .8rem 1.2rem; margin-top: 1.4rem; }
+.cta .hint { color: var(--muted); max-width: 30rem; }
+
+/* ===== Respuestas ===== */
+.sticky {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10;
+  margin-inline: -16px; padding: .65rem 16px;
+  background: var(--paper); border-bottom: 1px solid var(--line);
+}
+.sticky-in { max-width: 62rem; margin-inline: auto; display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; }
+.sticky .prog { flex: 1 1 12rem; min-width: 0; display: grid; gap: .25rem; }
+.sticky .prog b { font-variant-numeric: tabular-nums; }
+.sticky .btn { min-height: 2.5rem; padding-block: .3rem; }
+
+.fix { display: inline; }
+.fix s { color: var(--pen); text-decoration-thickness: 2px; background: var(--pen-soft); border-radius: 5px; padding: 0 .2em; }
+.fix b { color: var(--ok); background: var(--ok-soft); border-radius: 5px; padding: 0 .2em; margin-left: .25em; font-weight: 700; }
+.fix sup {
+  display: inline-grid; place-items: center; min-width: 1.35em; height: 1.35em; padding: 0 .3em;
+  margin-left: .2em; border-radius: 99px; vertical-align: super;
+  font: 700 .62em var(--font-body); background: var(--accent); color: var(--accent-ink);
+  font-variant-numeric: tabular-nums;
+}
+.fix.found sup { background: var(--ok); color: var(--surface); }
+.fix.missed sup { background: var(--pen); color: var(--surface); }
+.fix.found { box-shadow: 0 2px 0 0 var(--ok); }
+.fix.missed { box-shadow: 0 2px 0 0 var(--pen); }
+
+.section-title { margin: 2rem 0 .3rem; font-size: 1.5rem; }
+.section-sub { color: var(--muted); margin-bottom: 1rem; max-width: 40rem; }
+
+.errs { list-style: none; margin: 0; padding: 0; display: grid; gap: .75rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 24rem), 1fr)); }
+.err {
+  display: grid; gap: .55rem; background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: .9rem 1rem 1rem; min-width: 0;
+  border-left-width: 6px;
+}
+.err.found { border-left-color: var(--ok); }
+.err.missed { border-left-color: var(--pen); }
+.err-top { display: flex; flex-wrap: wrap; align-items: baseline; gap: .3rem .7rem; }
+.err-n { font: 700 1rem var(--font-display); color: var(--muted); min-width: 1.9rem; }
+.pair { display: flex; flex-wrap: wrap; align-items: baseline; gap: .15rem .55rem; font-size: 1.2rem; min-width: 0; }
+.pair s { color: var(--pen); text-decoration-thickness: 2px; overflow-wrap: anywhere; }
+.pair .arrow { color: var(--muted); }
+.pair b { color: var(--ok); overflow-wrap: anywhere; }
+.tag { margin-left: auto; font-size: .8rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: .1rem .55rem; border-radius: 99px; background: var(--surface-2); color: var(--muted); }
+.tag.p { background: var(--accent-soft); color: var(--accent); }
+.why { color: var(--muted); }
+.seg { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+.seg button {
+  min-height: 2.6rem; border-radius: 10px; border: 2px solid var(--line); background: var(--surface);
+  font-weight: 700; transition: background-color .1s ease, border-color .1s ease;
+}
+.seg button:hover { border-color: var(--muted); }
+.seg button[aria-pressed="true"].yes { background: var(--ok-soft); border-color: var(--ok); color: var(--ok); }
+.seg button[aria-pressed="true"].no { background: var(--pen-soft); border-color: var(--pen); color: var(--pen); }
+
+.finish { margin-top: 1.8rem; display: grid; gap: .6rem; justify-items: start; }
+.finish .note { color: var(--muted); }
+
+/* ===== Resultado ===== */
+.result { display: grid; gap: 1.2rem; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem 1.4rem; }
+.score { font: 700 clamp(4rem, 17vw, 7rem)/1 var(--font-display); font-variant-numeric: tabular-nums; }
+.score small { font-size: .4em; }
+.result .big-line { font-size: 1.3rem; }
+.stats { display: grid; gap: .75rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); }
+.stat { background: var(--surface-2); border-radius: 12px; padding: .75rem .9rem; display: grid; gap: .1rem; }
+.stat span { color: var(--muted); font-size: .95rem; }
+.stat strong { font: 700 1.6rem var(--font-display); font-variant-numeric: tabular-nums; }
+.stat.ok strong { color: var(--ok); }
+.stat.bad strong { color: var(--pen); }
+.review { margin: 0; padding: 0; list-style: none; display: grid; gap: .4rem; }
+.review li { display: flex; flex-wrap: wrap; gap: .2rem .6rem; align-items: baseline; }
+.actions { display: flex; flex-wrap: wrap; gap: .7rem; }
+.msg { font-size: 1.2rem; }
+
+@media (max-width: 520px) {
+  .sheet { padding: 1.2rem 1rem 1.2rem 2.5rem; }
+  .sheet::before { left: 1.6rem; }
+  .card .num { font-size: 2.1rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+</style>
+</head>
+<body><a href="../../index.html" style="display:block;padding:8px 16px;background:#1b2033;color:#fff;font:600 15px/1.3 system-ui,'Segoe UI',sans-serif;text-decoration:none;position:relative;z-index:60">← Índice principal</a>
+
+<div class="wrap" id="app"></div>
+
+<script>
+/* Formato de cada error: [[texto con falta|forma correcta|c o p|explicación]]
+   c = clásico, p = para pillar */
+const EXAMS = [
+{
+  id: 1, nivel: 1,
+  titulo: "El cumpleaños de Lucía",
+  tema: "Una fiesta en familia",
+  texto: `
+El [[sabado|sábado|c|Es una palabra esdrújula (sá-ba-do): las esdrújulas siempre llevan tilde.]] pasado fue el [[cumple años|cumpleaños|p|Es una sola palabra: cumpleaños.]] de mi prima [[Lucia|Lucía|c|Hiato: la í es la sílaba fuerte y lleva tilde (Lu-cí-a).]] y toda la familia nos reunimos en su casa. Cuando [[llegue|llegué|c|Es una palabra aguda acabada en vocal: lleva tilde.]], [[habían|había|c|El verbo haber, cuando indica que algo existe, va siempre en singular: había globos, había muchas personas.]] globos de colores por todas partes y la mesa estaba llena de [[vocadillos|bocadillos|c|Se escribe con b, porque viene de «boca».]]. Mi tía Carmen me [[pregunto|preguntó|c|Es una palabra aguda acabada en vocal: lleva tilde.]][[; ¿quieres ayudarme a colgar la guirnalda?|: «¿Quieres ayudarme a colgar la guirnalda?»|c|Después de un verbo como «preguntó» van dos puntos, no punto y coma. La pregunta empieza con mayúscula y se pone entre comillas.]] Le dije que [[si|sí|c|Cuando se usa para decir que sí, lleva tilde.]], aunque no sabía [[como|cómo|c|Es una pregunta indirecta («cómo se hacía»): lleva tilde.]] se hacía. Mi [[tio|tío|c|Hiato: la í es la sílaba fuerte y lleva tilde.]], que es muy alto, [[tubo|tuvo|c|«Tuvo» es del verbo tener. «Tubo» es un cilindro.]] que subirse a una silla [[por que|porque|c|Para dar una causa se escribe junto y sin tilde: porque.]] yo no llegaba al techo.
+
+A las cinco de la tarde [[llego|llegó|c|Es una palabra aguda acabada en vocal: lleva tilde.]] el pastel. Lucía [[soplo|sopló|c|Es una palabra aguda acabada en vocal: lleva tilde.]] las velas y pidió un deseo en voz baja, pero todos [[sabiamos|sabíamos|c|Hiato: la í es la sílaba fuerte y lleva tilde (sa-bí-a-mos).]] [[que|qué|c|Es una pregunta indirecta («qué había pedido»): lleva tilde.]] había pedido: un perro. [[Despues|Después|c|Es una palabra aguda acabada en -s: lleva tilde.]] abrió los regalos. Yo le [[abía|había|c|El verbo haber siempre se escribe con h.]] comprado un libro de aventuras y ella me [[dió|dio|c|Los monosílabos no llevan tilde: dio, fue, vio, fui.]] un abrazo enorme. Mi hermano pequeño, en cambio, se puso a llorar porque quería abrir también los paquetes de [[los de más|los demás|p|«Los demás» significa «los otros». «De más» significa «de sobra»: he puesto sal de más.]].
+
+[[Ubo|Hubo|c|Es del verbo haber: lleva h.]] juegos, [[musica|música|c|Es una palabra esdrújula: siempre lleva tilde.]] y muchas risas. Jugamos al escondite y yo me [[escondi|escondí|c|Es una palabra aguda acabada en vocal: lleva tilde.]] [[detras|detrás|c|Es una palabra aguda acabada en -s: lleva tilde.]] de la cortina del [[salon|salón|c|Es una palabra aguda acabada en -n: lleva tilde.]], pero mi primo Pablo me encontró enseguida. Luego bailamos [[asta|hasta|p|«Hasta» lleva h. «Asta» es el palo de una bandera.]] que a mi madre le dolieron los pies. [[Porsupuesto|Por supuesto|c|Se escribe en dos palabras.]], no faltó la tarta de chocolate, que estaba tan rica que [[repeti|repetí|c|Es una palabra aguda acabada en vocal: lleva tilde.]] dos veces.
+
+Al final, cuando ya era de noche, nos despedimos. Mi abuela nos dijo: «[[Volver|Volved|c|Para dar una orden a «vosotros» se usa el imperativo en -d: volved, venid, callad. El infinitivo (volver) no sirve para mandar.]] pronto, que sin vosotros la casa se queda muy callada». [[Volvi|Volví|c|Es una palabra aguda acabada en vocal: lleva tilde.]] a casa cansado pero feliz, y le prometí a Lucía que el año que viene le [[regalaria|regalaría|c|Hiato: la í es la sílaba fuerte y lleva tilde (re-ga-la-rí-a).]] el perro.
+`
+},
+{
+  id: 2, nivel: 1,
+  titulo: "El partido de fútbol",
+  tema: "La final del torneo del cole",
+  texto: `
+Ayer jugamos la final del torneo [[de el|del|c|«De» + «el» se une siempre: del.]] colegio. [[Llevabamos|Llevábamos|c|Es una palabra esdrújula: lleva tilde.]] semanas entrenando y todos estábamos muy [[nerbiosos|nerviosos|c|Se escribe con v: nervio, nervioso.]]. El entrenador nos [[reunio|reunió|c|Es una palabra aguda acabada en vocal: lleva tilde.]] en el vestuario y nos dijo: «Si [[jugais|jugáis|c|Es una palabra aguda acabada en -s: lleva tilde.]] en equipo, ganaremos. Pero [[sino|si no|c|«Si no» (dos palabras) expresa una condición: si no os ayudáis. «Sino» sirve para contraponer: no es blanco, sino negro.]] os [[ayudais|ayudáis|c|Es una palabra aguda acabada en -s: lleva tilde.]] unos a otros, perderemos». Nadie dijo nada, solo asentimos con la cabeza.
+
+El partido [[enpezó|empezó|c|Antes de p y b siempre se escribe m: empezó, también, ambos.]] muy mal. A los [[dies|diez|c|Se escribe con z: diez.]] minutos, el delantero [[de el|del|c|«De» + «el» se une siempre: del.]] otro equipo marcó un gol y la grada se llenó de gritos. Yo me quedé quieto en la [[porteria|portería|c|Hiato: la í es la sílaba fuerte y lleva tilde (por-te-rí-a).]], sin saber [[que|qué|c|Es una pregunta indirecta («qué hacer»): lleva tilde.]] hacer. Entonces [[oi|oí|p|Hiato: la í es la sílaba fuerte y lleva tilde (o-í).]] a mi amigo Hugo, que me gritó: «¡[[Tu|Tú|c|Cuando es el pronombre personal (= tú mismo), lleva tilde. «Tu» posesivo no la lleva: tu casa.]] puedes! [[Ahora tienes que parar el siguiente!|¡Ahora tienes que parar el siguiente!|c|Las exclamaciones se abren con ¡ y se cierran con !.]]». [[Cojí|Cogí|c|El verbo coger se escribe con g: coger, cogí, cogemos.]] aire, me agaché y esperé.
+
+En la segunda parte todo cambió. Marcamos dos goles seguidos: uno de falta y otro de cabeza. La gente [[aplaudia|aplaudía|c|Hiato: la í es la sílaba fuerte y lleva tilde (a-plau-dí-a).]], los padres saltaban y hasta el [[arbitro|árbitro|c|Es una palabra esdrújula: siempre lleva tilde.]] [[sonreia|sonreía|c|Hiato: la í es la sílaba fuerte y lleva tilde (son-re-í-a).]]. Faltaban tres minutos cuando el equipo rival lanzó un penalti. Yo no [[ví|vi|p|Los monosílabos no llevan tilde: vi, vio, fue, dio.]] el balón, pero lo paré con la punta de los dedos. No me lo podía creer.
+
+Cuando sonó el [[silvato|silbato|c|Se escribe con b: silbar, silbato.]] final, [[hechamos|echamos|c|«Echar» (lanzar, empezar a) no lleva h. «Hecho» es del verbo hacer.]] a correr [[hacía|hacia|p|«Hacia» indica dirección y no lleva tilde. «Hacía» es del verbo hacer: hacía frío.]] el centro del campo y nos abrazamos. Ganamos dos a uno. Volvimos [[a el|al|c|«A» + «el» se une siempre: al.]] vestuario y mi madre me dijo [[despues|después|c|Es una palabra aguda acabada en -s: lleva tilde.]] que había llorado de alegría, aunque no sabe [[porqué|por qué|c|Es una pregunta indirecta: se escribe en dos palabras y con tilde. «El porqué» (junto) es un sustantivo: el motivo.]]. El entrenador nos felicitó y dijo que el trofeo era de todos, no solo de los que [[abían|habían|c|El verbo haber siempre se escribe con h.]] jugado. Esa noche no pude dormir, y [[tan poco|tampoco|c|«Tampoco» es lo contrario de «también» y se escribe en una sola palabra.]] quise hacerlo.
+`
+},
+{
+  id: 3, nivel: 1,
+  titulo: "Mi primer día en el instituto",
+  tema: "Tildes y signos de puntuación",
+  texto: `
+El [[Lunes|lunes|c|Los días de la semana se escriben con minúscula.]] 14 de [[Septiembre|septiembre|c|Los meses se escriben con minúscula.]] [[empece|empecé|c|Es una palabra aguda acabada en vocal: lleva tilde.]] primero de la ESO. Me desperté muy temprano porque estaba nervioso, y mi madre me preparó un desayuno enorme: tostadas, [[sumo|zumo|p|«Zumo» (de fruta) se escribe con z. «Sumo» significa «muy grande» o «supremo».]] y un [[baso|vaso|c|Para beber se escribe con v: vaso. «Baso» es del verbo basar.]] de leche. «Come despacio, que [[todavia|todavía|c|Hiato: la í es la sílaba fuerte y lleva tilde (to-da-ví-a).]] es pronto», me dijo. Pero yo no podía parar de pensar en el instituto.
+
+Cuando llegué, el patio estaba lleno de chicos y chicas que no conocía. Busqué a mi amigo Daniel, pero no lo vi por ninguna parte. [[Depronto|De pronto|c|Se escribe en dos palabras.]], alguien me dio un golpecito en el [[ombro|hombro|c|Hombro se escribe con h.]]. Era una chica con el pelo [[risado|rizado|c|Se escribe con z: rizo, rizado.]] que me preguntó: «¿[[Tu|Tú|c|Cuando es el pronombre personal (= tú mismo), lleva tilde.]] [[tambien|también|c|Es una palabra aguda acabada en -n: lleva tilde.]] eres nuevo?». Le contesté que [[si|sí|c|Cuando se usa para decir que sí, lleva tilde.]] y le pregunté [[como|cómo|c|Es una pregunta indirecta («cómo se llamaba»): lleva tilde.]] se llamaba. «Me llamo Alba, y [[ésta|esta|p|Los demostrativos (este, esta, ese...) ya no llevan tilde, ni siquiera cuando van solos.]] es mi amiga Sara», respondió.
+
+Entramos juntos en clase de Lengua. El profesor, [[Don|don|p|Los tratamientos como don, doña o señor se escriben con minúscula, salvo al principio de frase o abreviados (D.).]] Ernesto, nos dijo que este año [[ibamos|íbamos|c|Es una palabra esdrújula: lleva tilde.]] a leer libros muy interesantes y que, [[ademas|además|c|Es una palabra aguda acabada en -s: lleva tilde.]], tendríamos que escribir muchos textos. «Si [[quereis|queréis|c|Es una palabra aguda acabada en -s: lleva tilde.]] aprobar, tenéis que cuidar la [[ortografia|ortografía|c|Hiato: la í es la sílaba fuerte y lleva tilde (or-to-gra-fí-a).]]», añadió. Todos nos reímos, pero [[a mi|a mí|c|Es un pronombre tras preposición: lleva tilde. Truco: puedes cambiarlo por «a ti».]] me dio un poco de miedo, porque [[aveces|a veces|c|Siempre se escribe en dos palabras.]] se me escapan algunas faltas.
+
+A la [[ora|hora|c|Hora lleva h. «Ora» es del verbo orar (rezar).]] del recreo encontré por fin a Daniel. Le pregunté: «[[Dónde estabas?|¿Dónde estabas?|c|Las preguntas se abren con ¿ y se cierran con ?.]]». Me dijo que a [[el|él|c|Es el pronombre personal (= a ese chico): lleva tilde. «El» artículo no la lleva: el libro.]] también le había tocado en la misma clase que Alba y exclamó: «[[Qué suerte!|¡Qué suerte!|c|Las exclamaciones se abren con ¡ y se cierran con !.]]». Volvimos a casa contentos.
+
+Al llegar, mi madre me preguntó[[; ¿has hecho amigos?|: «¿Has hecho amigos?»|c|Después de un verbo como «preguntó» van dos puntos, no punto y coma. La pregunta empieza con mayúscula y se pone entre comillas.]] Le contesté que ya tenía tres. Creo que este curso va a ser mejor de lo que pensaba.
+`
+},
+{
+  id: 4, nivel: 2,
+  titulo: "Una visita al museo",
+  tema: "Esqueletos, minerales y un bocadillo",
+  texto: `
+El [[Martes|martes|c|Los días de la semana se escriben con minúscula.]], la clase de sexto fue de excursión al museo de ciencias. Salimos del colegio a las nueve en un [[autobus|autobús|c|Es una palabra aguda acabada en -s: lleva tilde.]] [[amarilo|amarillo|c|Se escribe con ll: amarillo.]] y llegamos antes del [[medio día|mediodía|p|Para la hora (las doce) se escribe en una sola palabra: mediodía.]]. La [[guia|guía|c|Hiato: la í es la sílaba fuerte y lleva tilde (gu-í-a).]] nos [[esperava|esperaba|c|El pretérito imperfecto de los verbos en -ar acaba en -aba, -abas, -aban: se escribe con b.]] en la entrada con una sonrisa enorme. «Bienvenidos. Hoy [[bais|vais|c|«Vais» es del verbo ir y se escribe con v. «Bais» no existe.]] a descubrir [[como|cómo|c|Es una pregunta indirecta («cómo vivían»): lleva tilde.]] vivían las personas hace miles de años».
+
+En la primera sala [[abía|había|c|El verbo haber siempre se escribe con h.]] un esqueleto de dinosaurio [[jigantesco|gigantesco|c|Gigante y gigantesco se escriben con g.]]. Era tan alto que su cabeza casi tocaba el techo. Todos nos quedamos callados, aunque Marta no pudo [[ebitar|evitar|c|Se escribe con v: evitar.]] preguntar: «[[Es de verdad?|¿Es de verdad?|c|Las preguntas se abren con ¿ y se cierran con ?.]]». La guía sonrió y [[explico|explicó|c|Es una palabra aguda acabada en vocal: lleva tilde.]] que se trataba de una [[replica|réplica|c|Es una palabra esdrújula: siempre lleva tilde.]], pero que estaba hecha con los mismos [[uesos|huesos|c|Hueso se escribe con h.]] que se habían encontrado en una cueva.
+
+[[Despues|Después|c|Es una palabra aguda acabada en -s: lleva tilde.]] visitamos la sala de los minerales. Había piedras de todos los colores: azules, verdes, rojas… Algunas brillaban tanto que parecían joyas. Mi amigo Iván dijo que quería [[yevarse|llevarse|c|Se escribe con ll: llevar.]] una a casa, pero la guía le recordó que [[esta|está|c|«Está» (del verbo estar) lleva tilde. «Esta» sin tilde es un demostrativo: esta casa.]] prohibido tocar las vitrinas. [[Sinembargo|Sin embargo|c|Se escribe en dos palabras.]], él insistió en que solo quería mirarla de cerca.
+
+A la una comimos en el [[jardin|jardín|c|Es una palabra aguda acabada en -n: lleva tilde.]] que [[ay|hay|c|«Hay» es del verbo haber. «Ay» es una exclamación: ¡ay, qué susto!]] [[al rededor de el|alrededor del|p|«Alrededor» se escribe en una sola palabra, y «de» + «el» siempre se une: del.]] museo. Yo traje un bocadillo de [[jamon|jamón|c|Es una palabra aguda acabada en -n: lleva tilde.]] y una manzana, y [[comparti|compartí|c|Es una palabra aguda acabada en vocal: lleva tilde.]] mis galletas con quienes no habían [[traido|traído|p|Hiato: la í es la sílaba fuerte y lleva tilde (tra-í-do), igual que leído o caído.]] nada. Antes de volver, la profesora nos pidió que [[escribieramos|escribiéramos|p|Es una palabra esdrújula (es-cri-bié-ra-mos): lleva tilde.]] [[que|qué|c|Es una pregunta indirecta («qué era»): lleva tilde.]] era lo que [[mas|más|c|Cuando indica cantidad, «más» lleva tilde. «Mas» significa «pero».]] nos había gustado. Yo escribí que el dinosaurio, porque nunca había visto algo tan grande. Fue una mañana inolvidable.
+`
+},
+{
+  id: 5, nivel: 2,
+  titulo: "Vacaciones en la playa",
+  tema: "Sol, olas y castillos de arena",
+  texto: `
+Este [[berano|verano|c|Verano se escribe con v.]] nos fuimos de [[vacasiones|vacaciones|c|Se escribe con c: vacaciones.]] a la playa. El [[viage|viaje|c|Las palabras acabadas en -aje se escriben con j: viaje, mensaje, paisaje.]] duró casi [[sinco|cinco|c|Se escribe con c: cinco.]] [[oras|horas|c|Hora lleva h.]], pero mereció la pena. Cuando llegamos al apartamento, lo primero que [[ise|hice|c|Del verbo hacer: hice, hizo. Se escribe con h y con c.]] fue abrir las ventanas y asomarme al [[balcon|balcón|c|Es una palabra aguda acabada en -n: lleva tilde.]]: se [[veia|veía|c|Hiato: la í es la sílaba fuerte y lleva tilde (ve-í-a).]] el mar, azul y tranquilo. Mi hermano pequeño se puso a gritar de [[alegria|alegría|c|Hiato: la í es la sílaba fuerte y lleva tilde (a-le-grí-a).]] y mi padre dijo que [[abía|había|c|El verbo haber siempre se escribe con h.]] que descansar un rato antes de [[vajar|bajar|c|Bajar se escribe con b.]] a la arena.
+
+Por la tarde fuimos a la playa. Yo estaba muy [[agusto|a gusto|p|Se escribe en dos palabras: a gusto.]] tumbado al sol, hasta que una [[hola|ola|p|«Ola» (del mar) no lleva h. «Hola» es un saludo.]] enorme me mojó de pies a cabeza. Mi hermano se [[hechó|echó|c|«Echar» no lleva h. «Hecho» es del verbo hacer.]] a [[reir|reír|c|Hiato: la í es la sílaba fuerte y lleva tilde (re-ír).]] con tantas ganas que se le [[calló|cayó|c|«Cayó» es del verbo caer. «Calló» es del verbo callar (no hablar).]] el [[elado|helado|c|Helado lleva h.]]. Me dijo que, [[sí|si|p|Cuando expresa una condición («si quería»), «si» no lleva tilde.]] quería, podía compartir el suyo, pero le contesté que prefería una naranjada.
+
+[[Mas|Más|c|Cuando indica tiempo o cantidad, «más» lleva tilde. «Mas» significa «pero».]] tarde construimos un [[castiyo|castillo|c|Se escribe con ll: castillo.]] de arena con torres, un foso y hasta un puente. Aunque la marea lo [[destruió|destruyó|p|El verbo destruir hace destruyó, con y: destruyó, construyó, huyó.]], no nos importó, porque sabíamos que al día siguiente [[aríamos|haríamos|c|Del verbo hacer: lleva h.]] otro todavía mejor.
+
+Por la noche cenamos pescado en un [[restorante|restaurante|c|Se escribe restaurante, de «restaurar».]] del puerto. El camarero, que era muy simpático, nos explicó [[cual|cuál|c|Es una pregunta indirecta («cuál era»): lleva tilde.]] era el plato del día y nos trajo unas patatas de aperitivo. Mi madre le preguntó si había postre. «Claro que sí: [[ay|hay|c|«Hay» es del verbo haber. «Ay» es una exclamación: ¡ay, qué susto!]] flan y helado», contestó. Yo [[elejí|elegí|c|Elegir se escribe con g: elegí, elegimos.]] el flan y me lo comí sin dejar ni una miga. Al volver al apartamento, mi padre propuso hacer una [[escursión|excursión|c|Se escribe con x: excursión.]] a las rocas [[al a manecer|al amanecer|p|Amanecer se escribe en una sola palabra.]]. Mi hermana se quejó, pero acabó aceptando. Ojalá todos los veranos fueran [[asi|así|c|Es una palabra aguda acabada en vocal: lleva tilde.]].
+`
+},
+{
+  id: 6, nivel: 2,
+  titulo: "El perro perdido",
+  tema: "Una historia con final feliz",
+  texto: `
+Una tarde de [[Otoño|otoño|c|Las estaciones del año se escriben con minúscula.]], al [[bolver|volver|c|Volver se escribe con v.]] del colegio, [[encontre|encontré|c|Es una palabra aguda acabada en vocal: lleva tilde.]] un perro pequeño y asustado [[de bajo|debajo|p|«Debajo» (en la parte inferior) se escribe en una sola palabra.]] de un banco [[de el|del|c|«De» + «el» se une siempre: del.]] parque. Tenía el pelo [[marron|marrón|c|Es una palabra aguda acabada en -n: lleva tilde.]] y sucio, y llevaba un collar roto. Me acerqué despacio y le [[ofresí|ofrecí|c|Ofrecer se escribe con c: ofrecí, ofrecemos.]] un trozo de mi [[bocadiyo|bocadillo|c|Se escribe con ll: bocadillo.]]. El perro lo olió con cuidado y, después de un momento, empezó a mover la cola.
+
+Lo [[lleve|llevé|c|Es una palabra aguda acabada en vocal: lleva tilde.]] a casa y le conté a mi madre lo que había [[ocurido|ocurrido|c|Ocurrir se escribe con rr.]]. Ella dijo que no [[podiamos|podíamos|c|Es una palabra esdrújula: lleva tilde.]] quedárnoslo, [[si no que|sino que|c|«Sino que» se escribe junto cuando contrapone: no es A, sino que B.]] teníamos que buscar a su dueño. [[Asique|Así que|c|Se escribe en dos palabras, y «así» lleva tilde.]] [[hizimos|hicimos|c|Del verbo hacer: hice, hicimos. Se escribe con c.]] carteles con una foto y los pegamos en las farolas de todo el [[varrio|barrio|c|Barrio se escribe con b.]]. En ellos escribimos: «[[Emos|Hemos|c|Es del verbo haber: lleva h.]] encontrado un perro. Si es tuyo, [[llamanos|llámanos|p|Es una palabra esdrújula (llá-ma-nos): lleva tilde.]]». Aquella noche el perro durmió a mis pies y no se movió ni una sola vez, pero yo [[tube|tuve|c|«Tuve» es del verbo tener. «Tubo» es un cilindro.]] que levantarme dos veces para comprobar que seguía allí.
+
+Al día siguiente, una señora mayor llamó a la puerta. Tenía los ojos rojos de tanto llorar. «¿[[Haz|Has|c|«Has» es del verbo haber (has visto). «Haz» es del verbo hacer: haz la cama.]] visto a mi perro?», preguntó con la voz temblorosa. Cuando el animal la [[vió|vio|c|Los monosílabos no llevan tilde: vio, fue, dio, vi.]], salió corriendo a su encuentro y empezó a ladrar de alegría. La señora lo abrazó con tanta fuerza que casi lo ahoga. Me dio las [[grasias|gracias|c|Gracias se escribe con c.]] una y otra vez y me prometió que volvería para visitarnos.
+
+Me alegré mucho por ella, [[aun que|aunque|p|«Aunque» se escribe en una sola palabra.]] también sentí un poco de pena. Mi madre me abrazó y me dijo que había [[echo|hecho|c|«Hecho» (del verbo hacer) lleva h. «Echo» es del verbo echar.]] lo correcto. Por la tarde, la señora trajo una caja de galletas. Dentro había una nota que decía: «Gracias por [[a ver|haber|c|«Haber» es el verbo (haber cuidado). «A ver» sirve para mirar o comprobar: a ver si llueve.]] cuidado de mi mejor amigo». La guardé en mi [[cajon|cajón|c|Es una palabra aguda acabada en -n: lleva tilde.]], junto a mis cosas más [[baliosas|valiosas|c|Valioso viene de «valor» y se escribe con v.]].
+`
+},
+{
+  id: 7, nivel: 2,
+  titulo: "Excursión a la montaña",
+  tema: "Subiendo hasta la cumbre",
+  texto: `
+El domingo salimos de [[excursion|excursión|c|Es una palabra aguda acabada en -n: lleva tilde.]] a la sierra. [[Habiamos|Habíamos|c|Es una palabra esdrújula: lleva tilde.]] quedado a las ocho, pero mi padre [[se retraso|se retrasó|c|Es una palabra aguda acabada en vocal: lleva tilde.]] porque no encontraba las llaves del coche. [[Porfin|Por fin|c|Se escribe en dos palabras.]] llegamos al pie de la montaña y [[empesamos|empezamos|c|Se escribe con z: empezar, empecé, empezamos.]] a subir por un sendero estrecho que estaba lleno de piedras. Mi hermana subía muy deprisa, [[llendo|yendo|p|«Llendo» no existe. El gerundio del verbo ir es «yendo».]] siempre por delante, y mi madre le [[grito|gritó|c|Es una palabra aguda acabada en vocal: lleva tilde.]] que no [[coriera|corriera|c|La rr entre vocales suena fuerte: corriera.]].
+
+A mitad de camino hicimos un descanso. Nos sentamos junto a un [[arrollo|arroyo|c|«Arroyo» (río pequeño) se escribe con y. «Arrollo» es del verbo arrollar.]] y yo [[llene|llené|c|Es una palabra aguda acabada en vocal: lleva tilde.]] mi [[votella|botella|c|Botella se escribe con b.]] con agua fresca. Mi padre sacó los bocadillos y [[repartio|repartió|c|Es una palabra aguda acabada en vocal: lleva tilde.]] fruta. «¿[[Donde|Dónde|c|En una pregunta directa, «dónde» lleva tilde.]] [[esta|está|c|«Está» (del verbo estar) lleva tilde. «Esta» sin tilde es un demostrativo: esta casa.]] el queso?», preguntó mi hermana. «Aquí no hay queso, [[si no|sino|c|«Sino» contrapone: no hay queso, sino jamón. «Si no» (dos palabras) expresa una condición: si no llueve.]] jamón», respondió mi madre. [[Aún así|Aun así|p|Cuando significa «incluso» o «a pesar de eso», «aun» no lleva tilde. «Aún» (= todavía) sí: aún no ha llegado.]], todos comimos con muchas ganas, porque el aire de la montaña da mucha hambre.
+
+Luego seguimos subiendo. Cerca de la [[sima|cima|p|«Cima» es la parte más alta. «Sima» es un agujero muy profundo.]] vimos un [[aguila|águila|c|Es una palabra esdrújula: siempre lleva tilde.]] [[bolando|volando|c|Volar se escribe con v.]] muy alto y un grupo de cabras que [[saltavan|saltaban|c|El pretérito imperfecto de los verbos en -ar acaba en -aba, -abas, -aban: se escribe con b.]] entre las rocas. No [[se|sé|c|Es del verbo saber (= yo sé): lleva tilde. Truco: si puedes poner «sabes», lleva tilde.]] [[porque|por qué|c|Es una pregunta indirecta: se escribe en dos palabras y con tilde.]], pero me pareció que nos observaban. Mi padre dijo que, [[sino|si no|c|«Si no» (dos palabras) expresa una condición. «Sino» sirve para contraponer.]] nos dábamos prisa, no llegaríamos antes [[de el|del|c|«De» + «el» se une siempre: del.]] [[medio día|mediodía|p|Para la hora (las doce) se escribe en una sola palabra: mediodía.]]. Cuando por fin alcanzamos la cumbre, estábamos [[exaustos|exhaustos|p|Lleva una h detrás de la x: exhausto.]], pero la vista era [[increible|increíble|c|Hiato: la í es la sílaba fuerte y lleva tilde (in-cre-í-ble).]]: se veía todo el valle y, a lo lejos, el mar.
+
+Allí arriba [[hacia|hacía|p|«Hacía» es del verbo hacer: hacía viento. «Hacia» indica dirección: hacia el mar.]] mucho viento, [[asi que|así que|c|«Así» es una palabra aguda acabada en vocal: lleva tilde.]] nos pusimos las chaquetas. Mi madre dijo que [[ojala|ojalá|c|Es una palabra aguda acabada en vocal: lleva tilde.]] pudiéramos volver pronto. Bajamos con cuidado, sin prisa, y al llegar al coche [[me dormi|me dormí|c|Es una palabra aguda acabada en vocal: lleva tilde.]] enseguida.
+`
+},
+{
+  id: 8, nivel: 3,
+  titulo: "Cocinando con mi madre",
+  tema: "Una tortilla de patatas",
+  texto: `
+El [[Domingo|domingo|c|Los días de la semana se escriben con minúscula.]] por la mañana mi madre y yo [[desidimos|decidimos|c|Decidir se escribe con c.]] preparar una tortilla de patatas para toda la familia. Primero, mi madre me [[esplicó|explicó|c|Se escribe con x: explicar, explicó.]] que había que pelar las patatas con mucho cuidado para no cortarse. Después las [[trocee|troceé|p|Es una palabra aguda acabada en vocal: lleva tilde (tro-ce-é).]] en rodajas finas y las puse a [[freir|freír|p|Hiato: la í es la sílaba fuerte y lleva tilde (fre-ír), igual que reír u oír.]] en una [[sarten|sartén|c|Es una palabra aguda acabada en -n: lleva tilde.]] con abundante aceite. [[Mientrastanto|Mientras tanto|p|Se escribe en dos palabras.]], batí seis [[uevos|huevos|c|Huevo se escribe con h.]] en un bol grande y añadí un poco de sal.
+
+Le pregunté: «¿[[Cuanto|Cuánto|c|En una pregunta, «cuánto» lleva tilde.]] tiempo tengo que dejarlas en el fuego?». «Hasta que [[esten|estén|c|Es una palabra aguda acabada en -n: lleva tilde (es-tén).]] blandas, pero sin que se quemen», me contestó. [[Apesar|A pesar|c|Se escribe en dos palabras: a pesar de.]] de eso, me distraje un momento y algunas patatas se doraron [[demaciado|demasiado|c|Demasiado se escribe con s.]]. Mi madre no se enfadó, [[si no que|sino que|c|«Sino que» se escribe junto cuando contrapone: no se enfadó, sino que sonrió.]] sonrió y dijo que lo importante era aprender.
+
+Cuando todo [[estubo|estuvo|c|«Estuvo» se escribe con v, como estuve, estuviste.]] listo, [[mesclamos|mezclamos|c|Mezclar se escribe con z.]] las patatas con los huevos y vertimos la mezcla en la sartén. Esperamos unos minutos y dimos la vuelta a la tortilla con ayuda de un plato. [[Qué nervios!|¡Qué nervios!|c|Las exclamaciones se abren con ¡ y se cierran con !.]] [[Sí|Si|p|Cuando expresa una condición («si se rompía»), «si» no lleva tilde.]] se rompía, [[tendriamos|tendríamos|c|Hiato: la í es la sílaba fuerte y lleva tilde (ten-drí-a-mos).]] que empezar [[denuevo|de nuevo|p|Se escribe en dos palabras.]]. Por suerte, salió perfecta: dorada por fuera y jugosa por dentro.
+
+[[Ala|A la|c|Es la preposición «a» más el artículo «la»: dos palabras.]] hora de comer, mi padre probó un trozo y exclamó: «¡Está [[esquisita|exquisita|c|Se escribe con x: exquisito.]]! ¿[[Quien|Quién|c|En una pregunta, «quién» lleva tilde.]] la [[a|ha|c|«Ha» es del verbo haber (ha hecho). «A» es una preposición: voy a casa.]] hecho?». Mi madre y yo nos miramos y [[sonreimos|sonreímos|c|Hiato: la í es la sílaba fuerte y lleva tilde (son-re-í-mos).]]. Después, mientras [[recojíamos|recogíamos|c|Recoger se escribe con g: recoger, recogíamos, recogemos.]] la cocina, mi madre me dijo que el secreto de una buena tortilla no está en los ingredientes, sino en el cariño [[con qué|con que|p|Aquí «que» no pregunta nada, solo enlaza (= con el cual): no lleva tilde.]] se prepara. Desde entonces, cada domingo cocinamos juntos, y tengo que reconocer que ya no se me quema nada.
+`
+},
+{
+  id: 9, nivel: 3,
+  titulo: "Una noche de tormenta",
+  tema: "Truenos, apagón y un búho",
+  texto: `
+Aquella noche, mi hermana y yo [[estabamos|estábamos|c|Es una palabra esdrújula: lleva tilde.]] solos en casa porque nuestros padres habían [[hido|ido|c|El verbo ir no lleva h: ido, iba, ir. La h es del verbo haber: han ido.]] a [[senar|cenar|c|Cenar se escribe con c.]] a casa de unos amigos. [[Hacia|Hacía|p|«Hacía» es del verbo hacer: hacía calor. «Hacia» indica dirección: hacia el mar.]] mucho calor y el cielo estaba cubierto de [[nuves|nubes|c|Nube se escribe con b.]] negras. [[Derepente|De repente|c|Se escribe en dos palabras: de repente.]], un trueno enorme hizo temblar las ventanas y se [[fué|fue|p|Los monosílabos no llevan tilde: fue, fui, dio, vio.]] la luz.
+
+Mi hermana gritó: «¡[[Hay|Ay|c|«Ay» es una exclamación. «Hay» es del verbo haber.]], [[que|qué|c|En una exclamación, «qué» lleva tilde.]] susto! ¿Qué [[a|ha|c|«Ha» es del verbo haber (ha pasado). «A» es una preposición: voy a casa.]] pasado?». Yo le dije: «No te preocupes, solo es una tormenta. [[Boy|Voy|c|Voy es del verbo ir y se escribe con v.]] a buscar una linterna».
+
+[[Avance|Avancé|c|Es una palabra aguda acabada en vocal: lleva tilde.]] a oscuras por el pasillo, con las manos [[estendidas|extendidas|c|Se escribe con x: extender, extendidas.]]. [[Entonses|Entonces|c|Entonces se escribe con c.]] oí un ruido extraño que venía [[de el|del|c|«De» + «el» se une siempre: del.]] [[desvan|desván|c|Es una palabra aguda acabada en -n: lleva tilde.]]. Me quedé [[inmovil|inmóvil|p|Es una palabra llana acabada en -l: lleva tilde (in-mó-vil), como fácil o difícil.]]. Mi hermana me agarró del brazo y susurró que [[ojala|ojalá|c|Es una palabra aguda acabada en vocal: lleva tilde.]] [[hubieramos|hubiéramos|p|Es una palabra esdrújula (hu-bié-ra-mos): lleva tilde.]] ido con mis padres. «[[Valla|Vaya|c|«Vaya» es del verbo ir y se usa en exclamaciones: ¡vaya susto! «Valla» es una cerca.]] idea tan mala quedarnos [[aqui|aquí|c|Es una palabra aguda acabada en vocal: lleva tilde.]]», dijo en voz baja.
+
+Cogí la linterna y subimos [[despasio|despacio|c|Despacio se escribe con c.]]. Cuando abrí la puerta, un [[buho|búho|p|Hiato: la ú es la sílaba fuerte y lleva tilde (bú-ho), aunque haya una h en medio.]] salió volando y casi me da un infarto. Nos [[reimos|reímos|p|Hiato: la í es la sílaba fuerte y lleva tilde (re-í-mos).]] tanto que nos dolía la [[varriga|barriga|c|Barriga se escribe con b.]]. Después de aquello, ya no sentimos miedo. Nos sentamos en el [[sofa|sofá|c|Es una palabra aguda acabada en vocal: lleva tilde.]], con una manta, y esperamos juntos hasta que [[volvio|volvió|c|Es una palabra aguda acabada en vocal: lleva tilde.]] la luz.
+
+Cuando llegaron mis padres, nos encontraron dormidos. Mi madre preguntó [[que|qué|c|Es una pregunta indirecta («qué había pasado»): lleva tilde.]] había pasado y yo le contesté que nada, que solo había sido una noche tranquila. [[Ni si quiera|Ni siquiera|p|«Siquiera» se escribe en una sola palabra.]] [[tube|tuve|c|«Tuve» es del verbo tener. «Tubo» es un cilindro.]] que mentir del todo.
+`
+},
+{
+  id: 10, nivel: 3,
+  titulo: "Carta desde casa de mis tíos",
+  tema: "Una carta llena de trampas",
+  texto: `
+Querido [[Andres|Andrés|c|Es una palabra aguda acabada en -s: lleva tilde.]]:
+
+Te escribo desde la casa de mis tíos, donde estoy pasando las vacaciones de invierno. Aquí hace un frío tremendo: ayer, al salir al jardín, vi que la [[hierva|hierba|p|«Hierba» (la planta) se escribe con b. «Hierva» es del verbo hervir.]] estaba cubierta de hielo y que el agua del estanque se [[abía|había|c|El verbo haber siempre se escribe con h.]] [[conjelado|congelado|c|Congelar se escribe con g.]]. Mi tío me dijo que, aunque no es [[abitual|habitual|c|Habitual se escribe con h.]], a veces nieva incluso en esta [[epoca|época|c|Es una palabra esdrújula: siempre lleva tilde.]]. Ojalá nos caiga una buena [[nebada|nevada|c|Nevada se escribe con v, como nieve.]] antes de que me [[valla|vaya|c|«Vaya» es del verbo ir. «Valla» es una cerca.]].
+
+Esta semana [[e|he|c|Es del verbo haber (he leído): lleva h.]] [[leido|leído|p|Hiato: la í es la sílaba fuerte y lleva tilde (le-í-do).]] un libro que me encantó. El protagonista, un joven que se [[revela|rebela|p|«Rebelarse» es oponerse a algo. «Revelar» es descubrir algo oculto.]] contra su destino, descubre un secreto que cambia su vida. No te cuento el final, pero te aseguro que no pude dejarlo hasta que lo terminé. Además, mi tía me regaló un [[baul|baúl|p|Hiato: la ú es la sílaba fuerte y lleva tilde (ba-úl).]] lleno de viejos [[periodicos|periódicos|c|Es una palabra esdrújula: siempre lleva tilde.]] que guardaba desde hace años. Me pasé toda la tarde hojeándolos y me [[rei|reí|p|Hiato: la í es la sílaba fuerte y lleva tilde (re-í).]] mucho con algunos titulares.
+
+Ayer, durante la comida, tuvimos una [[discucion|discusión|c|Discusión se escribe con s y lleva tilde (es aguda acabada en -n).]] muy tonta. Mi primo Rafael dijo que [[el|él|c|Es el pronombre personal (= ese chico): lleva tilde. «El» artículo no la lleva: el libro.]] no [[iva|iba|c|El pretérito imperfecto de ir se escribe con b: iba, ibas, iban.]] a ir a la excursión del [[Sábado|sábado|c|Los días de la semana se escriben con minúscula.]] porque tenía que estudiar. Mi tío le contestó que no se trataba de eso, sino de que [[pasaramos|pasáramos|p|Es una palabra esdrújula (pa-sá-ra-mos): lleva tilde.]] tiempo juntos. [[Alfinal|Al final|c|Se escribe en dos palabras.]] todos acordamos ir, [[escepto|excepto|c|Se escribe con xc: excepto.]] mi primo, que sigue sin querer. No [[se|sé|c|Es del verbo saber (yo sé): lleva tilde.]] [[adonde|adónde|p|En una pregunta indirecta («adónde va a parar») lleva tilde.]] va a parar esta historia, pero espero que se arregle pronto.
+
+Por cierto, ¿recuerdas a mi [[ex profesor|exprofesor|p|El prefijo ex- (el que ya no lo es) se escribe unido a la palabra: exprofesor, exmarido, exalumno.]] de Matemáticas? Pues se [[a|ha|c|«Ha» es del verbo haber (se ha jubilado). «A» es una preposición.]] jubilado y nos invitó a su fiesta de despedida. Prometió que no [[habria|habría|c|Hiato: la í es la sílaba fuerte y lleva tilde (ha-brí-a).]] discursos, aunque sospecho que mentía. [[Escribeme|Escríbeme|p|Es una palabra esdrújula (es-crí-be-me): lleva tilde.]] pronto y cuéntame [[que tal|qué tal|c|En «qué tal», «qué» lleva tilde porque es una pregunta.]] te va por [[hay|ahí|c|«Ahí» es un lugar. «Hay» es del verbo haber. «Ay» es una exclamación.]]. Un abrazo muy fuerte,
+
+Lucas
+`
+}
+];
+
+
+(function () {
+  "use strict";
+
+  var NIVELES = { 1: "Fácil", 2: "Medio", 3: "Difícil" };
+  var STORE_KEY = "caza-errores-v1";
+  var RE = /\[\[([^|\]]+)\|([^|\]]+)\|([cp])\|([^|\]]+)\]\]/g;
+
+  /* ---------- Datos ---------- */
+  function parse(exam) {
+    var errors = [];
+    var paras = exam.texto.trim().split(/\n\s*\n/).map(function (p) {
+      var parts = [], last = 0, m;
+      RE.lastIndex = 0;
+      while ((m = RE.exec(p)) !== null) {
+        if (m.index > last) parts.push({ t: p.slice(last, m.index) });
+        var e = { n: errors.length + 1, wrong: m[1], right: m[2], type: m[3], why: m[4] };
+        errors.push(e);
+        parts.push({ e: e });
+        last = RE.lastIndex;
+      }
+      if (last < p.length) parts.push({ t: p.slice(last) });
+      return parts;
+    });
+    return { exam: exam, paras: paras, errors: errors };
+  }
+  var parsed = EXAMS.map(parse);
+
+  /* ---------- Almacenamiento (solo comodidad) ---------- */
+  function loadStore() { try { return JSON.parse(localStorage.getItem(STORE_KEY)) || {}; } catch (e) { return {}; } }
+  function saveStore(s) { try { localStorage.setItem(STORE_KEY, JSON.stringify(s)); } catch (e) { /* sin almacenamiento */ } }
+  var store = loadStore();
+
+  /* ---------- Utilidades DOM ---------- */
+  var app = document.getElementById("app");
+  function h(tag, attrs) {
+    var el = document.createElement(tag);
+    if (attrs) Object.keys(attrs).forEach(function (k) {
+      if (k === "class") el.className = attrs[k];
+      else if (k === "text") el.textContent = attrs[k];
+      else if (k.slice(0, 2) === "on") el.addEventListener(k.slice(2), attrs[k]);
+      else el.setAttribute(k, attrs[k]);
+    });
+    for (var i = 2; i < arguments.length; i++) {
+      var c = arguments[i];
+      if (c == null || c === false) continue;
+      el.appendChild(typeof c === "string" ? document.createTextNode(c) : c);
+    }
+    return el;
+  }
+  function addText(parent, str) {
+    str.split("\n").forEach(function (line, i) {
+      if (i > 0) parent.appendChild(document.createElement("br"));
+      if (line) parent.appendChild(document.createTextNode(line));
+    });
+  }
+  function pct(n, total) { return total ? Math.round((n / total) * 100) : 0; }
+
+  /* ---------- Estado ---------- */
+  var view = "index", cur = 0, marks = {};
+
+  function go(v, idx) {
+    view = v;
+    if (idx != null) cur = idx;
+    if (v === "exam") marks = {};
+    render();
+    window.scrollTo(0, 0);
+    var t = app.querySelector("h1");
+    if (t) { t.setAttribute("tabindex", "-1"); t.focus({ preventScroll: true }); }
+  }
+
+  function render() {
+    app.innerHTML = "";
+    if (view === "index") renderIndex();
+    else if (view === "exam") renderExam();
+    else if (view === "answers") renderAnswers();
+    else renderResult();
+  }
+
+  /* ---------- Índice ---------- */
+  function renderIndex() {
+    var done = 0, sum = 0;
+    parsed.forEach(function (p) { var r = store[p.exam.id]; if (r) { done++; sum += r.pct; } });
+
+    app.appendChild(h("header", { class: "hero" },
+      h("h1", null, "Caza-", h("span", { class: "pen", text: "errores" })),
+      h("p", { class: "lede", text: "Diez textos con faltas de ortografía escondidas. Lee con calma, apunta en un papel las que encuentres y después comprueba cuántas has cazado." })
+    ));
+
+    app.appendChild(h("ol", { class: "steps" },
+      h("li", { text: "Elige un examen y lee el texto despacio." }),
+      h("li", { text: "Apunta en un papel cada falta que veas." }),
+      h("li", { text: "Pulsa «Ver respuestas» y marca cuáles encontraste." }),
+      h("li", { text: "Mira tu total y tu porcentaje de aciertos." })
+    ));
+
+    app.appendChild(h("p", { class: "summary" },
+      h("span", null, h("strong", { text: done + " de " + parsed.length }), " exámenes hechos"),
+      done ? h("span", null, "Media de tu último intento: ", h("strong", { text: Math.round(sum / done) + " %" })) : null
+    ));
+
+    var ul = h("ul", { class: "grid" });
+    parsed.forEach(function (p, i) {
+      var ex = p.exam, r = store[ex.id];
+      var dots = h("span", { class: "dots", "aria-hidden": "true" });
+      for (var d = 1; d <= 3; d++) dots.appendChild(h("i", { class: d <= ex.nivel ? "on" : "" }));
+      var btn = h("button", { class: "card", type: "button", onclick: function () { go("exam", i); } },
+        h("span", { class: "num", text: String(ex.id) }),
+        h("span", { class: "titulo", text: ex.titulo }),
+        h("span", { class: "tema", text: ex.tema }),
+        h("span", { class: "meta" },
+          h("span", { class: "level" }, dots, NIVELES[ex.nivel]),
+          h("span", { text: p.errors.length + " errores" })
+        ),
+        r
+          ? h("span", { class: "last done" }, "Último intento: " + r.pct + " % (" + r.found + " de " + r.total + ")",
+              h("span", { class: "bar-track", "aria-hidden": "true" }, h("span", { class: "bar-fill", style: "width:" + r.pct + "%" })))
+          : h("span", { class: "last", text: "Sin hacer todavía" })
+      );
+      btn.setAttribute("aria-label", "Examen " + ex.id + ": " + ex.titulo + ". Nivel " + NIVELES[ex.nivel] + ". " + p.errors.length + " errores." + (r ? " Último intento " + r.pct + " por ciento." : ""));
+      ul.appendChild(h("li", null, btn));
+    });
+    app.appendChild(ul);
+  }
+
+  /* ---------- Examen ---------- */
+  function head(p, kicker) {
+    return h("div", { class: "exam-head" },
+      h("span", { class: "kicker", text: kicker }),
+      h("h1", { text: p.exam.titulo }),
+      h("p", null, h("span", { class: "chip", text: "Este texto tiene " + p.errors.length + " errores" }))
+    );
+  }
+
+  function renderExam() {
+    var p = parsed[cur];
+    app.appendChild(h("div", { class: "topline" },
+      h("button", { class: "link", type: "button", onclick: function () { go("index"); } }, "← Todos los exámenes")
+    ));
+    app.appendChild(head(p, "Examen " + p.exam.id + " · " + NIVELES[p.exam.nivel]));
+
+    var sheet = h("article", { class: "sheet" });
+    p.paras.forEach(function (parts) {
+      var para = h("p");
+      parts.forEach(function (part) { addText(para, part.t != null ? part.t : part.e.wrong); });
+      sheet.appendChild(para);
+    });
+    app.appendChild(sheet);
+
+    app.appendChild(h("div", { class: "cta" },
+      h("button", { class: "btn big", type: "button", onclick: function () { go("answers"); } }, "Ver respuestas"),
+      h("p", { class: "hint", text: "Antes de pulsar, apunta en tu papel todas las faltas que hayas encontrado." })
+    ));
+  }
+
+  /* ---------- Respuestas ---------- */
+  var refs;
+
+  function renderAnswers() {
+    var p = parsed[cur];
+    refs = { fix: {}, card: {}, yes: {}, no: {} };
+
+    var progText = h("b"), progFill = h("span", { class: "bar-fill", style: "background:var(--accent)" });
+    var resultBtn = h("button", { class: "btn", type: "button", onclick: finish }, "Ver mi resultado");
+    refs.progText = progText; refs.progFill = progFill;
+
+    app.appendChild(h("div", { class: "topline" },
+      h("button", { class: "link", type: "button", onclick: function () { go("exam"); } }, "← Volver al texto")
+    ));
+    app.appendChild(head(p, "Respuestas · Examen " + p.exam.id));
+
+    app.appendChild(h("div", { class: "sticky" },
+      h("div", { class: "sticky-in" },
+        h("div", { class: "prog" },
+          h("span", null, "Revisados ", progText),
+          h("span", { class: "bar-track", "aria-hidden": "true" }, progFill)
+        ),
+        resultBtn
+      )
+    ));
+
+    app.appendChild(h("h2", { class: "section-title", text: "El texto corregido" }));
+    app.appendChild(h("p", { class: "section-sub", text: "En rojo, lo que estaba mal. En verde, cómo se escribe. El número te lleva a la explicación de abajo." }));
+
+    var sheet = h("article", { class: "sheet" });
+    p.paras.forEach(function (parts) {
+      var para = h("p");
+      parts.forEach(function (part) {
+        if (part.t != null) { addText(para, part.t); return; }
+        var e = part.e;
+        var fx = h("span", { class: "fix" },
+          h("s", { text: e.wrong }),
+          h("b", { text: e.right }),
+          h("sup", { text: String(e.n) })
+        );
+        refs.fix[e.n] = fx;
+        para.appendChild(fx);
+      });
+      sheet.appendChild(para);
+    });
+    app.appendChild(sheet);
+
+    app.appendChild(h("h2", { class: "section-title", text: "Las " + p.errors.length + " faltas, una a una" }));
+    app.appendChild(h("p", { class: "section-sub", text: "Para cada falta, marca si la encontraste en tu papel o si se te escapó. Puedes cambiarlo las veces que quieras." }));
+
+    var ul = h("ul", { class: "errs" });
+    p.errors.forEach(function (e) {
+      var yes = h("button", { class: "yes", type: "button", "aria-pressed": "false", onclick: function () { setMark(e.n, true); } }, "✓ Lo encontré");
+      var no = h("button", { class: "no", type: "button", "aria-pressed": "false", onclick: function () { setMark(e.n, false); } }, "✕ No lo vi");
+      refs.yes[e.n] = yes; refs.no[e.n] = no;
+      var card = h("li", { class: "err" },
+        h("div", { class: "err-top" },
+          h("span", { class: "err-n", text: "#" + e.n }),
+          h("span", { class: "pair" }, h("s", { text: e.wrong }), h("span", { class: "arrow", "aria-hidden": "true", text: "→" }), h("b", { text: e.right })),
+          h("span", { class: "tag " + e.type, text: e.type === "p" ? "Para pillar" : "Clásico" })
+        ),
+        h("p", { class: "why", text: e.why }),
+        h("div", { class: "seg", role: "group", "aria-label": "Falta " + e.n }, yes, no)
+      );
+      refs.card[e.n] = card;
+      ul.appendChild(card);
+    });
+    app.appendChild(ul);
+
+    app.appendChild(h("div", { class: "finish" },
+      h("button", { class: "btn big", type: "button", onclick: finish }, "Ver mi resultado"),
+      h("p", { class: "note", text: "Las faltas que no hayas marcado cuentan como «no vi»." })
+    ));
+
+    refresh();
+  }
+
+  function setMark(n, val) {
+    marks[n] = marks[n] === val ? undefined : val;
+    refresh();
+  }
+
+  function refresh() {
+    var p = parsed[cur], reviewed = 0;
+    p.errors.forEach(function (e) {
+      var m = marks[e.n];
+      if (m !== undefined) reviewed++;
+      refs.fix[e.n].className = "fix" + (m === true ? " found" : m === false ? " missed" : "");
+      refs.card[e.n].className = "err" + (m === true ? " found" : m === false ? " missed" : "");
+      refs.yes[e.n].setAttribute("aria-pressed", String(m === true));
+      refs.no[e.n].setAttribute("aria-pressed", String(m === false));
+    });
+    refs.progText.textContent = reviewed + " de " + p.errors.length;
+    refs.progFill.style.width = pct(reviewed, p.errors.length) + "%";
+  }
+
+  function finish() {
+    var p = parsed[cur];
+    var found = p.errors.filter(function (e) { return marks[e.n] === true; }).length;
+    var total = p.errors.length;
+    store[p.exam.id] = { pct: pct(found, total), found: found, total: total };
+    saveStore(store);
+    go("result");
+  }
+
+  /* ---------- Resultado ---------- */
+  function renderResult() {
+    var p = parsed[cur], total = p.errors.length;
+    var found = 0, noVi = 0, sin = 0, byType = { c: [0, 0], p: [0, 0] }, missed = [];
+    p.errors.forEach(function (e) {
+      var m = marks[e.n];
+      byType[e.type][1]++;
+      if (m === true) { found++; byType[e.type][0]++; }
+      else { missed.push(e); if (m === false) noVi++; else sin++; }
+    });
+    var percent = pct(found, total);
+    var msg = percent >= 90 ? "¡Ojo de águila! Casi no se te escapa ninguna."
+      : percent >= 70 ? "Muy bien. Ya cazas la mayoría de las faltas."
+      : percent >= 50 ? "Vas por buen camino. Repasa las que se te escaparon."
+      : "A seguir practicando. Lee las explicaciones de las que no viste y vuelve a intentarlo.";
+
+    app.appendChild(h("div", { class: "topline" },
+      h("button", { class: "link", type: "button", onclick: function () { go("index"); } }, "← Todos los exámenes")
+    ));
+    app.appendChild(head(p, "Resultado · Examen " + p.exam.id));
+
+    var box = h("section", { class: "result", "aria-label": "Resultado" },
+      h("div", null,
+        h("div", { class: "score" }, String(percent), h("small", { text: " %" })),
+        h("p", { class: "big-line" }, "Encontraste ", h("b", { text: found + " de " + total }), " faltas.")
+      ),
+      h("span", { class: "bar-track", "aria-hidden": "true", style: "height:.8rem" }, h("span", { class: "bar-fill", style: "width:" + percent + "%" })),
+      h("p", { class: "msg", text: msg }),
+      h("div", { class: "stats" },
+        h("div", { class: "stat ok" }, h("span", { text: "Encontradas" }), h("strong", { text: String(found) })),
+        h("div", { class: "stat bad" }, h("span", { text: "Se te escaparon" }), h("strong", { text: String(total - found) })),
+        h("div", { class: "stat" }, h("span", { text: "Clásicas" }), h("strong", { text: byType.c[0] + " de " + byType.c[1] })),
+        h("div", { class: "stat" }, h("span", { text: "Para pillar" }), h("strong", { text: byType.p[0] + " de " + byType.p[1] }))
+      )
+    );
+    if (sin > 0) box.appendChild(h("p", { class: "why", text: "Hay " + sin + " faltas sin marcar. Cuentan como «no vi»." }));
+    app.appendChild(box);
+
+    if (missed.length) {
+      app.appendChild(h("h2", { class: "section-title", text: "Para repasar" }));
+      app.appendChild(h("p", { class: "section-sub", text: "Estas son las faltas que no encontraste. Léelas una vez y fíjate en la explicación." }));
+      var ul = h("ul", { class: "errs" });
+      missed.forEach(function (e) {
+        ul.appendChild(h("li", { class: "err missed" },
+          h("div", { class: "err-top" },
+            h("span", { class: "pair" }, h("s", { text: e.wrong }), h("span", { class: "arrow", "aria-hidden": "true", text: "→" }), h("b", { text: e.right })),
+            h("span", { class: "tag " + e.type, text: e.type === "p" ? "Para pillar" : "Clásico" })
+          ),
+          h("p", { class: "why", text: e.why })
+        ));
+      });
+      app.appendChild(ul);
+    }
+
+    var next = cur + 1 < parsed.length ? cur + 1 : null;
+    var actions = h("div", { class: "actions" },
+      h("button", { class: "btn", type: "button", onclick: function () { go("exam", cur); } }, "Repetir este examen"),
+      next != null ? h("button", { class: "btn ghost", type: "button", onclick: function () { go("exam", next); } }, "Siguiente examen") : null,
+      h("button", { class: "btn ghost", type: "button", onclick: function () { go("index"); } }, "Elegir otro")
+    );
+    app.appendChild(h("div", { class: "finish" }, actions));
+  }
+
+  render();
+})();
+</script>
+
+</body>
+</html>

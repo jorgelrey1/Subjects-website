@@ -1,0 +1,388 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Práctica · Formación de palabras</title><meta name="description" content="Ejercicios interactivos de formación de palabras"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@700&display=swap"><style>
+:root{
+  --bg:#f7f6f2; --surface:#ffffff; --fg:#1c2230; --muted:#5a6275; --line:#dcdfe8;
+  --accent:#2a55c7; --accent-bg:#e6edfb;
+  --raiz:#1f5fbf; --raiz-bg:#e4edfb;
+  --pref:#17805a; --pref-bg:#dff3ea;
+  --suf:#b8520a;  --suf-bg:#fdebd9;
+  --inter:#8a3fb0; --inter-bg:#f1e5f8;
+  --flex:#566078; --flex-bg:#e6e9f2;
+  --culta:#c0284f; --culta-bg:#fbe3ea;
+  --verb:#0b7285; --verb-bg:#dcf3f7;
+  --good:#17805a; --good-bg:#dff3ea; --bad:#b3261e; --bad-bg:#fbe4e2;
+  --warn:#7a5200; --warn-bg:#fff1cf; --red:#c4271f;
+  --display:"Bricolage Grotesque","Trebuchet MS",sans-serif;
+  --body:"Source Sans 3","Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12151f; --surface:#1b2030; --fg:#e9ecf6; --muted:#a2a9bf; --line:#2f3650;
+  --accent:#8fb0ff; --accent-bg:#1e2a4d;
+  --raiz:#7fb0ff; --raiz-bg:#1b2b4a; --pref:#5fd0a2; --pref-bg:#173a2e;
+  --suf:#ffa45c; --suf-bg:#4a2b12; --inter:#d29bf0; --inter-bg:#3a2248;
+  --flex:#b4bbd2; --flex-bg:#2a3047; --culta:#ff8fa8; --culta-bg:#4a1f2d; --verb:#6fd6e6; --verb-bg:#12363d;
+  --good:#5fd0a2; --good-bg:#173a2e; --bad:#ff8d85; --bad-bg:#4a1f1c;
+  --warn:#ffd88a; --warn-bg:#40320f; --red:#ff8d85; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12151f; --surface:#1b2030; --fg:#e9ecf6; --muted:#a2a9bf; --line:#2f3650;
+  --accent:#8fb0ff; --accent-bg:#1e2a4d;
+  --raiz:#7fb0ff; --raiz-bg:#1b2b4a; --pref:#5fd0a2; --pref-bg:#173a2e;
+  --suf:#ffa45c; --suf-bg:#4a2b12; --inter:#d29bf0; --inter-bg:#3a2248;
+  --flex:#b4bbd2; --flex-bg:#2a3047; --culta:#ff8fa8; --culta-bg:#4a1f2d; --verb:#6fd6e6; --verb-bg:#12363d;
+  --good:#5fd0a2; --good-bg:#173a2e; --bad:#ff8d85; --bad-bg:#4a1f1c;
+  --warn:#ffd88a; --warn-bg:#40320f; --red:#ff8d85; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+.btn:disabled.ok,.btn:disabled.no{opacity:1}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.6}
+.wrap{max-width:60rem;margin-inline:auto;padding:18px 16px 64px;display:flex;flex-direction:column;gap:36px}
+h1,h2,h3,h4{font-family:var(--display);line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:clamp(2rem,6vw,3rem);font-weight:800}
+h2{font-size:1.55rem;font-weight:800}
+h3{font-size:1.2rem;font-weight:600}
+p{margin:0}
+a{color:var(--accent);font-weight:700}
+a:focus-visible,button:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--fg);outline-offset:2px}
+.lead{color:var(--muted);max-width:44rem;font-size:1.05rem}
+.k{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.mono{font-family:var(--mono);font-weight:700}
+nav.top{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:.95rem}
+nav.top a{padding:7px 14px;border-radius:99px;text-decoration:none;color:var(--fg);background:var(--surface);border:1px solid var(--line)}
+nav.top a[aria-current="page"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+nav.top .sp{flex:1}
+.hero{background:var(--accent-bg);border-radius:16px;padding:26px 22px;display:flex;flex-direction:column;gap:14px}
+.hero h1{color:var(--accent)}
+.hero p{max-width:42rem}
+.sec{display:flex;flex-direction:column;gap:16px}
+.sh{display:flex;align-items:center;gap:12px}
+.sh::before{content:"";width:12px;height:30px;border-radius:3px;background:var(--accent);flex:none}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr));gap:16px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,24rem),1fr));gap:16px}
+.card.link{text-decoration:none;color:var(--fg);transition:transform .12s,border-color .12s}
+.card.link:hover{transform:translateY(-2px);border-color:var(--accent)}
+.card .num{font-family:var(--display);font-weight:800;font-size:2rem;color:var(--accent);line-height:1}
+.callout{border-radius:10px;padding:14px 16px;border-left:5px solid var(--accent);background:var(--accent-bg);display:flex;flex-direction:column;gap:6px}
+.callout.warn{border-color:var(--suf);background:var(--warn-bg);color:var(--warn)}
+.callout.warn b,.callout.warn strong{color:var(--warn)}
+.callout.good{border-color:var(--good);background:var(--good-bg)}
+.callout.bad{border-color:var(--bad);background:var(--bad-bg)}
+.q{border-left:4px solid var(--fg);padding:6px 16px;font-style:italic;color:var(--fg);background:var(--surface);border-radius:0 10px 10px 0}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:34rem}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--display);font-size:.92rem;background:var(--bg)}
+tr:last-child td{border-bottom:0}
+ol.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;counter-reset:s}
+ol.steps li{counter-increment:s;display:grid;grid-template-columns:2.6rem 1fr;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;align-items:start}
+ol.steps li::before{content:counter(s);font-family:var(--display);font-weight:800;font-size:1.5rem;color:var(--accent);background:var(--accent-bg);width:2.6rem;height:2.6rem;border-radius:50%;display:grid;place-items:center}
+ol.steps b{font-family:var(--display)}
+/* piezas de palabra */
+.anat{display:inline-flex;flex-wrap:wrap;gap:3px;vertical-align:middle}
+.pc{--c:var(--flex);--cb:var(--flex-bg);display:inline-flex;flex-direction:column;align-items:center;gap:1px;padding:4px 10px 5px;border-radius:8px;background:var(--cb);color:var(--c);border-bottom:3px solid var(--c);font-family:var(--mono);font-weight:700;font-size:1rem;line-height:1.25}
+.pc small{font-family:var(--body);font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700}
+.anat.big .pc{font-size:1.7rem;padding:6px 14px 7px}
+.anat.big .pc small{font-size:.68rem}
+.k-raiz{--c:var(--raiz);--cb:var(--raiz-bg)}
+.k-pref{--c:var(--pref);--cb:var(--pref-bg)}
+.k-suf{--c:var(--suf);--cb:var(--suf-bg)}
+.k-inter{--c:var(--inter);--cb:var(--inter-bg)}
+.k-flex{--c:var(--flex);--cb:var(--flex-bg)}
+.k-culta{--c:var(--culta);--cb:var(--culta-bg)}
+.k-verb{--c:var(--verb);--cb:var(--verb-bg)}
+.legend{display:flex;flex-wrap:wrap;gap:8px}
+.tag{display:inline-block;padding:2px 10px;border-radius:6px;font-weight:700;font-size:.85rem;background:var(--accent-bg);color:var(--accent)}
+.ex{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center}
+.formula{font-family:var(--mono);font-weight:700;font-size:.95rem;background:var(--bg);border:1px dashed var(--line);border-radius:8px;padding:8px 12px}
+.fields{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin:0}
+.fields dt{font-weight:700;color:var(--muted)}
+.fields dd{margin:0}
+.tpl{font-family:var(--mono);font-size:.95rem;border:2px solid var(--red);border-radius:10px;padding:14px 16px;background:var(--surface);display:grid;grid-template-columns:1fr 1fr;gap:6px 18px;color:var(--red)}
+.tpl .full{grid-column:1/-1}
+.red{color:var(--red);font-weight:700}
+.btn{font:inherit;font-weight:700;padding:9px 18px;border-radius:10px;border:2px solid var(--fg);background:var(--surface);color:var(--fg);cursor:pointer;min-height:44px}
+.btn:hover{background:var(--accent-bg)}
+.btn.primary{background:var(--fg);color:var(--bg)}
+.btn.primary:hover{opacity:.88}
+.btn:disabled{opacity:.55;cursor:default}
+details{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:0}
+details>summary{cursor:pointer;padding:12px 16px;font-weight:700;list-style-position:inside}
+details>.in{padding:2px 16px 16px;display:flex;flex-direction:column;gap:10px}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;border-bottom:2px solid var(--line);padding-bottom:10px}
+.tabs button{font:inherit;font-weight:700;padding:9px 16px;border-radius:99px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer;min-height:44px}
+.tabs button[aria-selected="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.bigword{font-family:var(--display);font-weight:800;font-size:clamp(2.2rem,9vw,3.6rem);text-align:center;padding:12px 0 6px;overflow-wrap:anywhere}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(9.5rem,1fr));gap:10px}
+.opt.ok{background:var(--good-bg);border-color:var(--good);color:var(--good)}
+.opt.no{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.prog{display:flex;justify-content:space-between;font-weight:700;color:var(--muted);font-size:.95rem}
+.bar{height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--accent);transition:width .25s}
+.fb{border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.fb.ok{background:var(--good-bg);border-left:5px solid var(--good)}
+.fb.no{background:var(--bad-bg);border-left:5px solid var(--bad)}
+.segs{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;padding:6px 0}
+.seg{display:flex;flex-direction:column;gap:6px;align-items:stretch;min-width:9rem}
+.seg .pc{align-items:center}
+.seg .pc small{display:none}
+select,textarea{font:inherit;padding:8px 10px;border-radius:8px;border:2px solid var(--line);background:var(--surface);color:var(--fg);min-height:44px;max-width:100%}
+select.ok{border-color:var(--good);background:var(--good-bg)}
+select.no{border-color:var(--bad);background:var(--bad-bg)}
+textarea{width:100%;min-height:110px;resize:vertical}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:end}
+.row label{display:flex;flex-direction:column;gap:4px;font-weight:700;font-size:.9rem;color:var(--muted)}
+.chk{display:flex;flex-direction:column;gap:6px}
+.chk label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.chk input{width:20px;height:20px;margin-top:3px;flex:none}
+mark{background:var(--warn-bg);color:var(--fg);padding:0 4px;border-radius:4px;font-weight:700}
+.big-score{font-family:var(--display);font-weight:800;font-size:3rem;color:var(--accent);text-align:center}
+.mini{font-size:.9rem;color:var(--muted)}
+footer{color:var(--muted);font-size:.9rem;border-top:1px solid var(--line);padding-top:16px}
+
+.chip{display:inline-flex;align-items:center;gap:6px;padding:3px 11px;border-radius:99px;font-weight:700;font-size:.82rem;border:1.5px solid currentColor;white-space:nowrap}
+.chip.ok{color:var(--good);background:var(--good-bg)}
+.chip.mid{color:var(--warn);background:var(--warn-bg)}
+.chip.low{color:var(--bad);background:var(--bad-bg)}
+.chip.quest{color:var(--inter);background:var(--inter-bg)}
+.sources li{margin:4px 0}
+.flow{display:flex;flex-direction:column;gap:10px;align-items:stretch}
+.stage{border:2px solid var(--line);border-radius:14px;padding:14px 16px;background:var(--surface);display:flex;flex-direction:column;gap:10px}
+.stage>h3{display:flex;gap:10px;align-items:center}
+.stage>h3 .n{background:var(--accent);color:var(--bg);width:2rem;height:2rem;border-radius:50%;display:inline-grid;place-items:center;font-size:1rem;flex:none}
+.branch{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:10px}
+.leaf{border-radius:10px;padding:10px 12px;border-left:6px solid var(--c);background:var(--cb);display:flex;flex-direction:column;gap:3px}
+.leaf b{color:var(--c)}
+.arrow{text-align:center;font-size:1.4rem;color:var(--muted);line-height:1}
+.wiz{display:flex;flex-direction:column;gap:14px}
+.wiz .qtext{font-family:var(--display);font-weight:800;font-size:1.4rem;line-height:1.2}
+.wiz .ans{display:flex;flex-wrap:wrap;gap:10px}
+.trail{display:flex;flex-wrap:wrap;gap:6px;font-size:.85rem}
+.trail span{background:var(--bg);border:1px solid var(--line);border-radius:99px;padding:2px 10px}
+.duda{display:flex;flex-direction:column;gap:12px}
+.duda .cmp{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:10px}
+.duda .cmp>div{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--bg);display:flex;flex-direction:column;gap:4px}
+.duda .ask{border-left:5px solid var(--inter);background:var(--inter-bg);border-radius:0 10px 10px 0;padding:10px 14px}
+.radios{display:flex;flex-wrap:wrap;gap:8px 18px}
+.radios label{display:flex;gap:6px;align-items:center;cursor:pointer;font-weight:600}
+.radios input{width:18px;height:18px}
+@media print{
+  nav.top,.noprint,.btn{display:none!important}
+  body{background:#fff;font-size:11.5pt}
+  .wrap{gap:14px;padding:0}
+  .card,details,.tw{break-inside:avoid}
+}
+@media (max-width:520px){.tpl{grid-template-columns:1fr}.fields{grid-template-columns:1fr}.fields dt{margin-top:6px}}
+</style></head><body><a href="../../index.html" style="display:block;padding:8px 16px;background:#1b2033;color:#fff;font:600 15px/1.3 system-ui,'Segoe UI',sans-serif;text-decoration:none;position:relative;z-index:60">← Índice principal</a><div class="wrap"><nav class="top" aria-label="Secciones"><a href="index.html">Inicio</a><a href="guia.html">Guía</a><a href="arbol.html">Árbol de decisión</a><a href="errores.html">Errores comunes</a><a href="dudas.html">Dudas</a><a href="practica.html" aria-current="page">Práctica</a></nav>
+<header class="hero"><div class="k">Lengua · Bloque 2 · 2.1</div><h1>Práctica</h1>
+<p>Tres formas de practicar con 194 palabras. Empieza por «Clasifica», sigue con «Analiza» y termina con el «Simulacro». Si dudas, abre el <a href="arbol.html">árbol de decisión</a> o la <a href="guia.html">guía</a>.</p></header>
+<div class="callout good"><span><b>Criterio de clase:</b> en un infinitivo, -ar/-er/-ir es un <b>sufijo verbal</b>, así que <i>cantar</i> es derivada. Un verbo conjugado (cantamos, deberíamos) es simple. Usa el filtro «Solo infinitivos» para entrenarlo.</span></div>
+<div class="tabs" role="tablist" aria-label="Modos de práctica">
+<button role="tab" data-t="clasifica" aria-selected="true">1 · Clasifica</button>
+<button role="tab" data-t="analiza" aria-selected="false">2 · Analiza</button>
+<button role="tab" data-t="simulacro" aria-selected="false">3 · Simulacro</button></div>
+
+<section class="sec panel" id="p-clasifica" role="tabpanel">
+<p class="lead">Elige el procedimiento de formación. Después de cada respuesta ves el análisis y el porqué. Las rondas reparten las palabras entre los cinco tipos. <span id="c-best"></span></p>
+<div class="row">
+<label>Palabras por ronda<select id="c-size"><option value="12">12</option><option value="20">20</option><option value="30">30</option></select></label>
+<label>Tipo de palabras<select id="c-filter"><option value="todas">Todas</option><option value="verbos">Solo verbos</option><option value="infinitivos">Solo infinitivos</option><option value="nombres">Solo nombres y adjetivos</option><option value="dificiles">Solo derivadas y parasintéticas</option><option value="fallos">Mis fallos guardados (0)</option></select></label>
+<button class="btn primary" id="c-start">Empezar ronda</button></div>
+<details><summary>Recordatorio: las 4 preguntas</summary><div class="in">
+<p>1. ¿Cuántas raíces hay? Dos o más → <b>compuesta</b> (o <b>compuesta culta</b> si son griegas/latinas).</p>
+<p>2. ¿Solo una raíz y flexivos? → <b>simple</b>. (Un infinitivo nunca: lleva sufijo verbal.)</p>
+<p>3. ¿Raíz con prefijo y/o sufijo? Quita un afijo: si queda una palabra que existe → <b>derivada</b>.</p>
+<p>4. Si al quitar cualquiera no queda una palabra que exista → <b>parasintética</b>.</p></div></details>
+<div class="card" id="c-box"></div></section>
+
+<section class="sec panel" id="p-analiza" role="tabpanel" hidden>
+<p class="lead">Etiqueta cada trozo (raíz, prefijo, sufijo, sufijo verbal, interfijo, flexivo o raíz culta) y elige la categoría y la estructura. Al comprobar verás la respuesta en la plantilla de tus apuntes.</p>
+<div class="row"><label>Tipo de palabras<select id="a-filter"><option value="todas">Todas</option><option value="verbos">Solo verbos</option><option value="infinitivos">Solo infinitivos</option><option value="nombres">Solo nombres y adjetivos</option><option value="dificiles">Solo derivadas y parasintéticas</option></select></label></div>
+<div class="card" id="a-box"></div></section>
+
+<section class="sec panel" id="p-simulacro" role="tabpanel" hidden>
+<p class="lead">14 preguntas con el formato del examen. Contéstalas en un papel (3 minutos cada una) y después mira la respuesta modelo y compárala punto por punto.</p>
+<div class="callout"><span>Consejo: no mires la respuesta hasta haber escrito la tuya completa. Es lo que más rinde.</span></div>
+<div id="s-box" class="sec"></div></section>
+<footer>Material hecho a partir de los apuntes escaneados de Jorge (Lengua, Bloque 2 · 2.1 Formación de palabras). Los criterios se han contrastado con el Glosario de términos gramaticales de la RAE; donde los apuntes y la RAE no coinciden, está marcado en la página de Dudas.</footer></div><script>
+(function(){
+const D=[{"w": "tío", "c": "sustantivo", "e": "simple", "p": [["tí", "raiz"], ["o", "flex"]], "y": "Una sola raíz y morfemas flexivos (-o). No hay prefijos ni sufijos: simple."}, {"w": "mesas", "c": "sustantivo", "e": "simple", "p": [["mes", "raiz"], ["a", "flex"], ["s", "flex"]], "y": "Una sola raíz y morfemas flexivos (-a, -s). No hay prefijos ni sufijos: simple."}, {"w": "verde", "c": "adjetivo", "e": "simple", "p": [["verd", "raiz"], ["e", "flex"]], "y": "Una sola raíz y morfemas flexivos (-e). No hay prefijos ni sufijos: simple."}, {"w": "pequeña", "c": "adjetivo", "e": "simple", "p": [["pequeñ", "raiz"], ["a", "flex"]], "y": "Una sola raíz y morfemas flexivos (-a). No hay prefijos ni sufijos: simple."}, {"w": "libros", "c": "sustantivo", "e": "simple", "p": [["libr", "raiz"], ["o", "flex"], ["s", "flex"]], "y": "Una sola raíz y morfemas flexivos (-o, -s). No hay prefijos ni sufijos: simple."}, {"w": "niñas", "c": "sustantivo", "e": "simple", "p": [["niñ", "raiz"], ["a", "flex"], ["s", "flex"]], "y": "Una sola raíz y morfemas flexivos (-a, -s). No hay prefijos ni sufijos: simple."}, {"w": "gatos", "c": "sustantivo", "e": "simple", "p": [["gat", "raiz"], ["o", "flex"], ["s", "flex"]], "y": "Una sola raíz y morfemas flexivos (-o, -s). No hay prefijos ni sufijos: simple."}, {"w": "ventanas", "c": "sustantivo", "e": "simple", "p": [["ventan", "raiz"], ["a", "flex"], ["s", "flex"]], "y": "Una sola raíz y morfemas flexivos (-a, -s). No hay prefijos ni sufijos: simple."}, {"w": "grandes", "c": "adjetivo", "e": "simple", "p": [["grand", "raiz"], ["e", "flex"], ["s", "flex"]], "y": "Una sola raíz y morfemas flexivos (-e, -s). No hay prefijos ni sufijos: simple."}, {"w": "rápido", "c": "adjetivo", "e": "simple", "p": [["rápid", "raiz"], ["o", "flex"]], "y": "Una sola raíz y morfemas flexivos (-o). No hay prefijos ni sufijos: simple."}, {"w": "sol", "c": "sustantivo", "e": "simple", "p": [["sol", "raiz"]], "y": "Una sola raíz y ningún morfema flexivo visible. No hay prefijos ni sufijos: simple."}, {"w": "pan", "c": "sustantivo", "e": "simple", "p": [["pan", "raiz"]], "y": "Una sola raíz y ningún morfema flexivo visible. No hay prefijos ni sufijos: simple."}, {"w": "azul", "c": "adjetivo", "e": "simple", "p": [["azul", "raiz"]], "y": "Una sola raíz y ningún morfema flexivo visible. No hay prefijos ni sufijos: simple."}, {"w": "feliz", "c": "adjetivo", "e": "simple", "p": [["feliz", "raiz"]], "y": "Una sola raíz y ningún morfema flexivo visible. No hay prefijos ni sufijos: simple."}, {"w": "cantas", "c": "verbo", "e": "simple", "p": [["cant", "raiz"], ["as", "flex"]], "y": "Una sola raíz y morfemas flexivos (-as). No hay prefijos ni sufijos: simple. Es una forma personal (verbo conjugado): en clase, forma personal = simple."}, {"w": "hablaban", "c": "verbo", "e": "simple", "p": [["habl", "raiz"], ["aba", "flex"], ["n", "flex"]], "y": "Una sola raíz y morfemas flexivos (-aba, -n). No hay prefijos ni sufijos: simple. Es una forma personal (verbo conjugado): en clase, forma personal = simple."}, {"w": "cantaron", "c": "verbo", "e": "simple", "p": [["cant", "raiz"], ["aron", "flex"]], "y": "Una sola raíz y morfemas flexivos (-aron). No hay prefijos ni sufijos: simple. Es una forma personal (verbo conjugado): en clase, forma personal = simple."}, {"w": "escribieron", "c": "verbo", "e": "simple", "p": [["escrib", "raiz"], ["ieron", "flex"]], "y": "Una sola raíz y morfemas flexivos (-ieron). No hay prefijos ni sufijos: simple. Es una forma personal (verbo conjugado): en clase, forma personal = simple."}, {"w": "comíamos", "c": "verbo", "e": "simple", "p": [["com", "raiz"], ["ía", "flex"], ["mos", "flex"]], "y": "Una sola raíz y morfemas flexivos (-ía, -mos). No hay prefijos ni sufijos: simple. Es una forma personal (verbo conjugado): en clase, forma personal = simple."}, {"w": "vivirán", "c": "verbo", "e": "simple", "p": [["viv", "raiz"], ["irá", "flex"], ["n", "flex"]], "y": "Una sola raíz y morfemas flexivos (-irá, -n). No hay prefijos ni sufijos: simple. Es una forma personal (verbo conjugado): en clase, forma personal = simple."}, {"w": "amábamos", "c": "verbo", "e": "simple", "p": [["am", "raiz"], ["ába", "flex"], ["mos", "flex"]], "y": "Una sola raíz y morfemas flexivos (-ába, -mos). No hay prefijos ni sufijos: simple. Es una forma personal (verbo conjugado): en clase, forma personal = simple."}, {"w": "jugábamos", "c": "verbo", "e": "simple", "p": [["jug", "raiz"], ["ába", "flex"], ["mos", "flex"]], "y": "Una sola raíz y morfemas flexivos (-ába, -mos). No hay prefijos ni sufijos: simple. Es una forma personal (verbo conjugado): en clase, forma personal = simple. La raíz cambia a jueg- en «juego», pero es la misma raíz."}, {"w": "deberíamos", "c": "verbo", "e": "simple", "p": [["deb", "raiz"], ["ería", "flex"], ["mos", "flex"]], "y": "Una sola raíz y morfemas flexivos (-ería, -mos). No hay prefijos ni sufijos: simple. Es una forma personal (verbo conjugado): en clase, forma personal = simple. Es una forma personal: -ería marca el condicional (con la vocal temática -e-) y -mos la persona y el número."}, {"w": "infeliz", "c": "adjetivo", "e": "derivada", "p": [["in", "pref"], ["feliz", "raiz"]], "y": "in- (prefijo) + feliz- (raíz). Quitas in- y queda «feliz», que existe → derivada."}, {"w": "imposible", "c": "adjetivo", "e": "derivada", "p": [["im", "pref"], ["posibl", "raiz"], ["e", "flex"]], "y": "im- (prefijo) + posibl- (raíz) + -e (flexivo). Quitas im- y queda «posible», que existe → derivada."}, {"w": "ilegal", "c": "adjetivo", "e": "derivada", "p": [["i", "pref"], ["legal", "raiz"]], "y": "i- (prefijo) + legal- (raíz). Quitas i- y queda «legal», que existe → derivada."}, {"w": "inútil", "c": "adjetivo", "e": "derivada", "p": [["in", "pref"], ["útil", "raiz"]], "y": "in- (prefijo) + útil- (raíz). Quitas in- y queda «útil», que existe → derivada."}, {"w": "incapaz", "c": "adjetivo", "e": "derivada", "p": [["in", "pref"], ["capaz", "raiz"]], "y": "in- (prefijo) + capaz- (raíz). Quitas in- y queda «capaz», que existe → derivada."}, {"w": "incorrecto", "c": "adjetivo", "e": "derivada", "p": [["in", "pref"], ["correct", "raiz"], ["o", "flex"]], "y": "in- (prefijo) + correct- (raíz) + -o (flexivo). Quitas in- y queda «correcto», que existe → derivada."}, {"w": "desorden", "c": "sustantivo", "e": "derivada", "p": [["des", "pref"], ["orden", "raiz"]], "y": "des- (prefijo) + orden- (raíz). Quitas des- y queda «orden», que existe → derivada."}, {"w": "desleal", "c": "adjetivo", "e": "derivada", "p": [["des", "pref"], ["leal", "raiz"]], "y": "des- (prefijo) + leal- (raíz). Quitas des- y queda «leal», que existe → derivada."}, {"w": "deshonesto", "c": "adjetivo", "e": "derivada", "p": [["des", "pref"], ["honest", "raiz"], ["o", "flex"]], "y": "des- (prefijo) + honest- (raíz) + -o (flexivo). Quitas des- y queda «honesto», que existe → derivada."}, {"w": "anormal", "c": "adjetivo", "e": "derivada", "p": [["a", "pref"], ["normal", "raiz"]], "y": "a- (prefijo) + normal- (raíz). Quitas a- y queda «normal», que existe → derivada."}, {"w": "antinatural", "c": "adjetivo", "e": "derivada", "p": [["anti", "pref"], ["natural", "raiz"]], "y": "anti- (prefijo) + natural- (raíz). Quitas anti- y queda «natural», que existe → derivada."}, {"w": "supermercado", "c": "sustantivo", "e": "derivada", "p": [["super", "pref"], ["mercad", "raiz"], ["o", "flex"]], "y": "super- (prefijo) + mercad- (raíz) + -o (flexivo). Quitas super- y queda «mercado», que existe → derivada."}, {"w": "bisabuelo", "c": "sustantivo", "e": "derivada", "p": [["bis", "pref"], ["abuel", "raiz"], ["o", "flex"]], "y": "bis- (prefijo) + abuel- (raíz) + -o (flexivo). Quitas bis- y queda «abuelo», que existe → derivada."}, {"w": "subdirector", "c": "sustantivo", "e": "derivada", "p": [["sub", "pref"], ["director", "raiz"]], "y": "sub- (prefijo) + director- (raíz). Quitas sub- y queda «director», que existe → derivada."}, {"w": "rehacer", "c": "verbo", "e": "derivada", "p": [["re", "pref"], ["hac", "raiz"], ["er", "verb"]], "y": "re- (prefijo) + hac- (raíz) + -er (sufijo verbal). Quitas re- y queda «hacer», que existe → derivada."}, {"w": "deshacer", "c": "verbo", "e": "derivada", "p": [["des", "pref"], ["hac", "raiz"], ["er", "verb"]], "y": "des- (prefijo) + hac- (raíz) + -er (sufijo verbal). Quitas des- y queda «hacer», que existe → derivada."}, {"w": "desgastar", "c": "verbo", "e": "derivada", "p": [["des", "pref"], ["gast", "raiz"], ["ar", "verb"]], "y": "des- (prefijo) + gast- (raíz) + -ar (sufijo verbal). Quitas des- y queda «gastar», que existe → derivada."}, {"w": "desalojar", "c": "verbo", "e": "derivada", "p": [["des", "pref"], ["aloj", "raiz"], ["ar", "verb"]], "y": "des- (prefijo) + aloj- (raíz) + -ar (sufijo verbal). Quitas des- y queda «alojar», que existe → derivada."}, {"w": "reaparecer", "c": "verbo", "e": "derivada", "p": [["re", "pref"], ["aparec", "raiz"], ["er", "verb"]], "y": "re- (prefijo) + aparec- (raíz) + -er (sufijo verbal). Quitas re- y queda «aparecer», que existe → derivada."}, {"w": "contradecir", "c": "verbo", "e": "derivada", "p": [["contra", "pref"], ["dec", "raiz"], ["ir", "verb"]], "y": "contra- (prefijo) + dec- (raíz) + -ir (sufijo verbal). Quitas contra- y queda «decir», que existe → derivada."}, {"w": "desintoxicar", "c": "verbo", "e": "derivada", "p": [["des", "pref"], ["in", "pref"], ["toxic", "raiz"], ["ar", "verb"]], "y": "des- (prefijo) + in- (prefijo) + toxic- (raíz) + -ar (sufijo verbal). Quitas des- y queda «intoxicar», que existe → derivada."}, {"w": "zapatero", "c": "sustantivo", "e": "derivada", "p": [["zapat", "raiz"], ["er", "suf"], ["o", "flex"]], "y": "zapat- (raíz) + -er (sufijo) + -o (flexivo). Quitas -er y queda «zapato», que existe → derivada."}, {"w": "librería", "c": "sustantivo", "e": "derivada", "p": [["libr", "raiz"], ["ería", "suf"]], "y": "libr- (raíz) + -ería (sufijo). Quitas -ería y queda «libro», que existe → derivada."}, {"w": "grandeza", "c": "sustantivo", "e": "derivada", "p": [["grand", "raiz"], ["eza", "suf"]], "y": "grand- (raíz) + -eza (sufijo). Quitas -eza y queda «grande», que existe → derivada."}, {"w": "tristeza", "c": "sustantivo", "e": "derivada", "p": [["trist", "raiz"], ["eza", "suf"]], "y": "trist- (raíz) + -eza (sufijo). Quitas -eza y queda «triste», que existe → derivada."}, {"w": "belleza", "c": "sustantivo", "e": "derivada", "p": [["bell", "raiz"], ["eza", "suf"]], "y": "bell- (raíz) + -eza (sufijo). Quitas -eza y queda «bello», que existe → derivada."}, {"w": "pobreza", "c": "sustantivo", "e": "derivada", "p": [["pobr", "raiz"], ["eza", "suf"]], "y": "pobr- (raíz) + -eza (sufijo). Quitas -eza y queda «pobre», que existe → derivada."}, {"w": "naturaleza", "c": "sustantivo", "e": "derivada", "p": [["natural", "raiz"], ["eza", "suf"]], "y": "natural- (raíz) + -eza (sufijo). Quitas -eza y queda «natural», que existe → derivada."}, {"w": "limpieza", "c": "sustantivo", "e": "derivada", "p": [["limpi", "raiz"], ["eza", "suf"]], "y": "limpi- (raíz) + -eza (sufijo). Quitas -eza y queda «limpio», que existe → derivada."}, {"w": "lentitud", "c": "sustantivo", "e": "derivada", "p": [["lent", "raiz"], ["itud", "suf"]], "y": "lent- (raíz) + -itud (sufijo). Quitas -itud y queda «lento», que existe → derivada."}, {"w": "rapidez", "c": "sustantivo", "e": "derivada", "p": [["rapid", "raiz"], ["ez", "suf"]], "y": "rapid- (raíz) + -ez (sufijo). Quitas -ez y queda «rápido», que existe → derivada."}, {"w": "alegría", "c": "sustantivo", "e": "derivada", "p": [["alegr", "raiz"], ["ía", "suf"]], "y": "alegr- (raíz) + -ía (sufijo). Quitas -ía y queda «alegre», que existe → derivada."}, {"w": "futbolista", "c": "sustantivo", "e": "derivada", "p": [["futbol", "raiz"], ["ista", "suf"]], "y": "futbol- (raíz) + -ista (sufijo). Quitas -ista y queda «fútbol», que existe → derivada."}, {"w": "peligroso", "c": "adjetivo", "e": "derivada", "p": [["peligr", "raiz"], ["os", "suf"], ["o", "flex"]], "y": "peligr- (raíz) + -os (sufijo) + -o (flexivo). Quitas -os y queda «peligro», que existe → derivada."}, {"w": "arenoso", "c": "adjetivo", "e": "derivada", "p": [["aren", "raiz"], ["os", "suf"], ["o", "flex"]], "y": "aren- (raíz) + -os (sufijo) + -o (flexivo). Quitas -os y queda «arena», que existe → derivada."}, {"w": "ciudadano", "c": "sustantivo", "e": "derivada", "p": [["ciudad", "raiz"], ["an", "suf"], ["o", "flex"]], "y": "ciudad- (raíz) + -an (sufijo) + -o (flexivo). Quitas -an y queda «ciudad», que existe → derivada."}, {"w": "cocinero", "c": "sustantivo", "e": "derivada", "p": [["cocin", "raiz"], ["er", "suf"], ["o", "flex"]], "y": "cocin- (raíz) + -er (sufijo) + -o (flexivo). Quitas -er y queda «cocina», que existe → derivada."}, {"w": "jugador", "c": "sustantivo", "e": "derivada", "p": [["jug", "raiz"], ["ador", "suf"]], "y": "jug- (raíz) + -ador (sufijo). Se forma a partir de «jugar», que existe → derivada."}, {"w": "vendedor", "c": "sustantivo", "e": "derivada", "p": [["vend", "raiz"], ["edor", "suf"]], "y": "vend- (raíz) + -edor (sufijo). Se forma a partir de «vender», que existe → derivada."}, {"w": "traducción", "c": "sustantivo", "e": "derivada", "p": [["traduc", "raiz"], ["ción", "suf"]], "y": "traduc- (raíz) + -ción (sufijo). Se forma a partir de «traducir», que existe → derivada."}, {"w": "declaración", "c": "sustantivo", "e": "derivada", "p": [["declar", "raiz"], ["ación", "suf"]], "y": "declar- (raíz) + -ación (sufijo). Se forma a partir de «declarar», que existe → derivada."}, {"w": "aprendizaje", "c": "sustantivo", "e": "derivada", "p": [["aprendiz", "raiz"], ["aje", "suf"]], "y": "aprendiz- (raíz) + -aje (sufijo). Quitas -aje y queda «aprendiz», que existe → derivada."}, {"w": "merecedoras", "c": "adjetivo", "e": "derivada", "p": [["merec", "raiz"], ["edor", "suf"], ["as", "flex"]], "y": "merec- (raíz) + -edor (sufijo) + -as (flexivo). Se forma a partir de «merecer», que existe → derivada."}, {"w": "lamentaciones", "c": "sustantivo", "e": "derivada", "p": [["lament", "raiz"], ["acion", "suf"], ["es", "flex"]], "y": "lament- (raíz) + -acion (sufijo) + -es (flexivo). Se forma a partir de «lamentar», que existe → derivada."}, {"w": "acosadoras", "c": "adjetivo", "e": "derivada", "p": [["acos", "raiz"], ["ador", "suf"], ["as", "flex"]], "y": "acos- (raíz) + -ador (sufijo) + -as (flexivo). Se forma a partir de «acosar», que existe → derivada."}, {"w": "suavizar", "c": "verbo", "e": "derivada", "p": [["suav", "raiz"], ["izar", "suf"]], "y": "suav- (raíz) + -izar (sufijo). Quitas -izar y queda «suave», que existe → derivada."}, {"w": "blanquear", "c": "verbo", "e": "derivada", "p": [["blanqu", "raiz"], ["ear", "suf"]], "y": "blanqu- (raíz) + -ear (sufijo). Quitas -ear y queda «blanco», que existe → derivada."}, {"w": "golpear", "c": "verbo", "e": "derivada", "p": [["golp", "raiz"], ["ear", "suf"]], "y": "golp- (raíz) + -ear (sufijo). Quitas -ear y queda «golpe», que existe → derivada."}, {"w": "pasear", "c": "verbo", "e": "derivada", "p": [["pas", "raiz"], ["ear", "suf"]], "y": "pas- (raíz) + -ear (sufijo). Quitas -ear y queda «paso», que existe → derivada."}, {"w": "realizar", "c": "verbo", "e": "derivada", "p": [["real", "raiz"], ["izar", "suf"]], "y": "real- (raíz) + -izar (sufijo). Quitas -izar y queda «real», que existe → derivada."}, {"w": "utilizar", "c": "verbo", "e": "derivada", "p": [["util", "raiz"], ["izar", "suf"]], "y": "util- (raíz) + -izar (sufijo). Quitas -izar y queda «útil», que existe → derivada."}, {"w": "clarificar", "c": "verbo", "e": "derivada", "p": [["clar", "raiz"], ["ificar", "suf"]], "y": "clar- (raíz) + -ificar (sufijo). Quitas -ificar y queda «claro», que existe → derivada."}, {"w": "simplificar", "c": "verbo", "e": "derivada", "p": [["simpl", "raiz"], ["ificar", "suf"]], "y": "simpl- (raíz) + -ificar (sufijo). Quitas -ificar y queda «simple», que existe → derivada."}, {"w": "desigualdad", "c": "sustantivo", "e": "derivada", "p": [["des", "pref"], ["igual", "raiz"], ["dad", "suf"]], "y": "des- (prefijo) + igual- (raíz) + -dad (sufijo). Quitas des- y queda «igualdad», que existe → derivada."}, {"w": "deslealtad", "c": "sustantivo", "e": "derivada", "p": [["des", "pref"], ["leal", "raiz"], ["tad", "suf"]], "y": "des- (prefijo) + leal- (raíz) + -tad (sufijo). Quitas des- y queda «lealtad», que existe → derivada."}, {"w": "desagradable", "c": "adjetivo", "e": "derivada", "p": [["des", "pref"], ["agrad", "raiz"], ["able", "suf"]], "y": "des- (prefijo) + agrad- (raíz) + -able (sufijo). Quitas des- y queda «agradable», que existe → derivada."}, {"w": "desorganización", "c": "sustantivo", "e": "derivada", "p": [["des", "pref"], ["organiz", "raiz"], ["ación", "suf"]], "y": "des- (prefijo) + organiz- (raíz) + -ación (sufijo). Quitas des- y queda «organización», que existe → derivada."}, {"w": "reutilizable", "c": "adjetivo", "e": "derivada", "p": [["re", "pref"], ["util", "raiz"], ["iz", "suf"], ["able", "suf"]], "y": "re- (prefijo) + util- (raíz) + -iz (sufijo) + -able (sufijo). Quitas re- y queda «utilizable», que existe → derivada."}, {"w": "imperdonable", "c": "adjetivo", "e": "derivada", "p": [["im", "pref"], ["perdon", "raiz"], ["able", "suf"]], "y": "im- (prefijo) + perdon- (raíz) + -able (sufijo). Quitas im- y queda «perdonable», que existe → derivada."}, {"w": "cantar", "c": "verbo", "e": "derivada", "p": [["cant", "raiz"], ["ar", "verb"]], "y": "cant- (raíz) + -ar (sufijo verbal). Es un infinitivo: en clase la terminación -ar es un <b>sufijo verbal</b>, así que hay raíz + sufijo → derivada. Fíjate: «cantamos» (forma personal) sería simple; el infinitivo no."}, {"w": "amar", "c": "verbo", "e": "derivada", "p": [["am", "raiz"], ["ar", "verb"]], "y": "am- (raíz) + -ar (sufijo verbal). Es un infinitivo: en clase la terminación -ar es un <b>sufijo verbal</b>, así que hay raíz + sufijo → derivada. Fíjate: «amamos» (forma personal) sería simple; el infinitivo no."}, {"w": "hablar", "c": "verbo", "e": "derivada", "p": [["habl", "raiz"], ["ar", "verb"]], "y": "habl- (raíz) + -ar (sufijo verbal). Es un infinitivo: en clase la terminación -ar es un <b>sufijo verbal</b>, así que hay raíz + sufijo → derivada. Fíjate: «hablamos» (forma personal) sería simple; el infinitivo no."}, {"w": "saltar", "c": "verbo", "e": "derivada", "p": [["salt", "raiz"], ["ar", "verb"]], "y": "salt- (raíz) + -ar (sufijo verbal). Es un infinitivo: en clase la terminación -ar es un <b>sufijo verbal</b>, así que hay raíz + sufijo → derivada. Fíjate: «saltamos» (forma personal) sería simple; el infinitivo no."}, {"w": "jugar", "c": "verbo", "e": "derivada", "p": [["jug", "raiz"], ["ar", "verb"]], "y": "jug- (raíz) + -ar (sufijo verbal). Es un infinitivo: en clase la terminación -ar es un <b>sufijo verbal</b>, así que hay raíz + sufijo → derivada. Fíjate: «jugamos» (forma personal) sería simple; el infinitivo no."}, {"w": "pensar", "c": "verbo", "e": "derivada", "p": [["pens", "raiz"], ["ar", "verb"]], "y": "pens- (raíz) + -ar (sufijo verbal). Es un infinitivo: en clase la terminación -ar es un <b>sufijo verbal</b>, así que hay raíz + sufijo → derivada. Fíjate: «pensamos» (forma personal) sería simple; el infinitivo no."}, {"w": "comer", "c": "verbo", "e": "derivada", "p": [["com", "raiz"], ["er", "verb"]], "y": "com- (raíz) + -er (sufijo verbal). Es un infinitivo: en clase la terminación -er es un <b>sufijo verbal</b>, así que hay raíz + sufijo → derivada. Fíjate: «comemos» (forma personal) sería simple; el infinitivo no."}, {"w": "beber", "c": "verbo", "e": "derivada", "p": [["beb", "raiz"], ["er", "verb"]], "y": "beb- (raíz) + -er (sufijo verbal). Es un infinitivo: en clase la terminación -er es un <b>sufijo verbal</b>, así que hay raíz + sufijo → derivada. Fíjate: «bebemos» (forma personal) sería simple; el infinitivo no."}, {"w": "correr", "c": "verbo", "e": "derivada", "p": [["corr", "raiz"], ["er", "verb"]], "y": "corr- (raíz) + -er (sufijo verbal). Es un infinitivo: en clase la terminación -er es un <b>sufijo verbal</b>, así que hay raíz + sufijo → derivada. Fíjate: «corremos» (forma personal) sería simple; el infinitivo no."}, {"w": "temer", "c": "verbo", "e": "derivada", "p": [["tem", "raiz"], ["er", "verb"]], "y": "tem- (raíz) + -er (sufijo verbal). Es un infinitivo: en clase la terminación -er es un <b>sufijo verbal</b>, así que hay raíz + sufijo → derivada. Fíjate: «tememos» (forma personal) sería simple; el infinitivo no."}, {"w": "vivir", "c": "verbo", "e": "derivada", "p": [["viv", "raiz"], ["ir", "verb"]], "y": "viv- (raíz) + -ir (sufijo verbal). Es un infinitivo: en clase la terminación -ir es un <b>sufijo verbal</b>, así que hay raíz + sufijo → derivada. Fíjate: «vivimos» (forma personal) sería simple; el infinitivo no."}, {"w": "partir", "c": "verbo", "e": "derivada", "p": [["part", "raiz"], ["ir", "verb"]], "y": "part- (raíz) + -ir (sufijo verbal). Es un infinitivo: en clase la terminación -ir es un <b>sufijo verbal</b>, así que hay raíz + sufijo → derivada. Fíjate: «partimos» (forma personal) sería simple; el infinitivo no."}, {"w": "escribir", "c": "verbo", "e": "derivada", "p": [["escrib", "raiz"], ["ir", "verb"]], "y": "escrib- (raíz) + -ir (sufijo verbal). Es un infinitivo: en clase la terminación -ir es un <b>sufijo verbal</b>, así que hay raíz + sufijo → derivada. Fíjate: «escribimos» (forma personal) sería simple; el infinitivo no."}, {"w": "recibir", "c": "verbo", "e": "derivada", "p": [["recib", "raiz"], ["ir", "verb"]], "y": "recib- (raíz) + -ir (sufijo verbal). Es un infinitivo: en clase la terminación -ir es un <b>sufijo verbal</b>, así que hay raíz + sufijo → derivada. Fíjate: «recibimos» (forma personal) sería simple; el infinitivo no."}, {"w": "subir", "c": "verbo", "e": "derivada", "p": [["sub", "raiz"], ["ir", "verb"]], "y": "sub- (raíz) + -ir (sufijo verbal). Es un infinitivo: en clase la terminación -ir es un <b>sufijo verbal</b>, así que hay raíz + sufijo → derivada. Fíjate: «subimos» (forma personal) sería simple; el infinitivo no."}, {"w": "decidir", "c": "verbo", "e": "derivada", "p": [["decid", "raiz"], ["ir", "verb"]], "y": "decid- (raíz) + -ir (sufijo verbal). Es un infinitivo: en clase la terminación -ir es un <b>sufijo verbal</b>, así que hay raíz + sufijo → derivada. Fíjate: «decidimos» (forma personal) sería simple; el infinitivo no."}, {"w": "cafecito", "c": "sustantivo", "e": "derivada", "p": [["cafe", "raiz"], ["c", "inter"], ["it", "suf"], ["o", "flex"]], "y": "cafe- (raíz) + -c- (interfijo) + -it (sufijo) + -o (flexivo). Quitas -c-ito y queda «café», que existe → derivada."}, {"w": "panecillo", "c": "sustantivo", "e": "derivada", "p": [["pan", "raiz"], ["ec", "inter"], ["ill", "suf"], ["o", "flex"]], "y": "pan- (raíz) + -ec- (interfijo) + -ill (sufijo) + -o (flexivo). Quitas -ec-illo y queda «pan», que existe → derivada."}, {"w": "pececito", "c": "sustantivo", "e": "derivada", "p": [["pec", "raiz"], ["ec", "inter"], ["it", "suf"], ["o", "flex"]], "y": "pec- (raíz) + -ec- (interfijo) + -it (sufijo) + -o (flexivo). Se forma a partir de «pez», que existe → derivada."}, {"w": "florecita", "c": "sustantivo", "e": "derivada", "p": [["flor", "raiz"], ["ec", "inter"], ["it", "suf"], ["a", "flex"]], "y": "flor- (raíz) + -ec- (interfijo) + -it (sufijo) + -a (flexivo). Quitas -ec-ita y queda «flor», que existe → derivada."}, {"w": "cancioncita", "c": "sustantivo", "e": "derivada", "p": [["cancion", "raiz"], ["c", "inter"], ["it", "suf"], ["a", "flex"]], "y": "cancion- (raíz) + -c- (interfijo) + -it (sufijo) + -a (flexivo). Quitas -c-ita y queda «canción», que existe → derivada."}, {"w": "pobrecito", "c": "adjetivo", "e": "derivada", "p": [["pobre", "raiz"], ["c", "inter"], ["it", "suf"], ["o", "flex"]], "y": "pobre- (raíz) + -c- (interfijo) + -it (sufijo) + -o (flexivo). Quitas -c-ito y queda «pobre», que existe → derivada."}, {"w": "bailotear", "c": "verbo", "e": "derivada", "p": [["bail", "raiz"], ["ot", "inter"], ["ear", "suf"]], "y": "bail- (raíz) + -ot- (interfijo) + -ear (sufijo). Quitas -ot-ear y queda «bailar», que existe → derivada."}, {"w": "canturrear", "c": "verbo", "e": "derivada", "p": [["cant", "raiz"], ["urr", "inter"], ["ear", "suf"]], "y": "cant- (raíz) + -urr- (interfijo) + -ear (sufijo). Quitas -urr-ear y queda «cantar», que existe → derivada."}, {"w": "corretear", "c": "verbo", "e": "derivada", "p": [["corr", "raiz"], ["ete", "inter"], ["ar", "verb"]], "y": "corr- (raíz) + -ete- (interfijo) + -ar (sufijo verbal). Se forma a partir de «correr», que existe → derivada."}, {"w": "lametazo", "c": "sustantivo", "e": "derivada", "p": [["lam", "raiz"], ["et", "inter"], ["azo", "suf"]], "y": "lam- (raíz) + -et- (interfijo) + -azo (sufijo). Quitas -et-azo y queda «lamer», que existe → derivada."}, {"w": "bravucón", "c": "adjetivo", "e": "derivada", "p": [["brav", "raiz"], ["uc", "inter"], ["ón", "suf"]], "y": "brav- (raíz) + -uc- (interfijo) + -ón (sufijo). Quitas -uc-ón y queda «bravo», que existe → derivada."}, {"w": "alejar", "c": "verbo", "e": "parasintetica", "p": [["a", "pref"], ["lej", "raiz"], ["ar", "verb"]], "y": "a- (prefijo) + lej- (raíz) + -ar (sufijo verbal). El prefijo y el sufijo entran a la vez: no existe «lejar» (sin a-) → parasintética."}, {"w": "aclarar", "c": "verbo", "e": "parasintetica", "p": [["a", "pref"], ["clar", "raiz"], ["ar", "verb"]], "y": "a- (prefijo) + clar- (raíz) + -ar (sufijo verbal). El prefijo y el sufijo entran a la vez: no existe «clarar» (sin a-) → parasintética."}, {"w": "ensuciar", "c": "verbo", "e": "parasintetica", "p": [["en", "pref"], ["suci", "raiz"], ["ar", "verb"]], "y": "en- (prefijo) + suci- (raíz) + -ar (sufijo verbal). El prefijo y el sufijo entran a la vez: no existe «suciar» (sin en-) → parasintética."}, {"w": "enjaular", "c": "verbo", "e": "parasintetica", "p": [["en", "pref"], ["jaul", "raiz"], ["ar", "verb"]], "y": "en- (prefijo) + jaul- (raíz) + -ar (sufijo verbal). El prefijo y el sufijo entran a la vez: no existe «jaular» (sin en-) → parasintética."}, {"w": "embotellar", "c": "verbo", "e": "parasintetica", "p": [["em", "pref"], ["botell", "raiz"], ["ar", "verb"]], "y": "em- (prefijo) + botell- (raíz) + -ar (sufijo verbal). El prefijo y el sufijo entran a la vez: no existe «botellar» (sin em-) → parasintética."}, {"w": "emborrachar", "c": "verbo", "e": "parasintetica", "p": [["em", "pref"], ["borrach", "raiz"], ["ar", "verb"]], "y": "em- (prefijo) + borrach- (raíz) + -ar (sufijo verbal). El prefijo y el sufijo entran a la vez: no existe «borrachar» (sin em-) → parasintética."}, {"w": "engordar", "c": "verbo", "e": "parasintetica", "p": [["en", "pref"], ["gord", "raiz"], ["ar", "verb"]], "y": "en- (prefijo) + gord- (raíz) + -ar (sufijo verbal). El prefijo y el sufijo entran a la vez: no existe «gordar» (sin en-) → parasintética."}, {"w": "endulzar", "c": "verbo", "e": "parasintetica", "p": [["en", "pref"], ["dulz", "raiz"], ["ar", "verb"]], "y": "en- (prefijo) + dulz- (raíz) + -ar (sufijo verbal). El prefijo y el sufijo entran a la vez: no existe «dulzar» (sin en-) → parasintética."}, {"w": "aterrizar", "c": "verbo", "e": "parasintetica", "p": [["a", "pref"], ["terr", "raiz"], ["izar", "suf"]], "y": "a- (prefijo) + terr- (raíz) + -izar (sufijo). El prefijo y el sufijo entran a la vez: no existen «terrizar» (sin a-) ni «aterr-» (sin -izar) → parasintética."}, {"w": "enrojecer", "c": "verbo", "e": "parasintetica", "p": [["en", "pref"], ["roj", "raiz"], ["ecer", "suf"]], "y": "en- (prefijo) + roj- (raíz) + -ecer (sufijo). El prefijo y el sufijo entran a la vez: no existen «rojecer» (sin en-) ni «enroj-» (sin -ecer) → parasintética."}, {"w": "ensombrecer", "c": "verbo", "e": "parasintetica", "p": [["en", "pref"], ["sombr", "raiz"], ["ecer", "suf"]], "y": "en- (prefijo) + sombr- (raíz) + -ecer (sufijo). El prefijo y el sufijo entran a la vez: no existen «sombrecer» (sin en-) ni «ensombr-» (sin -ecer) → parasintética."}, {"w": "anochecer", "c": "verbo", "e": "parasintetica", "p": [["a", "pref"], ["noch", "raiz"], ["ecer", "suf"]], "y": "a- (prefijo) + noch- (raíz) + -ecer (sufijo). El prefijo y el sufijo entran a la vez: no existe «nochecer» (sin a-) → parasintética."}, {"w": "atardecer", "c": "verbo", "e": "parasintetica", "p": [["a", "pref"], ["tard", "raiz"], ["ecer", "suf"]], "y": "a- (prefijo) + tard- (raíz) + -ecer (sufijo). El prefijo y el sufijo entran a la vez: no existe «tardecer» (sin a-) → parasintética."}, {"w": "empobrecer", "c": "verbo", "e": "parasintetica", "p": [["em", "pref"], ["pobr", "raiz"], ["ecer", "suf"]], "y": "em- (prefijo) + pobr- (raíz) + -ecer (sufijo). El prefijo y el sufijo entran a la vez: no existe «pobrecer» (sin em-) → parasintética."}, {"w": "enriquecer", "c": "verbo", "e": "parasintetica", "p": [["en", "pref"], ["riqu", "raiz"], ["ecer", "suf"]], "y": "en- (prefijo) + riqu- (raíz) + -ecer (sufijo). El prefijo y el sufijo entran a la vez: no existe «riquecer» (sin en-) → parasintética."}, {"w": "desalmado", "c": "adjetivo", "e": "parasintetica", "p": [["des", "pref"], ["alm", "raiz"], ["ad", "suf"], ["o", "flex"]], "y": "des- (prefijo) + alm- (raíz) + -ad (sufijo) + -o (flexivo). El prefijo y el sufijo entran a la vez: ni «almado» (sin des-) ni «desalma» (sin -ado) existen → parasintética."}, {"w": "adinerado", "c": "adjetivo", "e": "parasintetica", "p": [["a", "pref"], ["diner", "raiz"], ["ad", "suf"], ["o", "flex"]], "y": "a- (prefijo) + diner- (raíz) + -ad (sufijo) + -o (flexivo). El prefijo y el sufijo entran a la vez: ni «dinerado» (sin a-) ni «adinero» (sin -ado) existen → parasintética."}, {"w": "hierbabuena", "c": "sustantivo", "e": "compuesta", "p": [["hierb", "raiz"], ["a", "flex"], ["buen", "raiz"], ["a", "flex"]], "y": "hierb- (raíz) + -a (flexivo) + buen- (raíz) + -a (flexivo). Hay dos raíces (hierb- y buen-), cada una con significado propio → compuesta. No son afijos: «buena» existe como palabra."}, {"w": "malgastar", "c": "verbo", "e": "compuesta", "p": [["mal", "raiz"], ["gast", "raiz"], ["ar", "verb"]], "y": "mal- (raíz) + gast- (raíz) + -ar (sufijo verbal). Hay dos raíces (mal- y gast-), cada una con significado propio → compuesta. «mal» existe solo, igual que «bien» en bienhablado, y en clase «bien» es raíz; por analogía aquí también. ⚠ Pendiente de confirmar con la profesora (Dudas, d12)."}, {"w": "hazmerreír", "c": "sustantivo", "e": "compuesta", "p": [["hazme", "raiz"], ["reír", "raiz"]], "y": "hazme- (raíz) + reír- (raíz). Hay dos raíces (hazme- y reír-), cada una con significado propio → compuesta. Es el imperativo «haz» + «me» + «reír», fundido en un sustantivo (persona ridícula)."}, {"w": "bienhablado", "c": "adjetivo", "e": "compuesta", "p": [["bien", "raiz"], ["hablad", "raiz"], ["o", "flex"]], "y": "bien- (raíz) + hablad- (raíz) + -o (flexivo). Hay dos raíces (bien- y hablad-), cada una con significado propio → compuesta. «bien» existe solo, así que en clase es raíz y no prefijo (confirmado)."}, {"w": "bienvenido", "c": "adjetivo", "e": "compuesta", "p": [["bien", "raiz"], ["venid", "raiz"], ["o", "flex"]], "y": "bien- (raíz) + venid- (raíz) + -o (flexivo). Hay dos raíces (bien- y venid-), cada una con significado propio → compuesta. Mismo caso que «bienhablado»: «bien» es raíz."}, {"w": "sacacorchos", "c": "sustantivo", "e": "compuesta", "p": [["saca", "raiz"], ["corch", "raiz"], ["os", "flex"]], "y": "saca- (raíz) + corch- (raíz) + -os (flexivo). Hay dos raíces (saca- y corch-), cada una con significado propio → compuesta."}, {"w": "lavaplatos", "c": "sustantivo", "e": "compuesta", "p": [["lava", "raiz"], ["plat", "raiz"], ["os", "flex"]], "y": "lava- (raíz) + plat- (raíz) + -os (flexivo). Hay dos raíces (lava- y plat-), cada una con significado propio → compuesta."}, {"w": "cumpleaños", "c": "sustantivo", "e": "compuesta", "p": [["cumple", "raiz"], ["añ", "raiz"], ["os", "flex"]], "y": "cumple- (raíz) + añ- (raíz) + -os (flexivo). Hay dos raíces (cumple- y añ-), cada una con significado propio → compuesta."}, {"w": "agridulce", "c": "adjetivo", "e": "compuesta", "p": [["agri", "raiz"], ["dulc", "raiz"], ["e", "flex"]], "y": "agri- (raíz) + dulc- (raíz) + -e (flexivo). Hay dos raíces (agri- y dulc-), cada una con significado propio → compuesta."}, {"w": "abrelatas", "c": "sustantivo", "e": "compuesta", "p": [["abre", "raiz"], ["lat", "raiz"], ["as", "flex"]], "y": "abre- (raíz) + lat- (raíz) + -as (flexivo). Hay dos raíces (abre- y lat-), cada una con significado propio → compuesta."}, {"w": "aguardiente", "c": "sustantivo", "e": "compuesta", "p": [["agu", "raiz"], ["ardient", "raiz"], ["e", "flex"]], "y": "agu- (raíz) + ardient- (raíz) + -e (flexivo). Hay dos raíces (agu- y ardient-), cada una con significado propio → compuesta. Agua + ardiente."}, {"w": "telaraña", "c": "sustantivo", "e": "compuesta", "p": [["tel", "raiz"], ["araña", "raiz"]], "y": "tel- (raíz) + araña- (raíz). Hay dos raíces (tel- y araña-), cada una con significado propio → compuesta. Tela + araña."}, {"w": "tocadiscos", "c": "sustantivo", "e": "compuesta", "p": [["toca", "raiz"], ["disc", "raiz"], ["os", "flex"]], "y": "toca- (raíz) + disc- (raíz) + -os (flexivo). Hay dos raíces (toca- y disc-), cada una con significado propio → compuesta."}, {"w": "rascacielos", "c": "sustantivo", "e": "compuesta", "p": [["rasca", "raiz"], ["ciel", "raiz"], ["os", "flex"]], "y": "rasca- (raíz) + ciel- (raíz) + -os (flexivo). Hay dos raíces (rasca- y ciel-), cada una con significado propio → compuesta."}, {"w": "lavavajillas", "c": "sustantivo", "e": "compuesta", "p": [["lava", "raiz"], ["vajill", "raiz"], ["as", "flex"]], "y": "lava- (raíz) + vajill- (raíz) + -as (flexivo). Hay dos raíces (lava- y vajill-), cada una con significado propio → compuesta."}, {"w": "sacapuntas", "c": "sustantivo", "e": "compuesta", "p": [["saca", "raiz"], ["punt", "raiz"], ["as", "flex"]], "y": "saca- (raíz) + punt- (raíz) + -as (flexivo). Hay dos raíces (saca- y punt-), cada una con significado propio → compuesta."}, {"w": "girasol", "c": "sustantivo", "e": "compuesta", "p": [["gira", "raiz"], ["sol", "raiz"]], "y": "gira- (raíz) + sol- (raíz). Hay dos raíces (gira- y sol-), cada una con significado propio → compuesta."}, {"w": "pasatiempo", "c": "sustantivo", "e": "compuesta", "p": [["pasa", "raiz"], ["tiemp", "raiz"], ["o", "flex"]], "y": "pasa- (raíz) + tiemp- (raíz) + -o (flexivo). Hay dos raíces (pasa- y tiemp-), cada una con significado propio → compuesta."}, {"w": "salvavidas", "c": "sustantivo", "e": "compuesta", "p": [["salva", "raiz"], ["vid", "raiz"], ["as", "flex"]], "y": "salva- (raíz) + vid- (raíz) + -as (flexivo). Hay dos raíces (salva- y vid-), cada una con significado propio → compuesta."}, {"w": "quitamanchas", "c": "sustantivo", "e": "compuesta", "p": [["quita", "raiz"], ["manch", "raiz"], ["as", "flex"]], "y": "quita- (raíz) + manch- (raíz) + -as (flexivo). Hay dos raíces (quita- y manch-), cada una con significado propio → compuesta."}, {"w": "matamoscas", "c": "sustantivo", "e": "compuesta", "p": [["mata", "raiz"], ["mosc", "raiz"], ["as", "flex"]], "y": "mata- (raíz) + mosc- (raíz) + -as (flexivo). Hay dos raíces (mata- y mosc-), cada una con significado propio → compuesta."}, {"w": "tragaperras", "c": "sustantivo", "e": "compuesta", "p": [["traga", "raiz"], ["perr", "raiz"], ["as", "flex"]], "y": "traga- (raíz) + perr- (raíz) + -as (flexivo). Hay dos raíces (traga- y perr-), cada una con significado propio → compuesta."}, {"w": "posavasos", "c": "sustantivo", "e": "compuesta", "p": [["posa", "raiz"], ["vas", "raiz"], ["os", "flex"]], "y": "posa- (raíz) + vas- (raíz) + -os (flexivo). Hay dos raíces (posa- y vas-), cada una con significado propio → compuesta."}, {"w": "guardabosques", "c": "sustantivo", "e": "compuesta", "p": [["guarda", "raiz"], ["bosqu", "raiz"], ["es", "flex"]], "y": "guarda- (raíz) + bosqu- (raíz) + -es (flexivo). Hay dos raíces (guarda- y bosqu-), cada una con significado propio → compuesta."}, {"w": "aguanieve", "c": "sustantivo", "e": "compuesta", "p": [["agua", "raiz"], ["niev", "raiz"], ["e", "flex"]], "y": "agua- (raíz) + niev- (raíz) + -e (flexivo). Hay dos raíces (agua- y niev-), cada una con significado propio → compuesta."}, {"w": "medianoche", "c": "sustantivo", "e": "compuesta", "p": [["media", "raiz"], ["noch", "raiz"], ["e", "flex"]], "y": "media- (raíz) + noch- (raíz) + -e (flexivo). Hay dos raíces (media- y noch-), cada una con significado propio → compuesta."}, {"w": "bocacalle", "c": "sustantivo", "e": "compuesta", "p": [["boca", "raiz"], ["call", "raiz"], ["e", "flex"]], "y": "boca- (raíz) + call- (raíz) + -e (flexivo). Hay dos raíces (boca- y call-), cada una con significado propio → compuesta."}, {"w": "altavoz", "c": "sustantivo", "e": "compuesta", "p": [["alt", "raiz"], ["a", "flex"], ["voz", "raiz"]], "y": "alt- (raíz) + -a (flexivo) + voz- (raíz). Hay dos raíces (alt- y voz-), cada una con significado propio → compuesta."}, {"w": "buscapersonas", "c": "sustantivo", "e": "compuesta", "p": [["busca", "raiz"], ["person", "raiz"], ["as", "flex"]], "y": "busca- (raíz) + person- (raíz) + -as (flexivo). Hay dos raíces (busca- y person-), cada una con significado propio → compuesta."}, {"w": "biología", "c": "sustantivo", "e": "culta", "p": [["bio", "culta"], ["logía", "culta"]], "y": "bio- (vida) + -logía (estudio, ciencia). Dos raíces griegas o latinas unidas → compuesta culta."}, {"w": "geología", "c": "sustantivo", "e": "culta", "p": [["geo", "culta"], ["logía", "culta"]], "y": "geo- (tierra) + -logía (estudio). Dos raíces griegas o latinas unidas → compuesta culta."}, {"w": "psicología", "c": "sustantivo", "e": "culta", "p": [["psico", "culta"], ["logía", "culta"]], "y": "psico- (mente, alma) + -logía (estudio). Dos raíces griegas o latinas unidas → compuesta culta."}, {"w": "zoología", "c": "sustantivo", "e": "culta", "p": [["zoo", "culta"], ["logía", "culta"]], "y": "zoo- (animal) + -logía (estudio). Dos raíces griegas o latinas unidas → compuesta culta."}, {"w": "ecología", "c": "sustantivo", "e": "culta", "p": [["eco", "culta"], ["logía", "culta"]], "y": "eco- (casa, entorno) + -logía (estudio). Dos raíces griegas o latinas unidas → compuesta culta."}, {"w": "antropología", "c": "sustantivo", "e": "culta", "p": [["antropo", "culta"], ["logía", "culta"]], "y": "antropo- (ser humano) + -logía (estudio). Dos raíces griegas o latinas unidas → compuesta culta."}, {"w": "arqueología", "c": "sustantivo", "e": "culta", "p": [["arqueo", "culta"], ["logía", "culta"]], "y": "arqueo- (antiguo) + -logía (estudio). Dos raíces griegas o latinas unidas → compuesta culta."}, {"w": "cardiología", "c": "sustantivo", "e": "culta", "p": [["cardio", "culta"], ["logía", "culta"]], "y": "cardio- (corazón) + -logía (estudio). Dos raíces griegas o latinas unidas → compuesta culta."}, {"w": "traumatología", "c": "sustantivo", "e": "culta", "p": [["trauma", "culta"], ["to", "inter"], ["logía", "culta"]], "y": "trauma- (herida, lesión) + -logía (estudio); entre ambas hay una vocal de unión que en clase se llama interfijo (-to-). Dos raíces griegas o latinas unidas → compuesta culta."}, {"w": "bioquímico", "c": "adjetivo", "e": "culta", "p": [["bio", "culta"], ["químic", "culta"], ["o", "flex"]], "y": "bio- (vida) + químic- (de la química). ⚠ Pendiente de confirmar con la profesora (Dudas, d12): sale en la pregunta de los apuntes.. Dos raíces griegas o latinas unidas → compuesta culta."}, {"w": "filosofía", "c": "sustantivo", "e": "culta", "p": [["filo", "culta"], ["sofía", "culta"]], "y": "filo- (amor) + -sofía (sabiduría). Dos raíces griegas o latinas unidas → compuesta culta."}, {"w": "filólogo", "c": "sustantivo", "e": "culta", "p": [["filó", "culta"], ["logo", "culta"]], "y": "filo- (amor) + -logo (palabra, estudio). Dos raíces griegas o latinas unidas → compuesta culta."}, {"w": "aracnofobia", "c": "sustantivo", "e": "culta", "p": [["aracno", "culta"], ["fobia", "culta"]], "y": "aracno- (araña) + -fobia (miedo). Dos raíces griegas o latinas unidas → compuesta culta."}, {"w": "talasofobia", "c": "sustantivo", "e": "culta", "p": [["talaso", "culta"], ["fobia", "culta"]], "y": "talaso- (mar) + -fobia (miedo). Dos raíces griegas o latinas unidas → compuesta culta."}, {"w": "claustrofobia", "c": "sustantivo", "e": "culta", "p": [["claustro", "culta"], ["fobia", "culta"]], "y": "claustro- (lugar cerrado) + -fobia (miedo). Dos raíces griegas o latinas unidas → compuesta culta."}, {"w": "hidrofobia", "c": "sustantivo", "e": "culta", "p": [["hidro", "culta"], ["fobia", "culta"]], "y": "hidro- (agua) + -fobia (miedo). Dos raíces griegas o latinas unidas → compuesta culta."}, {"w": "xenofobia", "c": "sustantivo", "e": "culta", "p": [["xeno", "culta"], ["fobia", "culta"]], "y": "xeno- (extranjero) + -fobia (miedo). Dos raíces griegas o latinas unidas → compuesta culta."}, {"w": "bibliofilia", "c": "sustantivo", "e": "culta", "p": [["biblio", "culta"], ["filia", "culta"]], "y": "biblio- (libro) + -filia (afición, amor). Dos raíces griegas o latinas unidas → compuesta culta."}, {"w": "cinéfilo", "c": "adjetivo", "e": "culta", "p": [["ciné", "culta"], ["filo", "culta"]], "y": "cine- (movimiento, imagen) + -filo (amante). Dos raíces griegas o latinas unidas → compuesta culta."}, {"w": "melomanía", "c": "sustantivo", "e": "culta", "p": [["melo", "culta"], ["manía", "culta"]], "y": "melo- (música) + -manía (obsesión). Dos raíces griegas o latinas unidas → compuesta culta."}, {"w": "carnívoro", "c": "adjetivo", "e": "culta", "p": [["carní", "culta"], ["vor", "culta"], ["o", "flex"]], "y": "carni- (carne) + -voro (que devora). Dos raíces griegas o latinas unidas → compuesta culta."}, {"w": "herbívoro", "c": "adjetivo", "e": "culta", "p": [["herbí", "culta"], ["vor", "culta"], ["o", "flex"]], "y": "herbi- (hierba) + -voro (que devora). Dos raíces griegas o latinas unidas → compuesta culta."}, {"w": "insectívoro", "c": "adjetivo", "e": "culta", "p": [["insectí", "culta"], ["vor", "culta"], ["o", "flex"]], "y": "insecti- (insecto) + -voro (que devora). Dos raíces griegas o latinas unidas → compuesta culta."}, {"w": "omnívoro", "c": "adjetivo", "e": "culta", "p": [["omní", "culta"], ["vor", "culta"], ["o", "flex"]], "y": "omni- (todo) + -voro (que devora). Dos raíces griegas o latinas unidas → compuesta culta."}, {"w": "telescopio", "c": "sustantivo", "e": "culta", "p": [["tele", "culta"], ["scopio", "culta"]], "y": "tele- (lejos) + -scopio (ver, observar). Dos raíces griegas o latinas unidas → compuesta culta."}, {"w": "teléfono", "c": "sustantivo", "e": "culta", "p": [["telé", "culta"], ["fono", "culta"]], "y": "tele- (lejos) + -fono (sonido). Dos raíces griegas o latinas unidas → compuesta culta."}, {"w": "micrófono", "c": "sustantivo", "e": "culta", "p": [["micró", "culta"], ["fono", "culta"]], "y": "micro- (pequeño) + -fono (sonido). Dos raíces griegas o latinas unidas → compuesta culta."}, {"w": "termómetro", "c": "sustantivo", "e": "culta", "p": [["termó", "culta"], ["metro", "culta"]], "y": "termo- (calor) + -metro (medida). Dos raíces griegas o latinas unidas → compuesta culta."}, {"w": "cronómetro", "c": "sustantivo", "e": "culta", "p": [["cronó", "culta"], ["metro", "culta"]], "y": "crono- (tiempo) + -metro (medida). Dos raíces griegas o latinas unidas → compuesta culta."}, {"w": "kilómetro", "c": "sustantivo", "e": "culta", "p": [["kiló", "culta"], ["metro", "culta"]], "y": "kilo- (mil) + -metro (medida). Dos raíces griegas o latinas unidas → compuesta culta."}, {"w": "democracia", "c": "sustantivo", "e": "culta", "p": [["demo", "culta"], ["cracia", "culta"]], "y": "demo- (pueblo) + -cracia (poder, gobierno). Dos raíces griegas o latinas unidas → compuesta culta."}, {"w": "aristocracia", "c": "sustantivo", "e": "culta", "p": [["aristo", "culta"], ["cracia", "culta"]], "y": "aristo- (mejor) + -cracia (poder, gobierno). Dos raíces griegas o latinas unidas → compuesta culta."}, {"w": "fotografía", "c": "sustantivo", "e": "culta", "p": [["foto", "culta"], ["grafía", "culta"]], "y": "foto- (luz) + -grafía (escritura, dibujo). Dos raíces griegas o latinas unidas → compuesta culta."}, {"w": "geografía", "c": "sustantivo", "e": "culta", "p": [["geo", "culta"], ["grafía", "culta"]], "y": "geo- (tierra) + -grafía (escritura, descripción). Dos raíces griegas o latinas unidas → compuesta culta."}, {"w": "biografía", "c": "sustantivo", "e": "culta", "p": [["bio", "culta"], ["grafía", "culta"]], "y": "bio- (vida) + -grafía (escritura). Dos raíces griegas o latinas unidas → compuesta culta."}, {"w": "bibliografía", "c": "sustantivo", "e": "culta", "p": [["biblio", "culta"], ["grafía", "culta"]], "y": "biblio- (libro) + -grafía (escritura). Dos raíces griegas o latinas unidas → compuesta culta."}, {"w": "autobiografía", "c": "sustantivo", "e": "culta", "p": [["auto", "culta"], ["bio", "culta"], ["grafía", "culta"]], "y": "auto- (uno mismo) + bio- (vida) + -grafía (escritura). Dos raíces griegas o latinas unidas → compuesta culta."}, {"w": "polígono", "c": "sustantivo", "e": "culta", "p": [["polí", "culta"], ["gono", "culta"]], "y": "poli- (muchos) + -gono (ángulo). Dos raíces griegas o latinas unidas → compuesta culta."}, {"w": "fotosíntesis", "c": "sustantivo", "e": "culta", "p": [["foto", "culta"], ["síntesis", "culta"]], "y": "foto- (luz) + síntesis (composición). Dos raíces griegas o latinas unidas → compuesta culta."}];
+const SIM=[{"w": "desalojar", "t": "Las autoridades ordenaron desalojar el edificio antes de la tormenta."}, {"w": "agridulce", "t": "En el restaurante probamos una salsa agridulce buenísima."}, {"w": "anochecer", "t": "Nos fuimos a casa en cuanto empezó a anochecer."}, {"w": "aracnofobia", "t": "Su aracnofobia le impide entrar en el desván."}, {"w": "panecillo", "t": "Para desayunar me comí un panecillo con aceite."}, {"w": "jugábamos", "t": "De pequeños jugábamos todas las tardes en el patio."}, {"w": "reutilizable", "t": "Compré una bolsa reutilizable para la compra."}, {"w": "sacacorchos", "t": "El camarero abrió la botella con el sacacorchos."}, {"w": "desintoxicar", "t": "Pasó una semana en el campo para desintoxicar su mente de las pantallas."}, {"w": "traumatología", "t": "Lo operaron en el servicio de traumatología del hospital."}, {"w": "recibir", "t": "Estamos esperando para recibir a los invitados."}, {"w": "corretear", "t": "Los niños no paran de corretear por el pasillo."}, {"w": "naturaleza", "t": "Me encanta pasear por la naturaleza los domingos."}, {"w": "enrojecer", "t": "Su cara empezó a enrojecer cuando le preguntaron."}];
+const KIND={raiz:'Raíz',pref:'Prefijo derivativo',suf:'Sufijo derivativo',inter:'Interfijo',flex:'Morfema flexivo',culta:'Raíz culta (griega/latina)',verb:'Sufijo verbal (-ar/-er/-ir)'};
+const KSHORT={raiz:'Raíz',pref:'Prefijo',suf:'Sufijo',inter:'Interfijo',flex:'Flexivo',culta:'Raíz culta',verb:'Suf. verbal'};
+const EST={simple:'Simple',compuesta:'Compuesta',derivada:'Derivada',parasintetica:'Parasintética',culta:'Compuesta culta'};
+const CATS=['sustantivo','adjetivo','verbo','adverbio'];
+const $=s=>document.querySelector(s);
+function store(k,v){try{if(v===undefined){return JSON.parse(localStorage.getItem(k));}localStorage.setItem(k,JSON.stringify(v));}catch(e){return null;}}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));const t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function anat(p){return '<span class="anat">'+p.map(x=>'<span class="pc k-'+x[1]+'">'+x[0]+'<small>'+KSHORT[x[1]]+'</small></span>').join('')+'</span>';}
+function cap(s){return s.charAt(0).toUpperCase()+s.slice(1);}
+function pool(f){
+  if(f==='verbos')return D.filter(w=>w.c==='verbo');
+  if(f==='infinitivos')return D.filter(w=>w.p.some(x=>x[1]==='verb'));
+  if(f==='nombres')return D.filter(w=>w.c!=='verbo');
+  if(f==='dificiles')return D.filter(w=>w.e==='derivada'||w.e==='parasintetica');
+  if(f==='fallos'){const m=store('fp-missed')||{};return D.filter(w=>m[w.w]);}
+  return D;
+}
+/* selección equilibrada: reparte por tipo de estructura */
+function pick(list,n){
+  const g={};shuffle(list).forEach(w=>{(g[w.e]=g[w.e]||[]).push(w);});
+  const keys=shuffle(Object.keys(g)),out=[];
+  while(out.length<n&&keys.some(k=>g[k].length)){keys.forEach(k=>{if(out.length<n&&g[k].length)out.push(g[k].pop());});}
+  return shuffle(out);
+}
+
+/* ---------- pestañas ---------- */
+const tabs=[].slice.call(document.querySelectorAll('[role=tab]'));
+function show(id){
+  if(!document.getElementById('p-'+id)) id='clasifica';
+  tabs.forEach(t=>t.setAttribute('aria-selected',String(t.dataset.t===id)));
+  [].forEach.call(document.querySelectorAll('.panel'),p=>{p.hidden=(p.id!=='p-'+id);});
+  try{history.replaceState(null,'','#'+id);}catch(e){}
+}
+tabs.forEach(t=>t.addEventListener('click',()=>show(t.dataset.t)));
+
+/* ---------- 1. CLASIFICA ---------- */
+const C={q:[],i:0,ok:0,miss:[],locked:false};
+function cStart(custom){
+  let list;
+  if(custom){list=custom;}
+  else{
+    list=pool($('#c-filter').value);
+    if(!list.length){$('#c-box').innerHTML='<div class="callout"><span>Todavía no tienes fallos guardados. Haz una ronda normal primero.</span></div>';return;}
+  }
+  const n=custom?custom.length:Math.min(+$('#c-size').value,list.length);
+  C.q=custom?shuffle(custom):pick(list,n);C.i=0;C.ok=0;C.miss=[];cRender();
+}
+function bar(i,n){return '<div class="prog"><span>Palabra '+Math.min(i+1,n)+' de '+n+'</span><span>Aciertos: '+C.ok+'</span></div><div class="bar"><i style="width:'+(100*i/n)+'%"></i></div>';}
+function cRender(){
+  const box=$('#c-box'),n=C.q.length;
+  if(C.i>=n){
+    let msg='';
+    if(C.ok===n)msg='Ronda perfecta.';else if(C.ok>=n*0.8)msg='Muy bien: casi todo dominado.';else if(C.ok>=n*0.5)msg='Vas por buen camino. Repasa la guía y repite los fallos.';else msg='Repasa la guía y el árbol de decisión y vuelve a intentarlo.';
+    const best=store('fp-clasifica-best');
+    const pct=Math.round(100*C.ok/n);
+    const nb=n>=12&&(!best||pct>best.pct);
+    if(nb)store('fp-clasifica-best',{pct:pct,ok:C.ok,n:n});
+    box.innerHTML='<div class="big-score">'+C.ok+' / '+n+'</div><p style="text-align:center">'+msg+(nb&&C.ok>0?' Es tu mejor marca.':'')+'</p>'+
+      (C.miss.length?'<div class="card"><b>Para repasar</b><div style="display:flex;flex-wrap:wrap;gap:8px">'+C.miss.map(w=>'<span class="tag">'+w.w+' → '+EST[w.e]+'</span>').join('')+'</div></div>':'')+
+      '<div class="row" style="justify-content:center"><button class="btn primary" id="c-again">Otra ronda</button>'+(C.miss.length?'<button class="btn" id="c-miss">Repetir solo mis fallos</button>':'')+'</div>';
+    $('#c-again').onclick=()=>cStart();
+    if(C.miss.length){$('#c-miss').onclick=()=>cStart(C.miss.slice());}
+    return;
+  }
+  const w=C.q[C.i];C.locked=false;
+  box.innerHTML=bar(C.i,n)+'<div class="bigword">'+w.w+'</div><div class="opts" role="group" aria-label="Elige el procedimiento">'+
+    Object.keys(EST).map(k=>'<button class="btn opt" data-k="'+k+'">'+EST[k]+'</button>').join('')+'</div><div id="c-fb" aria-live="polite"></div>';
+  [].forEach.call(box.querySelectorAll('.opt'),b=>b.addEventListener('click',()=>cAnswer(b.dataset.k)));
+}
+function cAnswer(k){
+  if(C.locked)return;C.locked=true;
+  const w=C.q[C.i],ok=k===w.e;
+  const m=store('fp-missed')||{};
+  if(ok){C.ok++;if(m[w.w]){m[w.w]--;if(m[w.w]<=0)delete m[w.w];}}else{C.miss.push(w);m[w.w]=(m[w.w]||0)+2;}
+  store('fp-missed',m);updMissed();
+  [].forEach.call(document.querySelectorAll('#c-box .opt'),b=>{b.disabled=true;if(b.dataset.k===w.e)b.classList.add('ok');else if(b.dataset.k===k)b.classList.add('no');});
+  const last=C.i===C.q.length-1;
+  $('#c-fb').innerHTML='<div class="fb '+(ok?'ok':'no')+'"><b>'+(ok?'✓ Correcto':'✗ No: es '+EST[w.e].toLowerCase())+'</b>'+anat(w.p)+'<p>'+w.y+'</p><div><button class="btn primary" id="c-next">'+(last?'Ver resultado':'Siguiente')+'</button></div></div>';
+  const nx=$('#c-next');nx.onclick=()=>{C.i++;cRender();};nx.focus();
+}
+function updMissed(){const m=store('fp-missed')||{};const n=Object.keys(m).length;const o=$('#c-filter option[value=fallos]');if(o)o.textContent='Mis fallos guardados ('+n+')';}
+
+/* ---------- 2. ANALIZA ---------- */
+const A={w:null,last:-1,done:false,n:0,pts:0,max:0};
+function opts(list){return '<option value="">¿Cuál es?</option>'+list.map(x=>'<option value="'+x[0]+'">'+x[1]+'</option>').join('');}
+function aNext(){
+  const list=pool($('#a-filter').value);
+  let i;do{i=Math.floor(Math.random()*list.length);}while(list.length>1&&list[i]===A.last);
+  A.last=list[i];A.w=list[i];A.done=false;aRender();
+}
+function aRender(){
+  const w=A.w,box=$('#a-box');
+  const kinds=Object.keys(KIND).map(k=>[k,KIND[k]]);
+  box.innerHTML='<div class="prog"><span>Palabras analizadas: '+A.n+'</span><span>Puntos: '+A.pts+' / '+A.max+'</span></div>'+
+   '<div class="bigword">'+w.w+'</div><p class="mini" style="text-align:center">Ya te damos los cortes. Dile a cada trozo qué es. (En el examen tendrás que cortar tú.)</p>'+
+   '<div class="segs">'+w.p.map((x,j)=>'<div class="seg"><span class="pc">'+x[0]+'</span><select data-j="'+j+'" aria-label="Qué es «'+x[0]+'»">'+opts(kinds)+'</select></div>').join('')+'</div>'+
+   '<div class="row" style="justify-content:center"><label>Categoría<select id="a-cat">'+opts(CATS.map(c=>[c,cap(c)]))+'</select></label>'+
+   '<label>Estructura<select id="a-est">'+opts(Object.keys(EST).map(k=>[k,EST[k]]))+'</select></label>'+
+   '<button class="btn primary" id="a-check">Comprobar</button></div><div id="a-fb" aria-live="polite"></div>';
+  $('#a-check').onclick=aCheck;
+}
+function aCheck(){
+  if(A.done)return;
+  const w=A.w;const sels=[].slice.call(document.querySelectorAll('#a-box .seg select'));
+  const cat=$('#a-cat'),est=$('#a-est');
+  if(sels.some(s=>!s.value)||!cat.value||!est.value){$('#a-fb').innerHTML='<div class="callout warn"><span>Faltan campos por elegir. Rellénalos todos y pulsa «Comprobar».</span></div>';return;}
+  A.done=true;let pts=0;const max=w.p.length+2;
+  sels.forEach((s,j)=>{const kk=w.p[j][1];const ok=s.value===kk||((kk==='verb'||kk==='suf')&&(s.value==='verb'||s.value==='suf'));s.classList.add(ok?'ok':'no');s.disabled=true;if(ok)pts++;});
+  const cok=cat.value===w.c,eok=est.value===w.e;
+  cat.classList.add(cok?'ok':'no');est.classList.add(eok?'ok':'no');cat.disabled=true;est.disabled=true;
+  if(cok)pts++;if(eok)pts++;
+  A.n++;A.pts+=pts;A.max+=max;
+  const perfect=pts===max;
+  $('#a-check').disabled=true;
+  $('#a-fb').innerHTML='<div class="fb '+(perfect?'ok':'no')+'"><b>'+(perfect?'✓ Todo correcto':'Has acertado '+pts+' de '+max)+'</b>'+anat(w.p)+
+   '<p><b>Categoría:</b> '+w.c+' · <b>Estructura:</b> '+EST[w.e].toLowerCase()+'</p><p>'+w.y+'</p>'+tpl(w)+
+   '<div><button class="btn primary" id="a-next">Otra palabra</button></div></div>';
+  $('#a-next').onclick=aNext;
+  const pp=document.querySelector('#a-box .prog');if(pp)pp.innerHTML='<span>Palabras analizadas: '+A.n+'</span><span>Puntos: '+A.pts+' / '+A.max+'</span>';
+}
+
+/* ---------- plantilla ---------- */
+function dash(x){
+  if(x[1]==='raiz')return '-'+x[0]+'-';
+  if(x[1]==='culta')return x[0];
+  if(x[1]==='pref')return x[0]+'-';
+  if(x[1]==='inter')return '-'+x[0]+'-';
+  return '-'+x[0];
+}
+function list(w,kinds){const r=w.p.filter(x=>kinds.indexOf(x[1])>=0).map(dash);return r.length?r.join(', '):'—';}
+function proc(w){
+  switch(w.e){
+    case 'simple':return 'Es una palabra <b>simple</b>: solo tiene una raíz y morfemas flexivos; no lleva ningún afijo derivativo'+(w.c==='verbo'?' (es una forma personal, no un infinitivo).':'.');
+    case 'compuesta':return 'Es una palabra <b>compuesta</b>: se forma por la unión de dos raíces (palabras con significado propio) más el morfema flexivo.';
+    case 'derivada':return 'Es una palabra <b>derivada</b>: a una raíz se le añaden morfemas derivativos (prefijo y/o sufijo). Si se quita el afijo, la palabra que queda existe.';
+    case 'parasintetica':return 'Es una palabra <b>parasintética</b>: el prefijo y el sufijo (también el sufijo verbal -ar/-er/-ir) se añaden a la vez a la raíz, y la palabra no existe si se quita uno de ellos.';
+    default:return 'Es una palabra <b>compuesta culta</b> (formada por bases compositivas cultas): la unión de dos raíces de origen griego o latino.';
+  }
+}
+function tpl(w){
+  const hasV=w.p.some(x=>x[1]==='verb'),hasI=w.p.some(x=>x[1]==='inter');
+  return '<div class="tpl"><span class="full">Palabra: '+w.w+'</span>'+
+   '<span>Raíz: '+list(w,['raiz','culta'])+'</span><span>Categoría: '+w.c+'</span>'+
+   '<span>M. derivativo prefijo: '+list(w,['pref'])+'</span><span>Estructura: '+EST[w.e].toLowerCase()+'</span>'+
+   '<span>M. derivativo sufijo: '+list(w,['suf','verb'])+(hasV?' (verbal)':'')+'</span><span>M. flexivo: '+list(w,['flex'])+'</span>'+
+   (hasI?'<span class="full">Interfijo: '+list(w,['inter'])+'</span>':'')+'</div>'+
+   '<p><b>Procedimiento:</b> '+proc(w)+'</p>';
+}
+
+/* ---------- 3. SIMULACRO ---------- */
+function simRender(){
+  const box=$('#s-box');
+  box.innerHTML=SIM.map((s,i)=>{
+    const w=D.find(x=>x.w===s.w);
+    const txt=s.t.replace(s.w,'<mark>'+s.w+'</mark>');
+    return '<article class="card"><div class="k">Pregunta '+(i+1)+' de '+SIM.length+'</div>'+
+      '<p class="q">En el texto aparece la palabra «<b>'+s.w+'</b>»: «'+txt+'». Analice su estructura y defina el procedimiento por el que se ha formado. (0,5 p)</p>'+
+      '<label for="s-ta'+i+'" class="mini">Escribe tu respuesta (o hazla en papel con la plantilla):</label><textarea id="s-ta'+i+'"></textarea>'+
+      '<div><button class="btn" data-i="'+i+'">Ver respuesta modelo</button></div>'+
+      '<div id="s-ans'+i+'" hidden><div class="k">Respuesta modelo</div>'+anat(w.p)+tpl(w)+'<p class="mini">'+w.y+'</p>'+
+      '<div class="chk"><b>Compárala con la tuya:</b>'+
+      ['Corté bien la palabra (raíz y afijos).','Distinguí flexivo y derivativo.','Puse la categoría.','Nombré el procedimiento y lo justifiqué.'].map(t=>'<label><input type="checkbox"> '+t+'</label>').join('')+'</div></div></article>';
+  }).join('');
+  [].forEach.call(box.querySelectorAll('button[data-i]'),b=>b.addEventListener('click',()=>{
+    const el=document.getElementById('s-ans'+b.dataset.i);el.hidden=!el.hidden;b.textContent=el.hidden?'Ver respuesta modelo':'Ocultar respuesta modelo';
+  }));
+}
+
+/* ---------- arranque ---------- */
+const best=store('fp-clasifica-best');
+if(best&&best.n){const e=$('#c-best');if(e)e.textContent='Tu mejor marca: '+best.ok+' / '+best.n+' ('+best.pct+' %).';}
+updMissed();
+$('#c-start').onclick=()=>cStart();
+$('#a-filter').addEventListener('change',aNext);
+cStart();aNext();simRender();
+show((location.hash||'#clasifica').slice(1));
+window.addEventListener('hashchange',()=>show((location.hash||'#clasifica').slice(1)));
+})();
+</script></body></html>

@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Test · Materiales y fabricación</title>
+<style>
+:root{
+  --bg:#f4f6fa; --card:#ffffff; --ink:#1b2430; --muted:#5f6b7a; --line:#dde3ea;
+  --accent:#1f6feb; --accent-ink:#ffffff; --ok:#1a7f4b; --ok-bg:#e3f5ea; --bad:#c62828; --bad-bg:#fdecec;
+  --warn:#9a6700; --warn-bg:#fff4d6; --blank:#6b7280; --blank-bg:#eceff3; --chip:#eaf1fb; --fs:16px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f141a; --card:#171e27; --ink:#e6ebf1; --muted:#9aa7b5; --line:#2a3441;
+    --accent:#5aa0ff; --accent-ink:#0b1220; --ok:#5ad08a; --ok-bg:#133022; --bad:#ff7b7b; --bad-bg:#3a1a1a;
+    --warn:#f2c14e; --warn-bg:#3a2e10; --blank:#aab2bd; --blank-bg:#242c36; --chip:#1f2a3a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f141a; --card:#171e27; --ink:#e6ebf1; --muted:#9aa7b5; --line:#2a3441;
+  --accent:#5aa0ff; --accent-ink:#0b1220; --ok:#5ad08a; --ok-bg:#133022; --bad:#ff7b7b; --bad-bg:#3a1a1a;
+  --warn:#f2c14e; --warn-bg:#3a2e10; --blank:#aab2bd; --blank-bg:#242c36; --chip:#1f2a3a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:var(--fs);line-height:1.5}
+.wrap{max-width:860px;margin:0 auto;padding:16px}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+h1{font-size:1.35rem;margin:0}
+h2{font-size:1.15rem;margin:0 0 10px}
+h3{font-size:1rem;margin:16px 0 6px}
+.sub{color:var(--muted);font-size:.9rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:14px}
+button{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:9px 14px;border-radius:10px;cursor:pointer}
+button:hover{border-color:var(--accent)}
+button.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:600}
+button.small{padding:5px 10px;font-size:.85rem}
+button:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.grow{flex:1}
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.mode{border:2px solid var(--line);border-radius:12px;padding:12px;cursor:pointer}
+.mode.sel{border-color:var(--accent);background:var(--chip)}
+.mode b{display:block;font-size:1.05rem}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px dashed var(--line)}
+.opt:last-child{border-bottom:0}
+.opt label:not(.switch){flex:1;cursor:pointer}
+.opt .d{display:block;color:var(--muted);font-size:.85rem}
+.switch{position:relative;width:44px;min-width:44px;max-width:44px;height:24px;flex:0 0 44px;margin-top:2px;display:inline-block}
+.switch input{opacity:0;width:0;height:0}
+.switch span{position:absolute;inset:0;background:var(--line);border-radius:24px;transition:.2s;cursor:pointer}
+.switch span:before{content:"";position:absolute;width:18px;height:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s}
+.switch input:checked+span{background:var(--accent)}
+.switch input:checked+span:before{transform:translateX(20px)}
+.temas{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:6px;margin-top:8px}
+.temas label{display:flex;gap:6px;align-items:center;font-size:.88rem;padding:4px 6px;border-radius:8px;background:var(--chip)}
+.num{width:90px;padding:6px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
+select.num{width:auto}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.seg button{border:0;border-radius:0;padding:7px 12px;font-size:.9rem}
+.seg button.on{background:var(--accent);color:var(--accent-ink)}
+.hidden{display:none!important}
+.chip{display:inline-block;padding:2px 10px;border-radius:999px;background:var(--chip);font-size:.8rem;color:var(--muted)}
+.chip.p{background:var(--warn-bg);color:var(--warn)}
+.prog{height:8px;background:var(--line);border-radius:8px;overflow:hidden;margin:10px 0}
+.prog i{display:block;height:100%;background:var(--accent);width:0;transition:.3s}
+.qtext{font-size:1.1rem;font-weight:600;margin:10px 0 14px}
+.answers{display:flex;flex-direction:column;gap:8px}
+.ans{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:2px solid var(--line);border-radius:12px;cursor:pointer;background:var(--card);text-align:left;width:100%}
+.ans:hover{border-color:var(--accent)}
+.ans .L{flex:none;width:28px;height:28px;border-radius:50%;background:var(--chip);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem}
+.ans.sel{border-color:var(--accent);background:var(--chip)}
+.ans.ok{border-color:var(--ok);background:var(--ok-bg)}
+.ans.bad{border-color:var(--bad);background:var(--bad-bg)}
+.ans.blank{border-style:dashed;color:var(--muted)}
+.ans.blank.sel{border-color:var(--blank);background:var(--blank-bg)}
+.ans.locked{cursor:default}
+.fb{margin-top:12px;padding:12px 14px;border-radius:12px;border-left:5px solid var(--ok);background:var(--ok-bg)}
+.fb.bad{border-left-color:var(--bad);background:var(--bad-bg)}
+.fb.blank{border-left-color:var(--blank);background:var(--blank-bg)}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:16px;flex-wrap:wrap}
+.dots{display:flex;flex-wrap:wrap;gap:5px;margin-top:12px}
+.dot{width:26px;height:26px;border-radius:7px;border:1px solid var(--line);font-size:.75rem;display:flex;align-items:center;justify-content:center;cursor:pointer;background:var(--card)}
+.dot.cur{outline:2px solid var(--accent)}
+.dot.done{background:var(--chip)}
+.dot.b{background:var(--blank-bg)}
+.dot.k{background:var(--ok-bg)} .dot.x{background:var(--bad-bg)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:10px 0}
+.stat{padding:12px;border-radius:12px;background:var(--chip);text-align:center}
+.stat b{display:block;font-size:1.6rem}
+.stat.ok{background:var(--ok-bg)} .stat.bad{background:var(--bad-bg)} .stat.blank{background:var(--blank-bg)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th,td{padding:7px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{color:var(--muted);font-weight:600}
+.bar{height:8px;border-radius:6px;background:var(--line);overflow:hidden;min-width:70px}
+.bar i{display:block;height:100%;background:var(--ok)}
+.bar i.bad{background:var(--bad)}
+.rev{padding:12px;border:1px solid var(--line);border-radius:12px;margin-bottom:8px}
+.rev.ok{border-left:5px solid var(--ok)} .rev.bad{border-left:5px solid var(--bad)} .rev.blank{border-left:5px solid var(--blank)}
+.rev p{margin:4px 0}
+.tag{font-size:.78rem;padding:1px 8px;border-radius:6px;background:var(--chip);color:var(--muted)}
+.warn{border-left:5px solid var(--warn);background:var(--warn-bg);padding:12px 14px;border-radius:12px;margin:8px 0}
+.analisis p{margin:6px 0}
+.analisis ul,.analisis ol{margin:4px 0 10px;padding-left:22px}
+details summary{cursor:pointer;font-weight:600}
+.hist{font-size:.88rem;color:var(--muted)}
+.timer{font-variant-numeric:tabular-nums;font-weight:600}
+.timer.low{color:var(--bad)}
+kbd{font:.8em monospace;padding:1px 5px;border:1px solid var(--line);border-radius:4px;background:var(--bg)}
+footer{color:var(--muted);font-size:.8rem;text-align:center;padding:20px 0}
+@media (max-width:560px){.modes{grid-template-columns:1fr}.wrap{padding:12px}}
+</style>
+</head>
+<body><a href="../index.html" style="display:block;padding:8px 16px;background:#1b2033;color:#fff;font:600 15px/1.3 system-ui,'Segoe UI',sans-serif;text-decoration:none;position:relative;z-index:60">← Índice principal</a>
+<div class="wrap">
+<header>
+  <div>
+    <h1>Test · Materiales y fabricación</h1>
+    <div class="sub">Tecnología e Ingeniería I · 15 temas · <span id="totalB"></span> preguntas del banco de clase + <span id="totalP"></span> de la profesora</div>
+  </div>
+  <div class="row">
+    <button class="small" id="btnTheme" title="Cambiar tema claro/oscuro">🌗</button>
+    <button class="small" id="btnHome">Inicio</button>
+  </div>
+</header>
+
+<!-- ============ CONFIGURACIÓN ============ -->
+<section id="config">
+  <div class="card">
+    <h2>Modo</h2>
+    <div class="modes">
+      <div class="mode sel" data-mode="practica"><b>🧪 Práctica</b><span class="sub">Tú eliges fuente, temas, número de preguntas y opciones. Corrección al momento si quieres.</span></div>
+      <div class="mode" data-mode="examen"><b>📝 Examen</b><span class="sub">Como el real: 30 preguntas del banco de clase + 10 de la profesora, mezcladas. +1 por acierto, −0,5 por fallo, 0 en blanco. Sin pistas hasta el final.</span></div>
+    </div>
+
+    <div id="cfgPractica">
+      <h3>Fuente de las preguntas</h3>
+      <div class="row">
+        <div class="seg" id="srcSeg">
+          <button data-v="mix">Ambas, al azar</button>
+          <button data-v="banco">Solo banco de clase</button>
+          <button data-v="profe">Solo profesora</button>
+          <button data-v="custom">Nº fijo de cada una</button>
+        </div>
+      </div>
+      <div class="row" id="rowNumQ" style="margin-top:8px">
+        <label>Número de preguntas:
+          <select id="numQ" class="num">
+            <option value="all">Todas</option>
+            <option value="5">5</option><option value="10">10</option><option value="15">15</option>
+            <option value="20">20</option><option value="30">30</option><option value="40">40</option><option value="custom">Otro…</option>
+          </select>
+        </label>
+        <input type="number" id="numQcustom" class="num hidden" min="1" value="12">
+        <span class="sub" id="numQinfo"></span>
+      </div>
+      <div class="row hidden" id="rowCustom" style="margin-top:8px">
+        <label>Del banco de clase: <input type="number" id="nB" class="num" min="0" value="30"></label>
+        <label>De la profesora: <input type="number" id="nP" class="num" min="0" value="10"></label>
+        <span class="sub" id="customInfo"></span>
+      </div>
+
+      <h3>Temas <button class="small" id="temasAll">Todos</button> <button class="small" id="temasNone">Ninguno</button></h3>
+      <div class="temas" id="temasBox"></div>
+
+      <h3>Opciones</h3>
+      <div class="opt"><label class="switch"><input type="checkbox" id="optShuffleQ" checked><span></span></label><label for="optShuffleQ">Preguntas en orden aleatorio<span class="d">Desactívalo para verlas ordenadas por tema (tema 1 → tema 15).</span></label></div>
+      <div class="opt"><label class="switch"><input type="checkbox" id="optShuffleA" checked><span></span></label><label for="optShuffleA">Respuestas en orden aleatorio<span class="d">Las letras A/B/C/D cambian de sitio. Las preguntas con respuestas tipo "Todas son correctas" o "A y B" mantienen su orden para que tengan sentido.</span></label></div>
+      <div class="opt"><label class="switch"><input type="checkbox" id="optTema" checked><span></span></label><label for="optTema">Mostrar de qué tema es cada pregunta</label></div>
+      <div class="opt"><label class="switch"><input type="checkbox" id="optSrc" checked><span></span></label><label for="optSrc">Mostrar de qué fuente es cada pregunta<span class="d">Etiqueta "Banco de clase" o "Profesora" en cada pregunta.</span></label></div>
+      <div class="opt"><label class="switch"><input type="checkbox" id="optFeedback" checked><span></span></label><label for="optFeedback">Corrección inmediata<span class="d">Al responder ves si has acertado y la justificación. Si lo desactivas, se corrige todo al final (como en el examen).</span></label></div>
+      <div class="opt"><label class="switch"><input type="checkbox" id="optJustOk" checked><span></span></label><label for="optJustOk">Mostrar la justificación también cuando aciertas<span class="d">Si lo desactivas, solo se explica cuando fallas o dejas en blanco.</span></label></div>
+      <div class="opt"><label class="switch"><input type="checkbox" id="optBack" checked><span></span></label><label for="optBack">Permitir volver a preguntas anteriores<span class="d">Con corrección inmediata solo puedes repasarlas; sin corrección inmediata puedes cambiar la respuesta.</span></label></div>
+      <div class="opt"><label class="switch"><input type="checkbox" id="optPrio"><span></span></label><label for="optPrio">Priorizar las preguntas que has fallado otras veces<span class="d">Usa el historial de este navegador: las que más has fallado salen primero (si hay menos preguntas que el total).</span></label></div>
+      <div class="opt"><label class="switch"><input type="checkbox" id="optPenal"><span></span></label><label for="optPenal">Puntuar como en el examen (+1 / −0,5)<span class="d">Solo cambia la nota que se muestra al final.</span></label></div>
+      <div class="opt"><label class="switch"><input type="checkbox" id="optTimer"><span></span></label><label for="optTimer">Tiempo límite<span class="d">Minutos: <input type="number" id="timerMin" class="num" min="1" value="20" style="width:70px"> · al acabarse se entrega automáticamente.</span></label></div>
+    </div>
+
+    <div id="cfgExamen" class="hidden">
+      <div class="warn">
+        <b>Reglas del examen</b>
+        <ul style="margin:6px 0 0;padding-left:20px">
+          <li>40 preguntas: 30 elegidas al azar del banco de clase y 10 al azar de las de la profesora, todas mezcladas y con las respuestas barajadas. Todas tienen el mismo aspecto.</li>
+          <li>No se muestra el tema ni la fuente de la pregunta, ni si has acertado, hasta entregar.</li>
+          <li>Acierto +1 · fallo −0,5 · en blanco 0. Puedes volver atrás y cambiar cualquier respuesta antes de entregar.</li>
+        </ul>
+      </div>
+      <div class="opt"><label class="switch"><input type="checkbox" id="optTimerEx"><span></span></label><label for="optTimerEx">Tiempo límite<span class="d">Minutos: <input type="number" id="timerMinEx" class="num" min="1" value="50" style="width:70px"> · al acabarse se entrega automáticamente.</span></label></div>
+    </div>
+
+    <h3>Pantalla</h3>
+    <div class="row">
+      <span class="sub">Tamaño de letra:</span>
+      <div class="seg" id="fontSeg"><button data-v="15px">Pequeña</button><button data-v="16px">Normal</button><button data-v="19px">Grande</button></div>
+      <span class="sub">Teclado: <kbd>1</kbd>–<kbd>4</kbd> o <kbd>A</kbd>–<kbd>D</kbd> responder · <kbd>0</kbd> en blanco · <kbd>→</kbd>/<kbd>Enter</kbd> siguiente · <kbd>←</kbd> anterior</span>
+    </div>
+
+    <div class="row" style="margin-top:16px">
+      <button class="primary" id="btnStart">Empezar</button>
+      <span class="sub" id="startInfo"></span>
+    </div>
+  </div>
+
+  <div class="card" id="histCard">
+    <h2>Últimos intentos</h2>
+    <div class="hist" id="histBox"></div>
+    <div class="row" style="margin-top:8px"><button class="small" id="btnClearHist">Borrar historial</button><button class="small" id="btnClearFails">Borrar memoria de fallos</button><span class="sub" id="failsInfo"></span></div>
+  </div>
+</section>
+
+<!-- ============ TEST ============ -->
+<section id="quiz" class="hidden">
+  <div class="card">
+    <div class="row">
+      <span class="chip" id="qMode"></span>
+      <span class="chip" id="qTema"></span>
+      <span class="chip" id="qSrc"></span>
+      <span class="grow"></span>
+      <span class="timer hidden" id="qTimer"></span>
+      <span class="sub" id="qCount"></span>
+    </div>
+    <div class="prog"><i id="qProg"></i></div>
+    <div class="qtext" id="qText"></div>
+    <div class="answers" id="qAns"></div>
+    <div id="qFb"></div>
+    <div class="nav">
+      <button id="btnPrev">← Anterior</button>
+      <div class="row">
+        <button id="btnAbort" class="small">Abandonar</button>
+        <button id="btnNext" class="primary">Siguiente →</button>
+      </div>
+    </div>
+    <div class="dots" id="qDots"></div>
+  </div>
+</section>
+
+<!-- ============ RESULTADOS ============ -->
+<section id="results" class="hidden">
+  <div class="card">
+    <h2 id="rTitle">Resultados</h2>
+    <div class="stats" id="rStats"></div>
+    <div id="rNota"></div>
+    <div class="row" style="margin-top:12px">
+      <button class="primary" id="btnAgain">Repetir con la misma configuración</button>
+      <button id="btnRedo">Repetir solo las falladas</button>
+      <button id="btnWeak">Practicar solo los temas fallados</button>
+      <button id="btnHome2">Volver al inicio</button>
+    </div>
+  </div>
+  <div class="card analisis">
+    <h2>Análisis detallado</h2>
+    <div id="rAnalisis"></div>
+  </div>
+  <div class="card">
+    <h2>Por temas</h2>
+    <div style="overflow:auto"><table id="rTable"></table></div>
+    <h3>Por fuente</h3>
+    <div style="overflow:auto"><table id="rSrcTable"></table></div>
+  </div>
+  <div class="card">
+    <details open><summary>Revisión pregunta a pregunta</summary>
+      <div class="row" style="margin:8px 0"><button class="small" id="revAll">Todas</button><button class="small" id="revBad">Solo fallos y blancos</button></div>
+      <div id="rReview"></div>
+    </details>
+  </div>
+</section>
+
+<footer>Tecnología e Ingeniería I · UD. Materiales y fabricación · banco de preguntas de clase + posibles preguntas de la profesora</footer>
+</div>
+
+<script>
+// ===================== DATOS =====================
+// Resumen de ideas clave por tema (sacado de las preguntas y sus justificaciones: no hay temario).
+const TEMAS = {
+ 1:{n:"Ensayos mecánicos y análisis de fallos en materiales", tip:"Asocia cada ensayo con lo que mide: tracción (se estira la probeta hasta romperla → resistencia y alargamiento; es destructivo), dureza (resistencia a rayarse o marcarse), Charpy (péndulo que golpea la probeta → tenacidad/resiliencia al impacto), fatiga (cargas repetidas que abren una grieta). Los no destructivos (ultrasonidos, rayos X, líquidos penetrantes) buscan defectos sin romper la pieza y se pueden usar en piezas en servicio."},
+ 2:{n:"Corrosión avanzada, oxidación y protección de estructuras", tip:"La pila de corrosión: en el ÁNODO el metal se oxida (pierde electrones); en el CÁTODO hay reducción. Tipos: uniforme (toda la superficie), por picaduras (agujeros localizados y profundos, la más peligrosa en mar/offshore). Protecciones: galvanizado (capa de zinc), ánodo de sacrificio (metal más activo, sin fuente externa) y corriente impresa (con fuente externa)."},
+ 3:{n:"Siderurgia, aceros, fundiciones y tratamientos térmicos", tip:"Acero: 0,008-2,11 % de carbono, resistente y dúctil. Fundición: 2,11-6,67 % de carbono, fácil de moldear; gris (bloques de motor, bancadas) y blanca (dura y frágil). Obtención: acero líquido → colada continua → laminación. Tratamientos: recocido (ablanda y quita tensiones), normalizado (afina el grano), temple (endurece), revenido (quita fragilidad tras el temple). Aceros aleados: con Cr, Ni, Mo, V…"},
+ 4:{n:"Metales no férricos (ligeros, pesados y ultraligeros)", tip:"Sin hierro (o casi): menos densidad, se protegen solos con una capa de óxido pasiva (aluminio, titanio, cobre), amagnéticos. Se clasifican por densidad (ultraligeros, ligeros, pesados) y lo que importa es la relación resistencia-peso. Fichas: aluminio (ligero, aviación y automoción), magnesio (ultraligero, arde, cuidado con el fuego), latón = cobre + zinc, bronce = cobre + estaño."},
+ 5:{n:"Polímeros (termoplásticos, termoestables y elastómeros)", tip:"Monómero → polímero. Termoplásticos (PP, PE, PET…): se refunden y reciclan. Termoestables (baquelita): no se pueden volver a moldear. Elastómeros (caucho): recuperan la forma; vulcanización = añadir azufre para crear enlaces cruzados (Goodyear). Procesos: inyección (fundido a presión en molde cerrado), extrusión (perfiles, tubos), soplado (envases). Parachoques: PP (+EPDM)."},
+ 6:{n:"Materiales cerámicos, madera y sus derivados", tip:"Cerámicas: enlaces iónicos y/o covalentes → muy duras pero frágiles. Vidrio templado: se enfría rápido por fuera y la superficie queda a compresión → más resistente; el vidrio de pantallas aguanta golpes pero lo raya la arena/cuarzo. Madera: anisótropa (propiedades distintas en las direcciones axial, radial y tangencial), punto de saturación de las fibras ≈ 30 %, contracción tangencial ≈ doble de la radial, CLT con número impar de capas (3, 5, 7)."},
+ 7:{n:"Biomateriales e ingeniería tisular", tip:"Biocompatible = funciona en el cuerpo sin rechazo ni toxicidad. Osteointegración = unión directa hueso-implante (titanio). Familias: metales (titanio: prótesis que soportan carga), cerámicos (hidroxiapatita: regeneración ósea), polímeros (PLA: biodegradable). Bioimpresión 3D: los retos son que todas las células reciban oxígeno y nutrientes y conseguir formas complejas."},
+ 8:{n:"Materiales compuestos (composites) y de construcción", tip:"Composite = dos o más fases distintas que combinan sus mejores propiedades: matriz (une, transfiere esfuerzos entre fibras y las protege) + refuerzo (fibras: dan la resistencia). Fibra de carbono: muy resistente y ligera (palas de aerogenerador, bicis). Hormigón armado: el hormigón aguanta compresión y el acero la tracción. Infusión al vacío: la resina entra entre las fibras y se saca el aire."},
+ 9:{n:"Nanomateriales y aislantes extremos", tip:"Grafeno: una capa de átomos de carbono en red hexagonal (panal), obtenida por primera vez con celo; grafeno de ángulo mágico ≈ 1,1°. Fullerenos, nanotubos (mejoran las baterías de litio), nanodiamante. Espuma metálica: 75-90 % huecos con gas. Aerogel de sílice: más del 95 % aire, por eso es un aislante térmico extremo. Repasa la pregunta del «primer nanomaterial» tal y como la da el banco."},
+ 10:{n:"Materiales inteligentes, superconductores y memoria de forma", tip:"Nitinol: martensita en frío, austenita al calentar por encima de A<sub>f</sub> → memoria de forma y superelasticidad (stents). Piezoeléctrico directo (presión → electricidad, cuarzo) e inverso (electricidad → deformación). Fluidos magnetorreológicos: con campo magnético pasan a semisólido en milisegundos. Superconductores: resistencia cero + expulsión del campo magnético (efecto Meissner)."},
+ 11:{n:"Materiales para la transición energética y almacenamiento", tip:"Cada material con su función: neodimio → imanes de aerogeneradores y motores; silicio → paneles solares; cobre → cables, motores y redes; cobalto, níquel y grafito → baterías de ion-litio. Batería: ánodo, cátodo, electrolito y separador; al descargar, los iones Li⁺ van del ánodo al cátodo por el electrolito. LFP: más segura, más vida, más barata; NMC: más densidad de energía. Estado sólido: electrolito sólido (cerámico o polimérico)."},
+ 12:{n:"Ciclo de vida, reciclado y economía circular de materiales", tip:"ACV: impactos ambientales en todas las etapas (materias primas, fabricación, transporte, uso, fin de vida). Lineal: extraer-fabricar-usar-tirar; circular: reutilizar y reciclar. Reciclaje mecánico (moler y refundir) frente a químico (romper las cadenas y recuperar monómeros). Aluminio reciclado: mucha menos energía que el primario. Design for Disassembly: piezas fáciles de separar al final de la vida útil."},
+ 13:{n:"Técnicas de fabricación, prototipado rápido y bajo demanda", tip:"Aditiva añade material capa a capa; sustractiva (CNC) lo quita de un bloque. Tecnologías: FDM (filamento termoplástico fundido por una boquilla), SLA (resina + luz UV), SLS (polvo de plástico + láser), SLM (polvo metálico). Parámetros: relleno/infill (30-50 % equilibrio), tolerancia (margen entre medida real y diseñada)."},
+ 14:{n:"Fabricación digital e Industria 4.0", tip:"Industria 4.0 = conectar fábrica y producto con el mundo digital (IoT, datos, IA). Cadena: CAD diseña → CAE (Computer-Aided Engineering) simula → CAM genera el código para la máquina. FEA: divide la pieza en una malla de elementos para calcular tensiones, deformaciones y calor; más fina = más precisa; necesita validación con ensayos reales. Gemelo digital: réplica «viva» conectada por sensores en tiempo real."},
+ 15:{n:"Selección de materiales en diseño de ingeniería", tip:"Metodología de Ashby: primero definir función, restricciones, objetivos y variables libres. Índice M = √E/ρ (viga ligera y rígida): cuanto mayor, mejor. Mapas de Ashby: E frente a ρ (arriba-izquierda = rígido y ligero); las familias de materiales aparecen agrupadas en regiones; resistencia frente a coste (titanio: bueno pero caro). Conclusión: no hay un material mejor en absoluto, depende del uso."}
+};
+
+// f:"B" = banco de preguntas de clase (docx). f:"P" = posibles preguntas de la profesora (pdf).
+// c = índice (0 = A) de la respuesta correcta. fixed = las respuestas no se barajan.
+const QB = [
+// TEMA 1
+{t:1,q:"¿Para qué sirven los ensayos mecánicos?",o:["Para conocer cómo se comportan los materiales","Para cambiar el color del material","Para limpiar las piezas","Para aumentar el tamaño de la pieza"],c:0,j:"Permiten comprobar propiedades como la resistencia, la dureza y la capacidad de soportar golpes o cargas."},
+{t:1,q:"¿Qué ocurre normalmente en un ensayo de tracción?",o:["Se enfría la pieza con agua","Se estira la probeta aplicando una fuerza","Se pinta la superficie","Se pesa la máquina"],c:1,j:"La probeta se estira para observar cuánto soporta y cuánto se alarga antes de romperse."},
+{t:1,q:"¿Qué mide el ensayo de dureza?",o:["El color del material","La temperatura de la sala","La resistencia a que la superficie se marque o se raye","La longitud de la probeta"],c:2,j:"La dureza indica la resistencia del material a la penetración o a la deformación localizada."},
+{t:1,q:"¿Qué ventaja tienen los ensayos no destructivos, como los ultrasonidos y los rayos X?",o:["Siempre rompen la pieza","Solo sirven para medir el peso","Cambian el material por otro","Permiten buscar defectos sin romper la pieza"],c:3,j:"Estos métodos permiten detectar ciertos defectos internos o superficiales y conservar la pieza para seguir utilizándola."},
+{t:1,q:"¿Qué es la fatiga de un material?",o:["El daño que puede acumularse por cargas repetidas","El cambio de color por pintura","El aumento de tamaño al medirlo","La limpieza de una pieza"],c:0,j:"Las cargas repetidas pueden iniciar y hacer crecer una grieta hasta que la pieza se rompe, incluso si cada carga no es muy grande."},
+// TEMA 2 (sin respuestas en el banco)
+{t:2,q:"¿Qué ocurre en el ánodo durante un proceso de corrosión electroquímica?",o:["El metal se oxida y pierde electrones.","El metal gana electrones y se reduce.","Se forma siempre una capa de pintura.","Se interrumpe toda reacción química."],c:0,j:"En el ánodo se produce la oxidación: el metal cede electrones (por ejemplo Fe → Fe²⁺ + 2e⁻) y se va disolviendo. La ganancia de electrones (reducción) ocurre en el cátodo. Truco: Ánodo ↔ Oxidación (las dos empiezan por vocal), Cátodo ↔ Reducción (consonante)."},
+{t:2,q:"¿Qué es la corrosión por picaduras?",o:["Una pérdida uniforme de material por toda la superficie.","La aparición de cavidades localizadas que pueden ser profundas.","La deformación del metal por un golpe.","La formación de una capa protectora de zinc."],c:1,j:"Es un ataque localizado: se forman pequeños agujeros (picaduras) que pueden ser muy profundos y perforar la pieza aunque se haya perdido poco material. Por eso es más peligrosa que la corrosión uniforme, que se reparte por toda la superficie y se ve fácilmente."},
+{t:2,q:"¿Cómo funciona un ánodo de sacrificio en la protección del casco de un buque?",o:["Impide que el agua de mar toque el casco.","Aumenta la oxidación del acero del casco.","Se corroe preferentemente y protege al metal conectado.","Elimina la necesidad de inspeccionar el buque."],c:2,j:"El ánodo de sacrificio es un bloque de un metal más activo que el acero (zinc, aluminio o magnesio) conectado eléctricamente al casco. Al ser más activo se oxida él en lugar del casco (protección catódica). Se va consumiendo y hay que reponerlo, por lo que el buque sigue necesitando inspecciones."},
+{t:2,q:"¿Qué diferencia principal existe entre la protección catódica por corriente impresa y la de ánodos de sacrificio?",o:["La corriente impresa utiliza una fuente externa de corriente eléctrica.","Los ánodos de sacrificio necesitan siempre una fuente externa.","La corriente impresa solo puede utilizarse en tierra.","Los dos métodos protegen únicamente mediante pintura."],c:0,j:"En la corriente impresa, una fuente externa (un rectificador) inyecta corriente a través de ánodos inertes para proteger la estructura; en los ánodos de sacrificio la corriente nace sola de la diferencia de potencial entre los dos metales, sin fuente externa. Ambas se usan en tierra y en mar (tuberías, tanques, buques, plataformas)."},
+{t:2,q:"¿Por qué se utiliza zinc para galvanizar el acero?",o:["Porque hace que el acero deje de conducir electricidad.","Porque elimina por completo cualquier posibilidad de corrosión.","Porque el zinc solo sirve para dar color al acero.","Porque crea una barrera y puede actuar como metal de sacrificio."],c:3,j:"El galvanizado cubre el acero con una capa de zinc que actúa como barrera frente al aire y el agua. Si la capa se raya, el zinc, al ser más activo que el hierro, se corroe él primero (efecto de sacrificio) y sigue protegiendo el acero. No elimina la corrosión para siempre: la capa de zinc se va gastando."},
+// TEMA 3 (respuestas en el banco, sin justificación)
+{t:3,q:"¿Qué propiedad destaca especialmente en los aceros?",o:["Su facilidad de moldeo exclusivamente.","Su resistencia y ductilidad.","Su fragilidad en todos los casos.","Su elevado contenido de carbono."],c:1,j:"El acero combina alta resistencia mecánica con ductilidad: se puede deformar (laminar, forjar, estirar) sin romperse. Su contenido de carbono es bajo (menos del 2 % aprox.); las que tienen mucho carbono y son frágiles son las fundiciones."},
+{t:3,q:"¿Qué material se utiliza principalmente para fabricar bloques de motores y bancadas de máquinas?",o:["Acero de bajo carbono.","Acero inoxidable.","Fundición gris.","Fundición blanca."],c:2,j:"La fundición gris (con el carbono en forma de láminas de grafito) se moldea muy bien, es barata, resiste bien a compresión y amortigua las vibraciones: ideal para bloques de motor y bancadas. La fundición blanca es muy dura y frágil, se usa para piezas resistentes al desgaste."},
+{t:3,q:"¿Qué tratamiento térmico permite ablandar el acero y reducir tensiones internas?",o:["Temple.","Revenido.","Normalizado.","Recocido."],c:3,j:"El recocido consiste en calentar el acero y enfriarlo muy despacio (dentro del horno): ablanda el material, elimina tensiones internas y facilita el mecanizado. El temple endurece (enfriamiento rápido), el revenido reduce la fragilidad después del temple y el normalizado afina el grano enfriando al aire."},
+{t:3,q:"¿Cuál es una característica de los aceros aleados?",o:["Contienen únicamente hierro y carbono.","Incorporan otros elementos para mejorar sus propiedades.","Tienen siempre más carbono que las fundiciones.","No pueden utilizarse en herramientas."],c:1,j:"Además de hierro y carbono llevan otros elementos (cromo, níquel, molibdeno, vanadio, wolframio, manganeso…) que mejoran la dureza, la resistencia a la corrosión o la templabilidad. Los aceros de herramientas y los inoxidables son aceros aleados."},
+{t:3,q:"¿Qué proceso se realiza después de obtener el acero líquido para darle una forma inicial antes de la laminación?",o:["Recocido.","Colada continua.","Temple.","Normalizado."],c:1,j:"En la colada continua el acero líquido se vierte en un molde refrigerado por agua y sale ya solidificado en forma de palanquillas o desbastes, listos para laminar. Recocido, temple y normalizado son tratamientos térmicos que se hacen después, sobre la pieza ya sólida."},
+// TEMA 4
+{t:4,q:"A la hora de clasificar los metales no ferrosos, ¿cuál es el criterio fundamental que agrupa a este amplio conjunto de elementos metálicos y qué implicaciones generales tiene este grupo frente a los aceros y fundiciones?",o:["Se definen estrictamente por su origen mineral primario en yacimientos volcánicos, lo que resulta en una resistencia mecánica superior a la de cualquier aleación ferrosa a temperatura ambiente.","Lo que les caracteriza es la ausencia total o el contenido extremadamente bajo de hierro en su composición, lo que se traduce en una mayor resistencia a la corrosión ambiental, menor densidad y una ausencia de transformaciones alotrópicas complejas similares a las del hierro.","Son metales los cuales solo se pueden procesar mediante técnicas de pulvimetalurgia debido a la imposibilidad con los procesos tradicionales de fundición y deformación plástica en caliente.","Agrupan exclusivamente a los metales preciosos cuyo valor de mercado supera un umbral determinado, compartiendo una conductividad térmica nula y un punto de fusión inferior a los 100 grados Celsius."],c:1,j:"Como su nombre indica, son «no ferrosos», es decir, no contienen hierro. Además, en la mayoría de ellos su estructura es más estable y por ello no sufren tantas transformaciones."},
+{t:4,q:"Desde un punto de vista químico y estructural, ¿cómo suelen reaccionar la gran mayoría de los metales no ferrosos ante la exposición a la atmósfera y agentes oxidantes como agentes ácidos en comparación con los metales ferrosos convencionales sin alear?",o:["Experimentan una oxidación homogénea y continua en todo su volumen hasta su desaparición total, ya que son químicamente incapaces de formar cualquier tipo de barrera protectora superficial.","Desarrollan de manera espontánea una fina capa de óxido superficial pasiva y altamente adherente que sella el metal subyacente, deteniendo el avance de la corrosión y confiriéndoles una notable resistencia en ambientes agresivos.","Sufren un proceso de descomposición rápido al entrar en contacto con el oxígeno, requiriendo obligatoriamente un recubrimiento galvánico de hierro para mantener su integridad estructural.","Se modifica su estructura cristalina interna convirtiéndose en materiales cerámicos quebradizos tras pocas horas de exposición a la humedad relativa del aire."],c:1,j:"Sucede porque son muy reactivos con el oxígeno: forman enseguida una capa de óxido muy fina y adherente (pasivación) que protege el metal de debajo. Es lo que hacen el aluminio, el titanio o el cobre; en cambio el óxido del hierro es poroso y no protege."},
+{t:4,q:"Cuando queremos hacer una clasificación de los metales no ferrosos, ¿cuál es el criterio general que divide a los metales en las categorías de «ligeros», «ultraligeros» y «pesados», y qué implicaciones surgen de esta clasificación?",o:["Se dividen estrictamente según su densidad natural, provocando así diferencias al reflejar la luz infrarroja como pesados y a los opacos como ligeros.","La división responde exclusivamente al costo de extracción en minas de superficie, clasificando como pesados aquellos que requieren maquinaria superior a 50 toneladas.","Se establece una clasificación según la densidad, lo que condiciona directamente su relación resistencia-peso y su viabilidad en sectores como el transporte y la industria aeroespacial.","Se agrupan según su punto de ebullición absoluto, considerando pesados a los que superan los 1000 grados Celsius a presión atmosférica estándar."],c:2,j:"Se dividen así porque esa clasificación (por densidad) te indica cómo trabajar el metal y para qué sirve: los ligeros y ultraligeros (aluminio, magnesio, titanio) son los que interesan donde el peso importa, como en transporte y aeronáutica."},
+{t:4,q:"Al analizar el grupo de los metales no ferrosos ligeros y ultraligeros, ¿cuál es la propiedad físico-mecánica fundamental que los convierte en materiales estratégicos al ser trabajados frente a aceros estructurales?",o:["Su capacidad única para absorber grandes cantidades de radiación electromagnética sin sufrir ningún tipo de alteración en su red cristalina, superando así al acero o al hormigón.","Su absoluta inmunidad frente a la fatiga mecánica, haciendo imposible que sufran roturas por cargas cíclicas repetidas.","Su punto de fusión extremadamente bajo; esto permite fundirlos a temperatura ambiente utilizando pequeñas cantidades de energía y, a su vez, permite una gran ductilidad y maleabilidad.","Su excepcional relación resistencia-peso frente al resto de metales, lo que permite diseñar componentes capaces de soportar cargas elevadas con una masa global muy reducida."],c:3,j:"Sucede debido a su estructura rígida y estable: con mucha menos masa que el acero aguantan cargas elevadas, es decir, tienen una relación resistencia-peso muy alta. Ningún metal es inmune a la fatiga ni se funde a temperatura ambiente."},
+{t:4,q:"Al examinar el comportamiento magnético y eléctrico de la gran mayoría de los metales no ferrosos (en clara oposición a los materiales ferromagnéticos tradicionales como el hierro o el acero), ¿qué característica fundamental define su respuesta ante los campos magnéticos externos?",o:["Presentan un comportamiento predominantemente amagnético, lo que implica que no son atraídos de forma significativa por los imanes convencionales y no retienen magnetismo remanente.","Poseen una permeabilidad magnética extremadamente alta que les permite retener un campo magnético permanente de gran intensidad incluso tras retirar la fuente externa.","Se convierten automáticamente en superconductores de corriente continua en cualquier condición de temperatura ambiente al entrar en contacto con un campo magnético.","Experimentan una polarización dieléctrica instantánea que los aísla por completo de cualquier onda electromagnética en el espectro visible."],c:0,j:"Son amagnéticos porque sus electrones van apareados con los espines en sentidos contrarios, de modo que los pequeños campos magnéticos de los electrones se anulan entre sí. En el hierro, el níquel y el cobalto hay electrones desapareados cuyos campos se alinean, y por eso son ferromagnéticos."},
+// TEMA 5
+{t:5,q:"¿Qué es un monómero?",o:["Una molécula pequeña que puede unirse a otras para formar un polímero.","Un material metálico resistente.","Un tipo de plástico reciclado.","Una máquina utilizada para fabricar plásticos."],c:0,j:"Un monómero es la unidad básica: una molécula pequeña que, repetida y enlazada miles de veces (polimerización), forma la cadena larga del polímero. Ejemplo: el etileno es el monómero del polietileno. Truco: mono = uno, poli = muchos."},
+{t:5,q:"¿Cuál de estas características corresponde a los termoplásticos?",o:["No pueden volver a moldearse con calor.","Pueden fundirse y moldearse varias veces.","Siempre recuperan su forma original.","No se pueden reciclar."],c:1,j:"Los termoplásticos (PE, PP, PET, PVC…) se ablandan al calentarlos y se endurecen al enfriarse, y esto se puede repetir muchas veces; por eso se pueden reciclar fundiéndolos. Los que no se pueden volver a moldear son los termoestables; los que recuperan su forma son los elastómeros."},
+{t:5,q:"¿En qué consiste el moldeo por inyección?",o:["En introducir aire para dar forma al plástico.","En estirar el plástico para formar tubos.","En introducir plástico fundido a presión en un molde.","En endurecer el caucho mediante vulcanización."],c:2,j:"En la inyección, el plástico fundido se empuja a presión dentro de un molde cerrado; al enfriarse se abre el molde y sale la pieza terminada (tapones, carcasas, piezas de coche). Introducir aire es el soplado (botellas) y hacer tubos o perfiles continuos es la extrusión."},
+{t:5,q:"¿Por qué se utiliza PP+EPDM en los parachoques de los coches?",o:["Porque es un material muy pesado y rígido.","Porque combina resistencia, flexibilidad y capacidad para absorber impactos.","Porque es un material metálico.","Porque no necesita ningún proceso de fabricación."],c:1,j:"Es una mezcla de polipropileno (PP: ligero, rígido y barato) con caucho EPDM (elástico). El resultado aguanta golpes pequeños deformándose y recuperando la forma, pesa poco y no se oxida. Se fabrica por inyección."},
+{t:5,q:"¿Cuál es una ventaja de sustituir piezas metálicas por polímeros técnicos de alta resistencia?",o:["Aumentar el peso de los productos.","Reducir la resistencia mecánica.","Aumentar la corrosión.","Reducir el peso y mejorar la resistencia a la corrosión."],c:3,j:"Los polímeros técnicos (poliamida, POM, PEEK…) son mucho menos densos que los metales y no se oxidan, así que la pieza pesa menos (ahorro de combustible, por ejemplo) y no sufre corrosión. Además suelen necesitar menos mecanizado."},
+// TEMA 6
+{t:6,q:"¿Qué ejes no entran en la anisotropía de la madera?",o:["Eje axial","Eje cartesiano","Eje radial","Eje tangencial"],c:1,j:"La madera es anisótropa: sus propiedades (resistencia, contracción…) cambian según la dirección. Las tres direcciones que se usan son la axial (a lo largo de las fibras), la radial (del centro del tronco a la corteza) y la tangencial (siguiendo los anillos). «Eje cartesiano» es un concepto de matemáticas, no una dirección de la madera."},
+{t:6,q:"¿En qué porcentaje aproximadamente se sitúa el punto de saturación de las fibras (PSF)?",o:["20","30","40","50"],c:1,j:"El punto de saturación de las fibras está en torno al 30 % de humedad: las paredes de las células están llenas de agua pero ya no queda agua libre en los huecos. Por debajo de ese valor la madera empieza a contraerse (y por encima, a hincharse); por eso es el valor clave para el secado."},
+{t:6,q:"¿Cuál es la relación entre la contracción tangencial y la radial?",o:["Son iguales","La radial es el doble que la tangencial","No tienen relación","La tangencial es casi el doble que la radial"],c:3,j:"Al secarse, la madera se contrae aproximadamente el doble en dirección tangencial (siguiendo los anillos) que en dirección radial (valores típicos ≈ 8 % frente a ≈ 4 %), y casi nada en dirección axial. Esa diferencia es la que provoca que las tablas se alabeen o agrieten al secar."},
+{t:6,q:"Normalmente, ¿cuál no suele ser un número de capas de la madera contralaminada (CLT)?",o:["3","6","5","7"],c:1,j:"Los paneles de CLT se fabrican con un número impar de capas cruzadas (3, 5, 7…) para que el panel sea simétrico respecto a su capa central y no se deforme. Seis capas no es un formato habitual."},
+{t:6,q:"¿Cuál de estas es una debilidad del vidrio cerámico de las pantallas de los móviles?",o:["Absorber energía de impactos secos","La arena","El polvo de cuarzo","La «B» y la «C»"],c:3,fixed:true,j:"El vidrio cerámico reforzado aguanta bien los impactos (esa es precisamente su fortaleza), pero su punto débil son los arañazos: la arena y el polvo de cuarzo tienen dureza 7 en la escala de Mohs, mayor que la del vidrio (≈ 6), así que lo rayan aunque sea un vidrio reforzado. Por eso se rayan las pantallas en los bolsillos y en la playa."},
+// TEMA 7 (sin respuestas en el banco)
+{t:7,q:"¿Qué es la biocompatibilidad?",o:["La capacidad de un material para resistir altas temperaturas.","La capacidad de un material para funcionar en el cuerpo sin causar daños.","La capacidad de un material para descomponerse rápidamente.","Todas son correctas."],c:1,fixed:true,j:"Un material biocompatible es el que puede estar en contacto con el organismo (implantes, prótesis, suturas) cumpliendo su función sin provocar rechazo, toxicidad ni inflamación. No tiene que ver con resistir temperatura, y descomponerse rápido sería la biodegradabilidad, que no todos los biomateriales tienen."},
+{t:7,q:"¿Qué material se utiliza habitualmente en prótesis de cadera por su resistencia y biocompatibilidad?",o:["Titanio.","Hidroxiapatita.","PLA.","Todas son correctas."],c:0,fixed:true,j:"El titanio y sus aleaciones son los metales de referencia en prótesis de cadera: resistentes, ligeros, no se corroen en el cuerpo y el hueso se une bien a ellos. La hidroxiapatita es un cerámico que se usa solo como recubrimiento o relleno óseo (no soporta cargas), y el PLA es un polímero biodegradable para suturas o tornillos temporales, no para una cadera. Por eso «todas» no es correcta."},
+{t:7,q:"¿Qué es la osteointegración?",o:["La degradación de un implante dentro del organismo.","La fabricación de tejidos mediante impresión 3D.","La unión estable entre el hueso y un implante.","Ninguna es correcta."],c:2,fixed:true,j:"La osteointegración es la unión directa y estable entre el hueso vivo y la superficie del implante, sin tejido blando entre medias. Es lo que hace que un implante dental o una prótesis de titanio queden firmes. Truco: osteo = hueso, integración = unirse."},
+{t:7,q:"¿Qué afirmación sobre los biomateriales es correcta?",o:["Los cerámicos pueden favorecer la regeneración ósea.","Algunos polímeros son biodegradables.","Los metales pueden utilizarse en implantes que soportan cargas.","Todas son correctas."],c:3,fixed:true,j:"Las tres son ciertas: los cerámicos como la hidroxiapatita favorecen que crezca hueso nuevo; polímeros como el PLA o el PGA se degradan en el cuerpo (suturas reabsorbibles); y los metales (titanio, acero inoxidable, cromo-cobalto) se usan donde hay que aguantar cargas (cadera, rodilla, placas)."},
+{t:7,q:"¿Cuál es uno de los principales retos de la bioimpresión 3D de órganos?",o:["Conseguir que todas las células reciban oxígeno y nutrientes.","Fabricar estructuras con formas complejas.","Utilizar células vivas y biomateriales.","A y B son correctas."],c:3,fixed:true,j:"Los dos grandes retos son la vascularización (crear vasos para que el oxígeno y los nutrientes lleguen a todas las células del órgano impreso, no solo a las de fuera) y reproducir la forma y la estructura interna complejas de un órgano real. Usar células vivas y biomateriales (biotintas) no es un reto, es en qué consiste la técnica."},
+// TEMA 8 (3 opciones, sin respuestas en el banco)
+{t:8,q:"¿Qué función tiene la matriz en un material compuesto?",o:["Unir y mantener juntas las fibras.","Dar color al material.","Hacer que el material pese más."],c:0,j:"Un material compuesto tiene dos partes: el refuerzo (fibras, que dan la resistencia) y la matriz (normalmente una resina), que envuelve las fibras, las mantiene en su sitio, reparte las cargas entre ellas y las protege. Sin matriz, las fibras serían solo un tejido suelto."},
+{t:8,q:"¿Cuál de estos materiales destaca por ser muy resistente y ligero?",o:["El cartón.","La fibra de carbono.","El papel."],c:1,j:"La fibra de carbono (fibras de carbono en una matriz de resina epoxi) tiene una resistencia parecida a la del acero con una cuarta parte de su densidad. Por eso se usa en bicicletas, raquetas, aviones y coches de competición."},
+{t:8,q:"¿Para qué sirve la infusión al vacío?",o:["Para enfriar las fibras.","Para pintar los materiales.","Para introducir la resina entre las fibras y quitar el aire."],c:2,j:"En la infusión al vacío las fibras secas se colocan en el molde, se cubren con una bolsa y se hace el vacío: la resina es aspirada y se reparte entre todas las fibras mientras el aire se elimina. Así no quedan burbujas y la pieza sale más ligera y resistente (cascos de barco, palas de aerogenerador)."},
+{t:8,q:"¿De qué materiales está formado principalmente el hormigón armado?",o:["Cemento y acero.","Plástico y madera.","Vidrio y aluminio."],c:0,j:"El hormigón (cemento, arena, grava y agua) aguanta muy bien la compresión pero mal la tracción; las barras de acero (armadura) aportan la resistencia a tracción. Juntos forman un material compuesto: matriz de hormigón y refuerzo de acero."},
+{t:8,q:"¿Para qué se utilizan los materiales compuestos en las palas de los aerogeneradores?",o:["Para hacerlas más pesadas.","Para que sean resistentes y ligeras.","Para que tengan más color."],c:1,j:"Las palas miden decenas de metros y giran sin parar: tienen que soportar grandes esfuerzos y fatiga pesando lo menos posible. La fibra de vidrio o de carbono con resina lo consigue; con acero serían demasiado pesadas."},
+// TEMA 9
+{t:9,q:"¿Cómo se obtuvo por primera vez el grafeno?",o:["Cortando el grafito muy fino hasta que sea de 1 átomo de grosor","Pegando capas de celo con grafito unas con otras para hacerlo muy fino","Bañando el grafito en una mezcla salina y se desprendan las capas","Uniendo átomos de carbono uno a uno hasta llegar al grafito"],c:1,j:"Unos científicos pegaron varias capas de celo con grafito repetidamente, haciendo que cada vez hubiese menos capas, hasta que se quedó de una sola capa."},
+{t:9,q:"¿Por cuántos grados se puede rotar una lámina de grafeno con respecto a otra para conseguir el grafeno rotado con propiedades más útiles?",o:["5 grados","59 grados","1,1 grados","3 grados"],c:2,j:"Se puede girar una lámina de grafeno contra otra unos 1,1 grados para conseguir el grafeno de ángulo mágico, que tiene propiedades superconductoras y cuánticas increíbles."},
+{t:9,q:"¿De qué es lo que más está hecha una espuma metálica?",o:["Espacios vacíos llenos de gas","Un líquido","El metal del que está hecho","Ninguna de las anteriores"],c:0,fixed:true,j:"Una espuma metálica está formada en un 75-90 % de espacios vacíos llenos de gas, es por esto por lo que se dice que es un nanomaterial, pese a ser perceptible al ojo humano."},
+{t:9,q:"¿Qué tipo de nanomaterial de carbono es el que se usa para aumentar la eficiencia de las baterías de litio?",o:["Grafeno","Fullereno","Nanodiamante","Nanotubos (SWCNT/MWCNT)"],c:3,j:"Los nanotubos se introducen en las baterías de litio para que aumente la cantidad de ciclos que podrá hacer la batería durante toda su vida."},
+{t:9,q:"¿Cuál fue el primer nanomaterial que se descubrió en la historia?",o:["Fullereno","El grafeno","Se descubrieron a la vez","Ninguna de las anteriores"],c:1,fixed:true,j:"El primer nanomaterial descubierto fue el grafeno, ya que se descubrió con cinta adhesiva (celo), pegando una tira de celo con otra hasta que se quedó una única capa de celo."},
+// TEMA 10 (respuestas en el banco, sin justificación)
+{t:10,q:"¿Qué transformación de fase cristalina ocurre en el Nitinol al calentarlo por encima de su temperatura de transición (A<sub>f</sub>)?",o:["De austenita a martensita.","De martensita a austenita.","De estructura cúbica a líquido.","De amorfo a cristalino."],c:1,j:"El Nitinol (níquel + titanio) tiene dos fases: en frío es martensita, blanda y fácil de deformar; al calentarlo por encima de A<sub>f</sub> pasa a austenita y recupera la forma que se le «enseñó» (efecto memoria de forma). Al enfriarlo vuelve a martensita. Truco: calor → Austenita (A de «alta temperatura»)."},
+{t:10,q:"¿En qué consiste el efecto piezoeléctrico directo?",o:["En la generación de una carga o corriente eléctrica al aplicar una fuerza o presión mecánica sobre el material.","En el cambio de viscosidad de un fluido al aplicar un campo magnético.","En la deformación física de un cristal al aplicarle un voltaje o campo eléctrico.","En la pérdida total de resistencia eléctrica al enfriar un metal por debajo de su temperatura crítica."],c:0,j:"Efecto directo: aprietas o deformas el cristal (cuarzo, cerámicas PZT) y aparece una tensión eléctrica; es lo que usan los encendedores de cocina y los sensores de presión. El efecto inverso es el contrario: aplicas voltaje y el cristal se deforma (altavoces, actuadores). La opción B es el fluido magnetorreológico y la D la superconductividad."},
+{t:10,q:"¿Cómo reacciona un fluido magnetorreológico (MR) cuando se le aplica un campo magnético externo?",o:["Se evapora instantáneamente debido al incremento de temperatura.","Genera una corriente eléctrica de alta frecuencia por efecto inductivo.","Sus micropartículas de hierro se alinean en cadenas rígidas, pasando de estado líquido a un estado semisólido o gel en milisegundos.","Pierde completamente su capacidad de amortiguar vibraciones al volverse totalmente incompresible."],c:2,j:"Un fluido MR es un aceite con micropartículas de hierro en suspensión. Con el imán apagado fluye como un líquido; al aplicar el campo magnético las partículas se alinean formando cadenas y el fluido se vuelve casi sólido en milisegundos. Al quitar el campo vuelve a ser líquido. Se usa en amortiguadores de coches y en prótesis, porque la dureza se controla con la corriente."},
+{t:10,q:"¿Qué dos propiedades fundamentales caracterizan a un material cuando alcanza el estado de superconductividad?",o:["Superelasticidad y memoria de forma térmica.","Resistencia eléctrica cero y expulsión del campo magnético interior (efecto Meissner).","Alta dilatación térmica y generación de chispa por impacto.","Viscosidad variable y alta conductividad hidráulica."],c:1,j:"Por debajo de su temperatura crítica, un superconductor conduce la corriente sin ninguna resistencia (no pierde energía en forma de calor) y expulsa el campo magnético de su interior (efecto Meissner), que es lo que permite la levitación magnética. La opción A describe el Nitinol."},
+{t:10,q:"En la fabricación de un stent vascular autoexpandible de Nitinol, ¿por qué propiedad mecánica se elige este material frente al acero inoxidable tradicional?",o:["Porque el Nitinol es un material cerámico sintético de bajo coste de producción.","Porque permite introducir el stent comprimido en frío (martensita) y que se expanda solo al alcanzar la temperatura corporal (37 °C), ejerciendo una fuerza radial constante gracias a su superelasticidad.","Porque necesita un campo magnético aplicado de forma continua desde el exterior del cuerpo para mantenerse abierto.","Porque se disuelve gradualmente en el torrente sanguíneo sin dejar residuos tras unos meses."],c:1,j:"El stent se comprime en frío (fase martensita) para meterlo por un catéter; al llegar a la arteria, a 37 °C, pasa a austenita y se expande solo, y gracias a la superelasticidad sigue empujando suavemente la pared de la arteria sin deformarse de forma permanente. El acero habría que expandirlo con un balón y no recupera la forma."},
+// TEMA 11
+{t:11,q:"¿Qué función específica tiene el neodimio en las tecnologías de transición energética?",o:["Crear calor","Actuar como el material base para el ánodo","Fabricar imanes de alto rendimiento en aerogeneradores y motores eléctricos","Captar la energía directamente en los paneles solares fotovoltaicos"],c:2,j:"El neodimio es una tierra rara con la que se fabrican los imanes permanentes más potentes (neodimio-hierro-boro). Esos imanes van en los generadores de los aerogeneradores y en los motores de los coches eléctricos. La base del ánodo es el grafito y la captación solar la hace el silicio."},
+{t:11,q:"¿Cuáles son los cuatro elementos esenciales que componen toda batería recargable?",o:["Ánodo, cátodo, electrolito y separador interno","Litio, cobalto, níquel y grafito","Turbina, alternador, imán y circuito externo","Célula fotovoltaica, silicio, inversor y cableado"],c:0,j:"Toda batería tiene dos electrodos (ánodo y cátodo), un electrolito por el que se mueven los iones y un separador que impide que los electrodos se toquen (cortocircuito). Litio, cobalto, níquel y grafito son materiales con los que se fabrican esas partes en una batería de ion-litio, no las partes en sí."},
+{t:11,q:"Según el texto, ¿qué materiales desempeñan un papel directo en la mejora o estructura de las baterías de ion-litio?",o:["El neodimio y el silicio","El cobalto (mejora rendimiento), el níquel (aporta densidad) y el grafito (base del ánodo)","Únicamente el sodio y las baterías de flujo","El cobre para los cables y el neodimio para los imanes"],c:1,j:"En el cátodo de una batería de ion-litio el cobalto da estabilidad y rendimiento y el níquel aumenta la densidad de energía (más autonomía); el ánodo está hecho de grafito, donde se alojan los iones de litio al cargar. El neodimio (imanes), el silicio (paneles) y el cobre (cables) tienen otras funciones."},
+{t:11,q:"¿Qué material es el componente fundamental para captar energía en los paneles solares fotovoltaicos?",o:["El silicio","El cobre","El grafito","El cobalto"],c:0,j:"Las células fotovoltaicas son de silicio, un semiconductor: cuando la luz incide sobre él libera electrones y genera corriente eléctrica. El cobre solo conduce esa corriente por los cables."},
+{t:11,q:"¿Qué material es esencial para la fabricación de cables, motores eléctricos y redes de distribución?",o:["El cobre","El silicio","El grafito","El cobalto"],c:0,j:"El cobre es, después de la plata, el mejor conductor eléctrico, y además es dúctil (se estira en hilos) y relativamente barato. Por eso está en todos los cables, en los bobinados de motores y transformadores y en las redes eléctricas. Un coche eléctrico o un aerogenerador llevan cientos de kilos de cobre."},
+// TEMA 12 (respuestas en el banco, sin justificación)
+{t:12,q:"¿Cuál es el objetivo principal del análisis del ciclo de vida (ACV)?",o:["Analizar únicamente la fabricación de un producto.","Evaluar los impactos ambientales de un producto a lo largo de las etapas consideradas de su ciclo de vida.","Calcular exclusivamente su precio de venta.","Determinar solo la cantidad de residuos generados."],c:1,j:"El ACV estudia el impacto ambiental «de la cuna a la tumba»: extracción de materias primas, fabricación, transporte, uso y fin de vida (reciclaje o vertedero). Las otras opciones se quedan en una sola etapa o en un solo aspecto (precio, residuos)."},
+{t:12,q:"¿Qué caracteriza al modelo lineal de producción y consumo?",o:["Reutilizar todos los productos indefinidamente.","Transformar siempre los residuos en materias primas.","Extraer, fabricar, utilizar y desechar.","Eliminar la necesidad de materias primas."],c:2,j:"El modelo lineal es «extraer → fabricar → usar → tirar»: los recursos salen de la naturaleza y acaban en el vertedero. Lo contrario es la economía circular, que intenta que los materiales vuelvan al ciclo (reutilizar, reparar, reciclar)."},
+{t:12,q:"¿Qué sucede normalmente en el reciclaje mecánico de plásticos?",o:["Se transforman necesariamente en sus monómeros originales.","Se clasifican y procesan físicamente para obtener material aprovechable.","Se convierten siempre en combustible.","Se recuperan todos los polímeros sin pérdida de calidad."],c:1,j:"En el reciclaje mecánico los plásticos se separan por tipo, se lavan, se trituran y se funden para hacer granza nueva, sin cambiar su química. Volver a los monómeros es el reciclaje químico, y en cada ciclo mecánico el plástico pierde algo de calidad (por eso el rPET no sirve para todo)."},
+{t:12,q:"¿Por qué el aluminio reciclado puede reducir el consumo energético?",o:["Porque no necesita recogerse ni transportarse.","Porque su refundición suele requerir menos energía que producir aluminio primario a partir del mineral.","Porque nunca necesita clasificarse.","Porque su fabricación no produce ningún impacto ambiental."],c:1,j:"Obtener aluminio de la bauxita exige electrólisis, que consume muchísima electricidad; refundir chatarra de aluminio gasta en torno a un 5 % de esa energía. Sigue haciendo falta recoger, transportar y clasificar, y sigue habiendo impacto, pero mucho menor."},
+{t:12,q:"¿Qué debe tenerse en cuenta al comparar envases de rPET, aluminio y vidrio mediante un ACV?",o:["Únicamente el color del envase.","Solo si se puede depositar en un contenedor de reciclaje.","El peso, la fabricación, el transporte, el uso y el fin de vida.","Exclusivamente el precio de compra."],c:2,j:"Un ACV mira todas las etapas: cuánto pesa el envase (afecta al transporte), cuánta energía cuesta fabricarlo, cuántos kilómetros recorre, cómo se usa (¿se rellena?) y qué pasa al final (¿se recicla?, ¿cuántas veces?). Por eso el vidrio, que es muy reciclable pero pesado, no siempre gana."},
+// TEMA 13 (respuestas en el banco, sin justificación)
+{t:13,q:"¿Qué material utiliza normalmente la tecnología SLS?",o:["Resina líquida.","Polvo de plástico.","Polvo metálico.","Hilo de plástico."],c:1,j:"SLS (sinterizado selectivo por láser) funde con un láser, capa a capa, un polvo de plástico (normalmente poliamida/nailon). La resina líquida es la SLA, el polvo metálico es la SLM/DMLS y el hilo de plástico es la FDM."},
+{t:13,q:"¿Qué diferencia principalmente a la fabricación aditiva de la sustractiva?",o:["La aditiva utiliza siempre metal.","La sustractiva utiliza luz ultravioleta.","La aditiva añade material y la sustractiva lo elimina.","Ambas funcionan exactamente igual."],c:2,j:"La fabricación aditiva (impresión 3D) construye la pieza añadiendo material capa a capa; la sustractiva (torno, fresadora, CNC) parte de un bloque y va quitando material. Truco: aditiva = añadir, sustractiva = sustraer (quitar)."},
+{t:13,q:"¿Qué porcentaje de relleno (infill) ofrece un equilibrio entre resistencia y consumo de material?",o:["10-20 %.","30-50 %.","70-100 %.","90-100 %."],c:1,j:"El relleno es la estructura interna de la pieza (rejilla, panal…). Con 10-20 % la pieza es ligera pero frágil; con 70-100 % es muy resistente pero gasta mucho material y tiempo. El 30-50 % es el término medio habitual para piezas funcionales."},
+{t:13,q:"¿Qué es la tolerancia en la impresión 3D?",o:["La cantidad de material que contiene una pieza.","La posición en la que se coloca una pieza.","El tiempo que tarda en imprimirse una pieza.","El margen de error entre las medidas reales y las diseñadas."],c:3,j:"La tolerancia es la diferencia admisible entre la medida que diseñaste y la que sale de la impresora (por ejemplo ±0,2 mm). Es clave cuando dos piezas tienen que encajar: si no se tiene en cuenta, el agujero sale más pequeño que el eje."},
+{t:13,q:"¿Qué tecnología utiliza luz ultravioleta para endurecer una resina fotosensible?",o:["FDM.","SLS.","SLA.","SLM."],c:2,j:"SLA (estereolitografía): un láser o una pantalla UV endurece capa a capa una resina líquida fotosensible; da piezas muy detalladas. FDM funde hilo de plástico, SLS sinteriza polvo de plástico y SLM funde polvo metálico."},
+// TEMA 14
+{t:14,q:"¿Cuál de las siguientes afirmaciones sobre la Industria 4.0 es CORRECTA según lo visto en la presentación?",o:["La Industria 4.0 se caracteriza por la electricidad y la producción en cadena, que permitieron la primera automatización de las fábricas.","La Industria 4.0 conecta el mundo físico (fábrica, producto) con el mundo digital mediante el uso de datos, inteligencia artificial y fabricación digital.","La Industria 4.0 se basa en aislar cada máquina para que trabaje de forma independiente y así evitar fallos en la línea de producción.","La Industria 4.0 se reduce exclusivamente a la impresión 3D, que es la única tecnología que la diferencia de la automatización tradicional."],c:1,j:"La Industria 4.0 se define por la conectividad y el uso de datos (IoT, Big Data, IA) y por la fabricación digital. La opción A corresponde a la 2ª revolución industrial; la C es lo contrario del paradigma 4.0 (que se basa en la conexión, no en el aislamiento); y la D es falsa porque la impresión 3D es solo una parte de la fabricación digital, no el todo."},
+{t:14,q:"¿Qué función cumple cada etapa de la cadena CAD/CAE/CAM?",o:["El CAD genera el código numérico, el CAE valida ese código y el CAM diseña la geometría 3D.","El CAD diseña la geometría 3D, el CAE simula el comportamiento del modelo y el CAM genera el código numérico para la máquina.","El CAE sustituye al CAD cuando el diseño ya está validado, y el CAM solo interviene si falla la simulación.","Las tres etapas son independientes y no comparten información."],c:1,j:"La cadena es secuencial y sin pérdida de información: CAD (diseño 3D) → CAE (simulación, incluido FEA) → CAM (código numérico para CNC, impresoras 3D o robots). La A invierte los roles; la C confunde la función del CAE y del CAM; y la D es falsa porque la ventaja del flujo digital es que el modelo se reutiliza en cada etapa."},
+{t:14,q:"¿Qué hace el análisis por Elementos Finitos (FEA) y de qué depende su precisión?",o:["Divide el modelo en una malla de elementos; cuanto más fina sea la malla, mayor precisión del análisis.","Solo puede aplicarse a materiales metálicos, ya que los composites y plásticos no admiten mallado.","Proporciona resultados exactos sin necesidad de validación experimental.","Sustituye al gemelo digital, ya que ambos calculan tensiones y deformaciones de la misma forma."],c:0,j:"El FEA divide el modelo en una malla de elementos y calcula tensiones y deformaciones bajo cargas y condiciones de contorno; una malla más fina da mayor precisión. La B es falsa (el FEA se aplica a distintos materiales con sus propiedades); la C es falsa porque la simulación requiere validación experimental para ser creíble (Euro NCAP exige ensayos físicos de validación); y la D confunde conceptos: el gemelo digital está conectado al objeto real mediante sensores e IoT y se actualiza en tiempo real, mientras que el FEA simula escenarios sin esa conexión."},
+{t:14,q:"¿Qué diferencia a un gemelo digital de una simulación CAE puntual?",o:["El gemelo digital es una copia estática que se genera una sola vez al final del diseño.","El gemelo digital se alimenta de datos de sensores e IoT en tiempo real y permite predecir fallos y optimizar la producción.","Son sinónimos: ambos simulan el comportamiento del producto sin conexión al objeto real.","El gemelo digital solo se aplica al producto final, nunca a la línea de producción."],c:1,j:"La clave del gemelo digital es que es una réplica virtual «viva», conectada al objeto real mediante sensores e IoT, que se actualiza constantemente para predecir fallos (mantenimiento predictivo) y optimizar líneas de producción. La A lo describe como algo estático (falso); la C lo confunde con el CAE (que simula sin conexión en tiempo real); y la D es falsa porque los gemelos digitales también se aplican a líneas de producción y procesos completos."},
+{t:14,q:"¿Cuál es la principal ventaja de simular un crash test con CAE/FEA en lugar de realizar solo ensayos físicos?",o:["La simulación sustituye por completo a los ensayos físicos, por lo que Euro NCAP ya no exige validación experimental.","Permite probar múltiples escenarios (ángulos, velocidades, materiales) y rediseñar antes de fabricar, pero requiere validación con ensayos físicos para ser aceptada por la normativa.","Solo sirve para abaratar costes, pero no aporta información sobre la absorción de energía ni sobre las fuerzas que reciben los ocupantes.","Es útil únicamente en la fase de diseño inicial y no tiene relación con el gemelo digital del vehículo."],c:1,j:"La simulación virtual reduce ensayos físicos y permite explorar muchos escenarios, pero necesita validación experimental para ser creíble y aceptada por normativas como Euro NCAP. La A es falsa (Euro NCAP sí exige validación); la C es falsa (la simulación proporciona datos de absorción de energía y fuerzas sobre ocupantes); y la D es falsa porque la simulación se integra con el gemelo digital del vehículo para mantenimiento y optimización futura."},
+// TEMA 15 (solo 4 preguntas en el banco: falta el enunciado de la 4)
+{t:15,q:"¿Cuál es la finalidad principal de la metodología de Ashby?",o:["Elegir siempre el material más resistente disponible en el mercado.","Seleccionar materiales de forma sistemática considerando la función, las restricciones, el objetivo y las variables libres del diseño.","Calcular el coste de fabricación de una pieza a partir de su geometría.","Determinar la densidad de un material midiendo su masa y su volumen."],c:1,j:"La metodología de Ashby es un procedimiento sistemático que cruza función, restricciones, objetivo y variables libres. Las opciones A, C y D describen tareas distintas (elegir sin criterio, calcular costes, medir densidad)."},
+{t:15,q:"En el índice de rendimiento M = √E/ρ para un cuadro ligero y rígido, ¿qué indica un valor alto de M?",o:["Que el material tiene una densidad elevada y, por tanto, el cuadro pesará más.","Que el material combina bien rigidez y baja densidad, lo que favorece un cuadro ligero y rígido.","Que el material es más barato que los demás.","Que el material tiene poca rigidez, pero mucha resistencia a la tracción."],c:1,j:"El índice M = √E/ρ procede de un modelo simplificado de viga en flexión con rigidez fijada y masa mínima. Cuanto mayor es M, mejor combina el material rigidez (E) y ligereza (ρ baja). A es incorrecta porque una densidad alta empeora el índice; C y D no tienen relación con la fórmula."},
+{t:15,q:"En un mapa de Ashby de módulo de Young frente a densidad, un material situado en la zona superior izquierda se caracteriza por:",o:["Baja rigidez y baja densidad.","Alta rigidez y alta densidad.","Alta rigidez y baja densidad.","Baja rigidez y alta densidad."],c:2,j:"En ese mapa, el eje vertical es E (rigidez) y el horizontal es ρ (densidad). Arriba-izquierda = alta E y baja ρ. Las otras opciones invierten o mezclan los ejes."},
+{t:15,q:"Según el mapa de resistencia frente a coste, ¿cuál de las siguientes afirmaciones es correcta?",o:["El titanio suele presentar buenas propiedades mecánicas, pero su coste suele ser elevado.","El acero es siempre más caro que el titanio.","El aluminio es siempre más resistente que el acero.","La fibra de carbono es el material más económico para cualquier aplicación."],c:0,j:"El titanio tiene buenas propiedades mecánicas, pero coste alto. B es falsa (el acero suele ser más barato); C es falsa (el aluminio no es siempre más resistente que el acero); D es falsa (la fibra de carbono no es la más económica)."},
+{t:15,q:"¿Cuál es la conclusión correcta sobre la selección del material para un cuadro de bicicleta?",o:["La fibra de carbono es siempre la mejor opción, independientemente del uso.","El acero es siempre la mejor opción porque es el más resistente.","No existe un material universalmente mejor; la elección depende del uso previsto, las restricciones y el objetivo del diseño.","El material más caro es siempre el más adecuado."],c:2,j:"Es la conclusión central del tema. A, B y D convierten una elección condicionada por el uso en una regla absoluta, que es precisamente lo que la metodología de Ashby evita."}
+];
+const QP = [
+{t:1,q:"¿Qué tipo de ensayo destruye la pieza durante el ensayo para determinar su resistencia?",o:["Rayos X","Ultrasonidos","Ensayo de tracción","Inspección por líquidos penetrantes"],c:2,j:"El ensayo de tracción estira la probeta hasta romperla: es un ensayo destructivo. Rayos X, ultrasonidos y líquidos penetrantes son ensayos no destructivos (END): buscan defectos sin dañar la pieza."},
+{t:1,q:"El ensayo Charpy se utiliza principalmente para medir:",o:["La dureza superficial","La tenacidad o resiliencia ante un impacto","La resistencia a la fatiga tras ciclos repetidos","La conductividad térmica"],c:1,j:"En el ensayo Charpy un péndulo golpea una probeta con una entalla y se mide la energía que absorbe al romperse: eso es la resiliencia o tenacidad al impacto. La dureza se mide con Brinell/Rockwell/Vickers y la fatiga con cargas repetidas."},
+{t:1,q:"¿Cuál de las siguientes es una ventaja principal de los ensayos no destructivos (END) como los ultrasonidos?",o:["Permiten verificar piezas en servicio sin alterarlas ni destruirlas","Determinan exactamente la curva de tracción del material","Modifican la dureza del material para hacerlo más resistente","Son siempre los ensayos más baratos de realizar"],c:0,j:"Los END (ultrasonidos, rayos X, líquidos penetrantes) detectan grietas y defectos sin romper ni alterar la pieza, así que se pueden aplicar a piezas que ya están en servicio (puentes, aviones, tuberías). La curva de tracción solo la da el ensayo de tracción, que es destructivo."},
+{t:2,q:"La protección catódica mediante «ánodos de sacrificio» consiste en:",o:["Aplicar una capa de pintura plástica sobre la estructura","Limpiar la estructura periódicamente con agua salada","Someter el material a un tratamiento térmico de temple","Conectar a la estructura un metal más activo (como el zinc) para que se corroa en su lugar"],c:3,j:"Se conecta a la estructura un metal más activo que el acero (zinc, magnesio o aluminio). Ese metal hace de ánodo y se corroe él, mientras la estructura queda protegida como cátodo. El ánodo se gasta y hay que reponerlo. No tiene nada que ver con pintar, limpiar ni templar."},
+{t:2,q:"¿En qué consiste el proceso de galvanizado del acero?",o:["En recubrir el acero con una capa protectora de zinc","En sumergir el acero en un baño de aceite caliente","En alear el acero con un 50 % de aluminio","En aplicar una corriente eléctrica directa para fundirlo"],c:0,j:"Galvanizar es cubrir el acero con zinc (normalmente sumergiéndolo en zinc fundido). El zinc actúa como barrera y, si se raya, se corroe él antes que el acero (efecto de sacrificio). Vallas, postes y tornillos galvanizados son el ejemplo típico."},
+{t:2,q:"En las estructuras de parques eólicos offshore, ¿cuál es el tipo de corrosión más peligroso por atacar puntos concentrados de forma profunda?",o:["Corrosión uniforme","Pasivación","Oxidación seca a alta temperatura","Corrosión por picaduras"],c:3,j:"La corrosión por picaduras ataca puntos muy localizados y perfora en profundidad, y es difícil de ver; el agua de mar (cloruros) la favorece. La corrosión uniforme se reparte por toda la superficie y se detecta fácilmente, y la pasivación no es corrosión sino una capa que protege."},
+{t:3,q:"¿Cuál es el rango aproximado del porcentaje de carbono en los aceros?",o:["Entre el 0,008 % y el 2,11 %","Entre el 2,11 % y el 6,67 %","Superior al 10 %","0 % exacto (hierro puro)"],c:0,j:"Los aceros tienen entre 0,008 % y 2,11 % de carbono. Por encima del 2,11 % (hasta 6,67 %) ya son fundiciones. Truco: acero = «poco carbono», fundición = «mucho carbono»."},
+{t:3,q:"Las fundiciones se diferencian de los aceros principalmente por:",o:["Tener menor contenido de carbono y ser más maleables","No contener hierro en su composición","Tener un contenido de carbono superior al 2,11 %, lo que facilita su moldeo","Ser incapaces de conducir la electricidad"],c:2,j:"Las fundiciones tienen más del 2,11 % de carbono: funden a menor temperatura y fluyen bien, por eso se moldean fácilmente (bloques de motor, tapas de alcantarilla), aunque son más frágiles que el acero. Siguen siendo aleaciones de hierro y conducen la electricidad."},
+{t:4,q:"¿Cuál de las siguientes propiedades hace al aluminio muy atractivo en aviación y automoción?",o:["Su alta densidad y gran peso","Su baja densidad combinada con una elevada resistencia específica en sus aleaciones","Su altísimo punto de fusión superior a los 3000 °C","Su baja conductividad eléctrica"],c:1,j:"El aluminio pesa un tercio que el acero (2,7 g/cm³) y sus aleaciones (como el duraluminio) son muy resistentes para lo poco que pesan: alta resistencia específica. Funde a solo 660 °C y es buen conductor eléctrico, así que las otras opciones son falsas."},
+{t:4,q:"El latón es una aleación metálica compuesta fundamentalmente por:",o:["Cobre y estaño","Cobre y zinc","Aluminio y magnesio","Hierro y níquel"],c:1,j:"Latón = cobre + zinc (grifos, instrumentos de viento, llaves). Bronce = cobre + estaño (campanas, estatuas). Truco: latÓN con ZINC («latón» y «zinc» llevan N)… o simplemente memoriza las dos parejas."},
+{t:4,q:"¿Qué metal destaca por ser ultraligero y muy reactivo, requiriendo cuidados especiales frente al fuego?",o:["Magnesio","Plomo","Titanio","Cobre"],c:0,j:"El magnesio es el metal estructural más ligero (1,74 g/cm³) y arde con una llama blanca muy intensa que no se apaga con agua. El plomo y el cobre son pesados; el titanio es ligero pero mucho menos reactivo."},
+{t:5,q:"El proceso industrial en el que se inyecta plástico fundido a alta presión dentro de un molde cerrado se denomina:",o:["Forja por estampación","Extrusión por soplado","Moldeo por inyección","Sinterización"],c:2,j:"Es la definición del moldeo por inyección: plástico fundido empujado a presión en un molde cerrado; al enfriar se abre y sale la pieza. La forja es para metales, el soplado hace envases huecos y la sinterización compacta polvos con calor."},
+{t:5,q:"¿En qué consiste la vulcanización del caucho inventada por Charles Goodyear?",o:["En congelar el caucho para hacerlo más blando","En añadir azufre para crear enlaces cruzados entre cadenas de polímero, mejorando la elasticidad y resistencia","En disolver el plástico en un ácido fuerte","En mezclar caucho con hierro fundido"],c:1,j:"Goodyear calentó caucho con azufre: los átomos de azufre forman puentes (enlaces cruzados) entre las cadenas del polímero, y el caucho deja de ser pegajoso y blando para volverse elástico, resistente y estable con la temperatura. Es lo que hace posibles los neumáticos."},
+{t:5,q:"Un material termoplástico ampliamente usado en parachoques de automóviles por su tenacidad y resistencia al impacto es el:",o:["Polipropileno (PP)","Baquelita","Vidrio templado","Poliestireno expandido"],c:0,j:"El polipropileno (a menudo mezclado con caucho EPDM) es ligero, tenaz y absorbe golpes recuperando la forma. La baquelita es un termoestable frágil, el vidrio no es un plástico y el poliestireno expandido (corcho blanco) es blando y frágil."},
+{t:6,q:"Las cerámicas técnicas se caracterizan por presentar enlaces atómicos de tipo:",o:["Metálico puro","Enlaces de hidrógeno exclusivamente","Enlaces débiles de Van der Waals","Iónico y/o covalente, lo que les otorga alta dureza y fragilidad"],c:3,j:"Las cerámicas (alúmina, circonia, carburo de silicio…) tienen enlaces iónicos y/o covalentes, muy fuertes y rígidos: por eso son durísimas, aguantan temperaturas altas y son aislantes, pero se rompen sin deformarse (frágiles). El enlace metálico es el de los metales."},
+{t:6,q:"El vidrio templado es más resistente a la rotura que el vidrio recocido normal porque:",o:["Es mucho más blando y se dobla fácilmente","Contiene una malla metálica interior visible","Se enfría rápidamente por fuera, generando tensiones de compresión en la superficie","Está fabricado a partir de polímeros plásticos"],c:2,j:"Al templar el vidrio se enfría bruscamente la superficie con aire: la capa exterior queda comprimida y el interior a tracción. Como las grietas necesitan tracción para abrirse, la superficie comprimida las frena y el vidrio aguanta mucho más (y al romperse se hace añicos pequeños)."},
+{t:6,q:"Decimos que la madera es un material «anisotrópico» porque:",o:["Sus propiedades mecánicas son iguales en todas las direcciones","Sus propiedades varían según la dirección respecto a la fibra","Es capaz de flotar siempre en cualquier líquido","No absorbe humedad del ambiente"],c:1,j:"Anisótropo significa que las propiedades dependen de la dirección: la madera es mucho más resistente a lo largo de la fibra que en perpendicular, y se contrae distinto en dirección axial, radial y tangencial. Lo contrario (igual en todas las direcciones) es isótropo."},
+{t:7,q:"¿Qué significa que un material sea «biocompatible»?",o:["Que es capaz de biodegradarse en menos de 24 horas","Que produce una respuesta adecuada en el organismo sin causar reacciones tóxicas o de rechazo","Que está fabricado exclusivamente a partir de plantas","Que puede conducir impulsos eléctricos de alta intensidad"],c:1,j:"Biocompatible = el cuerpo lo acepta: cumple su función sin provocar toxicidad, inflamación ni rechazo. No tiene que ver con biodegradarse (eso es otra propiedad) ni con su origen vegetal."},
+{t:7,q:"La «osteointegración» es una propiedad fundamental en prótesis e implantes que consiste en:",o:["La unión directa física y funcional entre el hueso vivo y la superficie del implante (como el titanio)","La disolución del implante en el torrente sanguíneo","La flexibilidad de las articulaciones artificiales","La capacidad del metal para cambiar de color con la temperatura"],c:0,j:"Osteo = hueso. La osteointegración es que el hueso crece pegado al implante y queda unido a él de forma estable, sin tejido blando en medio. El titanio es el metal que mejor la consigue, por eso se usa en implantes dentales y de cadera."},
+{t:8,q:"Un material compuesto o composite está formado por:",o:["Un único elemento químico de gran pureza","Dos o más fases distintas para combinar sus mejores propiedades","Exclusivamente metales aleados a altas temperaturas","Gas atrapado en una red sólida"],c:1,j:"Un composite une dos o más materiales distintos (por ejemplo fibras + resina, o hormigón + acero) que siguen siendo distinguibles, para aprovechar lo mejor de cada uno. Una aleación no es un composite (es una mezcla a nivel atómico) y un gas en una red sólida sería una espuma."},
+{t:8,q:"En un composite como la fibra de carbono (CFRP), ¿cuál es la función principal de la matriz de resina?",o:["Soporta la totalidad de las cargas mecánicas de tracción","Hacer que el material sea transparente","Reducir la resistencia mecánica de las fibras","Agrupa las fibras, transfiere los esfuerzos entre ellas y las protege del entorno"],c:3,j:"Las fibras son las que aguantan la carga; la matriz (resina epoxi) las mantiene en su sitio, reparte los esfuerzos entre ellas y las protege de la humedad, los golpes y la abrasión. Sin matriz, las fibras serían un tejido suelto."},
+{t:8,q:"En el hormigón armado, la combinación perfecta de materiales se debe a que:",o:["El hormigón trabaja muy bien a tracción y el acero a compresión","Ambos materiales son flexibles y elásticos como la goma","El hormigón soporta la compresión y el acero aporta resistencia a la tracción","El acero evita que el hormigón absorba luz solar"],c:2,j:"El hormigón aguanta muy bien que lo aplasten (compresión) pero se agrieta si lo estiran (tracción); las barras de acero hacen justo lo que le falta: resistir la tracción. La opción A lo dice al revés."},
+{t:9,q:"El grafeno es un nanomaterial formado por una capa bidimensional de átomos de:",o:["Silicio dispuestos en red cúbica","Carbono dispuesta en una red hexagonal (panal de abeja) de un átomo de grosor","Hierro en estado líquido","Oxígeno e hidrógeno"],c:1,j:"El grafeno es una sola capa de átomos de carbono unidos en hexágonos, como un panal de abeja: una lámina de un átomo de grosor. Es el material del que están hechas las capas del grafito."},
+{t:9,q:"Los aerogeles de sílice son famosos por ser uno de los mejores aislantes térmicos del mundo debido a:",o:["Su altísima densidad y peso elevado","Su baja densidad y peso elevado","Su estructura extremadamente porosa (más del 95 % aire) que frena la conducción térmica","Su capacidad para conducir la electricidad sin resistencia"],c:2,j:"El aerogel es un sólido que es casi todo aire (más del 95 %) atrapado en nanoporos. El aire apenas conduce el calor y los poros son tan pequeños que tampoco puede moverse (sin convección), así que el calor casi no pasa. Por eso es ligerísimo y aísla tanto."},
+{t:10,q:"El Nitinol es una aleación metálica inteligente famosa por presentar:",o:["Superconductividad a temperatura ambiente","Ninguna propiedad mecánica utilizable","Corrosión inmediata en contacto con el aire","Efecto de memoria de forma y superelasticidad al sufrir cambios de fase"],c:3,j:"El Nitinol (níquel + titanio) cambia de fase entre martensita (fría) y austenita (caliente): deformado en frío, recupera su forma al calentarlo (memoria de forma) y puede estirarse mucho y volver (superelasticidad). Se usa en stents y gafas flexibles. No es superconductor y resiste bien la corrosión."},
+{t:10,q:"Un material piezoeléctrico (como el cuarzo) se caracteriza por:",o:["Generar una carga eléctrica al ser sometido a una presión o deformación mecánica","Cambiar de color cuando entra en contacto con el agua","Volverse líquido en presencia de un campo magnético","Atraer metales como un imán permanente"],c:0,j:"Piezo = presión. Al apretar o deformar un cristal piezoeléctrico aparece una tensión eléctrica (efecto directo: encendedores de cocina, sensores); y al revés, con un voltaje se deforma (efecto inverso: altavoces, relojes de cuarzo)."},
+{t:11,q:"En una batería de ion-litio comercial, durante el proceso de descarga:",o:["Los iones de litio viajan del ánodo al cátodo a través del electrolito","Los electrones se mueven por el interior del electrolito directamente","El cátodo se destruye por completo","El electrolito sólido se convierte en gas"],c:0,j:"Al descargar, los iones Li⁺ salen del ánodo (grafito), cruzan el electrolito y se insertan en el cátodo; los electrones hacen el mismo viaje pero por el circuito exterior (el que alimenta el móvil), porque el electrolito no deja pasar electrones. Al cargar ocurre al revés."},
+{t:11,q:"Al comparar las químicas de baterías NMC (níquel-manganeso-cobalto) y LFP (litio-ferrofosfato), la química LFP destaca por:",o:["Mayor densidad energética pero menor seguridad","Excelente estabilidad térmica, mayor seguridad, larga vida útil y menor coste","Utilizar cobalto en un 90 % de su estructura","Ser incapaz de recargarse más de 100 veces"],c:1,j:"LFP: no lleva cobalto, es muy estable (difícil que se incendie), aguanta miles de ciclos y es más barata; a cambio almacena algo menos de energía por kilo. NMC: más densidad de energía (más autonomía) pero más cara y menos estable. Truco: LFP = «Larga vida, Fiable, Precio bajo»."},
+{t:11,q:"Las baterías de estado sólido prometen revolucionar el vehículo eléctrico sustituyendo el electrolito líquido por uno:",o:["Gaseoso presurizado","Compuesto por agua y sal","Orgánico inflamable","Sólido (cerámico o polimérico)"],c:3,j:"Como dice su nombre, usan un electrolito sólido (cerámico o polimérico) en vez del líquido orgánico inflamable actual: más seguras, más densidad de energía y carga más rápida. La opción C describe justo lo que quieren eliminar."},
+{t:12,q:"En el contexto del diseño sostenible, la estrategia «Design for Disassembly» (diseño para el desensamblaje) busca:",o:["Pegar todas las piezas con adhesivos indestructibles","Diseñar productos cuyas partes se puedan separar fácilmente al final de su vida útil para facilitar el reciclaje","Ocultar los tornillos para que nadie intente reparar el producto","Fabricar piezas de un solo uso que se rompan al abrirse"],c:1,j:"Diseñar para desmontar: tornillos y clips en vez de pegamento, pocos materiales distintos y fáciles de identificar, para que al final de su vida el producto se pueda reparar o separar por materiales y reciclar. Las otras opciones son lo contrario."},
+{t:12,q:"¿Qué diferencia al reciclaje mecánico del reciclaje químico en los polímeros?",o:["El mecánico muele y vuelve a fundir el plástico; el químico rompe las cadenas para recuperar los monómeros originales","El químico es siempre más barato que el mecánico","El mecánico utiliza ácidos fuertes para disolver el material","No existe ninguna diferencia entre ambos"],c:0,j:"Mecánico: se clasifica, se lava, se tritura y se funde para hacer granza nueva (el polímero no cambia, pero pierde algo de calidad). Químico: se rompen las cadenas del polímero para recuperar los monómeros y volver a polimerizar como si fuera nuevo; es más caro y complejo."},
+{t:13,q:"La principal diferencia entre la fabricación aditiva y la fabricación sustractiva (como el mecanizado CNC) es que:",o:["La aditiva es mucho más moderna que la sustractiva","La sustractiva es mucho más moderna que la aditiva","La aditiva aporta material capa a capa donde se necesita, mientras que la sustractiva elimina material de un bloque inicial","La fabricación aditiva produce siempre piezas mucho más pesadas"],c:2,j:"Aditiva (impresión 3D) = añadir material capa a capa solo donde hace falta; sustractiva (torno, fresadora, CNC) = partir de un bloque e ir quitando material. Que una sea más moderna no es «la diferencia principal», y la aditiva suele dar piezas más ligeras, no más pesadas."},
+{t:13,q:"La tecnología de impresión 3D FDM (Fused Deposition Modeling) utiliza como materia prima:",o:["Resina líquida fotosensible","Filamento termoplástico que se funde y extruye a través de una boquilla","Polvo metálico sinterizado por láser","Bloques de hormigón fresco"],c:1,j:"FDM es la impresora 3D típica de casa o del instituto: un hilo (filamento) de PLA o ABS se funde en la boquilla caliente y se deposita capa a capa. La resina es la SLA y el polvo metálico la SLM."},
+{t:14,q:"En la cadena CAD/CAE/CAM, la sigla CAE se refiere a:",o:["Computer-Aided Engineering (ingeniería asistida por computador para simulación y análisis de esfuerzos)","Control Automático de la Energía","Creación Avanzada de Electrónica","Cómputo de Almacenamiento Estándar"],c:0,j:"CAD = Design (dibujar la pieza en 3D), CAE = Engineering (simular cómo se comporta: esfuerzos, deformaciones, calor), CAM = Manufacturing (generar el código para la máquina). La E es de Engineering."},
+{t:14,q:"El análisis por elementos finitos (FEA / MEF) es una herramienta informática utilizada para:",o:["Dibujar planos en dos dimensiones únicamente","Dividir una pieza compleja en una red de pequeños elementos para simular tensiones, deformaciones y calor","Generar presupuestos de venta al público","Controlar el inventario de la fábrica"],c:1,j:"El FEA trocea la pieza en una malla de elementos pequeños y calcula en cada uno las tensiones, deformaciones o temperaturas bajo las cargas que le pongas. Cuanto más fina es la malla, más preciso (y más lento). Es la herramienta principal del CAE."},
+{t:15,q:"En la metodología sistemática de selección de materiales desarrollada por Michael Ashby, el primer paso es definir:",o:["El nombre comercial del distribuidor más cercano","La función del componente, las restricciones, los objetivos y las variables libres","El color superficial deseado para el producto","El número de unidades que se van a vender en el primer año"],c:1,j:"Ashby empieza traduciendo el problema de diseño: qué tiene que hacer la pieza (función), qué condiciones debe cumplir sí o sí (restricciones), qué se quiere maximizar o minimizar (objetivo: peso, coste…) y qué puede variar el diseñador (variables libres). Después se usan los índices y los mapas."},
+{t:15,q:"En un mapa de propiedades de Ashby (por ejemplo, módulo de Young frente a densidad), los materiales pertenecientes a la misma familia (p. ej. metales o cerámicas):",o:["Aparecen agrupados en «subconjuntos» o regiones definidas del gráfico","Se distribuyen de forma completamente aleatoria sin ningún orden","Ocupan siempre una sola línea recta vertical","No se pueden representar de forma gráfica"],c:0,j:"En los mapas de Ashby cada familia (metales, cerámicas, polímeros, espumas, materiales naturales) forma una «burbuja» o región propia: los metales arriba a la derecha (rígidos y densos), los polímeros abajo, las espumas abajo a la izquierda. Eso permite comparar familias de un vistazo."}
+];
+QB.forEach(q=>q.f="B"); QP.forEach((q,i)=>{q.f="P";q.pn=i+1;});
+const Q=QB.concat(QP);
+Q.forEach((q,i)=>{q.id=i; if(q.f==="B")q.n=QB.filter((x,k)=>k<i&&x.t===q.t).length+1; q.key=q.f==="B"?`B${q.t}-${q.n}`:`P${q.pn}`;});
+const SRC={B:"Banco de clase",P:"Profesora"};
+
+// ===================== ESTADO =====================
+const $=s=>document.querySelector(s);
+const LETTERS="ABCDEFGH";
+let cfg={mode:"practica",srcMode:"mix",numQ:"all",numQcustom:12,nB:30,nP:10,temas:Object.keys(TEMAS).map(Number),shuffleQ:true,shuffleA:true,showTema:true,showSrc:true,feedback:true,justOk:true,back:true,prio:false,penal:false,timer:false,timerMin:20,timerEx:false,timerMinEx:50,font:"16px"};
+let S=null; let tick=null;
+
+function lsGet(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function fails(){return lsGet("tecno_fails",{})}
+
+// ===================== CONFIG UI =====================
+function buildTemas(){
+  const box=$("#temasBox");box.innerHTML="";
+  Object.keys(TEMAS).forEach(k=>{
+    const nb=QB.filter(q=>q.t==k).length,np=QP.filter(q=>q.t==k).length;
+    const l=document.createElement("label");
+    l.innerHTML=`<input type="checkbox" data-t="${k}" ${cfg.temas.includes(+k)?"checked":""}> <span>T${k} · ${TEMAS[k].n} <span class="sub">(${nb}+${np})</span></span>`;
+    box.appendChild(l);
+  });
+  box.querySelectorAll("input").forEach(i=>i.onchange=()=>{cfg.temas=[...box.querySelectorAll("input:checked")].map(x=>+x.dataset.t);saveCfg();updateInfo();});
+}
+function loadCfg(){const c=lsGet("tecno_cfg",null);if(c)cfg=Object.assign(cfg,c);}
+function saveCfg(){lsSet("tecno_cfg",cfg)}
+function applyCfgToUI(){
+  document.querySelectorAll(".mode").forEach(m=>m.classList.toggle("sel",m.dataset.mode===cfg.mode));
+  $("#cfgPractica").classList.toggle("hidden",cfg.mode!=="practica");
+  $("#cfgExamen").classList.toggle("hidden",cfg.mode!=="examen");
+  $("#srcSeg").querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.v===cfg.srcMode));
+  $("#fontSeg").querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.v===cfg.font));
+  document.documentElement.style.setProperty("--fs",cfg.font);
+  $("#rowNumQ").classList.toggle("hidden",cfg.srcMode==="custom");
+  $("#rowCustom").classList.toggle("hidden",cfg.srcMode!=="custom");
+  $("#numQ").value=cfg.numQ;$("#numQcustom").value=cfg.numQcustom;$("#numQcustom").classList.toggle("hidden",cfg.numQ!=="custom");
+  $("#nB").value=cfg.nB;$("#nP").value=cfg.nP;
+  [["optShuffleQ","shuffleQ"],["optShuffleA","shuffleA"],["optTema","showTema"],["optSrc","showSrc"],["optFeedback","feedback"],["optJustOk","justOk"],["optBack","back"],["optPrio","prio"],["optPenal","penal"],["optTimer","timer"],["optTimerEx","timerEx"]].forEach(([id,k])=>$("#"+id).checked=cfg[k]);
+  $("#timerMin").value=cfg.timerMin;$("#timerMinEx").value=cfg.timerMinEx;
+  buildTemas();updateInfo();
+}
+function poolB(){return QB.filter(q=>cfg.temas.includes(q.t));}
+function poolP(){return QP.filter(q=>cfg.temas.includes(q.t));}
+function wantedN(total){
+  if(cfg.numQ==="all")return total;
+  if(cfg.numQ==="custom")return Math.max(1,+cfg.numQcustom||1);
+  return +cfg.numQ;
+}
+function updateInfo(){
+  const b=poolB().length,p=poolP().length;
+  $("#numQinfo").textContent=cfg.srcMode==="mix"?`${b+p} disponibles (${b} del banco + ${p} de la profesora)`:cfg.srcMode==="banco"?`${b} disponibles`:`${p} disponibles`;
+  $("#customInfo").textContent=`disponibles: ${b} del banco y ${p} de la profesora con los temas elegidos`;
+  let n;
+  if(cfg.mode==="examen")n=40;
+  else if(cfg.srcMode==="custom")n=Math.min(cfg.nB,b)+Math.min(cfg.nP,p);
+  else{const tot=cfg.srcMode==="mix"?b+p:cfg.srcMode==="banco"?b:p;n=Math.min(wantedN(tot),tot);}
+  $("#startInfo").textContent=cfg.mode==="examen"?"40 preguntas (30 + 10) · +1 / −0,5":`${n} pregunta${n!==1?"s":""} · ${cfg.temas.length} tema${cfg.temas.length!==1?"s":""}`;
+  $("#btnStart").disabled=n===0;
+  const f=fails();const nf=Object.keys(f).length;
+  $("#failsInfo").textContent=nf?`${nf} pregunta${nf>1?"s":""} con fallos recordados`:"";
+}
+document.querySelectorAll(".mode").forEach(m=>m.onclick=()=>{cfg.mode=m.dataset.mode;saveCfg();applyCfgToUI();});
+$("#srcSeg").querySelectorAll("button").forEach(b=>b.onclick=()=>{cfg.srcMode=b.dataset.v;saveCfg();applyCfgToUI();});
+$("#fontSeg").querySelectorAll("button").forEach(b=>b.onclick=()=>{cfg.font=b.dataset.v;saveCfg();applyCfgToUI();});
+$("#numQ").onchange=e=>{cfg.numQ=e.target.value;$("#numQcustom").classList.toggle("hidden",cfg.numQ!=="custom");saveCfg();updateInfo();};
+$("#numQcustom").oninput=e=>{cfg.numQcustom=+e.target.value;saveCfg();updateInfo();};
+$("#nB").oninput=e=>{cfg.nB=Math.max(0,+e.target.value||0);saveCfg();updateInfo();};
+$("#nP").oninput=e=>{cfg.nP=Math.max(0,+e.target.value||0);saveCfg();updateInfo();};
+$("#timerMin").oninput=e=>{cfg.timerMin=Math.max(1,+e.target.value||1);saveCfg();};
+$("#timerMinEx").oninput=e=>{cfg.timerMinEx=Math.max(1,+e.target.value||1);saveCfg();};
+[["optShuffleQ","shuffleQ"],["optShuffleA","shuffleA"],["optTema","showTema"],["optSrc","showSrc"],["optFeedback","feedback"],["optJustOk","justOk"],["optBack","back"],["optPrio","prio"],["optPenal","penal"],["optTimer","timer"],["optTimerEx","timerEx"]].forEach(([id,k])=>{$("#"+id).onchange=e=>{cfg[k]=e.target.checked;saveCfg();};});
+$("#temasAll").onclick=()=>{cfg.temas=Object.keys(TEMAS).map(Number);saveCfg();buildTemas();updateInfo();};
+$("#temasNone").onclick=()=>{cfg.temas=[];saveCfg();buildTemas();updateInfo();};
+$("#btnTheme").onclick=()=>{const r=document.documentElement;const cur=r.dataset.theme||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");r.dataset.theme=cur==="dark"?"light":"dark";lsSet("tecno_theme",r.dataset.theme);};
+(()=>{const t=lsGet("tecno_theme",null);if(t)document.documentElement.dataset.theme=t;})();
+
+// ===================== HISTORIAL =====================
+function renderHist(){
+  const h=lsGet("tecno_hist",[]);const box=$("#histBox");
+  if(!h.length){box.textContent="Todavía no hay intentos guardados en este navegador.";return;}
+  box.innerHTML="<table><tr><th>Fecha</th><th>Modo</th><th>Preg.</th><th>✅</th><th>❌</th><th>⬜</th><th>Nota</th></tr>"+
+   h.slice().reverse().map(a=>`<tr><td>${a.f}</td><td>${a.m==="examen"?"Examen":"Práctica"}</td><td>${a.n}</td><td>${a.ok}</td><td>${a.bad}</td><td>${a.bl}</td><td><b>${a.nota}</b></td></tr>`).join("")+"</table>";
+}
+$("#btnClearHist").onclick=()=>{if(confirm("¿Borrar el historial de intentos?")){lsSet("tecno_hist",[]);renderHist();}};
+$("#btnClearFails").onclick=()=>{if(confirm("¿Olvidar qué preguntas has fallado otras veces?")){lsSet("tecno_fails",{});updateInfo();}};
+
+// ===================== SESIÓN =====================
+function pick(list,n){
+  if(n<=0)return[];
+  if(cfg.mode==="practica"&&cfg.prio){
+    const f=fails();
+    return shuffle(list).sort((a,b)=>(f[b.key]||0)-(f[a.key]||0)).slice(0,n);
+  }
+  return shuffle(list).slice(0,n);
+}
+function start(opts){
+  const exam=cfg.mode==="examen";
+  let sel;
+  if(opts&&opts.items){sel=opts.items;}
+  else if(exam){sel=shuffle(QB).slice(0,30).concat(shuffle(QP).slice(0,10));}
+  else{
+    let b=poolB(),p=poolP();
+    if(opts&&opts.temas){b=QB.filter(q=>opts.temas.includes(q.t));p=QP.filter(q=>opts.temas.includes(q.t));}
+    if(opts&&opts.temas){sel=b.concat(p);}
+    else if(cfg.srcMode==="custom")sel=pick(b,cfg.nB).concat(pick(p,cfg.nP));
+    else{const pool=cfg.srcMode==="mix"?b.concat(p):cfg.srcMode==="banco"?b:p;sel=pick(pool,wantedN(pool.length));}
+  }
+  if(!sel.length){alert("No hay preguntas con esa configuración.");return;}
+  const shuffleQ=exam||cfg.shuffleQ;
+  sel=shuffleQ?shuffle(sel):sel.slice().sort((a,b)=>a.t-b.t||(a.f===b.f?0:a.f==="B"?-1:1)||a.id-b.id);
+  const shuffleA=exam||cfg.shuffleA;
+  const mins=exam?(cfg.timerEx?cfg.timerMinEx:0):(cfg.timer?cfg.timerMin:0);
+  S={exam,items:sel.map(q=>{
+      let order=q.o.map((_,i)=>i);
+      if(shuffleA&&!q.fixed)order=shuffle(order);
+      return {q,order,ans:undefined,revealed:false};
+    }),i:0,
+    feedback:!exam&&cfg.feedback, justOk:exam||cfg.justOk, back:exam||cfg.back, showTema:!exam&&cfg.showTema, showSrc:!exam&&cfg.showSrc,
+    penal:exam||cfg.penal, started:Date.now(), deadline:mins?Date.now()+mins*60000:0};
+  show("quiz");render();startTimer();
+}
+function startTimer(){
+  clearInterval(tick);const el=$("#qTimer");
+  if(!S.deadline){el.classList.add("hidden");return;}
+  el.classList.remove("hidden");
+  const upd=()=>{const left=Math.max(0,S.deadline-Date.now());const m=Math.floor(left/60000),s=Math.floor(left%60000/1000);
+    el.textContent=`⏱ ${m}:${s<10?"0":""}${s}`;el.classList.toggle("low",left<60000);
+    if(left<=0){clearInterval(tick);finish(true);}};
+  upd();tick=setInterval(upd,500);
+}
+function show(id){["config","quiz","results"].forEach(s=>$("#"+s).classList.toggle("hidden",s!==id));window.scrollTo({top:0});if(id!=="quiz")clearInterval(tick);}
+
+function render(){
+  const it=S.items[S.i],q=it.q,N=S.items.length;
+  $("#qMode").textContent=S.exam?"📝 Examen":"🧪 Práctica";
+  $("#qTema").textContent=`Tema ${q.t} · ${TEMAS[q.t].n}`;$("#qTema").classList.toggle("hidden",!S.showTema);
+  $("#qSrc").textContent=SRC[q.f];$("#qSrc").className="chip"+(q.f==="P"?" p":"");$("#qSrc").classList.toggle("hidden",!S.showSrc);
+  $("#qCount").textContent=`Pregunta ${S.i+1} de ${N}`;
+  $("#qProg").style.width=((S.i)/N*100)+"%";
+  $("#qText").innerHTML=q.q;
+  const box=$("#qAns");box.innerHTML="";
+  const locked=it.revealed;
+  it.order.forEach((oi,pos)=>{
+    const b=document.createElement("button");b.className="ans";
+    b.innerHTML=`<span class="L">${LETTERS[pos]}</span><span>${q.o[oi]}</span>`;
+    if(it.ans===oi)b.classList.add("sel");
+    if(locked){b.classList.add("locked");if(oi===q.c)b.classList.add("ok");else if(it.ans===oi)b.classList.add("bad");}
+    b.onclick=()=>choose(oi);
+    box.appendChild(b);
+  });
+  const bl=document.createElement("button");bl.className="ans blank";
+  bl.innerHTML=`<span class="L">—</span><span>Dejar en blanco${S.penal?" (no resta)":""}</span>`;
+  if(it.ans===-1)bl.classList.add("sel");if(locked)bl.classList.add("locked");
+  bl.onclick=()=>choose(-1);box.appendChild(bl);
+  const fb=$("#qFb");fb.innerHTML="";
+  if(locked){
+    const ok=it.ans===q.c,blank=it.ans===-1;
+    const d=document.createElement("div");d.className="fb "+(ok?"":blank?"blank":"bad");
+    const cl=LETTERS[it.order.indexOf(q.c)];
+    d.innerHTML=`<b>${ok?"✅ Correcto":blank?"⬜ En blanco":"❌ Incorrecto"}.</b> ${ok?"":`La respuesta correcta es la <b>${cl}</b>.`}${(!ok||S.justOk)?`<div style="margin-top:6px">${q.j}</div>`:""}`;
+    fb.appendChild(d);
+  }
+  $("#btnPrev").disabled=!S.back||S.i===0;
+  const last=S.i===N-1;
+  $("#btnNext").textContent=last?(S.exam?"Entregar examen":"Terminar"):"Siguiente →";
+  const dots=$("#qDots");dots.innerHTML="";
+  S.items.forEach((x,k)=>{
+    const d=document.createElement("div");d.className="dot";d.textContent=k+1;
+    if(k===S.i)d.classList.add("cur");
+    if(x.ans!==undefined){ if(x.revealed){d.classList.add(x.ans===x.q.c?"k":x.ans===-1?"b":"x");} else d.classList.add(x.ans===-1?"b":"done"); }
+    if(S.back||k===S.i){d.onclick=()=>{S.i=k;render();};}else d.style.cursor="default";
+    dots.appendChild(d);
+  });
+}
+function choose(oi){
+  const it=S.items[S.i];
+  if(it.revealed)return;
+  it.ans=oi;
+  if(S.feedback){it.revealed=true;}
+  render();
+  if(S.feedback){$("#qFb").scrollIntoView({behavior:"smooth",block:"nearest"});}
+}
+function next(){
+  const it=S.items[S.i];
+  if(it.ans===undefined&&S.feedback){ if(!confirm("No has respondido. ¿Pasar a la siguiente y dejarla en blanco?"))return; it.ans=-1;it.revealed=true; }
+  if(S.i<S.items.length-1){S.i++;render();}
+  else finish();
+}
+$("#btnNext").onclick=next;
+$("#btnPrev").onclick=()=>{if(S.back&&S.i>0){S.i--;render();}};
+$("#btnAbort").onclick=()=>{if(confirm("¿Abandonar este intento? No se guardará."))show("config");};
+$("#btnHome").onclick=()=>{if(S&&!$("#quiz").classList.contains("hidden")){if(!confirm("¿Volver al inicio? Se perderá el intento actual."))return;}show("config");renderHist();updateInfo();};
+document.addEventListener("keydown",e=>{
+  if($("#quiz").classList.contains("hidden")||e.target.tagName==="INPUT")return;
+  const it=S.items[S.i],k=e.key.toLowerCase();
+  const idx="1234".indexOf(k)>=0?"1234".indexOf(k):"abcd".indexOf(k);
+  if(idx>=0&&idx<it.order.length){choose(it.order[idx]);e.preventDefault();}
+  else if(k==="0"){choose(-1);}
+  else if(k==="arrowright"||k==="enter"){next();e.preventDefault();}
+  else if(k==="arrowleft"){$("#btnPrev").click();}
+});
+
+// ===================== RESULTADOS =====================
+function finish(auto){
+  const un=S.items.filter(x=>x.ans===undefined).length;
+  if(!auto&&un&&!confirm(`Tienes ${un} pregunta${un>1?"s":""} sin responder. Se contará${un>1?"n":""} en blanco. ¿Entregar?`))return;
+  clearInterval(tick);
+  S.items.forEach(x=>{if(x.ans===undefined)x.ans=-1;x.revealed=true;});
+  const N=S.items.length;
+  let ok=0,bad=0,bl=0;
+  S.items.forEach(x=>{if(x.ans===-1)bl++;else if(x.ans===x.q.c)ok++;else bad++;});
+  const puntos=ok-(S.penal?0.5*bad:0);
+  const nota=Math.max(0,puntos)/N*10;
+  const notaTxt=nota.toFixed(2).replace(".",",");
+  const secs=Math.round((Date.now()-S.started)/1000);
+  $("#rTitle").textContent=(S.exam?"Resultado del examen":"Resultado de la práctica")+(auto?" (tiempo agotado)":"");
+  $("#rStats").innerHTML=`<div class="stat ok"><b>${ok}</b>aciertos</div><div class="stat bad"><b>${bad}</b>fallos</div><div class="stat blank"><b>${bl}</b>en blanco</div><div class="stat"><b>${notaTxt}</b>nota sobre 10</div>`;
+  let nt="";
+  if(S.penal){nt=`<p><b>Puntuación:</b> ${ok} aciertos × 1 − ${bad} fallos × 0,5 = <b>${puntos.toFixed(1).replace(".",",")}</b> puntos de ${N} posibles → nota ${notaTxt} / 10.</p>`;}
+  else{nt=`<p><b>Puntuación:</b> ${ok} de ${N} (${Math.round(ok/N*100)} %). Si fuera un examen con penalización (−0,5 por fallo) tendrías ${(ok-0.5*bad).toFixed(1).replace(".",",")} puntos → ${(Math.max(0,ok-0.5*bad)/N*10).toFixed(2).replace(".",",")} / 10.</p>`;}
+  nt+=`<p class="sub">Tiempo: ${Math.floor(secs/60)} min ${secs%60} s (${Math.round(secs/N)} s por pregunta).</p>`;
+  $("#rNota").innerHTML=nt;
+  // historial y memoria de fallos
+  const h=lsGet("tecno_hist",[]);h.push({f:new Date().toLocaleString("es-ES",{dateStyle:"short",timeStyle:"short"}),m:S.exam?"examen":"practica",n:N,ok,bad,bl,nota:notaTxt});
+  lsSet("tecno_hist",h.slice(-15));
+  const f=fails();S.items.forEach(x=>{if(x.ans!==x.q.c)f[x.q.key]=(f[x.q.key]||0)+1;else if(f[x.q.key])f[x.q.key]=Math.max(0,f[x.q.key]-1);if(f[x.q.key]===0)delete f[x.q.key];});lsSet("tecno_fails",f);
+  // por temas
+  const T={};
+  S.items.forEach(x=>{const t=x.q.t;T[t]=T[t]||{n:0,ok:0,bad:0,bl:0,fail:[]};T[t].n++;if(x.ans===-1){T[t].bl++;T[t].fail.push(x);}else if(x.ans===x.q.c)T[t].ok++;else{T[t].bad++;T[t].fail.push(x);}});
+  const rows=Object.keys(T).map(Number).sort((a,b)=>a-b);
+  $("#rTable").innerHTML="<tr><th>Tema</th><th>Preg.</th><th>✅</th><th>❌</th><th>⬜</th><th style=\"min-width:120px\">Aciertos</th></tr>"+rows.map(t=>{const r=T[t],p=Math.round(r.ok/r.n*100);return `<tr><td>T${t} · ${TEMAS[t].n}</td><td>${r.n}</td><td>${r.ok}</td><td>${r.bad}</td><td>${r.bl}</td><td><div class="bar"><i class="${p<50?"bad":""}" style="width:${p}%"></i></div><span class="sub">${p} %</span></td></tr>`}).join("");
+  // por fuente
+  const F={};S.items.forEach(x=>{const s=x.q.f;F[s]=F[s]||{n:0,ok:0,bad:0,bl:0};F[s].n++;if(x.ans===-1)F[s].bl++;else if(x.ans===x.q.c)F[s].ok++;else F[s].bad++;});
+  $("#rSrcTable").innerHTML="<tr><th>Fuente</th><th>Preg.</th><th>✅</th><th>❌</th><th>⬜</th><th style=\"min-width:120px\">Aciertos</th></tr>"+Object.keys(F).map(s=>{const r=F[s],p=Math.round(r.ok/r.n*100);return `<tr><td>${SRC[s]}</td><td>${r.n}</td><td>${r.ok}</td><td>${r.bad}</td><td>${r.bl}</td><td><div class="bar"><i class="${p<50?"bad":""}" style="width:${p}%"></i></div><span class="sub">${p} %</span></td></tr>`}).join("");
+  renderAnalisis(T,rows,F,{N,ok,bad,bl,puntos});
+  renderReview(false);
+  show("results");
+}
+function renderAnalisis(T,rows,F,s){
+  const weak=rows.map(t=>({t,...T[t],rate:(T[t].bad+T[t].bl)/T[t].n})).filter(x=>x.bad+x.bl>0).sort((a,b)=>b.rate-a.rate||b.bad-a.bad);
+  const strong=rows.filter(t=>T[t].bad+T[t].bl===0&&T[t].n>=2);
+  const failed=S.items.filter(x=>x.ans!==x.q.c);
+  let h="";
+  if(!weak.length){
+    h+=`<p>🎉 <b>Pleno.</b> No has fallado ni dejado en blanco ninguna pregunta${rows.length<15?" (solo han salido "+rows.length+" de los 15 temas: haz una práctica con el resto)":""}. Para fijarlo, repite dentro de unos días con las respuestas barajadas y sin corrección inmediata.</p>`;
+  } else {
+    const top=weak.slice(0,3);
+    h+=`<p><b>Dónde has fallado más:</b> ${top.map(w=>`<b>Tema ${w.t} (${TEMAS[w.t].n})</b>: ${w.bad} fallo${w.bad!==1?"s":""}${w.bl?" y "+w.bl+" en blanco":""} de ${w.n}`).join("; ")}.</p>`;
+    if(F.B&&F.P){const pb=F.B.ok/F.B.n,pp=F.P.ok/F.P.n;
+      if(pp<pb-0.15)h+=`<p>Las preguntas de la <b>profesora</b> se te dan peor (${Math.round(pp*100)} % frente a ${Math.round(pb*100)} % del banco). Son más de definición y de datos concretos (porcentajes de carbono, composición del latón, siglas…): haz una práctica solo con ellas, son ${QP.length} y en el examen caen 10.</p>`;
+      else if(pb<pp-0.15)h+=`<p>Las preguntas del <b>banco de clase</b> se te dan peor (${Math.round(pb*100)} % frente a ${Math.round(pp*100)} % de la profesora). Son 30 de las 40 del examen: dedícales la mayor parte del tiempo.</p>`;}
+    if(s.bad>0&&s.bl===0&&s.bad>=3)h+=`<p>Has fallado ${s.bad} y no has dejado ninguna en blanco. ${S.penal?`Cada fallo te ha restado 0,5: si hubieras dejado en blanco las que no sabías tendrías ${s.ok} puntos en vez de ${s.puntos.toFixed(1).replace(".",",")}. `:""}Si dudas entre dos opciones, intenta primero descartar las dos que seguro que no son; si sigues sin saber y hay penalización, deja en blanco.</p>`;
+    if(s.bl>=3)h+=`<p>Has dejado ${s.bl} en blanco. Está bien no arriesgar cuando resta, pero en práctica responde siempre: fallar y leer la justificación enseña más que dejarlo vacío.</p>`;
+    const todasRef=S.items.filter(x=>x.ans!==-1&&x.ans!==x.q.c&&/Todas son correctas|Ninguna|A y B|«B» y la «C»/.test(x.q.o[x.ans]));
+    if(todasRef.length>=2)h+=`<p>En ${todasRef.length} preguntas has elegido «todas/ninguna/A y B» y no era la correcta. Antes de marcar «todas son correctas», comprueba cada opción por separado: basta con que una sea falsa para descartarla.</p>`;
+    const absol=S.items.filter(x=>x.ans!==-1&&x.ans!==x.q.c&&/siempre|únicamente|exclusivamente|nunca|por completo|todas las|cualquier/i.test(x.q.o[x.ans]));
+    if(absol.length>=2)h+=`<p>En ${absol.length} fallos elegiste una opción con palabras absolutas («siempre», «únicamente», «exclusivamente», «nunca»…). En estos tests esas opciones casi siempre son falsas: desconfía de ellas.</p>`;
+    const rep=failed.filter(x=>(fails()[x.q.key]||0)>=2);
+    if(rep.length)h+=`<p>🔁 ${rep.length} de las que has fallado ya las habías fallado antes: ${rep.map(x=>`«${trunc(x.q.q,60)}»`).join(", ")}. Apúntalas en una tarjeta con la respuesta y repásalas antes de cada práctica.</p>`;
+    h+=`<h3>Qué repasar, tema por tema</h3>`;
+    weak.forEach(w=>{
+      h+=`<p><b>Tema ${w.t} · ${TEMAS[w.t].n}</b> — ${w.ok}/${w.n} aciertos.</p><ul>`;
+      w.fail.forEach(x=>{
+        const cl=LETTERS[x.order.indexOf(x.q.c)];
+        const tu=x.ans===-1?"en blanco":`elegiste «${trunc(x.q.o[x.ans],70)}»`;
+        h+=`<li><span class="tag">${SRC[x.q.f]}</span> <i>${trunc(x.q.q,110)}</i> — ${tu}; la correcta era <b>${cl}</b> («${trunc(x.q.o[x.q.c],70)}»). <span class="sub">${x.q.j}</span></li>`;
+      });
+      h+=`</ul><p>📚 <b>Ideas clave del tema:</b> ${TEMAS[w.t].tip}</p>`;
+    });
+    h+=`<h3>Plan sugerido</h3><p class="sub">No hay temario: el material de estudio son las preguntas y sus justificaciones.</p><ol>
+      <li>Lee despacio las justificaciones de las preguntas falladas (arriba) y las ideas clave de ${top.map(w=>"tema "+w.t).join(", ")}. Haz una tarjeta por cada concepto que no sabías: por delante la pregunta en tus palabras, por detrás la respuesta y el porqué.</li>
+      <li>Pulsa «Repetir solo las falladas» hasta acertarlas todas dos veces seguidas con las respuestas barajadas.</li>
+      <li>Haz una práctica <b>solo con esos temas</b> y con las dos fuentes (botón «Practicar solo los temas fallados»), con corrección inmediata.</li>
+      <li>Al día siguiente, un examen completo (30 + 10) para comprobar que no se te han olvidado los temas que hoy tenías bien.</li></ol>`;
+  }
+  if(strong.length)h+=`<p>💪 <b>Temas que dominas</b> (todo correcto): ${strong.map(t=>"T"+t).join(", ")}.</p>`;
+  const notSeen=Object.keys(TEMAS).map(Number).filter(t=>!rows.includes(t));
+  if(notSeen.length&&S.exam)h+=`<p class="sub">En este examen no ha salido ninguna pregunta de los temas ${notSeen.join(", ")}: no te fíes, también pueden caer.</p>`;
+  $("#rAnalisis").innerHTML=h;
+  $("#btnWeak").disabled=!weak.length;
+  $("#btnWeak").onclick=()=>{cfg.mode="practica";saveCfg();applyCfgToUI();start({temas:weak.map(w=>w.t)});};
+  $("#btnRedo").disabled=!failed.length;
+  $("#btnRedo").onclick=()=>{cfg.mode="practica";saveCfg();applyCfgToUI();start({items:failed.map(x=>x.q)});};
+}
+function trunc(s,n){s=s.replace(/<[^>]+>/g,"");return s.length>n?s.slice(0,n-1)+"…":s;}
+function renderReview(onlyBad){
+  const box=$("#rReview");box.innerHTML="";
+  S.items.forEach((x,k)=>{
+    const ok=x.ans===x.q.c,bl=x.ans===-1;
+    if(onlyBad&&ok)return;
+    const d=document.createElement("div");d.className="rev "+(ok?"ok":bl?"blank":"bad");
+    const cl=LETTERS[x.order.indexOf(x.q.c)];
+    d.innerHTML=`<p><span class="tag">${k+1}</span> <span class="tag">Tema ${x.q.t} · ${TEMAS[x.q.t].n}</span> <span class="tag">${SRC[x.q.f]}</span></p><p><b>${x.q.q}</b></p>`+
+      x.order.map((oi,pos)=>`<p style="padding-left:8px">${oi===x.q.c?"✅":x.ans===oi?"❌":"&nbsp;&nbsp;&nbsp;"} <b>${LETTERS[pos]})</b> ${x.q.o[oi]}</p>`).join("")+
+      `<p class="sub">${ok?"Correcto.":bl?"La dejaste en blanco.":"Tu respuesta: "+LETTERS[x.order.indexOf(x.ans)]+". Correcta: "+cl+"."} ${x.q.j}</p>`;
+    box.appendChild(d);
+  });
+  if(!box.children.length)box.innerHTML="<p class='sub'>No hay fallos ni blancos. 🎉</p>";
+}
+$("#revAll").onclick=()=>renderReview(false);
+$("#revBad").onclick=()=>renderReview(true);
+$("#btnAgain").onclick=()=>start();
+$("#btnHome2").onclick=()=>{show("config");renderHist();updateInfo();};
+$("#btnStart").onclick=()=>start();
+
+// ===================== INICIO =====================
+$("#totalB").textContent=QB.length;$("#totalP").textContent=QP.length;
+loadCfg();applyCfgToUI();renderHist();
+</script>
+</body>
+</html>

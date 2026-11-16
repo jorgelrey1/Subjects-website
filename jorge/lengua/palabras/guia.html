@@ -1,0 +1,307 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Guía · Formación de palabras</title><meta name="description" content="Guía explicada de formación de palabras"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@700&display=swap"><style>
+:root{
+  --bg:#f7f6f2; --surface:#ffffff; --fg:#1c2230; --muted:#5a6275; --line:#dcdfe8;
+  --accent:#2a55c7; --accent-bg:#e6edfb;
+  --raiz:#1f5fbf; --raiz-bg:#e4edfb;
+  --pref:#17805a; --pref-bg:#dff3ea;
+  --suf:#b8520a;  --suf-bg:#fdebd9;
+  --inter:#8a3fb0; --inter-bg:#f1e5f8;
+  --flex:#566078; --flex-bg:#e6e9f2;
+  --culta:#c0284f; --culta-bg:#fbe3ea;
+  --verb:#0b7285; --verb-bg:#dcf3f7;
+  --good:#17805a; --good-bg:#dff3ea; --bad:#b3261e; --bad-bg:#fbe4e2;
+  --warn:#7a5200; --warn-bg:#fff1cf; --red:#c4271f;
+  --display:"Bricolage Grotesque","Trebuchet MS",sans-serif;
+  --body:"Source Sans 3","Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12151f; --surface:#1b2030; --fg:#e9ecf6; --muted:#a2a9bf; --line:#2f3650;
+  --accent:#8fb0ff; --accent-bg:#1e2a4d;
+  --raiz:#7fb0ff; --raiz-bg:#1b2b4a; --pref:#5fd0a2; --pref-bg:#173a2e;
+  --suf:#ffa45c; --suf-bg:#4a2b12; --inter:#d29bf0; --inter-bg:#3a2248;
+  --flex:#b4bbd2; --flex-bg:#2a3047; --culta:#ff8fa8; --culta-bg:#4a1f2d; --verb:#6fd6e6; --verb-bg:#12363d;
+  --good:#5fd0a2; --good-bg:#173a2e; --bad:#ff8d85; --bad-bg:#4a1f1c;
+  --warn:#ffd88a; --warn-bg:#40320f; --red:#ff8d85; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12151f; --surface:#1b2030; --fg:#e9ecf6; --muted:#a2a9bf; --line:#2f3650;
+  --accent:#8fb0ff; --accent-bg:#1e2a4d;
+  --raiz:#7fb0ff; --raiz-bg:#1b2b4a; --pref:#5fd0a2; --pref-bg:#173a2e;
+  --suf:#ffa45c; --suf-bg:#4a2b12; --inter:#d29bf0; --inter-bg:#3a2248;
+  --flex:#b4bbd2; --flex-bg:#2a3047; --culta:#ff8fa8; --culta-bg:#4a1f2d; --verb:#6fd6e6; --verb-bg:#12363d;
+  --good:#5fd0a2; --good-bg:#173a2e; --bad:#ff8d85; --bad-bg:#4a1f1c;
+  --warn:#ffd88a; --warn-bg:#40320f; --red:#ff8d85; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+.btn:disabled.ok,.btn:disabled.no{opacity:1}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.6}
+.wrap{max-width:60rem;margin-inline:auto;padding:18px 16px 64px;display:flex;flex-direction:column;gap:36px}
+h1,h2,h3,h4{font-family:var(--display);line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:clamp(2rem,6vw,3rem);font-weight:800}
+h2{font-size:1.55rem;font-weight:800}
+h3{font-size:1.2rem;font-weight:600}
+p{margin:0}
+a{color:var(--accent);font-weight:700}
+a:focus-visible,button:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--fg);outline-offset:2px}
+.lead{color:var(--muted);max-width:44rem;font-size:1.05rem}
+.k{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.mono{font-family:var(--mono);font-weight:700}
+nav.top{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:.95rem}
+nav.top a{padding:7px 14px;border-radius:99px;text-decoration:none;color:var(--fg);background:var(--surface);border:1px solid var(--line)}
+nav.top a[aria-current="page"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+nav.top .sp{flex:1}
+.hero{background:var(--accent-bg);border-radius:16px;padding:26px 22px;display:flex;flex-direction:column;gap:14px}
+.hero h1{color:var(--accent)}
+.hero p{max-width:42rem}
+.sec{display:flex;flex-direction:column;gap:16px}
+.sh{display:flex;align-items:center;gap:12px}
+.sh::before{content:"";width:12px;height:30px;border-radius:3px;background:var(--accent);flex:none}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr));gap:16px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,24rem),1fr));gap:16px}
+.card.link{text-decoration:none;color:var(--fg);transition:transform .12s,border-color .12s}
+.card.link:hover{transform:translateY(-2px);border-color:var(--accent)}
+.card .num{font-family:var(--display);font-weight:800;font-size:2rem;color:var(--accent);line-height:1}
+.callout{border-radius:10px;padding:14px 16px;border-left:5px solid var(--accent);background:var(--accent-bg);display:flex;flex-direction:column;gap:6px}
+.callout.warn{border-color:var(--suf);background:var(--warn-bg);color:var(--warn)}
+.callout.warn b,.callout.warn strong{color:var(--warn)}
+.callout.good{border-color:var(--good);background:var(--good-bg)}
+.callout.bad{border-color:var(--bad);background:var(--bad-bg)}
+.q{border-left:4px solid var(--fg);padding:6px 16px;font-style:italic;color:var(--fg);background:var(--surface);border-radius:0 10px 10px 0}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:34rem}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--display);font-size:.92rem;background:var(--bg)}
+tr:last-child td{border-bottom:0}
+ol.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;counter-reset:s}
+ol.steps li{counter-increment:s;display:grid;grid-template-columns:2.6rem 1fr;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;align-items:start}
+ol.steps li::before{content:counter(s);font-family:var(--display);font-weight:800;font-size:1.5rem;color:var(--accent);background:var(--accent-bg);width:2.6rem;height:2.6rem;border-radius:50%;display:grid;place-items:center}
+ol.steps b{font-family:var(--display)}
+/* piezas de palabra */
+.anat{display:inline-flex;flex-wrap:wrap;gap:3px;vertical-align:middle}
+.pc{--c:var(--flex);--cb:var(--flex-bg);display:inline-flex;flex-direction:column;align-items:center;gap:1px;padding:4px 10px 5px;border-radius:8px;background:var(--cb);color:var(--c);border-bottom:3px solid var(--c);font-family:var(--mono);font-weight:700;font-size:1rem;line-height:1.25}
+.pc small{font-family:var(--body);font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700}
+.anat.big .pc{font-size:1.7rem;padding:6px 14px 7px}
+.anat.big .pc small{font-size:.68rem}
+.k-raiz{--c:var(--raiz);--cb:var(--raiz-bg)}
+.k-pref{--c:var(--pref);--cb:var(--pref-bg)}
+.k-suf{--c:var(--suf);--cb:var(--suf-bg)}
+.k-inter{--c:var(--inter);--cb:var(--inter-bg)}
+.k-flex{--c:var(--flex);--cb:var(--flex-bg)}
+.k-culta{--c:var(--culta);--cb:var(--culta-bg)}
+.k-verb{--c:var(--verb);--cb:var(--verb-bg)}
+.legend{display:flex;flex-wrap:wrap;gap:8px}
+.tag{display:inline-block;padding:2px 10px;border-radius:6px;font-weight:700;font-size:.85rem;background:var(--accent-bg);color:var(--accent)}
+.ex{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center}
+.formula{font-family:var(--mono);font-weight:700;font-size:.95rem;background:var(--bg);border:1px dashed var(--line);border-radius:8px;padding:8px 12px}
+.fields{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin:0}
+.fields dt{font-weight:700;color:var(--muted)}
+.fields dd{margin:0}
+.tpl{font-family:var(--mono);font-size:.95rem;border:2px solid var(--red);border-radius:10px;padding:14px 16px;background:var(--surface);display:grid;grid-template-columns:1fr 1fr;gap:6px 18px;color:var(--red)}
+.tpl .full{grid-column:1/-1}
+.red{color:var(--red);font-weight:700}
+.btn{font:inherit;font-weight:700;padding:9px 18px;border-radius:10px;border:2px solid var(--fg);background:var(--surface);color:var(--fg);cursor:pointer;min-height:44px}
+.btn:hover{background:var(--accent-bg)}
+.btn.primary{background:var(--fg);color:var(--bg)}
+.btn.primary:hover{opacity:.88}
+.btn:disabled{opacity:.55;cursor:default}
+details{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:0}
+details>summary{cursor:pointer;padding:12px 16px;font-weight:700;list-style-position:inside}
+details>.in{padding:2px 16px 16px;display:flex;flex-direction:column;gap:10px}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;border-bottom:2px solid var(--line);padding-bottom:10px}
+.tabs button{font:inherit;font-weight:700;padding:9px 16px;border-radius:99px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer;min-height:44px}
+.tabs button[aria-selected="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.bigword{font-family:var(--display);font-weight:800;font-size:clamp(2.2rem,9vw,3.6rem);text-align:center;padding:12px 0 6px;overflow-wrap:anywhere}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(9.5rem,1fr));gap:10px}
+.opt.ok{background:var(--good-bg);border-color:var(--good);color:var(--good)}
+.opt.no{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.prog{display:flex;justify-content:space-between;font-weight:700;color:var(--muted);font-size:.95rem}
+.bar{height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--accent);transition:width .25s}
+.fb{border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.fb.ok{background:var(--good-bg);border-left:5px solid var(--good)}
+.fb.no{background:var(--bad-bg);border-left:5px solid var(--bad)}
+.segs{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;padding:6px 0}
+.seg{display:flex;flex-direction:column;gap:6px;align-items:stretch;min-width:9rem}
+.seg .pc{align-items:center}
+.seg .pc small{display:none}
+select,textarea{font:inherit;padding:8px 10px;border-radius:8px;border:2px solid var(--line);background:var(--surface);color:var(--fg);min-height:44px;max-width:100%}
+select.ok{border-color:var(--good);background:var(--good-bg)}
+select.no{border-color:var(--bad);background:var(--bad-bg)}
+textarea{width:100%;min-height:110px;resize:vertical}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:end}
+.row label{display:flex;flex-direction:column;gap:4px;font-weight:700;font-size:.9rem;color:var(--muted)}
+.chk{display:flex;flex-direction:column;gap:6px}
+.chk label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.chk input{width:20px;height:20px;margin-top:3px;flex:none}
+mark{background:var(--warn-bg);color:var(--fg);padding:0 4px;border-radius:4px;font-weight:700}
+.big-score{font-family:var(--display);font-weight:800;font-size:3rem;color:var(--accent);text-align:center}
+.mini{font-size:.9rem;color:var(--muted)}
+footer{color:var(--muted);font-size:.9rem;border-top:1px solid var(--line);padding-top:16px}
+
+.chip{display:inline-flex;align-items:center;gap:6px;padding:3px 11px;border-radius:99px;font-weight:700;font-size:.82rem;border:1.5px solid currentColor;white-space:nowrap}
+.chip.ok{color:var(--good);background:var(--good-bg)}
+.chip.mid{color:var(--warn);background:var(--warn-bg)}
+.chip.low{color:var(--bad);background:var(--bad-bg)}
+.chip.quest{color:var(--inter);background:var(--inter-bg)}
+.sources li{margin:4px 0}
+.flow{display:flex;flex-direction:column;gap:10px;align-items:stretch}
+.stage{border:2px solid var(--line);border-radius:14px;padding:14px 16px;background:var(--surface);display:flex;flex-direction:column;gap:10px}
+.stage>h3{display:flex;gap:10px;align-items:center}
+.stage>h3 .n{background:var(--accent);color:var(--bg);width:2rem;height:2rem;border-radius:50%;display:inline-grid;place-items:center;font-size:1rem;flex:none}
+.branch{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:10px}
+.leaf{border-radius:10px;padding:10px 12px;border-left:6px solid var(--c);background:var(--cb);display:flex;flex-direction:column;gap:3px}
+.leaf b{color:var(--c)}
+.arrow{text-align:center;font-size:1.4rem;color:var(--muted);line-height:1}
+.wiz{display:flex;flex-direction:column;gap:14px}
+.wiz .qtext{font-family:var(--display);font-weight:800;font-size:1.4rem;line-height:1.2}
+.wiz .ans{display:flex;flex-wrap:wrap;gap:10px}
+.trail{display:flex;flex-wrap:wrap;gap:6px;font-size:.85rem}
+.trail span{background:var(--bg);border:1px solid var(--line);border-radius:99px;padding:2px 10px}
+.duda{display:flex;flex-direction:column;gap:12px}
+.duda .cmp{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:10px}
+.duda .cmp>div{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--bg);display:flex;flex-direction:column;gap:4px}
+.duda .ask{border-left:5px solid var(--inter);background:var(--inter-bg);border-radius:0 10px 10px 0;padding:10px 14px}
+.radios{display:flex;flex-wrap:wrap;gap:8px 18px}
+.radios label{display:flex;gap:6px;align-items:center;cursor:pointer;font-weight:600}
+.radios input{width:18px;height:18px}
+@media print{
+  nav.top,.noprint,.btn{display:none!important}
+  body{background:#fff;font-size:11.5pt}
+  .wrap{gap:14px;padding:0}
+  .card,details,.tw{break-inside:avoid}
+}
+@media (max-width:520px){.tpl{grid-template-columns:1fr}.fields{grid-template-columns:1fr}.fields dt{margin-top:6px}}
+</style></head><body><a href="../../index.html" style="display:block;padding:8px 16px;background:#1b2033;color:#fff;font:600 15px/1.3 system-ui,'Segoe UI',sans-serif;text-decoration:none;position:relative;z-index:60">← Índice principal</a><div class="wrap"><nav class="top" aria-label="Secciones"><a href="index.html">Inicio</a><a href="guia.html" aria-current="page">Guía</a><a href="arbol.html">Árbol de decisión</a><a href="errores.html">Errores comunes</a><a href="dudas.html">Dudas</a><a href="practica.html">Práctica</a></nav><header class="hero"><div class="k">Lengua · Bloque 2 · 2.1</div><h1>Guía: cómo se forman las palabras</h1>
+<p>Todo lo de tu cuaderno, explicado paso a paso con el criterio de tu profesora (confirmado) y contrastado con el Glosario de la RAE. Donde se diferencian, te lo decimos.</p></header><nav class="noprint" aria-label="Índice"><div class="legend"><a class="tag" href="guia.html#trozos" style="text-decoration:none">1 Trozos</a><a class="tag" href="guia.html#flexivo" style="text-decoration:none">2 Flexivo/derivativo</a><a class="tag" href="guia.html#procedimientos" style="text-decoration:none">3 Procedimientos</a><a class="tag" href="guia.html#metodo" style="text-decoration:none">4 Método</a><a class="tag" href="guia.html#examen" style="text-decoration:none">5 Examen</a><a class="tag" href="guia.html#resueltos" style="text-decoration:none">6 Resueltos</a><a class="tag" href="guia.html#chuleta" style="text-decoration:none">7 Chuleta</a><a class="tag" href="guia.html#fuentes" style="text-decoration:none">Fuentes</a></div></nav>
+<section class="sec" id="trozos"><div class="sh"><h2>1. Una palabra se puede cortar en trozos</h2></div>
+<p>Casi todas las palabras se pueden dividir en <b>morfemas</b>: los trozos más pequeños que tienen significado o función. Para analizar una palabra, lo primero es <b>cortarla</b> y ponerle nombre a cada trozo.</p>
+<div class="card"><div class="k">Ejemplo</div><p class="mini">des-in-toxic-ar tiene 4 trozos:</p><span class="anat big"><span class="pc k-pref">des<small>Prefijo</small></span><span class="pc k-pref">in<small>Prefijo</small></span><span class="pc k-raiz">toxic<small>Raíz</small></span><span class="pc k-verb">ar<small>Suf. verbal</small></span></span></div>
+<div class="tw"><table><thead><tr><th>Trozo</th><th>Qué es</th><th>Ejemplos</th></tr></thead><tbody>
+<tr><td><span class="anat"><span class="pc k-raiz">Raíz<small>Raíz</small></span></span></td><td>Aporta el <b>contenido léxico fundamental</b> de la palabra y la comparten las palabras de su familia (simple, simplicidad, simplificar → <i>simpl-</i>). También se llama lexema. (RAE)</td><td class="mono">toxic-, jug-, hierb-, buen-</td></tr>
+<tr><td><span class="anat"><span class="pc k-flex">Flexivo<small>Flexivo</small></span></span></td><td>Da información gramatical y <b>no crea palabras nuevas</b>. En nombres y adjetivos: <b>género y número</b> (-o, -a, -s). En los verbos forma la <i>desinencia</i>: vocal temática, tiempo-modo y persona-número. (RAE)</td><td class="mono">tí-o / tí-a · mesa-s · jug-ába-mos</td></tr>
+<tr><td><span class="anat"><span class="pc k-pref">Prefijo<small>Prefijo</small></span></span></td><td>Afijo derivativo que va <b>antes</b> de la raíz y crea una palabra nueva.</td><td class="mono">des-, in-, re-, a-, en-</td></tr>
+<tr><td><span class="anat"><span class="pc k-suf">Sufijo<small>Sufijo</small></span></span></td><td>Afijo derivativo que va <b>después</b> de la raíz y crea una palabra nueva.</td><td class="mono">-ero, -eza, -dad, -mente, -ecer</td></tr>
+<tr><td><span class="anat"><span class="pc k-inter">Interfijo<small>Interfijo</small></span></span></td><td>Afijo derivativo que se coloca <b>entre la base y el sufijo</b>. Generalmente <b>no aporta significado</b>; suele ser átono y contener una consonante. (RAE)</td><td class="mono">cancion-<b>c</b>-ita · pan-<b>ec</b>-illo · cant-<b>urr</b>-ear</td></tr>
+<tr><td><span class="anat"><span class="pc k-culta">Raíz culta<small>Raíz culta</small></span></span></td><td>Morfema ligado tomado del latín o del griego que tiene <b>significado léxico</b>: funciona como una raíz. Unir dos basta para formar una palabra. (RAE)</td><td class="mono">bio-, -logía, -fobia, carni-, -voro</td></tr>
+<tr><td><span class="anat"><span class="pc k-verb">Term. verbal<small>Suf. verbal</small></span></span></td><td>Final del <b>infinitivo</b> (-ar, -er, -ir). En clase es un <b>sufijo verbal</b> (derivativo), no flexivo. Mira el recuadro de abajo.</td><td class="mono">alej-<b>ar</b> · recib-<b>ir</b></td></tr>
+</tbody></table></div>
+<p>Prefijos, sufijos e interfijos juntos se llaman <b>afijos</b>.</p>
+<div class="callout good" id="verbal"><b>La regla del infinitivo (criterio de clase, confirmado)</b>
+<span><b>En el infinitivo, -ar / -er / -ir es un sufijo verbal</b> (derivativo). Por eso <i>cantar</i> = cant- + -ar es <b>derivada</b> y un infinitivo nunca es simple.<br>
+<b>En un verbo conjugado</b> (forma personal) todo lo que rodea a la raíz es flexivo: <i>cantamos</i>, <i>deberíamos</i> son <b>simples</b>.<br>
+Así escribe tu profesora: «recibir: raíz recib-; sufijo verbal (i)r; verbo; derivada».<br>
+<span class="mini">La RAE lo ve distinto (para ella todo eso es flexión). No importa: el examen lo corrige tu profesora, así que usa su criterio.</span></span></div>
+<div class="callout"><b>La vocal temática</b>
+<span>En un verbo conjugado, la raíz se puede escribir con la vocal temática entre paréntesis: <b>deb(e)-</b>ría-mos, <b>am(a)-</b>ba-mos. Se puede escribir de las dos formas (deb- o deb(e)-); Jorge prefiere la vocal entre paréntesis dentro de la raíz.</span></div>
+<div class="callout"><b>La raíz puede cambiar un poco al conjugar</b>
+<span><b>jugar → j<u>ue</u>go</b> (u → ue), <b>contar → c<u>ue</u>nto</b> (o → ue), <b>pensar → p<u>ie</u>nso</b> (e → ie). Sigue siendo la misma raíz (jug-/jueg-). La RAE lo llama «alteración de la raíz».</span></div>
+<div class="card"><div class="k">Colores que usamos en toda la carpeta</div><div class="legend" aria-label="Colores"><span class="anat"><span class="pc k-raiz">Raíz<small>Raíz</small></span></span><span class="anat"><span class="pc k-pref">Prefijo<small>Prefijo</small></span></span><span class="anat"><span class="pc k-suf">Sufijo<small>Sufijo</small></span></span><span class="anat"><span class="pc k-inter">Interfijo<small>Interfijo</small></span></span><span class="anat"><span class="pc k-flex">Flexivo<small>Flexivo</small></span></span><span class="anat"><span class="pc k-culta">Raíz culta<small>Raíz culta</small></span></span><span class="anat"><span class="pc k-verb">Suf. verbal<small>Suf. verbal</small></span></span></div></div>
+</section>
+<section class="sec" id="flexivo"><div class="sh"><h2>2. Flexivo o derivativo</h2></div>
+<p>Según la RAE, la <b>flexión</b> genera formas distintas <b>de la misma palabra</b> (género, número, persona…), no cambia nunca la clase de palabra y su significado es predecible. La <b>derivación</b> crea <b>palabras nuevas</b> y puede cambiar o no la clase de palabra.</p>
+<div class="grid2">
+<div class="card"><span class="tag">Morfema flexivo</span><p>Cambia <b>la forma</b> de la misma palabra.</p>
+<p class="ex"><span class="anat"><span class="pc k-raiz">niñ<small>Raíz</small></span><span class="pc k-flex">o<small>Flexivo</small></span></span> <span class="anat"><span class="pc k-raiz">niñ<small>Raíz</small></span><span class="pc k-flex">a<small>Flexivo</small></span><span class="pc k-flex">s<small>Flexivo</small></span></span></p><p class="mini">niño, niña, niños: siempre «niñ-», la misma palabra.</p></div>
+<div class="card"><span class="tag">Morfema derivativo</span><p>Crea <b>otra palabra distinta</b> con otro significado.</p>
+<p class="ex"><span class="anat"><span class="pc k-raiz">pan<small>Raíz</small></span></span> → <span class="anat"><span class="pc k-raiz">pan<small>Raíz</small></span><span class="pc k-inter">ad<small>Interfijo</small></span><span class="pc k-suf">ero<small>Sufijo</small></span></span></p><p class="mini">pan → panadero → panadería: palabras distintas.</p></div></div>
+<div class="callout"><b>Truco</b><span>Pregúntate: «¿sigo teniendo la misma palabra pero en otra forma (otro género, número, tiempo…)?». Si sí → flexivo. «¿Tengo una palabra nueva?». Si sí → derivativo.</span></div>
+</section>
+<section class="sec" id="procedimientos"><div class="sh"><h2>3. Los cinco procedimientos de formación</h2></div>
+<p>«Estructura» significa decir <b>cómo está construida</b> la palabra. En tus apuntes hay cinco posibilidades:</p>
+<div class="grid2">
+<article class="card"><div class="ex"><h3>1 · Simple</h3><span class="tag">raíz + flexivo</span></div>
+<p>Una sola raíz y, como mucho, morfemas flexivos. Sin prefijos ni sufijos.</p>
+<div class="ex"><span class="anat"><span class="pc k-raiz">tí<small>Raíz</small></span><span class="pc k-flex">o<small>Flexivo</small></span></span> <span class="anat"><span class="pc k-raiz">jug<small>Raíz</small></span><span class="pc k-flex">ába<small>Flexivo</small></span><span class="pc k-flex">mos<small>Flexivo</small></span></span></div>
+<p class="mini"><b>Trampa:</b> una palabra puede ser larga y ser simple (<i>jugábamos</i>, <i>deberíamos</i>): todo lo que rodea a la raíz es flexivo. Regla de clase: <b>forma personal (conjugada) = simple; infinitivo = derivada</b>.</p></article>
+
+<article class="card"><div class="ex"><h3>2 · Compuesta</h3><span class="tag">2 o más raíces + flexivo</span></div>
+<p>Se unen <b>dos o más palabras</b> con significado propio y forman una palabra nueva. La RAE la llama composición propia cuando se escriben juntas.</p>
+<div class="ex"><span class="anat"><span class="pc k-raiz">hierb<small>Raíz</small></span><span class="pc k-flex">a<small>Flexivo</small></span><span class="pc k-raiz">buen<small>Raíz</small></span><span class="pc k-flex">a<small>Flexivo</small></span></span> <span class="anat"><span class="pc k-raiz">saca<small>Raíz</small></span><span class="pc k-raiz">corch<small>Raíz</small></span><span class="pc k-flex">os<small>Flexivo</small></span></span></div>
+<p class="mini">Relaciones posibles: coordinación (<i>agridulce</i>), complemento (<i>sacacorchos</i>), atribución (<i>aguardiente</i>).</p></article>
+
+<article class="card"><div class="ex"><h3>3 · Derivada</h3><span class="tag">raíz + prefijo y/o sufijo</span></div>
+<p>A una raíz se le añade un afijo derivativo. <b>Si lo quitas, queda una palabra que existe</b>: pan → panadería.</p>
+<div class="ex"><span class="anat"><span class="pc k-raiz">pan<small>Raíz</small></span><span class="pc k-inter">ad<small>Interfijo</small></span><span class="pc k-suf">ero<small>Sufijo</small></span></span> <span class="anat"><span class="pc k-pref">des<small>Prefijo</small></span><span class="pc k-raiz">igual<small>Raíz</small></span><span class="pc k-suf">dad<small>Sufijo</small></span></span></div>
+<p class="mini">Puede haber varios afijos (<i>desigualdad</i>), pero siempre <b>una sola raíz</b>. Los infinitivos también: <i>cantar</i> = cant- + sufijo verbal -ar.</p></article>
+
+<article class="card"><div class="ex"><h3>4 · Parasintética</h3><span class="tag">prefijo + raíz + sufijo, a la vez</span></div>
+<p>La RAE la define como el proceso en el que <b>un sufijo y un prefijo se añaden simultáneamente a una base</b>. Por eso <b>ni el prefijo + base ni la base + sufijo existen</b> como palabras. En clase solo se ve este tipo (confirmado): <b>prefijo + sufijo a la vez</b>, y el sufijo verbal -ar cuenta.</p>
+<div class="ex"><span class="anat"><span class="pc k-pref">a<small>Prefijo</small></span><span class="pc k-raiz">lej<small>Raíz</small></span><span class="pc k-verb">ar<small>Suf. verbal</small></span></span> <span class="anat"><span class="pc k-pref">en<small>Prefijo</small></span><span class="pc k-raiz">roj<small>Raíz</small></span><span class="pc k-suf">ecer<small>Sufijo</small></span></span></div>
+<p class="mini">«lejar» no existe, «alejar» sí. Da verbos (<i>aclarar, anochecer, ensombrecer</i>) y pocos adjetivos (<i>adinerado</i>).</p></article>
+</div>
+
+<article class="card"><div class="ex"><h3>5 · Compuesta culta (bases compositivas cultas)</h3><span class="tag">2 raíces griegas o latinas</span></div>
+<p>Como la compuesta, pero las raíces vienen del <b>griego o del latín</b> y suelen usarse en palabras científicas o cultas. En tus apuntes aparece como «compuesta culta» y como «bases compositivas cultas»; la RAE las llama <i>elementos compositivos cultos</i> (también «tema grecolatino», «base culta»).</p>
+<div class="ex"><span class="anat"><span class="pc k-culta">bio<small>Raíz culta</small></span><span class="pc k-culta">logía<small>Raíz culta</small></span></span> <span class="anat"><span class="pc k-culta">filo<small>Raíz culta</small></span><span class="pc k-culta">sofía<small>Raíz culta</small></span></span> <span class="anat"><span class="pc k-culta">carní<small>Raíz culta</small></span><span class="pc k-culta">vor<small>Raíz culta</small></span><span class="pc k-flex">o<small>Flexivo</small></span></span></div>
+<div class="tw"><table><thead><tr><th>Raíz culta</th><th>Significa</th><th>Raíz culta</th><th>Significa</th></tr></thead><tbody>
+<tr><td class="mono">bio-</td><td>vida</td><td class="mono">-logía / -logo</td><td>estudio, ciencia</td></tr>
+<tr><td class="mono">geo-</td><td>tierra</td><td class="mono">-fobia</td><td>miedo</td></tr>
+<tr><td class="mono">filo-</td><td>amor</td><td class="mono">-sofía</td><td>sabiduría</td></tr>
+<tr><td class="mono">aracno-</td><td>araña</td><td class="mono">talaso-</td><td>mar</td></tr>
+<tr><td class="mono">trauma-</td><td>herida, lesión</td><td class="mono">carni-</td><td>carne</td></tr>
+<tr><td class="mono">herbi-</td><td>hierba</td><td class="mono">-voro</td><td>que devora, que come</td></tr>
+<tr><td class="mono">tele-</td><td>lejos</td><td class="mono">-scopio</td><td>ver, observar</td></tr>
+<tr><td class="mono">foto-</td><td>luz</td><td class="mono">-grafía</td><td>escritura, dibujo</td></tr>
+<tr><td class="mono">demo-</td><td>pueblo</td><td class="mono">-cracia</td><td>poder, gobierno</td></tr>
+<tr><td class="mono">hidro-</td><td>agua</td><td class="mono">-metro</td><td>medida</td></tr>
+</tbody></table></div>
+<p class="mini"><b>¿Compuesta o compuesta culta?</b> Si las dos partes son palabras normales del español (hierba + buena, saca + corchos) → compuesta. Si son trozos griegos o latinos que no usarías solos (bio + logía, carni + voro) → compuesta culta.</p></article>
+
+<div class="callout"><b>Cómo distinguir derivada de parasintética: el test de quitar</b>
+<span>Quita <b>un afijo cada vez</b>. Si al quitar alguno de ellos <b>queda una palabra que existe</b> → <b>derivada</b>. Si <b>en ningún caso</b> queda una palabra que exista → <b>parasintética</b>.<br>
+<i>desintoxicar</i>: quito des- → «intoxicar» existe → <b>derivada</b>.<br>
+<i>enrojecer</i>: quito en- → «rojecer» no existe; quito -ecer → «enroj-» no existe → <b>parasintética</b>.</span></div>
+<div class="callout good"><b>Criterios de clase confirmados</b>
+<span>• <b>bien-</b> y similares son <b>raíces</b>: <i>bienhablado</i> y <i>bienvenido</i> son compuestas.<br>
+• <b>Parasintética</b> = solo prefijo + sufijo a la vez (a-lej-ar). No se trabaja <i>quinceañero</i>. <i>Desintoxicar</i> es derivada.<br>
+• <b>Interfijo</b> = no significa nada; <b>sufijo</b> = sí significa. <i>-edor</i> y <i>-ación</i> son sufijos. En <i>traumatología</i>, la vocal de unión -to- es un interfijo.<br>
+• <b>Compuesta culta</b> y <b>bases compositivas cultas</b> son lo mismo.<br>
+• Los adverbios en -mente <b>no se han visto</b> en clase: no hacen falta.</span></div>
+<div class="callout warn"><b>Pendiente de confirmar</b>
+<span>En la pregunta de los apuntes aparecen <i>malgastar</i> y <i>bioquímico</i>. Por analogía con <i>bien</i>, <i>malgastar</i> sería compuesta (mal + gast + sufijo verbal -ar), y <i>bioquímico</i> compuesta culta. No lo hemos podido confirmar: <a href="dudas.html#d12">Dudas, d12</a>.</span></div>
+</section>
+<section class="sec" id="metodo"><div class="sh"><h2>4. Método paso a paso</h2></div>
+<p>Hazlo siempre en este orden. Cada paso corta una de las confusiones que aparecen en el cuaderno. Tienes el mismo método como <a href="arbol.html"><b>árbol de decisión interactivo</b></a> (con versión para imprimir).</p>
+<ol class="steps">
+<li><div><b>Aparta el morfema flexivo.</b><br>Final de género/número (-o, -a, -s, -es) o, en un verbo conjugado, la desinencia (-aba, -mos…). Eso <u>nunca</u> cuenta como derivación. <b>Ojo:</b> en un infinitivo, -ar/-er/-ir no es flexivo: es el <u>sufijo verbal</u>.</div></li>
+<li><div><b>Busca la raíz (o las raíces).</b><br>Es lo que tiene el significado: toxic-, hierb-, buen-. Pregúntate: <b>¿cuántas hay?</b></div></li>
+<li><div><b>¿Dos o más raíces?</b><br>Si son palabras del español → <b>compuesta</b>. Si son trozos griegos/latinos (-logía, -fobia, -voro…) → <b>compuesta culta</b>.</div></li>
+<li><div><b>¿Una sola raíz y nada más?</b><br>→ <b>simple</b> (solo si es un nombre, un adjetivo o un verbo conjugado; un infinitivo siempre tiene su sufijo verbal).</div></li>
+<li><div><b>¿Una raíz con prefijos y/o sufijos?</b><br>Cuenta <u>todos</u> los afijos (en <i>desintoxicar</i> eran des- e in-) y haz el test de quitar: <b>derivada</b> o <b>parasintética</b>.</div></li>
+</ol>
+<p>Y para terminar: la <b>categoría gramatical</b> (sustantivo, adjetivo, verbo, adverbio). Mírala por el significado en la frase. Ojo: <i>hazmerreír</i> lleva un verbo dentro, pero la palabra es un <b>sustantivo</b>.</p>
+</section>
+<section class="sec" id="examen"><div class="sh"><h2>5. Cómo se contesta en el examen</h2></div>
+<p class="q">En el texto aparece la palabra «…». Analice su estructura y defina el procedimiento por el que se ha formado. <b>(0,5 p)</b></p>
+<p>Son dos cosas: <b>(1) analizar</b> (cortar la palabra, nombrar cada trozo y decir la categoría) y <b>(2) definir el procedimiento</b> (nombrar el tipo de formación y explicar por qué). El modelo 0 de la PAU 2026 de Castilla y León pide lo mismo: <i>segmentar y clasificar los constituyentes</i>, <i>decir si es simple, compuesta, derivada o parasintética</i> y <i>dar la categoría y sus propiedades flexivas</i>. Esta es la plantilla de tus apuntes:</p>
+<div class="tpl" aria-label="Plantilla de los apuntes">
+<span class="full">Palabra: ______</span>
+<span>Raíz: -X-</span><span>Categoría: ______</span>
+<span>M. (F/D) prefijo: X-</span><span>Estructura: ______</span>
+<span>M. (F/D) sufijo: -X</span><span></span></div>
+<p class="mini">Interpreto «F/D» como flexivo / derivativo: hay que decir de qué tipo es cada morfema.</p>
+<div class="card"><div class="k">Respuesta modelo para <i>desalojar</i></div>
+<div class="tpl">
+<span class="full">Palabra: desalojar</span>
+<span>Raíz: -aloj-</span><span>Categoría: verbo</span>
+<span>M. derivativo, prefijo: des-</span><span>Estructura: derivada</span>
+<span>M. derivativo, sufijo verbal: -ar</span><span></span></div>
+<p><b>Procedimiento:</b> es una palabra <b>derivada</b>: a la raíz <i>aloj-</i> se le añaden el prefijo derivativo <i>des-</i> y el sufijo verbal <i>-ar</i>. Si se quita el prefijo, queda «alojar», que existe.</p></div>
+<div class="callout"><b>Para redactar el procedimiento</b>
+<span>«Es una palabra <u>(tipo)</u> porque <u>(qué tiene)</u>. Si se quita <u>(afijo)</u>, <u>(la palabra existe / no existe)</u>.» Siempre: <b>tipo + por qué</b>.</span></div>
+<div class="callout good"><b>Dato de la PAU de Madrid</b><span>Según el acta de la comisión de Lengua de la PAU 2026 (UAM), en esa pregunta no se admite llamar «elemento compositivo» a prefijos y sufijos, y no habrá palabras con interfijos en los procesos de creación léxica. La terminología se toma del Glosario de la RAE. Tu profesora puede pedir otra cosa en el examen del colegio: sigue su plantilla.</span></div>
+</section><section class="sec" id="resueltos"><div class="sh"><h2>6. Ejemplos resueltos</h2></div><p>Las palabras del cuaderno, analizadas con el criterio de clase y con la plantilla de los apuntes.</p><div class="grid2"><article class="card"><div class="ex"><h3>desintoxicar</h3><span class="anat"><span class="pc k-pref">des<small>Prefijo</small></span><span class="pc k-pref">in<small>Prefijo</small></span><span class="pc k-raiz">toxic<small>Raíz</small></span><span class="pc k-verb">ar<small>Suf. verbal</small></span></span></div><dl class="fields"><dt>Raíz</dt><dd>-toxic-</dd><dt>Prefijos</dt><dd>des-, in-</dd><dt>Sufijo verbal</dt><dd>-ar</dd><dt>Categoría</dt><dd>verbo</dd><dt>Estructura</dt><dd><b>derivada</b></dd></dl><p><b>¿Por qué?</b> Una sola raíz y dos prefijos. Quitas des- y queda «intoxicar», que existe.</p></article><article class="card"><div class="ex"><h3>hierbabuena</h3><span class="anat"><span class="pc k-raiz">hierb<small>Raíz</small></span><span class="pc k-flex">a<small>Flexivo</small></span><span class="pc k-raiz">buen<small>Raíz</small></span><span class="pc k-flex">a<small>Flexivo</small></span></span></div><dl class="fields"><dt>Raíces</dt><dd>-hierb- y -buen-</dd><dt>Flexivos</dt><dd>-a, -a</dd><dt>Categoría</dt><dd>sustantivo</dd><dt>Estructura</dt><dd><b>compuesta</b></dd></dl><p><b>¿Por qué?</b> «buena» no es un sufijo: es una palabra con significado propio. Dos raíces → compuesta.</p></article><article class="card"><div class="ex"><h3>hazmerreír</h3><span class="anat"><span class="pc k-raiz">hazme<small>Raíz</small></span><span class="pc k-raiz">reír<small>Raíz</small></span></span></div><dl class="fields"><dt>Raíces</dt><dd>-haz(me)- y -reír-</dd><dt>Categoría</dt><dd>sustantivo</dd><dt>Estructura</dt><dd><b>compuesta</b></dd></dl><p><b>¿Por qué?</b> Dos raíces (hacer + reír) fundidas con un pronombre. Es compuesta y funciona como sustantivo: «un hazmerreír».</p></article><article class="card"><div class="ex"><h3>bienhablado</h3><span class="anat"><span class="pc k-raiz">bien<small>Raíz</small></span><span class="pc k-raiz">hablad<small>Raíz</small></span><span class="pc k-flex">o<small>Flexivo</small></span></span></div><dl class="fields"><dt>Raíces</dt><dd>-bien- y -hablad-</dd><dt>Flexivo</dt><dd>-o</dd><dt>Categoría</dt><dd>adjetivo</dd><dt>Estructura</dt><dd><b>compuesta</b></dd></dl><p><b>¿Por qué?</b> «bien» existe solo, así que es raíz. Dos raíces → compuesta.</p><div class="callout warn"><span>Confirmado en clase: bien- es raíz (algunos manuales lo tratan como prefijo, pero la profesora no).</span></div></article><article class="card"><div class="ex"><h3>carnívoro</h3><span class="anat"><span class="pc k-culta">carní<small>Raíz culta</small></span><span class="pc k-culta">vor<small>Raíz culta</small></span><span class="pc k-flex">o<small>Flexivo</small></span></span></div><dl class="fields"><dt>Raíces cultas</dt><dd>carni- (carne) y -voro (que devora)</dd><dt>Flexivo</dt><dd>-o</dd><dt>Categoría</dt><dd>adjetivo</dd><dt>Estructura</dt><dd><b>compuesta culta</b></dd></dl><p><b>¿Por qué?</b> Los dos trozos son raíces latinas que se usan en palabras cultas: «que se alimenta de carne».</p></article><article class="card"><div class="ex"><h3>corretear</h3><span class="anat"><span class="pc k-raiz">corr<small>Raíz</small></span><span class="pc k-inter">ete<small>Interfijo</small></span><span class="pc k-verb">ar<small>Suf. verbal</small></span></span></div><dl class="fields"><dt>Raíz</dt><dd>-corr-</dd><dt>Interfijo</dt><dd>-ete-</dd><dt>Sufijo verbal</dt><dd>-ar</dd><dt>Categoría</dt><dd>verbo</dd><dt>Estructura</dt><dd><b>derivada</b></dd></dl><p><b>¿Por qué?</b> Se forma a partir de «correr»: raíz + interfijo (no significa nada) + sufijo verbal. Hay un sufijo, así que es derivada.</p><div class="callout warn"><span>Así lo escribe la profesora: interfijo -ete- y sufijo verbal -ar. La RAE agruparía -ear (corr-et-ear), pero el resultado, derivada, es el mismo.</span></div></article><article class="card"><div class="ex"><h3>cantar</h3><span class="anat"><span class="pc k-raiz">cant<small>Raíz</small></span><span class="pc k-verb">ar<small>Suf. verbal</small></span></span></div><dl class="fields"><dt>Raíz</dt><dd>-cant-</dd><dt>Sufijo verbal</dt><dd>-ar</dd><dt>Categoría</dt><dd>verbo</dd><dt>Estructura</dt><dd><b>derivada</b></dd></dl><p><b>¿Por qué?</b> Es un infinitivo: -ar es sufijo verbal, así que hay raíz + sufijo → derivada. «Cantamos» (forma personal) sería simple.</p></article><article class="card"><div class="ex"><h3>recibir</h3><span class="anat"><span class="pc k-raiz">recib<small>Raíz</small></span><span class="pc k-verb">ir<small>Suf. verbal</small></span></span></div><dl class="fields"><dt>Raíz</dt><dd>recib-</dd><dt>Sufijo verbal</dt><dd>(i)r</dd><dt>Categoría</dt><dd>verbo</dd><dt>Estructura</dt><dd><b>derivada</b></dd></dl><p><b>¿Por qué?</b> Como en el cuaderno: raíz recib-, sufijo verbal (i)r, verbo, derivada.</p></article><article class="card"><div class="ex"><h3>alejar</h3><span class="anat"><span class="pc k-pref">a<small>Prefijo</small></span><span class="pc k-raiz">lej<small>Raíz</small></span><span class="pc k-verb">ar<small>Suf. verbal</small></span></span></div><dl class="fields"><dt>Raíz</dt><dd>-lej-</dd><dt>Prefijo</dt><dd>a-</dd><dt>Sufijo verbal</dt><dd>-ar</dd><dt>Categoría</dt><dd>verbo</dd><dt>Estructura</dt><dd><b>parasintética</b></dd></dl><p><b>¿Por qué?</b> Es el ejemplo de tus apuntes. «lejar» no existe, así que el prefijo y el sufijo verbal entran a la vez. Igual que <i>aclarar</i>.</p></article><article class="card"><div class="ex"><h3>jugábamos</h3><span class="anat"><span class="pc k-raiz">jug<small>Raíz</small></span><span class="pc k-flex">ába<small>Flexivo</small></span><span class="pc k-flex">mos<small>Flexivo</small></span></span></div><dl class="fields"><dt>Raíz</dt><dd>-jug- (variante jueg- en «juego»)</dd><dt>Flexivos</dt><dd>-ába- (tiempo y modo), -mos (persona y número)</dd><dt>Categoría</dt><dd>verbo</dd><dt>Estructura</dt><dd><b>simple</b></dd></dl><p><b>¿Por qué?</b> Parece larga, pero todo lo que acompaña a la raíz es flexivo: simple.</p></article><article class="card"><div class="ex"><h3>deberíamos</h3><span class="anat"><span class="pc k-raiz">deb<small>Raíz</small></span><span class="pc k-flex">ería<small>Flexivo</small></span><span class="pc k-flex">mos<small>Flexivo</small></span></span></div><dl class="fields"><dt>Raíz</dt><dd>-deb(e)-</dd><dt>Flexivos</dt><dd>-ría- (tiempo y modo), -mos (persona y número)</dd><dt>Categoría</dt><dd>verbo</dd><dt>Estructura</dt><dd><b>simple</b></dd></dl><p><b>¿Por qué?</b> Es una forma personal (conjugada): raíz + flexivos. Simple.</p></article></div></section>
+<section class="sec" id="chuleta"><div class="sh"><h2>7. Chuleta de una página</h2><button class="btn noprint" onclick="window.print()" style="margin-left:auto">Imprimir</button></div>
+<div class="tw"><table><thead><tr><th>Estructura</th><th>Fórmula</th><th>Cómo la reconozco</th><th>Ejemplo</th></tr></thead><tbody>
+<tr><td><b>Simple</b></td><td class="mono">raíz + flexivo</td><td>Solo raíz. Nada de prefijos ni sufijos. Verbo conjugado = simple.</td><td>tío, mesas, jugábamos</td></tr>
+<tr><td><b>Compuesta</b></td><td class="mono">raíz + raíz (+ flexivo)</td><td>Dos palabras normales unidas.</td><td>hierbabuena, hazmerreír</td></tr>
+<tr><td><b>Derivada</b></td><td class="mono">raíz + prefijo/sufijo</td><td>Quitas el afijo y la palabra que queda <b>existe</b>. Infinitivo sin más = derivada.</td><td>panadería, desintoxicar, cantar</td></tr>
+<tr><td><b>Parasintética</b></td><td class="mono">prefijo + raíz + sufijo (a la vez)</td><td>Quitando cualquier afijo <b>no existe</b> la palabra.</td><td>alejar, enrojecer</td></tr>
+<tr><td><b>Compuesta culta</b></td><td class="mono">raíz culta + raíz culta</td><td>Trozos griegos o latinos: -logía, -fobia, -voro…</td><td>biología, carnívoro</td></tr>
+</tbody></table></div>
+<div class="grid">
+<div class="card"><b>Recuerda siempre</b><span>• -o, -a, -s = flexivo.<br>• Prefijo: antes. Sufijo: después. Interfijo: en medio y sin significado.<br>• Infinitivo (-ar/-er/-ir) = sufijo verbal → derivada. Verbo conjugado → simple.</span></div>
+<div class="card"><b>Antes de entregar</b><span>☐ ¿Cuenté <u>todos</u> los afijos?<br>☐ ¿Separé el flexivo?<br>☐ ¿Puse categoría y estructura?<br>☐ ¿Justifiqué el procedimiento?</span></div>
+</div>
+</section><section class="sec" id="fuentes"><div class="sh"><h2>Fuentes oficiales consultadas</h2></div><p class="mini">Las definiciones de esta carpeta siguen el Glosario de términos gramaticales de la RAE-ASALE, que es la referencia que cita la comisión de Lengua de la PAU de Madrid. Donde el criterio de clase (confirmado por Jorge) difiere de la RAE, manda el de clase, porque es el que corrige la profesora.</p><ul class="sources"><li><a href="https://www.rae.es/gtg/ra%C3%ADz" target="_blank" rel="noopener">RAE-ASALE, Glosario de términos gramaticales: raíz</a></li><li><a href="https://www.rae.es/gtg/flexi%C3%B3n" target="_blank" rel="noopener">RAE-ASALE, Glosario: flexión</a></li><li><a href="https://www.rae.es/gtg/derivaci%C3%B3n" target="_blank" rel="noopener">RAE-ASALE, Glosario: derivación</a></li><li><a href="https://www.rae.es/gtg/composici%C3%B3n" target="_blank" rel="noopener">RAE-ASALE, Glosario: composición</a></li><li><a href="https://www.rae.es/gtg/elemento-compositivo-culto" target="_blank" rel="noopener">RAE-ASALE, Glosario: elemento compositivo culto</a></li><li><a href="https://www.rae.es/gtg/interfijo" target="_blank" rel="noopener">RAE-ASALE, Glosario: interfijo</a></li><li><a href="https://www.rae.es/gtg/parasint%C3%A9sis" target="_blank" rel="noopener">RAE-ASALE, Glosario: parasíntesis</a></li><li><a href="https://www.rae.es/gtg/desinencia" target="_blank" rel="noopener">RAE-ASALE, Glosario: desinencia</a></li><li><a href="https://www.rae.es/gtg/vocal-tem%C3%A1tica" target="_blank" rel="noopener">RAE-ASALE, Glosario: vocal temática</a></li><li><a href="https://www.rae.es/gtg/tema1" target="_blank" rel="noopener">RAE-ASALE, Glosario: tema</a></li><li><a href="https://www.uam.es/uam/media/doc/1606850480017/pau-2026-acta-lengua.pdf" target="_blank" rel="noopener">Comisión de Lengua de la PAU 2026, UAM (Madrid): acta de la reunión</a></li><li><a href="https://www.educa.jcyl.es/universidad/fr/servicio-ensenanza-universitaria/acceso-universidades-publicas-castilla-leon/pau-2026/guias-calificacion-pau-2026.fichiers/1815899-Gu%C3%ADa%20Calificaci%C3%B3n%20Lengua%20Castellana%20y%20Literatura%20II.pdf" target="_blank" rel="noopener">Castilla y León, guía de calificación PAU 2026 de Lengua Castellana y Literatura II (modelo 0)</a></li><li><a href="https://www.ucm.es/data/cont/docs/3-2022-11-05-LENGUA%20CASTELLANA.pdf" target="_blank" rel="noopener">UCM, prueba de acceso para mayores de 25 y 45 años, Lengua Castellana (con soluciones)</a></li></ul></section><footer>Material hecho a partir de los apuntes escaneados de Jorge (Lengua, Bloque 2 · 2.1 Formación de palabras). Los criterios se han contrastado con el Glosario de términos gramaticales de la RAE; donde los apuntes y la RAE no coinciden, está marcado en la página de Dudas.</footer></div></body></html>
