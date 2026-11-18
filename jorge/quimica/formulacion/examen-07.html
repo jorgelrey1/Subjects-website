@@ -151,10 +151,12 @@ button:disabled{opacity:.5;cursor:default}
 #result{background:var(--surface);border:2px solid var(--fg);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:14px}
 #result .big{font-size:1.6rem}
 .info{color:var(--muted)}
+.mini{padding:4px 12px;font-size:.88rem;margin-top:6px;min-height:0}
+#result[hidden]{display:none}
 </style></head><body class=""><a href="../../index.html" style="display:block;padding:8px 16px;background:#1b2033;color:#fff;font:600 15px/1.3 system-ui,'Segoe UI',sans-serif;text-decoration:none;position:relative;z-index:60">← Índice principal</a><div class="wrap"><nav class="top"><a href="index.html">← Índice</a><div class="r"><a href="examen-06.html">← Examen 06</a><a href="examen-08.html">Examen 08 →</a></div></nav><header><span class="k">Examen de formulación</span><h1>Examen 07</h1><p class="lead">20 casos mezclados: 10 piden el nombre (vale cualquiera de las nomenclaturas de la familia) y 10 piden la fórmula. Escribe cada respuesta y pulsa <b>Corregir examen</b> al final. Las tildes cuentan. Las mayúsculas no importan en los nombres, pero en las fórmulas sí (Co no es CO). El «mono» es opcional. Los subíndices se pueden escribir con números (H2SO4).</p></header><div class="toolbar" role="group" aria-label="Símbolos"><button class="sym" type="button" data-c="₂">₂</button><button class="sym" type="button" data-c="₃">₃</button><button class="sym" type="button" data-c="₄">₄</button><button class="sym" type="button" data-c="₅">₅</button><button class="sym" type="button" data-c="₆">₆</button><button class="sym" type="button" data-c="₇">₇</button><button class="sym" type="button" data-c="(">(</button><button class="sym" type="button" data-c=")">)</button><button class="sym" type="button" data-c="−">−</button><button class="sym" type="button" data-c="+">+</button><button class="sym" type="button" data-c="[">[</button><button class="sym" type="button" data-c="]">]</button></div><ol id="qs"></ol><div class="actions"><button class="main" id="check" type="button">Corregir examen</button><button class="ghost" id="reset" type="button">Borrar y empezar de nuevo</button></div><section id="result" hidden></section><nav class="top"><a href="index.html">← Índice</a><div class="r"><a href="examen-06.html">← Examen 06</a><a href="examen-08.html">Examen 08 →</a></div></nav></div><script>
 const FAM = {"oxi": ["Óxido", "oxi"], "per": ["Peróxido", "oxi"], "hm": ["Hidruro metálico", "hid"], "hn": ["Hidruro no metálico", "hid"], "hox": ["Hidróxido", "hox"], "aci": ["Ácido oxácido", "aci"], "sn": ["Sal neutra de hidrácido", "sal"], "sv": ["Sal volátil", "sal"], "so": ["Sal neutra de oxácido", "sal"], "sa": ["Sal ácida de hidrácido", "sal"], "sao": ["Sal ácida de oxácido", "sal"]};
 const NOMBRES = {"sp": "Sistemática (prefijos)", "st": "Stock", "ca": "De carga", "tr": "Tradicional", "hi": "De hidrógeno", "sx": "Sistemática (oxo + romano)", "es": "Estequiométrica", "ad": "De adición", "trh": "Tradicional de hidruro", "sis": "Sistemática de sal", "hs": "De hidrógeno de sal", "trs": "Tradicional de sal", "sts": "Stock de sal"};
-const QS = [{"dir": "f", "fam": "oxi", "nom": "ca", "p": "Escribe la fórmula de <b>óxido de arsénico(5+)<\/b>", "a": ["As2O5"]}, {"dir": "n", "fam": "sao", "nom": null, "p": "Nombra: <span class=\"f\">Mg(HSiO<sub>3<\/sub>)<sub>2<\/sub><\/span>", "a": ["hidrogenometasilicato de magnesio", "hidrogenotrioxosilicato(IV) de magnesio", "bis(hidrogenometasilicato) de magnesio"]}, {"dir": "n", "fam": "so", "nom": null, "p": "Nombra: <span class=\"f\">Mn<sub>4<\/sub>(SiO<sub>4<\/sub>)<sub>3<\/sub><\/span>", "a": ["silicato de manganeso(III)", "tetraoxosilicato(IV) de manganeso(III)", "tris(silicato) de tetramanganeso", "tris[tetraóxidosilicato(4−)] de tetramanganeso"]}, {"dir": "f", "fam": "hox", "nom": "st", "p": "Escribe la fórmula de <b>hidróxido de cromo(III)<\/b>", "a": ["Cr(OH)3"]}, {"dir": "n", "fam": "hn", "nom": null, "p": "Nombra: <span class=\"f\">HBr<\/span>", "a": ["ácido bromhídrico", "bromuro de hidrógeno", "hidrógeno(bromuro)"]}, {"dir": "n", "fam": "aci", "nom": null, "p": "Nombra: <span class=\"f\">H<sub>2<\/sub>SiO<sub>3<\/sub><\/span>", "a": ["ácido metasilícico", "dihidrógeno(trióxidosilicato)", "trioxosilicato(IV) de hidrógeno"]}, {"dir": "f", "fam": "sv", "nom": "ca", "p": "Escribe la fórmula de <b>sulfuro de carbono(4+)<\/b>", "a": ["CS2"]}, {"dir": "f", "fam": "aci", "nom": "tr", "p": "Escribe la fórmula de <b>ácido antimonioso<\/b>", "a": ["H3SbO3"]}, {"dir": "f", "fam": "sao", "nom": "tr", "p": "Escribe la fórmula de <b>hidrogenosulfito de calcio<\/b>", "a": ["Ca(HSO3)2"]}, {"dir": "f", "fam": "so", "nom": "ad", "p": "Escribe la fórmula de <b>óxidobromato(1−) de amonio<\/b>", "a": ["NH4BrO"]}, {"dir": "n", "fam": "sa", "nom": null, "p": "Nombra: <span class=\"f\">Ca(HS)<sub>2<\/sub><\/span>", "a": ["hidrogenosulfuro de calcio", "bis[hidrógeno(sulfuro)] de calcio", "hidrogenosulfuro(1−) de calcio"]}, {"dir": "n", "fam": "oxi", "nom": null, "p": "Nombra: <span class=\"f\">CuO<\/span>", "a": ["óxido de cobre", "óxido de cobre(II)", "óxido de cobre(2+)"]}, {"dir": "n", "fam": "hm", "nom": null, "p": "Nombra: <span class=\"f\">FeH<sub>2<\/sub><\/span>", "a": ["dihidruro de hierro", "hidruro de hierro(II)", "hidruro de hierro(2+)"]}, {"dir": "n", "fam": "per", "nom": null, "p": "Nombra: <span class=\"f\">Rb<sub>2<\/sub>O<sub>2<\/sub><\/span>", "a": ["dióxido de dirubidio", "peróxido de rubidio"]}, {"dir": "f", "fam": "hox", "nom": "st", "p": "Escribe la fórmula de <b>hidróxido de manganeso(III)<\/b>", "a": ["Mn(OH)3"]}, {"dir": "n", "fam": "so", "nom": null, "p": "Nombra: <span class=\"f\">Cr(NO<sub>3<\/sub>)<sub>2<\/sub><\/span>", "a": ["nitrato de cromo(II)", "trioxonitrato(V) de cromo(II)", "bis(nitrato) de cromo", "bis[trióxidonitrato(1−)] de cromo"]}, {"dir": "n", "fam": "sn", "nom": null, "p": "Nombra: <span class=\"f\">AgF<\/span>", "a": ["fluoruro de plata"]}, {"dir": "f", "fam": "so", "nom": "sx", "p": "Escribe la fórmula de <b>trioxoyodato(V) de plomo(II)<\/b>", "a": ["Pb(IO3)2"]}, {"dir": "f", "fam": "per", "nom": "sp", "p": "Escribe la fórmula de <b>dióxido de bario<\/b>", "a": ["BaO2"]}, {"dir": "f", "fam": "aci", "nom": "sx", "p": "Escribe la fórmula de <b>tetraoxobromato(VII) de hidrógeno<\/b>", "a": ["HBrO4"]}];
+const QS = [{"dir": "f", "fam": "oxi", "nom": "ca", "p": "Escribe la fórmula de <b>óxido de arsénico(5+)<\/b>", "a": ["As2O5"]}, {"dir": "n", "fam": "sao", "nom": null, "p": "Nombra: <span class=\"f\">Mg(HSiO<sub>3<\/sub>)<sub>2<\/sub><\/span>", "a": ["hidrogenometasilicato de magnesio", "hidrogenotrioxosilicato(IV) de magnesio", "bis(hidrogenometasilicato) de magnesio"]}, {"dir": "n", "fam": "so", "nom": null, "p": "Nombra: <span class=\"f\">Mn<sub>4<\/sub>(SiO<sub>4<\/sub>)<sub>3<\/sub><\/span>", "a": ["silicato de manganeso(III)", "tetraoxosilicato(IV) de manganeso(III)", "tris(silicato) de tetramanganeso", "tris[tetraoxidosilicato(4−)] de tetramanganeso"]}, {"dir": "f", "fam": "hox", "nom": "st", "p": "Escribe la fórmula de <b>hidróxido de cromo(III)<\/b>", "a": ["Cr(OH)3"]}, {"dir": "n", "fam": "hn", "nom": null, "p": "Nombra: <span class=\"f\">HBr<\/span>", "a": ["ácido bromhídrico", "bromuro de hidrógeno", "hidrógeno(bromuro)"]}, {"dir": "n", "fam": "aci", "nom": null, "p": "Nombra: <span class=\"f\">H<sub>2<\/sub>SiO<sub>3<\/sub><\/span>", "a": ["ácido metasilícico", "dihidrógeno(trioxidosilicato)", "trioxosilicato(IV) de hidrógeno"]}, {"dir": "f", "fam": "sv", "nom": "ca", "p": "Escribe la fórmula de <b>sulfuro de carbono(4+)<\/b>", "a": ["CS2"]}, {"dir": "f", "fam": "aci", "nom": "tr", "p": "Escribe la fórmula de <b>ácido antimonioso<\/b>", "a": ["H3SbO3"]}, {"dir": "f", "fam": "sao", "nom": "tr", "p": "Escribe la fórmula de <b>hidrogenosulfito de calcio<\/b>", "a": ["Ca(HSO3)2"]}, {"dir": "f", "fam": "so", "nom": "ad", "p": "Escribe la fórmula de <b>oxidobromato(1−) de amonio<\/b>", "a": ["NH4BrO"]}, {"dir": "n", "fam": "sa", "nom": null, "p": "Nombra: <span class=\"f\">Ca(HS)<sub>2<\/sub><\/span>", "a": ["hidrogenosulfuro de calcio", "bis[hidrógeno(sulfuro)] de calcio", "hidrogenosulfuro(1−) de calcio"]}, {"dir": "n", "fam": "oxi", "nom": null, "p": "Nombra: <span class=\"f\">CuO<\/span>", "a": ["óxido de cobre", "óxido de cobre(II)", "óxido de cobre(2+)"]}, {"dir": "n", "fam": "hm", "nom": null, "p": "Nombra: <span class=\"f\">FeH<sub>2<\/sub><\/span>", "a": ["dihidruro de hierro", "hidruro de hierro(II)", "hidruro de hierro(2+)"]}, {"dir": "n", "fam": "per", "nom": null, "p": "Nombra: <span class=\"f\">Rb<sub>2<\/sub>O<sub>2<\/sub><\/span>", "a": ["dióxido de dirubidio", "peróxido de rubidio"]}, {"dir": "f", "fam": "hox", "nom": "st", "p": "Escribe la fórmula de <b>hidróxido de manganeso(III)<\/b>", "a": ["Mn(OH)3"]}, {"dir": "n", "fam": "so", "nom": null, "p": "Nombra: <span class=\"f\">Cr(NO<sub>3<\/sub>)<sub>2<\/sub><\/span>", "a": ["nitrato de cromo(II)", "trioxonitrato(V) de cromo(II)", "bis(nitrato) de cromo", "bis[trioxidonitrato(1−)] de cromo"]}, {"dir": "n", "fam": "sn", "nom": null, "p": "Nombra: <span class=\"f\">AgF<\/span>", "a": ["fluoruro de plata"]}, {"dir": "f", "fam": "so", "nom": "sx", "p": "Escribe la fórmula de <b>trioxoyodato(V) de plomo(II)<\/b>", "a": ["Pb(IO3)2"]}, {"dir": "f", "fam": "per", "nom": "sp", "p": "Escribe la fórmula de <b>dióxido de bario<\/b>", "a": ["BaO2"]}, {"dir": "f", "fam": "aci", "nom": "sx", "p": "Escribe la fórmula de <b>tetraoxobromato(VII) de hidrógeno<\/b>", "a": ["HBrO4"]}];
 const N = QS.length;
 const SUBS = {'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4','₅':'5','₆':'6','₇':'7','₈':'8','₉':'9'};
 function fixChars(s){
@@ -198,43 +200,61 @@ document.querySelectorAll('button.sym').forEach(function(b){
   });
 });
 let corrected = false;
+let auto = [], givens = [], forced = {};
 function esc(t){return t.replace(/&/g,'&amp;').replace(new RegExp(String.fromCharCode(60),'g'),'&lt;')}
-document.getElementById('check').addEventListener('click', function(){
-  if(corrected) return; corrected = true;
-  let ok = 0; const fails = []; const goods = [];
-  QS.forEach(function(q,i){
-    const inp = document.getElementById('r'+(i+1)); const card = document.getElementById('q'+(i+1)); const fb = document.getElementById('f'+(i+1));
-    inp.readOnly = true;
-    const good = isRight(q, inp.value);
-    const fam = FAM[q.fam];
-    const tags = '<span class="chip '+fam[1]+'">'+fam[0]+'<\/span>'+(q.nom?' <span class="nom">'+NOMBRES[q.nom]+'<\/span>':'');
-    card.classList.add(good?'ok':'no');
-    if(good){ ok++; goods.push(i+1); fb.innerHTML = '<div class="fbok"><b>Correcto.<\/b> '+tags+'<\/div>'; }
-    else {
-      fails.push({i:i+1, q:q, given:inp.value});
-      const alts = q.a.slice(1,7).map(esc).join(' · ');
-      fb.innerHTML = '<div class="fbno"><b>Fallo.<\/b> Tu respuesta: <span class="f">'+(inp.value.trim()?esc(inp.value):'(vacía)')+'<\/span><br>'+
-        'Respuesta correcta: <span class="f good">'+esc(q.a[0])+'<\/span>'+(alts?'<br><span class="alt">También válido: '+alts+'<\/span>':'')+'<br>'+tags+'<\/div>';
-    }
-  });
-  const pct = Math.round(100*ok/N);
+function tagsOf(q){ const fam = FAM[q.fam]; return '<span class="chip '+fam[1]+'">'+fam[0]+'<\/span>'+(q.nom?' <span class="nom">'+NOMBRES[q.nom]+'<\/span>':''); }
+function shown(i){ return givens[i].trim()? esc(givens[i]) : '(vacía)'; }
+function paintCard(i){
+  const q = QS[i], card = document.getElementById('q'+(i+1)), fb = document.getElementById('f'+(i+1)), tags = tagsOf(q);
+  card.classList.remove('ok','no'); card.classList.add((auto[i]||forced[i])?'ok':'no');
+  if(auto[i]){ fb.innerHTML = '<div class="fbok"><b>Correcto.<\/b> '+tags+'<\/div>'; return; }
+  const alts = q.a.slice(1,7).map(esc).join(' · ');
+  if(forced[i]){
+    fb.innerHTML = '<div class="fbok"><b>Contada como buena.<\/b> Tu respuesta: <span class="f">'+shown(i)+'<\/span><br>Respuesta del examen: <span class="f good">'+esc(q.a[0])+'<\/span><br>'+tags+
+      ' <button type="button" class="ghost mini unforce" data-i="'+i+'">Quitar<\/button><\/div>';
+    return;
+  }
+  fb.innerHTML = '<div class="fbno"><b>Fallo.<\/b> Tu respuesta: <span class="f">'+shown(i)+'<\/span><br>'+
+    'Respuesta correcta: <span class="f good">'+esc(q.a[0])+'<\/span>'+(alts?'<br><span class="alt">También válido: '+alts+'<\/span>':'')+'<br>'+tags+
+    ' <button type="button" class="ghost mini force" data-i="'+i+'" title="Úsalo si tu respuesta es correcta pero el corrector no la ha reconocido (un 0 en lugar de una O, una tilde, otra forma válida...)">Cuenta como buena<\/button><\/div>';
+}
+function paintResult(){
+  const goods = [], fails = [];
+  QS.forEach(function(q,i){ if(auto[i]||forced[i]) goods.push(i+1); else fails.push(i+1); });
+  const ok = goods.length, pct = Math.round(100*ok/N), nf = Object.keys(forced).filter(function(k){return forced[k]}).length;
   const res = document.getElementById('result');
   let h = '<h2>Resultado<\/h2><p class="big"><b>'+ok+'<\/b> de '+N+' ('+pct+' %)<\/p>';
+  if(nf) h += '<p class="info">Incluye '+nf+' respuesta'+(nf>1?'s':'')+' que has marcado tú como buena'+(nf>1?'s':'')+'.<\/p>';
   h += '<div class="two"><div class="card"><span class="k">Aciertos ('+goods.length+')<\/span><p>'+(goods.length?goods.join(', '):'Ninguno')+'<\/p><\/div>';
-  h += '<div class="card"><span class="k">Fallos ('+fails.length+')<\/span><p>'+(fails.length?fails.map(function(f){return f.i}).join(', '):'Ninguno: examen perfecto.')+'<\/p><\/div><\/div>';
+  h += '<div class="card"><span class="k">Fallos ('+fails.length+')<\/span><p>'+(fails.length?fails.join(', '):'Ninguno: examen perfecto.')+'<\/p><\/div><\/div>';
   if(fails.length){
     h += '<h3>Repasa estos casos<\/h3><div class="tw"><table><tr><th>Nº<\/th><th>Enunciado<\/th><th>Tu respuesta<\/th><th>Respuesta correcta<\/th><\/tr>';
-    fails.forEach(function(f){
-      h += '<tr><td>'+f.i+'<\/td><td>'+f.q.p+'<\/td><td class="f">'+(f.given.trim()?esc(f.given):'(vacía)')+'<\/td><td class="f good">'+esc(f.q.a[0])+(f.q.a.length>1?'<br><small>'+f.q.a.slice(1,7).map(esc).join(' · ')+'<\/small>':'')+'<\/td><\/tr>';
+    fails.forEach(function(n){
+      const q = QS[n-1];
+      h += '<tr><td>'+n+'<\/td><td>'+q.p+'<\/td><td class="f">'+shown(n-1)+'<\/td><td class="f good">'+esc(q.a[0])+(q.a.length>1?'<br><small>'+q.a.slice(1,7).map(esc).join(' · ')+'<\/small>':'')+'<\/td><\/tr>';
     });
     h += '<\/table><\/div>';
   }
   res.innerHTML = h; res.hidden = false;
+}
+document.getElementById('check').addEventListener('click', function(){
+  if(corrected) return; corrected = true; forced = {};
+  QS.forEach(function(q,i){
+    const inp = document.getElementById('r'+(i+1)); inp.readOnly = true;
+    givens[i] = inp.value; auto[i] = isRight(q, inp.value); paintCard(i);
+  });
+  paintResult();
   document.getElementById('check').disabled = true;
-  res.scrollIntoView({behavior:'smooth', block:'start'});
+  document.getElementById('result').scrollIntoView({behavior:'smooth', block:'start'});
+});
+list.addEventListener('click', function(e){
+  const b = e.target.closest('button[data-i]'); if(!b || !corrected) return;
+  const i = +b.dataset.i;
+  if(b.classList.contains('force')) forced[i] = true; else delete forced[i];
+  paintCard(i); paintResult();
 });
 document.getElementById('reset').addEventListener('click', function(){
-  corrected = false;
+  corrected = false; forced = {}; auto = []; givens = [];
   QS.forEach(function(q,i){
     const inp = document.getElementById('r'+(i+1)); inp.readOnly=false; inp.value='';
     document.getElementById('f'+(i+1)).innerHTML=''; const c=document.getElementById('q'+(i+1)); c.classList.remove('ok','no');
